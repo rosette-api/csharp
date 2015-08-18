@@ -22,20 +22,20 @@ namespace rosette_apiExamples
 
             //You may set the API key via command line argument:
             //translated_name yourapikeyhere
-            if (args.Length == 0)
+            if (args.Length != 0)
             {
                 apikey = args[0];
             }
-            CAPI TranslatedNameCAPI = new CAPI(apikey);
             try
             {
+                CAPI TranslatedNameCAPI = new CAPI(apikey);
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.TranslatedName("ص�?ية طالب السهيل", null, null, "eng", null, null, null, "PERSON");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(TranslatedNameResult));
             }
-            catch (RosetteException e)
+            catch (Exception e)
             {
-                Console.WriteLine("Error Code " + e.Code.ToString() + ":" + e.Message);
+                Console.WriteLine("Exception: " + e.Message);
             }
         }
     }
