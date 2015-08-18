@@ -16,13 +16,21 @@ namespace rosette_apiExamples
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
             //To use the C# API, you must provide an API key
-            CAPI SentimentCAPI = new CAPI("Your API key");
+            string apikey = "Your API key";
 
-            StreamWriter sw = new StreamWriter("C:\\Test.txt");
-            sw.WriteLine("We are looking forward to the upcoming release.");
+            //You may set the API key via command line argument:
+            //sentiment yourapikeyhere
+            if (args.Length == 0)
+            {
+                apikey = args[0];
+            }
+            CAPI SentimentCAPI = new CAPI(apikey);
+
+            StreamWriter sw = new StreamWriter("C:\\Test.html");
+            sw.WriteLine("<html><head><title>Performance Report</title></head><body><p>This article is clean, concise, and very easy to read.</p></body></html>");
             sw.Close();
 
             try

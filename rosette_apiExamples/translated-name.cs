@@ -15,14 +15,22 @@ namespace rosette_apiExamples
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
             //To use the C# API, you must provide an API key
-            CAPI TranslatedNameCAPI = new CAPI("your API key");
+            string apikey = "Your API key";
+
+            //You may set the API key via command line argument:
+            //translated_name yourapikeyhere
+            if (args.Length == 0)
+            {
+                apikey = args[0];
+            }
+            CAPI TranslatedNameCAPI = new CAPI(apikey);
             try
             {
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.TranslatedName("صفية طالب السهيل", null, null, "eng", null, null, null, "PERSON");
+                Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.TranslatedName("ص�?ية طالب السهيل", null, null, "eng", null, null, null, "PERSON");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(TranslatedNameResult));
             }
             catch (RosetteException e)

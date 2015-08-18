@@ -15,14 +15,22 @@ namespace rosette_apiExamples
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
             //To use the C# API, you must provide an API key
-            CAPI SentencesCAPI = new CAPI("your API key");
+            string apikey = "Your API key";
+
+            //You may set the API key via command line argument:
+            //sentences yourapikeyhere
+            if (args.Length == 0)
+            {
+                apikey = args[0];
+            }
+            CAPI SentencesCAPI = new CAPI(apikey);
             try
             {
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> SentencesResult = SentencesCAPI.Sentences("This land is your land This land is my land From California to the New York island; From the red wood forest to the Gulf Stream waters This land was made for you and Me. As I was walking that ribbon of highway, I saw above me that endless skyway: I saw below me that golden valley: This land was made for you and me.");
+                Dictionary<string, Object> SentencesResult = SentencesCAPI.Sentences("This land is your land. This land is my land\nFrom California to the New York island;\nFrom the red wood forest to the Gulf Stream waters\n\nThis land was made for you and Me.\n\nAs I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(SentencesResult));
             }
             catch (RosetteException e)
