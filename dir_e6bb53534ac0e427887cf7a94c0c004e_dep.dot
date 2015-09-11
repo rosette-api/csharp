@@ -1,0 +1,11 @@
+digraph "C:" {
+  bgcolor=transparent;
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_e6bb53534ac0e427887cf7a94c0c004e {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_e6bb53534ac0e427887cf7a94c0c004e.html"];
+    dir_e6bb53534ac0e427887cf7a94c0c004e [shape=plaintext label="C:"];
+    dir_d99d5d4662bf24521eef49da6a8cd34d [shape=box label="Dev" color="red" fillcolor="white" style="filled" URL="dir_d99d5d4662bf24521eef49da6a8cd34d.html"];
+  }
+}

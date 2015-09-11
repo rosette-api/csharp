@@ -1,0 +1,14 @@
+digraph "C:/Dev/ws-client-bindings" {
+  bgcolor=transparent;
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_d99d5d4662bf24521eef49da6a8cd34d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Dev" fontname="FreeSans", fontsize="10", URL="dir_d99d5d4662bf24521eef49da6a8cd34d.html"]
+  subgraph clusterdir_69029574b4ba983391c34a2c54665b33 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_69029574b4ba983391c34a2c54665b33.html"];
+    dir_69029574b4ba983391c34a2c54665b33 [shape=plaintext label="ws-client-bindings"];
+    dir_b672fda455621fe6d6b519d7cfec0937 [shape=box label="csharp" color="red" fillcolor="white" style="filled" URL="dir_b672fda455621fe6d6b519d7cfec0937.html"];
+  }
+  }
+}
