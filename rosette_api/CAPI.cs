@@ -43,9 +43,14 @@ namespace rosette_api
         private bool version_checked;
 
         /// <summary>
+        /// Internal time value of the last version check. Set on first version check. Resets the version check after 24hrs. 
+        /// </summary>
+        private DateTime last_version_check;
+
+        /// <summary>
         /// String to set version number. Must be updated on API update.
         /// </summary>
-        private string compatible_version = "0.5";
+        private string binding_version = "0.7";
 
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
@@ -66,10 +71,11 @@ namespace rosette_api
             MaxRetry = (maxRetry == 0) ? 1: maxRetry;
             Debug = false;
             Morphofeatures = new List<string> { "complete", "lemmas", "parts-of-speech", "compound-components", "han-readings" };
-            Version = compatible_version;
+            Version = binding_version;
             Timeout = 300;
             Client = client;
             version_checked = checkVersion();
+            last_version_check = default(DateTime);
         }
 
         /// <summary>UserKey
@@ -902,7 +908,7 @@ namespace rosette_api
         /// <returns>bool: Whether or not the versions match</returns>
         private bool checkVersion(string versionToCheck = null)
         {
-            if (!version_checked)
+            if (!version_checked || last_version_check.AddDays(1) < DateTime.Now)
             {
                 if (versionToCheck == null)
                 {
@@ -918,7 +924,9 @@ namespace rosette_api
                     {
                         System.Threading.Thread.Sleep(500);
                     }
-                    responseMsg = client.GetAsync("info/").Result;
+                    string url = string.Format("/info?clientVersion={0}", versionToCheck);
+                    HttpContent content = new StringContent(string.Empty);
+                    responseMsg = client.PostAsync(url, content).Result;
                     retry = retry + 1;
                 }
                 string text = "";
@@ -934,13 +942,14 @@ namespace rosette_api
                 var result = new JavaScriptSerializer().Deserialize<dynamic>(text);
                 // compatibility with server side is at minor version level of semver
                 string serverVersion = result["version"].ToString();
-                if (!serverVersion.Contains(versionToCheck))
+                if (!result["versionChecked"])
                 {
-                    throw new RosetteException("The server version is not " + versionToCheck, -6);
+                    throw new RosetteException("The server version is not compatible with binding version " + versionToCheck, -6);
                 }
                 else
                 {
                     version_checked = true;
+                    last_version_check = DateTime.Now;
                 }
             }
             return version_checked;
