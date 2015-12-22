@@ -826,6 +826,9 @@ namespace rosette_api
                 HttpResponseMessage responseMsg = null;
                 int retry = 0;
                 string wholeURI = Debug ? _uri + "?debug=true" : _uri;
+                if (wholeURI.StartsWith("/")) {
+                    wholeURI = wholeURI.Substring(1);
+                }
 
                 while (responseMsg == null || (!responseMsg.IsSuccessStatusCode && retry <= MaxRetry))
                 {
@@ -934,6 +937,10 @@ namespace rosette_api
         private HttpClient SetupClient()
         {
             HttpClient client;
+            if (!URIstring.EndsWith("/")) {
+                URIstring = URIstring + "/";
+            }
+
             if (Client == null)
             {
                 client =
@@ -967,10 +974,10 @@ namespace rosette_api
                 // exception can be ignored
             }
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/javascript"));
             client.DefaultRequestHeaders.Add("user_key", UserKey);
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + binding_version);
 
             return client;
         }

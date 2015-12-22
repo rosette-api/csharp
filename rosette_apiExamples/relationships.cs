@@ -30,7 +30,7 @@ namespace rosette_apiExamples
             {
                 CAPI RelationshipsCAPI = new CAPI(apikey);
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> RelationshipsResult = RelationshipsCAPI.Relationships("Yesterday in Guatemala, the Supreme Court approved the attorney general's request to impeach President Otto Pérez Molina.");
+                Dictionary<string, Object> RelationshipsResult = RelationshipsCAPI.Relationships("Bill Murray is in the new Ghostbusters film!");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(RelationshipsResult));
             }
             catch (Exception e)
