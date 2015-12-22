@@ -31,15 +31,20 @@ namespace rosette_apiExamples
             try
             {
                 CAPI SentimentCAPI = new CAPI(apikey);
-                var newFile = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Test.txt");
+                var newFile = Path.GetTempFileName();
                 StreamWriter sw = new StreamWriter(newFile);
-                sw.WriteLine("<html><head><title>Performance Report</title></head><body><p>This article is clean, concise, and very easy to read.</p></body></html>");
+                sw.WriteLine("<html><head><title>New Ghostbusters Film</title></head><body><p>Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”</p></body></html>");
+                sw.Flush();
                 sw.Close();
                 //Rosette API provides File upload options (shown here)
                 //Simply create a new RosetteFile using the path to a file
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> SentimentResult = SentimentCAPI.Sentiment(new RosetteFile(newFile));
                 Console.WriteLine(new JavaScriptSerializer().Serialize(SentimentResult));
+
+                if (File.Exists(newFile)) {
+                    File.Delete(newFile);
+                }
             }
             catch (Exception e)
             {

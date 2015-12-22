@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="rosette_api">
-      <HintPath>packages\rosette_api.0.5.6\lib\net45\rosette_api.dll</HintPath>
+      <HintPath>..\rosette_api\bin\Debug\rosette_api.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
