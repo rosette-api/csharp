@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rosette_api
-   &#160;<span id="projectnumber">0.7.4</span>
+   &#160;<span id="projectnumber">0.7.5</span>
    </div>
   </td>
  </tr>
@@ -384,358 +384,365 @@ $(document).ready(function(){initNavTree('CAPI_8cs_source.html','');});
 <div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;                HttpResponseMessage responseMsg = null;</div>
 <div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;                <span class="keywordtype">int</span> retry = 0;</div>
 <div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;                <span class="keywordtype">string</span> wholeURI = <a class="code" href="classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e">Debug</a> ? _uri + <span class="stringliteral">&quot;?debug=true&quot;</span> : _uri;</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;                <span class="keywordflow">while</span> (responseMsg == null || (!responseMsg.IsSuccessStatusCode &amp;&amp; retry &lt;= <a class="code" href="classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d">MaxRetry</a>))</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;                {</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;                    <span class="keywordflow">if</span> (retry &gt; 0)</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;                    {</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;                        <a class="code" href="namespaceSystem.html">System</a>.Threading.Thread.Sleep(500);</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;                    }</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;                    <span class="keywordflow">if</span> (jsonRequest != null)</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;                    {</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;                        HttpContent content = <span class="keyword">new</span> StringContent(jsonRequest);</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;                        content.Headers.ContentType = <span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.MediaTypeHeaderValue(<span class="stringliteral">&quot;application/json&quot;</span>);</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;                        responseMsg = client.PostAsync(wholeURI, content).Result;</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;                    }</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;                    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;                    {</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;                        responseMsg = client.GetAsync(wholeURI).Result;</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;                    }</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;                    retry = retry + 1;</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;                }</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;                <span class="keywordtype">string</span> text = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;                <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;                {</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;                    text = getMessage(responseMsg);</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;                }</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;                <span class="keywordflow">catch</span> (RosetteException e)</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                {</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;                    <span class="keywordflow">throw</span> e;</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                }</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;dynamic&gt;(text);                </div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;            }</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;            <span class="keywordflow">return</span> null;</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;        }</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;        <span class="keyword">private</span> Dictionary&lt;string, Object&gt; Process(RosetteFile file)</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;        {</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;            Dictionary&lt;string, string&gt; dict = <span class="keyword">new</span> Dictionary&lt;string, string&gt;(){</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;                { <span class="stringliteral">&quot;content&quot;</span>, file.getFileDataString()},</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;                { <span class="stringliteral">&quot;contentType&quot;</span>, file.getDataType()},</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;                { <span class="stringliteral">&quot;unit&quot;</span>, <span class="stringliteral">&quot;doc&quot;</span>},</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;            };</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;            <span class="keywordflow">if</span>(file.getOptions() != null){</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;                Dictionary&lt;string, string&gt; opts = <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;Dictionary&lt;string, string&gt;&gt;(file.getOptions());</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;                dict = (Dictionary&lt;string, string&gt;)dict.Concat(opts.Where(x=&gt; !dict.Keys.Contains(x.Key)));</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;            }</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;            <span class="keywordflow">return</span> getResponse(SetupClient(), <span class="keyword">new</span> JavaScriptSerializer().Serialize(dict));</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;        }</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;                <span class="keywordflow">if</span> (wholeURI.StartsWith(<span class="stringliteral">&quot;/&quot;</span>)) {</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;                    wholeURI = wholeURI.Substring(1);</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;                }</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;                <span class="keywordflow">while</span> (responseMsg == null || (!responseMsg.IsSuccessStatusCode &amp;&amp; retry &lt;= <a class="code" href="classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d">MaxRetry</a>))</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;                {</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;                    <span class="keywordflow">if</span> (retry &gt; 0)</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;                    {</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;                        <a class="code" href="namespaceSystem.html">System</a>.Threading.Thread.Sleep(500);</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;                    }</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;                    <span class="keywordflow">if</span> (jsonRequest != null)</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;                    {</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;                        HttpContent content = <span class="keyword">new</span> StringContent(jsonRequest);</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;                        content.Headers.ContentType = <span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.MediaTypeHeaderValue(<span class="stringliteral">&quot;application/json&quot;</span>);</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;                        responseMsg = client.PostAsync(wholeURI, content).Result;</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;                    }</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;                    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;                    {</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;                        responseMsg = client.GetAsync(wholeURI).Result;</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;                    }</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;                    retry = retry + 1;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;                }</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;                <span class="keywordtype">string</span> text = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;                <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;                {</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;                    text = getMessage(responseMsg);</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;                }</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                <span class="keywordflow">catch</span> (RosetteException e)</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;                {</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;                    <span class="keywordflow">throw</span> e;</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;                }</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;dynamic&gt;(text);                </div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;            }</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;            <span class="keywordflow">return</span> null;</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;        }</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;        <span class="keyword">private</span> Dictionary&lt;string, Object&gt; Process(RosetteFile file)</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;        {</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;            Dictionary&lt;string, string&gt; dict = <span class="keyword">new</span> Dictionary&lt;string, string&gt;(){</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;                { <span class="stringliteral">&quot;content&quot;</span>, file.getFileDataString()},</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;                { <span class="stringliteral">&quot;contentType&quot;</span>, file.getDataType()},</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;                { <span class="stringliteral">&quot;unit&quot;</span>, <span class="stringliteral">&quot;doc&quot;</span>},</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;            };</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;            <span class="keywordflow">if</span>(file.getOptions() != null){</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;                Dictionary&lt;string, string&gt; opts = <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;Dictionary&lt;string, string&gt;&gt;(file.getOptions());</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;                dict = (Dictionary&lt;string, string&gt;)dict.Concat(opts.Where(x=&gt; !dict.Keys.Contains(x.Key)));</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;            }</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;</div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;        <span class="keyword">private</span> Dictionary&lt;string, Object&gt; Process(<span class="keywordtype">string</span> content = null, <span class="keywordtype">string</span> language = null, <span class="keywordtype">string</span> contentType = null, <span class="keywordtype">string</span> unit = null, <span class="keywordtype">string</span> contentUri = null)</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;        {</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;            <span class="keywordflow">if</span> (content == null){</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;                <span class="keywordflow">if</span>(contentUri == null){</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;Must supply one of Content or ContentUri&quot;</span>, -3);</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;                } </div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;            }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;                <span class="keywordflow">if</span> (contentUri != null){</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;Cannot supply both Content and ContentUri&quot;</span>, -3);</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;                }</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;            }</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;            <span class="keywordflow">if</span> (unit == null)</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;            {</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;                unit = <span class="stringliteral">&quot;doc&quot;</span>;</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;            }</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;            Dictionary&lt;string, string&gt; dict = <span class="keyword">new</span> Dictionary&lt;string, string&gt;(){</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;                { <span class="stringliteral">&quot;language&quot;</span>, language},</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;                { <span class="stringliteral">&quot;content&quot;</span>, content},</div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;                { <span class="stringliteral">&quot;contentType&quot;</span>, contentType},</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;                { <span class="stringliteral">&quot;unit&quot;</span>, unit},</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                { <span class="stringliteral">&quot;contentUri&quot;</span>, contentUri}</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;            }.Where(f =&gt; !String.IsNullOrEmpty(f.Value)).ToDictionary(x =&gt; x.Key, x =&gt; x.Value);</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;            <span class="keywordflow">return</span> getResponse(SetupClient(), <span class="keyword">new</span> JavaScriptSerializer().Serialize(dict));</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;        }</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;            <span class="keywordflow">return</span> getResponse(SetupClient(), <span class="keyword">new</span> JavaScriptSerializer().Serialize(dict));</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;        }</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;        <span class="keyword">private</span> Dictionary&lt;string, Object&gt; Process(<span class="keywordtype">string</span> content = null, <span class="keywordtype">string</span> language = null, <span class="keywordtype">string</span> contentType = null, <span class="keywordtype">string</span> unit = null, <span class="keywordtype">string</span> contentUri = null)</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;        {</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;            <span class="keywordflow">if</span> (content == null){</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;                <span class="keywordflow">if</span>(contentUri == null){</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;Must supply one of Content or ContentUri&quot;</span>, -3);</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;                } </div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;            }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;                <span class="keywordflow">if</span> (contentUri != null){</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;Cannot supply both Content and ContentUri&quot;</span>, -3);</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;                }</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;            }</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;            <span class="keywordflow">if</span> (unit == null)</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;            {</div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;                unit = <span class="stringliteral">&quot;doc&quot;</span>;</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;            }</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;            Dictionary&lt;string, string&gt; dict = <span class="keyword">new</span> Dictionary&lt;string, string&gt;(){</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;                { <span class="stringliteral">&quot;language&quot;</span>, language},</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                { <span class="stringliteral">&quot;content&quot;</span>, content},</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;                { <span class="stringliteral">&quot;contentType&quot;</span>, contentType},</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;                { <span class="stringliteral">&quot;unit&quot;</span>, unit},</div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;                { <span class="stringliteral">&quot;contentUri&quot;</span>, contentUri}</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;            }.Where(f =&gt; !String.IsNullOrEmpty(f.Value)).ToDictionary(x =&gt; x.Key, x =&gt; x.Value);</div>
 <div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;        <span class="keyword">private</span> HttpClient SetupClient()</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;        {</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;            HttpClient client;</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5">Client</a> == null)</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;            {</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;                client =</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;                    <span class="keyword">new</span> HttpClient(</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;                        <span class="keyword">new</span> HttpClientHandler</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;                        {</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;                            AutomaticDecompression = DecompressionMethods.GZip</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;                                                     | DecompressionMethods.Deflate</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;                        });</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;                client.BaseAddress = <span class="keyword">new</span> Uri(<a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a>);</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;                client.Timeout = <span class="keyword">new</span> TimeSpan(0, 0, <a class="code" href="classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1">Timeout</a>);</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;            }</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;            {</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;                client = <a class="code" href="classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5">Client</a>;</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;                <span class="keywordflow">if</span> (client.BaseAddress == null)</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;                {</div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;                    client.BaseAddress = <span class="keyword">new</span> Uri(<a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a>);</div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;                }</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;                <span class="keywordflow">if</span> (client.Timeout == null)</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;                {</div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;                    client.Timeout = <span class="keyword">new</span> TimeSpan(0, 0, <a class="code" href="classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1">Timeout</a>);</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;                }</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;            }</div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;            {</div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;                client.DefaultRequestHeaders.Clear();</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;            }</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;            <span class="keywordflow">catch</span></div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;            {</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;                <span class="comment">// exception can be ignored</span></div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;            }</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;            client.DefaultRequestHeaders.Accept.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.MediaTypeWithQualityHeaderValue(<span class="stringliteral">&quot;application/json&quot;</span>));</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;            client.DefaultRequestHeaders.Accept.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.MediaTypeWithQualityHeaderValue(<span class="stringliteral">&quot;text/javascript&quot;</span>));</div>
-<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;            client.DefaultRequestHeaders.Add(<span class="stringliteral">&quot;user_key&quot;</span>, <a class="code" href="classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba">UserKey</a>);</div>
-<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;            client.DefaultRequestHeaders.AcceptEncoding.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.StringWithQualityHeaderValue(<span class="stringliteral">&quot;gzip&quot;</span>));</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;            client.DefaultRequestHeaders.AcceptEncoding.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.StringWithQualityHeaderValue(<span class="stringliteral">&quot;deflate&quot;</span>));</div>
-<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;</div>
-<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;            <span class="keywordflow">return</span> client;</div>
-<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;        }</div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;</div>
-<div class="line"><a name="l00985"></a><span class="lineno">  985</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">bool</span> checkVersion(<span class="keywordtype">string</span> versionToCheck = null)</div>
-<div class="line"><a name="l00986"></a><span class="lineno">  986</span>&#160;        {</div>
-<div class="line"><a name="l00987"></a><span class="lineno">  987</span>&#160;            <span class="keywordflow">if</span> (!version_checked || last_version_check.AddDays(1) &lt; DateTime.Now)</div>
-<div class="line"><a name="l00988"></a><span class="lineno">  988</span>&#160;            {</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;                <span class="keywordflow">if</span> (versionToCheck == null)</div>
-<div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;                {</div>
-<div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;                    versionToCheck = Version;</div>
-<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;                }</div>
-<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;                HttpClient client = SetupClient();</div>
-<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;                HttpResponseMessage responseMsg = null;</div>
-<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;                <span class="keywordtype">int</span> retry = 0;</div>
-<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;</div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;                <span class="keywordflow">while</span> (responseMsg == null || (!responseMsg.IsSuccessStatusCode &amp;&amp; retry &lt;= <a class="code" href="classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d">MaxRetry</a>))</div>
-<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;                {</div>
-<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;                    <span class="keywordflow">if</span> (retry &gt; 0)</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;                    {</div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;                        <a class="code" href="namespaceSystem.html">System</a>.Threading.Thread.Sleep(500);</div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;                    }</div>
-<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;                    <span class="keywordtype">string</span> url = <span class="keywordtype">string</span>.Format(<span class="stringliteral">&quot;info?clientVersion={0}&quot;</span>, versionToCheck);</div>
-<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;                    HttpContent content = <span class="keyword">new</span> StringContent(<span class="keywordtype">string</span>.Empty);</div>
-<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;                    responseMsg = client.PostAsync(url, content).Result;</div>
-<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;                    retry = retry + 1;</div>
-<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;                }</div>
-<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;                <span class="keywordtype">string</span> text = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;                <span class="keywordflow">try</span></div>
-<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160;                {</div>
-<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;                    text = getMessage(responseMsg);</div>
-<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;                }</div>
-<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;                <span class="keywordflow">catch</span>(RosetteException e)</div>
-<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;                {</div>
-<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;                    <span class="keywordflow">throw</span> e;</div>
-<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;                }</div>
-<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;</div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;                var result = <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;dynamic&gt;(text);</div>
-<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;                <span class="comment">// compatibility with server side is at minor version level of semver</span></div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;                <span class="keywordtype">string</span> serverVersion = result[<span class="stringliteral">&quot;version&quot;</span>].ToString();</div>
-<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;                <span class="keywordflow">if</span> (!result[<span class="stringliteral">&quot;versionChecked&quot;</span>])</div>
-<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;                {</div>
-<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;The server version is not compatible with binding version &quot;</span> + versionToCheck, -6);</div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;                }</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;                {</div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;                    version_checked = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;                    last_version_check = DateTime.Now;</div>
-<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;                }</div>
-<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;            }</div>
-<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;            <span class="keywordflow">return</span> version_checked;</div>
-<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;        }</div>
-<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;</div>
-<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> getMessage(HttpResponseMessage responseMsg)</div>
-<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;        {</div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;            <span class="keywordflow">if</span> (responseMsg.IsSuccessStatusCode)</div>
-<div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;            {</div>
-<div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;                byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;</div>
-<div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160;                <span class="keywordflow">if</span> (responseMsg.Content.Headers.ContentEncoding.Contains(<span class="stringliteral">&quot;gzip&quot;</span>) || (byteArray[0] == <span class="stringliteral">&#39;\x1f&#39;</span> &amp;&amp; byteArray[1] == <span class="stringliteral">&#39;\x8b&#39;</span> &amp;&amp; byteArray[2] == <span class="stringliteral">&#39;\x08&#39;</span>))</div>
-<div class="line"><a name="l01045"></a><span class="lineno"> 1045</span>&#160;                {</div>
-<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;                    byteArray = Decompress(byteArray);</div>
-<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;                }</div>
-<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;                MemoryStream stream = <span class="keyword">new</span> MemoryStream(byteArray);</div>
-<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;                StreamReader reader = <span class="keyword">new</span> StreamReader(stream, Encoding.UTF8);</div>
-<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;                <span class="keywordflow">return</span> reader.ReadToEnd();</div>
-<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;            }</div>
-<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;            {</div>
-<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;                <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(responseMsg.ReasonPhrase, (<span class="keywordtype">int</span>)responseMsg.StatusCode);</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;            }</div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;        }</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;</div>
-<div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;        <span class="keyword">private</span> <span class="keyword">static</span> byte[] Decompress(byte[] gzip)</div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;        {</div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;            <span class="comment">// Create a GZIP stream with decompression mode.</span></div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;            <span class="comment">// ... Then create a buffer and write into while reading from the GZIP stream.</span></div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;            <span class="keyword">using</span> (GZipStream stream = <span class="keyword">new</span> GZipStream(<span class="keyword">new</span> MemoryStream(gzip), CompressionMode.Decompress))</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;            {</div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">int</span> size = 4096;</div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;                byte[] buffer = <span class="keyword">new</span> byte[size];</div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;                <span class="keyword">using</span> (MemoryStream memory = <span class="keyword">new</span> MemoryStream())</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;                {</div>
-<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;                    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;                    <span class="keywordflow">do</span></div>
-<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;                    {</div>
-<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;                        count = stream.Read(buffer, 0, size);</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;                        <span class="keywordflow">if</span> (count &gt; 0)</div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;                        {</div>
-<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;                            memory.Write(buffer, 0, count);</div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;                        }</div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;                    }</div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;                    <span class="keywordflow">while</span> (count &gt; 0);</div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;                    <span class="keywordflow">return</span> memory.ToArray();</div>
-<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;                }</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;            }</div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;        }</div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;    }</div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;</div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;</div>
-<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;</div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;    [Serializable]</div>
-<div class="line"><a name="l01099"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html"> 1099</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1RosetteException.html">RosetteException</a> : Exception</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;    {</div>
-<div class="line"><a name="l01111"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0"> 1111</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0">RosetteException</a>(<span class="keywordtype">string</span> message = null, <span class="keywordtype">int</span> code = 0, <span class="keywordtype">string</span> requestid = null, <span class="keywordtype">string</span> file = null, <span class="keywordtype">string</span> line = null) : base(message)</div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;        {</div>
-<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">Code</a> = code;</div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">RequestID</a> = requestid;</div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">File</a> = file;</div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">Line</a> = line;</div>
-<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;        }</div>
-<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;</div>
-<div class="line"><a name="l01126"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082"> 1126</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">int</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">Code</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;</div>
-<div class="line"><a name="l01135"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163"> 1135</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">RequestID</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;</div>
-<div class="line"><a name="l01144"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7"> 1144</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">File</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;</div>
-<div class="line"><a name="l01153"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976"> 1153</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">Line</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;    }</div>
-<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160;</div>
-<div class="line"><a name="l01161"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html"> 1161</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1RosetteFile.html">RosetteFile</a></div>
-<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;    {</div>
-<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;</div>
-<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _file;</div>
-<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;</div>
-<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _dataType;</div>
-<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;</div>
-<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _options;</div>
-<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;</div>
-<div class="line"><a name="l01187"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472"> 1187</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472">RosetteFile</a>(<span class="keywordtype">string</span> file, <span class="keywordtype">string</span> dataType = <span class="stringliteral">&quot;application/octet-stream&quot;</span>, <span class="keywordtype">string</span> options = null)</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;        {</div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;            _file = file;</div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;            _dataType = dataType;</div>
-<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;            _options = options;</div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;        }</div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;</div>
-<div class="line"><a name="l01200"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b"> 1200</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b">getFilename</a>()</div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;        {</div>
-<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;            <span class="keywordflow">return</span> _file;</div>
-<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;        }</div>
-<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160;</div>
-<div class="line"><a name="l01211"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc"> 1211</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc">getDataType</a>()</div>
-<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;        {</div>
-<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;            <span class="keywordflow">return</span> _dataType;</div>
-<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;        }</div>
-<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;</div>
-<div class="line"><a name="l01222"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8"> 1222</a></span>&#160;        <span class="keyword">public</span> byte[] <a class="code" href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8">getFileData</a>()</div>
-<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;        {</div>
-<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;            byte[] bytes = null;</div>
-<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;            {</div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;                bytes = File.ReadAllBytes(_file);</div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;            }</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;            <span class="keywordflow">catch</span> (Exception e)</div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;            {</div>
-<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
-<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;            }</div>
-<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;            <span class="keywordflow">return</span> bytes;</div>
-<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;        }</div>
-<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;</div>
-<div class="line"><a name="l01242"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6"> 1242</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6">getFileDataString</a>(){</div>
-<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;            {</div>
-<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;                <span class="keyword">using</span> (StreamReader ff = File.OpenText(_file))</div>
-<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;                {</div>
-<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;                    <span class="keywordflow">return</span> <a class="code" href="namespaceSystem.html">System</a>.Convert.ToBase64String(<a class="code" href="namespaceSystem.html">System</a>.Text.Encoding.UTF8.GetBytes(ff.ReadToEnd()));</div>
-<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;                }</div>
-<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;            }</div>
-<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;            <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;            <span class="keywordflow">return</span> getResponse(SetupClient(), <span class="keyword">new</span> JavaScriptSerializer().Serialize(dict));</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;        }</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;        <span class="keyword">private</span> HttpClient SetupClient()</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;        {</div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;            HttpClient client;</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a>.EndsWith(<span class="stringliteral">&quot;/&quot;</span>)) {</div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;                <a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a> = <a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a> + <span class="stringliteral">&quot;/&quot;</span>;</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;            }</div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5">Client</a> == null)</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;            {</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;                client =</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;                    <span class="keyword">new</span> HttpClient(</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;                        <span class="keyword">new</span> HttpClientHandler</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;                        {</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;                            AutomaticDecompression = DecompressionMethods.GZip</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;                                                     | DecompressionMethods.Deflate</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;                        });</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;                client.BaseAddress = <span class="keyword">new</span> Uri(<a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a>);</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;                client.Timeout = <span class="keyword">new</span> TimeSpan(0, 0, <a class="code" href="classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1">Timeout</a>);</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;            }</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;            {</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;                client = <a class="code" href="classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5">Client</a>;</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;                <span class="keywordflow">if</span> (client.BaseAddress == null)</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;                {</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;                    client.BaseAddress = <span class="keyword">new</span> Uri(<a class="code" href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">URIstring</a>);</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;                }</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;                <span class="keywordflow">if</span> (client.Timeout == null)</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;                {</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;                    client.Timeout = <span class="keyword">new</span> TimeSpan(0, 0, <a class="code" href="classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1">Timeout</a>);</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;                }</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;            }</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;            <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;            {</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;                client.DefaultRequestHeaders.Clear();</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;            }</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;            <span class="keywordflow">catch</span></div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;            {</div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;                <span class="comment">// exception can be ignored</span></div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;            }</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;            client.DefaultRequestHeaders.Accept.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.MediaTypeWithQualityHeaderValue(<span class="stringliteral">&quot;application/json&quot;</span>));</div>
+<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;            client.DefaultRequestHeaders.Add(<span class="stringliteral">&quot;user_key&quot;</span>, <a class="code" href="classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba">UserKey</a>);</div>
+<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;            client.DefaultRequestHeaders.AcceptEncoding.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.StringWithQualityHeaderValue(<span class="stringliteral">&quot;gzip&quot;</span>));</div>
+<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;            client.DefaultRequestHeaders.AcceptEncoding.Add(<span class="keyword">new</span> <a class="code" href="namespaceSystem.html">System</a>.Net.Http.Headers.StringWithQualityHeaderValue(<span class="stringliteral">&quot;deflate&quot;</span>));</div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;            client.DefaultRequestHeaders.Add(<span class="stringliteral">&quot;User-Agent&quot;</span>, <span class="stringliteral">&quot;RosetteAPICsharp/&quot;</span> + binding_version);</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;            <span class="keywordflow">return</span> client;</div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160;        }</div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;</div>
+<div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">bool</span> checkVersion(<span class="keywordtype">string</span> versionToCheck = null)</div>
+<div class="line"><a name="l00993"></a><span class="lineno">  993</span>&#160;        {</div>
+<div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;            <span class="keywordflow">if</span> (!version_checked || last_version_check.AddDays(1) &lt; DateTime.Now)</div>
+<div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160;            {</div>
+<div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160;                <span class="keywordflow">if</span> (versionToCheck == null)</div>
+<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;                {</div>
+<div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;                    versionToCheck = Version;</div>
+<div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;                }</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;                HttpClient client = SetupClient();</div>
+<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;                HttpResponseMessage responseMsg = null;</div>
+<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;                <span class="keywordtype">int</span> retry = 0;</div>
+<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;</div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;                <span class="keywordflow">while</span> (responseMsg == null || (!responseMsg.IsSuccessStatusCode &amp;&amp; retry &lt;= <a class="code" href="classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d">MaxRetry</a>))</div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160;                {</div>
+<div class="line"><a name="l01006"></a><span class="lineno"> 1006</span>&#160;                    <span class="keywordflow">if</span> (retry &gt; 0)</div>
+<div class="line"><a name="l01007"></a><span class="lineno"> 1007</span>&#160;                    {</div>
+<div class="line"><a name="l01008"></a><span class="lineno"> 1008</span>&#160;                        <a class="code" href="namespaceSystem.html">System</a>.Threading.Thread.Sleep(500);</div>
+<div class="line"><a name="l01009"></a><span class="lineno"> 1009</span>&#160;                    }</div>
+<div class="line"><a name="l01010"></a><span class="lineno"> 1010</span>&#160;                    <span class="keywordtype">string</span> url = <span class="keywordtype">string</span>.Format(<span class="stringliteral">&quot;info?clientVersion={0}&quot;</span>, versionToCheck);</div>
+<div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160;                    HttpContent content = <span class="keyword">new</span> StringContent(<span class="keywordtype">string</span>.Empty);</div>
+<div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;                    responseMsg = client.PostAsync(url, content).Result;</div>
+<div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;                    retry = retry + 1;</div>
+<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;                }</div>
+<div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;                <span class="keywordtype">string</span> text = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;                <span class="keywordflow">try</span></div>
+<div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;                {</div>
+<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;                    text = getMessage(responseMsg);</div>
+<div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;                }</div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;                <span class="keywordflow">catch</span>(RosetteException e)</div>
+<div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;                {</div>
+<div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;                    <span class="keywordflow">throw</span> e;</div>
+<div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;                }</div>
+<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;                var result = <span class="keyword">new</span> JavaScriptSerializer().Deserialize&lt;dynamic&gt;(text);</div>
+<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;                <span class="comment">// compatibility with server side is at minor version level of semver</span></div>
+<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;                <span class="keywordtype">string</span> serverVersion = result[<span class="stringliteral">&quot;version&quot;</span>].ToString();</div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;                <span class="keywordflow">if</span> (!result[<span class="stringliteral">&quot;versionChecked&quot;</span>])</div>
+<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;                {</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(<span class="stringliteral">&quot;The server version is not compatible with binding version &quot;</span> + versionToCheck, -6);</div>
+<div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;                }</div>
+<div class="line"><a name="l01032"></a><span class="lineno"> 1032</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;                {</div>
+<div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;                    version_checked = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;                    last_version_check = DateTime.Now;</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;                }</div>
+<div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;            }</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;            <span class="keywordflow">return</span> version_checked;</div>
+<div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;        }</div>
+<div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;</div>
+<div class="line"><a name="l01046"></a><span class="lineno"> 1046</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> getMessage(HttpResponseMessage responseMsg)</div>
+<div class="line"><a name="l01047"></a><span class="lineno"> 1047</span>&#160;        {</div>
+<div class="line"><a name="l01048"></a><span class="lineno"> 1048</span>&#160;            <span class="keywordflow">if</span> (responseMsg.IsSuccessStatusCode)</div>
+<div class="line"><a name="l01049"></a><span class="lineno"> 1049</span>&#160;            {</div>
+<div class="line"><a name="l01050"></a><span class="lineno"> 1050</span>&#160;                byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;</div>
+<div class="line"><a name="l01051"></a><span class="lineno"> 1051</span>&#160;                <span class="keywordflow">if</span> (responseMsg.Content.Headers.ContentEncoding.Contains(<span class="stringliteral">&quot;gzip&quot;</span>) || (byteArray[0] == <span class="stringliteral">&#39;\x1f&#39;</span> &amp;&amp; byteArray[1] == <span class="stringliteral">&#39;\x8b&#39;</span> &amp;&amp; byteArray[2] == <span class="stringliteral">&#39;\x08&#39;</span>))</div>
+<div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160;                {</div>
+<div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;                    byteArray = Decompress(byteArray);</div>
+<div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;                }</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;                MemoryStream stream = <span class="keyword">new</span> MemoryStream(byteArray);</div>
+<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;                StreamReader reader = <span class="keyword">new</span> StreamReader(stream, Encoding.UTF8);</div>
+<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;                <span class="keywordflow">return</span> reader.ReadToEnd();</div>
+<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;            }</div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;            {</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;                <span class="keywordflow">throw</span> <span class="keyword">new</span> RosetteException(responseMsg.ReasonPhrase, (<span class="keywordtype">int</span>)responseMsg.StatusCode);</div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;            }</div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;        }</div>
+<div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;        <span class="keyword">private</span> <span class="keyword">static</span> byte[] Decompress(byte[] gzip)</div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;        {</div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;            <span class="comment">// Create a GZIP stream with decompression mode.</span></div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;            <span class="comment">// ... Then create a buffer and write into while reading from the GZIP stream.</span></div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;            <span class="keyword">using</span> (GZipStream stream = <span class="keyword">new</span> GZipStream(<span class="keyword">new</span> MemoryStream(gzip), CompressionMode.Decompress))</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;            {</div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">int</span> size = 4096;</div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;                byte[] buffer = <span class="keyword">new</span> byte[size];</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;                <span class="keyword">using</span> (MemoryStream memory = <span class="keyword">new</span> MemoryStream())</div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;                {</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;                    <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;                    <span class="keywordflow">do</span></div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;                    {</div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;                        count = stream.Read(buffer, 0, size);</div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;                        <span class="keywordflow">if</span> (count &gt; 0)</div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;                        {</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;                            memory.Write(buffer, 0, count);</div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;                        }</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;                    }</div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;                    <span class="keywordflow">while</span> (count &gt; 0);</div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;                    <span class="keywordflow">return</span> memory.ToArray();</div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;                }</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;            }</div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;        }</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;    }</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;</div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;</div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;    [Serializable]</div>
+<div class="line"><a name="l01106"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html"> 1106</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1RosetteException.html">RosetteException</a> : Exception</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;    {</div>
+<div class="line"><a name="l01118"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0"> 1118</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0">RosetteException</a>(<span class="keywordtype">string</span> message = null, <span class="keywordtype">int</span> code = 0, <span class="keywordtype">string</span> requestid = null, <span class="keywordtype">string</span> file = null, <span class="keywordtype">string</span> line = null) : base(message)</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;        {</div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">Code</a> = code;</div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">RequestID</a> = requestid;</div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">File</a> = file;</div>
+<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;            <a class="code" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">Line</a> = line;</div>
+<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;        }</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;</div>
+<div class="line"><a name="l01133"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082"> 1133</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">int</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">Code</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;</div>
+<div class="line"><a name="l01142"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163"> 1142</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">RequestID</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160;</div>
+<div class="line"><a name="l01151"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7"> 1151</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">File</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;</div>
+<div class="line"><a name="l01160"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976"> 1160</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">Line</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160;    }</div>
+<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;</div>
+<div class="line"><a name="l01168"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html"> 1168</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1RosetteFile.html">RosetteFile</a></div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;    {</div>
+<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;</div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _file;</div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;</div>
+<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _dataType;</div>
+<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;</div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;        <span class="keyword">private</span> <span class="keywordtype">string</span> _options;</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;</div>
+<div class="line"><a name="l01194"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472"> 1194</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472">RosetteFile</a>(<span class="keywordtype">string</span> file, <span class="keywordtype">string</span> dataType = <span class="stringliteral">&quot;application/octet-stream&quot;</span>, <span class="keywordtype">string</span> options = null)</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;        {</div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;            _file = file;</div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;            _dataType = dataType;</div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;            _options = options;</div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;        }</div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;</div>
+<div class="line"><a name="l01207"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b"> 1207</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b">getFilename</a>()</div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;        {</div>
+<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;            <span class="keywordflow">return</span> _file;</div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;        }</div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;</div>
+<div class="line"><a name="l01218"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc"> 1218</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc">getDataType</a>()</div>
+<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;        {</div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;            <span class="keywordflow">return</span> _dataType;</div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;        }</div>
+<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;</div>
+<div class="line"><a name="l01229"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8"> 1229</a></span>&#160;        <span class="keyword">public</span> byte[] <a class="code" href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8">getFileData</a>()</div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;        {</div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;            byte[] bytes = null;</div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;            <span class="keywordflow">try</span></div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;            {</div>
+<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;                bytes = File.ReadAllBytes(_file);</div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;            }</div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;            <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;            {</div>
+<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
+<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;            }</div>
+<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;            <span class="keywordflow">return</span> bytes;</div>
+<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;        }</div>
+<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;</div>
+<div class="line"><a name="l01249"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6"> 1249</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6">getFileDataString</a>(){</div>
+<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;            <span class="keywordflow">try</span></div>
 <div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;            {</div>
-<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
-<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;            }</div>
-<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;            <span class="keywordflow">return</span> null;</div>
-<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;        }</div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;</div>
-<div class="line"><a name="l01263"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8"> 1263</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8">getOptions</a>(){</div>
-<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;            <span class="keywordflow">try</span>{</div>
-<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;                <span class="keyword">using</span> (StreamReader ff = File.OpenText(_options))</div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;                {</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;                    <span class="keywordflow">return</span> ff.ReadToEnd();</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;                }</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;            }<span class="keywordflow">catch</span> (Exception e)</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;            {</div>
-<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
-<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;            }</div>
-<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;            <span class="keywordflow">return</span> null;</div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;        }</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;    }</div>
-<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;</div>
-<div class="line"><a name="l01282"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html"> 1282</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1Name.html">Name</a></div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;    {</div>
-<div class="line"><a name="l01293"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4"> 1293</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4">Name</a>(<span class="keywordtype">string</span> Text = null, <span class="keywordtype">string</span> Language = null, <span class="keywordtype">string</span> Script = null, <span class="keywordtype">string</span> EntityType = null)</div>
-<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;        {</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;            text = Text;</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">language</a> = Language;</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">script</a> = Script;</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">entityType</a> = EntityType;</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;        }</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;</div>
-<div class="line"><a name="l01307"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#aea41eeac4d108ba05e5b2857f41752e5"> 1307</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> text { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;</div>
-<div class="line"><a name="l01315"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889"> 1315</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">language</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;</div>
-<div class="line"><a name="l01323"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd"> 1323</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">script</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;</div>
-<div class="line"><a name="l01331"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e"> 1331</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">entityType</a> { <span class="keyword">get</span>; set; }</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;    }</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;}</div>
+<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;                <span class="keyword">using</span> (StreamReader ff = File.OpenText(_file))</div>
+<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;                {</div>
+<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;                    <span class="keywordflow">return</span> <a class="code" href="namespaceSystem.html">System</a>.Convert.ToBase64String(<a class="code" href="namespaceSystem.html">System</a>.Text.Encoding.UTF8.GetBytes(ff.ReadToEnd()));</div>
+<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;                }</div>
+<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;            }</div>
+<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;            <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;            {</div>
+<div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
+<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160;            }</div>
+<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160;            <span class="keywordflow">return</span> null;</div>
+<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;        }</div>
+<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;</div>
+<div class="line"><a name="l01270"></a><span class="lineno"><a class="line" href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8"> 1270</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8">getOptions</a>(){</div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;            <span class="keywordflow">try</span>{</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;                <span class="keyword">using</span> (StreamReader ff = File.OpenText(_options))</div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;                {</div>
+<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;                    <span class="keywordflow">return</span> ff.ReadToEnd();</div>
+<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;                }</div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;            }<span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;            {</div>
+<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;                <a class="code" href="namespaceSystem.html">System</a>.Diagnostics.Debug.WriteLine(e.ToString());</div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;            }</div>
+<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;            <span class="keywordflow">return</span> null;</div>
+<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;        }</div>
+<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;    }</div>
+<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;</div>
+<div class="line"><a name="l01289"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html"> 1289</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classrosette__api_1_1Name.html">Name</a></div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;    {</div>
+<div class="line"><a name="l01300"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4"> 1300</a></span>&#160;        <span class="keyword">public</span> <a class="code" href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4">Name</a>(<span class="keywordtype">string</span> Text = null, <span class="keywordtype">string</span> Language = null, <span class="keywordtype">string</span> Script = null, <span class="keywordtype">string</span> EntityType = null)</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;        {</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;            text = Text;</div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">language</a> = Language;</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">script</a> = Script;</div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;            <a class="code" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">entityType</a> = EntityType;</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;        }</div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;</div>
+<div class="line"><a name="l01314"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#aea41eeac4d108ba05e5b2857f41752e5"> 1314</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> text { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;</div>
+<div class="line"><a name="l01322"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889"> 1322</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">language</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;</div>
+<div class="line"><a name="l01330"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd"> 1330</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">script</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;</div>
+<div class="line"><a name="l01338"></a><span class="lineno"><a class="line" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e"> 1338</a></span>&#160;        <span class="keyword">public</span> <span class="keywordtype">string</span> <a class="code" href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">entityType</a> { <span class="keyword">get</span>; set; }</div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;    }</div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;}</div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a2e38d436ce0cfff05de46671cae7a309"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a2e38d436ce0cfff05de46671cae7a309">rosette_api.CAPI.Entity</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Entity(RosetteFile file)</div><div class="ttdoc">Entity </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00320">CAPI.cs:320</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html"><div class="ttname"><a href="classrosette__api_1_1CAPI.html">rosette_api.CAPI</a></div><div class="ttdoc">C# Rosette API. </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00027">CAPI.cs:27</a></div></div>
-<div class="ttc" id="classrosette__api_1_1Name_html_a5e9aba5fc1f32ad0fcf6e0bf14ce7afd"><div class="ttname"><a href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">rosette_api.Name.script</a></div><div class="ttdeci">string script</div><div class="ttdoc">script </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01323">CAPI.cs:1323</a></div></div>
+<div class="ttc" id="classrosette__api_1_1Name_html_a5e9aba5fc1f32ad0fcf6e0bf14ce7afd"><div class="ttname"><a href="classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd">rosette_api.Name.script</a></div><div class="ttdeci">string script</div><div class="ttdoc">script </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01330">CAPI.cs:1330</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a62b4bd9343e43477f512ada376d4896d"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d">rosette_api.CAPI.MaxRetry</a></div><div class="ttdeci">int MaxRetry</div><div class="ttdoc">MaxRetry </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00114">CAPI.cs:114</a></div></div>
 <div class="ttc" id="namespacerosette__api_html"><div class="ttname"><a href="namespacerosette__api.html">rosette_api</a></div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00014">CAPI.cs:14</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_ae2693ce28755a76c93537e68914b5cb2"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#ae2693ce28755a76c93537e68914b5cb2">rosette_api.CAPI.Sentences</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentences(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Sentences </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00612">CAPI.cs:612</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html_a30a50a43d7edb20f3176ae4f048fa976"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">rosette_api.RosetteException.Line</a></div><div class="ttdeci">string Line</div><div class="ttdoc">Line </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01153">CAPI.cs:1153</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html_a2c6de2baf841c9b0453058968345b082"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">rosette_api.RosetteException.Code</a></div><div class="ttdeci">int Code</div><div class="ttdoc">Code </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01126">CAPI.cs:1126</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html_a30a50a43d7edb20f3176ae4f048fa976"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976">rosette_api.RosetteException.Line</a></div><div class="ttdeci">string Line</div><div class="ttdoc">Line </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01160">CAPI.cs:1160</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html_a2c6de2baf841c9b0453058968345b082"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082">rosette_api.RosetteException.Code</a></div><div class="ttdeci">int Code</div><div class="ttdoc">Code </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01133">CAPI.cs:1133</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a8ffe39cfe01a07dc1b67f2bc76b1f92d"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a8ffe39cfe01a07dc1b67f2bc76b1f92d">rosette_api.CAPI.Morphology</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Morphology(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null, string feature=&quot;complete&quot;)</div><div class="ttdoc">Morphology </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00426">CAPI.cs:426</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a7e66399baa757fe6baa676419660fdd8"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a7e66399baa757fe6baa676419660fdd8">rosette_api.CAPI.Tokens</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Tokens(RosetteFile file)</div><div class="ttdoc">Tokens </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00752">CAPI.cs:752</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a979c8781846391dc237697e09423f472"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472">rosette_api.RosetteFile.RosetteFile</a></div><div class="ttdeci">RosetteFile(string file, string dataType=&quot;application/octet-stream&quot;, string options=null)</div><div class="ttdoc">RosetteFile </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01187">CAPI.cs:1187</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a979c8781846391dc237697e09423f472"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a979c8781846391dc237697e09423f472">rosette_api.RosetteFile.RosetteFile</a></div><div class="ttdeci">RosetteFile(string file, string dataType=&quot;application/octet-stream&quot;, string options=null)</div><div class="ttdoc">RosetteFile </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01194">CAPI.cs:1194</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a705a8033ee7c8da35e1544de53137084"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a705a8033ee7c8da35e1544de53137084">rosette_api.CAPI.TranslatedName</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; TranslatedName(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">TranslatedName </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00796">CAPI.cs:796</a></div></div>
-<div class="ttc" id="classrosette__api_1_1Name_html"><div class="ttname"><a href="classrosette__api_1_1Name.html">rosette_api.Name</a></div><div class="ttdoc">Name Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01282">CAPI.cs:1282</a></div></div>
+<div class="ttc" id="classrosette__api_1_1Name_html"><div class="ttname"><a href="classrosette__api_1_1Name.html">rosette_api.Name</a></div><div class="ttdoc">Name Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01289">CAPI.cs:1289</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a57a341be212d74390da90a31c7b65e94"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a57a341be212d74390da90a31c7b65e94">rosette_api.CAPI.Morphology</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Morphology(RosetteFile file, string feature=&quot;complete&quot;)</div><div class="ttdoc">Morphology </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00460">CAPI.cs:460</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_aeac226a63205a1c7f9b0466fe542b723"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#aeac226a63205a1c7f9b0466fe542b723">rosette_api.CAPI.Categories</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Categories(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Categories </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00168">CAPI.cs:168</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a4348a323976b5686dc6fa613d085be86"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a4348a323976b5686dc6fa613d085be86">rosette_api.CAPI.MatchedName</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; MatchedName(Name n1, Name n2)</div><div class="ttdoc">MatchedName </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00475">CAPI.cs:475</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html_a065c5e007dad0541bdfa7cab0400b6b0"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0">rosette_api.RosetteException.RosetteException</a></div><div class="ttdeci">RosetteException(string message=null, int code=0, string requestid=null, string file=null, string line=null)</div><div class="ttdoc">RosetteException </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01111">CAPI.cs:1111</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html_a065c5e007dad0541bdfa7cab0400b6b0"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0">rosette_api.RosetteException.RosetteException</a></div><div class="ttdeci">RosetteException(string message=null, int code=0, string requestid=null, string file=null, string line=null)</div><div class="ttdoc">RosetteException </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01118">CAPI.cs:1118</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a0bea36c60aaf9271927b81e38613a401"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a0bea36c60aaf9271927b81e38613a401">rosette_api.CAPI.Tokens</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Tokens(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Tokens </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00722">CAPI.cs:722</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a578e155f77e3baa51c56d38724567855"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a578e155f77e3baa51c56d38724567855">rosette_api.CAPI.Morphology</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Morphology(Dictionary&lt; object, object &gt; dict, string feature=&quot;complete&quot;)</div><div class="ttdoc">Morphology </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00443">CAPI.cs:443</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a27511cf013b4cec685fe38cf8f6aa4d8"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8">rosette_api.RosetteFile.getFileData</a></div><div class="ttdeci">byte[] getFileData()</div><div class="ttdoc">getFileData </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01222">CAPI.cs:1222</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a27511cf013b4cec685fe38cf8f6aa4d8"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8">rosette_api.RosetteFile.getFileData</a></div><div class="ttdeci">byte[] getFileData()</div><div class="ttdoc">getFileData </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01229">CAPI.cs:1229</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a379a8a3cb7b34a9f1a8e4e50f06f8eeb"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a379a8a3cb7b34a9f1a8e4e50f06f8eeb">rosette_api.CAPI.MatchedName</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; MatchedName(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">MatchedName </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00493">CAPI.cs:493</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_aef053823a3490b2cc15b4aa040d72508"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#aef053823a3490b2cc15b4aa040d72508">rosette_api.CAPI.SentimentInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; SentimentInfo()</div><div class="ttdoc">SentimentInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00703">CAPI.cs:703</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_ad9bd075aca983e6dbe8b2eed3138f799"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#ad9bd075aca983e6dbe8b2eed3138f799">rosette_api.CAPI.EntityInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; EntityInfo()</div><div class="ttdoc">EntityInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00332">CAPI.cs:332</a></div></div>
-<div class="ttc" id="classrosette__api_1_1Name_html_ad3b22b7edc76c5494e4ade85ea007889"><div class="ttname"><a href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">rosette_api.Name.language</a></div><div class="ttdeci">string language</div><div class="ttdoc">language </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01315">CAPI.cs:1315</a></div></div>
+<div class="ttc" id="classrosette__api_1_1Name_html_ad3b22b7edc76c5494e4ade85ea007889"><div class="ttname"><a href="classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889">rosette_api.Name.language</a></div><div class="ttdeci">string language</div><div class="ttdoc">language </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01322">CAPI.cs:1322</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a297b73d711955c8fd36f3612c603f24b"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a297b73d711955c8fd36f3612c603f24b">rosette_api.CAPI.Entity</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Entity(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Entity </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00284">CAPI.cs:284</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_acd9b4b1b5deaf2d5d85464fb4ac7b135"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#acd9b4b1b5deaf2d5d85464fb4ac7b135">rosette_api.CAPI.Sentences</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentences(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Sentences </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00627">CAPI.cs:627</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a30c033bab4ace53ef9647dd20ebea335"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a30c033bab4ace53ef9647dd20ebea335">rosette_api.CAPI.Relationships</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Relationships(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Relationships </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00569">CAPI.cs:569</a></div></div>
@@ -744,15 +751,15 @@ $(document).ready(function(){initNavTree('CAPI_8cs_source.html','');});
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a218b2b6cee592ca8869058e095df776c"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a218b2b6cee592ca8869058e095df776c">rosette_api.CAPI.Categories</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Categories(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Categories </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00153">CAPI.cs:153</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a841f1b659a19158a503657d71020acba"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba">rosette_api.CAPI.UserKey</a></div><div class="ttdeci">string UserKey</div><div class="ttdoc">UserKey </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00088">CAPI.cs:88</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a83c793fc2f02dfe85b543fa17b061777"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a83c793fc2f02dfe85b543fa17b061777">rosette_api.CAPI.Language</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Language(RosetteFile file)</div><div class="ttdoc">Language </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00393">CAPI.cs:393</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html_a124d4746ae63df0352290ac841019163"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">rosette_api.RosetteException.RequestID</a></div><div class="ttdeci">string RequestID</div><div class="ttdoc">RequestID </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01135">CAPI.cs:1135</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html">rosette_api.RosetteException</a></div><div class="ttdoc">RosetteException Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01099">CAPI.cs:1099</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html_a124d4746ae63df0352290ac841019163"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163">rosette_api.RosetteException.RequestID</a></div><div class="ttdeci">string RequestID</div><div class="ttdoc">RequestID </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01142">CAPI.cs:1142</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html">rosette_api.RosetteException</a></div><div class="ttdoc">RosetteException Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01106">CAPI.cs:1106</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a58db505790eb9d805650df07b0850b04"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a58db505790eb9d805650df07b0850b04">rosette_api.CAPI.TranslatedName</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; TranslatedName(string name, string sourceLanguageOfUse=null, string sourceScript=null, string targetLanguage=null, string targetScript=null, string targetScheme=null, string sourceLanguageOfOrigin=null, string entityType=null)</div><div class="ttdoc">TranslatedName </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00773">CAPI.cs:773</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_aad62971ec700b73052693fdaa2133939"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#aad62971ec700b73052693fdaa2133939">rosette_api.CAPI.Sentiment</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentiment(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Sentiment </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00661">CAPI.cs:661</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a22f6c14f1e484355a32af2de6cc9ae57"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a22f6c14f1e484355a32af2de6cc9ae57">rosette_api.CAPI.Sentiment</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentiment(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Sentiment </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00676">CAPI.cs:676</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a3c358533f274d3cd22d789d943a57e68"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68">rosette_api.CAPI.URIstring</a></div><div class="ttdeci">string URIstring</div><div class="ttdoc">URIstring </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00097">CAPI.cs:97</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a2da4ec1037afca2ca38624565dbb3cf5"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a2da4ec1037afca2ca38624565dbb3cf5">rosette_api.CAPI.MatchedNameInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; MatchedNameInfo()</div><div class="ttdoc">MatchedNameInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00505">CAPI.cs:505</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteException_html_a060ff0690a35a0afbe15ecebe892a5a7"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">rosette_api.RosetteException.File</a></div><div class="ttdeci">string File</div><div class="ttdoc">File </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01144">CAPI.cs:1144</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_af539cca8d69c0b71e46baed02987b3dc"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc">rosette_api.RosetteFile.getDataType</a></div><div class="ttdeci">string getDataType()</div><div class="ttdoc">getDataType </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01211">CAPI.cs:1211</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteException_html_a060ff0690a35a0afbe15ecebe892a5a7"><div class="ttname"><a href="classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7">rosette_api.RosetteException.File</a></div><div class="ttdeci">string File</div><div class="ttdoc">File </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01151">CAPI.cs:1151</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_af539cca8d69c0b71e46baed02987b3dc"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#af539cca8d69c0b71e46baed02987b3dc">rosette_api.RosetteFile.getDataType</a></div><div class="ttdeci">string getDataType()</div><div class="ttdoc">getDataType </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01218">CAPI.cs:1218</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a4ed6dffb28f4abed09f7504372f7fc86"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a4ed6dffb28f4abed09f7504372f7fc86">rosette_api.CAPI.Language</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Language(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Language </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00363">CAPI.cs:363</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_adb40d6828661d95567d124a2a57852d5"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5">rosette_api.CAPI.Client</a></div><div class="ttdeci">HttpClient Client</div><div class="ttdoc">Client </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00122">CAPI.cs:122</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a16e8da8b7074a7d92505c623945f5b6e"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e">rosette_api.CAPI.Debug</a></div><div class="ttdeci">bool Debug</div><div class="ttdoc">Debug </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00130">CAPI.cs:130</a></div></div>
@@ -760,11 +767,11 @@ $(document).ready(function(){initNavTree('CAPI_8cs_source.html','');});
 <div class="ttc" id="namespaceSystem_html"><div class="ttname"><a href="namespaceSystem.html">System</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a0c854ee70b35d09b204285e7ff2ee642"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a0c854ee70b35d09b204285e7ff2ee642">rosette_api.CAPI.Relationships</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Relationships(string content=null, string language=null, string contentType=null, string unit=null, string contentUri=null)</div><div class="ttdoc">Relationships </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00545">CAPI.cs:545</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a292bec5be6f2dddfcfc7a681df905e26"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a292bec5be6f2dddfcfc7a681df905e26">rosette_api.CAPI.Entity</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Entity(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Entity </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00302">CAPI.cs:302</a></div></div>
-<div class="ttc" id="classrosette__api_1_1Name_html_a3ef4ca325b3c10914173b6f615ccc1f4"><div class="ttname"><a href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4">rosette_api.Name.Name</a></div><div class="ttdeci">Name(string Text=null, string Language=null, string Script=null, string EntityType=null)</div><div class="ttdoc">Name </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01293">CAPI.cs:1293</a></div></div>
+<div class="ttc" id="classrosette__api_1_1Name_html_a3ef4ca325b3c10914173b6f615ccc1f4"><div class="ttname"><a href="classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4">rosette_api.Name.Name</a></div><div class="ttdeci">Name(string Text=null, string Language=null, string Script=null, string EntityType=null)</div><div class="ttdoc">Name </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01300">CAPI.cs:1300</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a7dc85cad4825942898152996157b0865"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a7dc85cad4825942898152996157b0865">rosette_api.CAPI.Language</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Language(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Language </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00378">CAPI.cs:378</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_ac8f4e67f9c37b26e3ad5a4ec2723862b"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#ac8f4e67f9c37b26e3ad5a4ec2723862b">rosette_api.CAPI.EntitiesLinked</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; EntitiesLinked(RosetteFile file)</div><div class="ttdoc">EntitiesLinked </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00250">CAPI.cs:250</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html">rosette_api.RosetteFile</a></div><div class="ttdoc">RosetteFile Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01161">CAPI.cs:1161</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_aa7022b54ae4f9e6f42b66c0f6e0a6ad6"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6">rosette_api.RosetteFile.getFileDataString</a></div><div class="ttdeci">string getFileDataString()</div><div class="ttdoc">getFileDataString </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01242">CAPI.cs:1242</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html">rosette_api.RosetteFile</a></div><div class="ttdoc">RosetteFile Class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01168">CAPI.cs:1168</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_aa7022b54ae4f9e6f42b66c0f6e0a6ad6"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6">rosette_api.RosetteFile.getFileDataString</a></div><div class="ttdeci">string getFileDataString()</div><div class="ttdoc">getFileDataString </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01249">CAPI.cs:1249</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a2dcf183afd4f5b7511a17efa5c42ffda"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a2dcf183afd4f5b7511a17efa5c42ffda">rosette_api.CAPI.LanguageInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; LanguageInfo()</div><div class="ttdoc">LanguageInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00405">CAPI.cs:405</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a2d1fabbeff31fb0e57527b7729255fed"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a2d1fabbeff31fb0e57527b7729255fed">rosette_api.CAPI.Tokens</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Tokens(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">Tokens </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00737">CAPI.cs:737</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a35ab561303c1d997fb22635942523a6c"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a35ab561303c1d997fb22635942523a6c">rosette_api.CAPI.Sentiment</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentiment(RosetteFile file)</div><div class="ttdoc">Sentiment </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00691">CAPI.cs:691</a></div></div>
@@ -772,13 +779,13 @@ $(document).ready(function(){initNavTree('CAPI_8cs_source.html','');});
 <div class="ttc" id="classrosette__api_1_1CAPI_html_ac8c2831cfaa5fcd727f4eadcbaea567d"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#ac8c2831cfaa5fcd727f4eadcbaea567d">rosette_api.CAPI.Sentences</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Sentences(RosetteFile file)</div><div class="ttdoc">Sentences </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00642">CAPI.cs:642</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a5458accd3534ffc5c594a00bfd63551f"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a5458accd3534ffc5c594a00bfd63551f">rosette_api.CAPI.Info</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Info()</div><div class="ttdoc">Info </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00344">CAPI.cs:344</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_af756b7b08c4fdb61b9f9d1f713086901"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#af756b7b08c4fdb61b9f9d1f713086901">rosette_api.CAPI.CAPI</a></div><div class="ttdeci">CAPI(string user_key, string uristring=&quot;https://api.rosette.com/rest/v1/&quot;, int maxRetry=1, HttpClient client=null)</div><div class="ttdoc">C# API class </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00067">CAPI.cs:67</a></div></div>
-<div class="ttc" id="classrosette__api_1_1Name_html_afae65803ecc7dd2b6f52a534fd343a7e"><div class="ttname"><a href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">rosette_api.Name.entityType</a></div><div class="ttdeci">string entityType</div><div class="ttdoc">entityType </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01331">CAPI.cs:1331</a></div></div>
+<div class="ttc" id="classrosette__api_1_1Name_html_afae65803ecc7dd2b6f52a534fd343a7e"><div class="ttname"><a href="classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e">rosette_api.Name.entityType</a></div><div class="ttdeci">string entityType</div><div class="ttdoc">entityType </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01338">CAPI.cs:1338</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_af5e226e8bbf466846ffb4e9786821fcd"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#af5e226e8bbf466846ffb4e9786821fcd">rosette_api.CAPI.TranslatedNameInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; TranslatedNameInfo()</div><div class="ttdoc">TranslatedNameInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00808">CAPI.cs:808</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a53f7c7f45a6335c0c93db787bbb68aa0"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a53f7c7f45a6335c0c93db787bbb68aa0">rosette_api.CAPI.Relationships</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; Relationships(RosetteFile file)</div><div class="ttdoc">Relationships </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00593">CAPI.cs:593</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_add8db1d7668066dfcf4c7244fe791ed8"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8">rosette_api.RosetteFile.getOptions</a></div><div class="ttdeci">string getOptions()</div><div class="ttdoc">getOptions </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01263">CAPI.cs:1263</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_add8db1d7668066dfcf4c7244fe791ed8"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#add8db1d7668066dfcf4c7244fe791ed8">rosette_api.RosetteFile.getOptions</a></div><div class="ttdeci">string getOptions()</div><div class="ttdoc">getOptions </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01270">CAPI.cs:1270</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_abfbd332b22b386b8da8402958a68f2d1"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#abfbd332b22b386b8da8402958a68f2d1">rosette_api.CAPI.EntitiesLinkedInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; EntitiesLinkedInfo()</div><div class="ttdoc">EntitiesLinkedInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00262">CAPI.cs:262</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_aa6073a6b30938e088d1d23e76b50ff9f"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#aa6073a6b30938e088d1d23e76b50ff9f">rosette_api.CAPI.EntitiesLinked</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; EntitiesLinked(Dictionary&lt; object, object &gt; dict)</div><div class="ttdoc">EntitiesLinked </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00233">CAPI.cs:233</a></div></div>
-<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a92c60183e27f079750855b3aae00c58b"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b">rosette_api.RosetteFile.getFilename</a></div><div class="ttdeci">string getFilename()</div><div class="ttdoc">getFilename </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01200">CAPI.cs:1200</a></div></div>
+<div class="ttc" id="classrosette__api_1_1RosetteFile_html_a92c60183e27f079750855b3aae00c58b"><div class="ttname"><a href="classrosette__api_1_1RosetteFile.html#a92c60183e27f079750855b3aae00c58b">rosette_api.RosetteFile.getFilename</a></div><div class="ttdeci">string getFilename()</div><div class="ttdoc">getFilename </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l01207">CAPI.cs:1207</a></div></div>
 <div class="ttc" id="classrosette__api_1_1CAPI_html_a049d61bdb80e14925f4431a6d4709d0f"><div class="ttname"><a href="classrosette__api_1_1CAPI.html#a049d61bdb80e14925f4431a6d4709d0f">rosette_api.CAPI.CategoriesInfo</a></div><div class="ttdeci">Dictionary&lt; string, object &gt; CategoriesInfo()</div><div class="ttdoc">CategoriesInfo </div><div class="ttdef"><b>Definition:</b> <a href="CAPI_8cs_source.html#l00195">CAPI.cs:195</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
