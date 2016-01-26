@@ -29,8 +29,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI TranslatedNameCAPI = new CAPI(apikey);
+                string translated_name_data = @"معمر محمد أبو منيار القذاف";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.TranslatedName("معمر محمد أبو منيار القذاف", null, null, "eng", null, null, null, "PERSON");
+                Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.TranslatedName("translated_name_data, null, null, "eng", null, null, null, "PERSON");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(TranslatedNameResult));
             }
             catch (Exception e)

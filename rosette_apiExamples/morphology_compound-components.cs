@@ -29,8 +29,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MorphologyCAPI = new CAPI(apikey);
+                string morphology_compound_components_data = @"Rechtsschutzversicherungsgesellschaften";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> MorphologyResult = MorphologyCAPI.Morphology("Rechtsschutzversicherungsgesellschaften", null, null, null, null, "compound-components");
+                Dictionary<string, Object> MorphologyResult = MorphologyCAPI.Morphology(morphology_compound_components_data, null, null, null, null, "compound-components");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(MorphologyResult));
             }
             catch (Exception e)
