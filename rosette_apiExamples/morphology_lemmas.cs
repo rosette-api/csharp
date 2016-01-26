@@ -29,7 +29,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MorphologyCAPI = new CAPI(apikey);
-                string morphology_lemmas_data = "The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
+                string morphology_lemmas_data = @"The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> MorphologyResult = MorphologyCAPI.Morphology(morphology_lemmas_data, null, null, null, null, "lemmas");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(MorphologyResult));

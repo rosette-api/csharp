@@ -29,7 +29,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI LanguageCAPI = new CAPI(apikey);
-                string language_data = "Por favor Señorita, says the man.";
+                string language_data = @"Por favor Señorita, says the man.";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> LanguageResult = LanguageCAPI.Language(language_data);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(LanguageResult));

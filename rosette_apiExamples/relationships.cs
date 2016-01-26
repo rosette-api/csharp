@@ -29,7 +29,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI RelationshipsCAPI = new CAPI(apikey);
-                string relationships_text_data = "Bill Murray is in the new Ghostbusters film!";
+                string relationships_text_data = @"Bill Murray is in the new Ghostbusters film!";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> RelationshipsResult = RelationshipsCAPI.Relationships(relationships_text_data);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(RelationshipsResult));

@@ -29,7 +29,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI SentencesCAPI = new CAPI(apikey);
-                string sentences_data = "This land is your land. This land is my land\nFrom California to the New York island;\nFrom the red wood forest to the Gulf Stream waters\n\nThis land was made for you and Me.\n\nAs I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
+                string sentences_data = @"This land is your land. This land is my land\nFrom California to the New York island;\nFrom the red wood forest to the Gulf Stream waters\n\nThis land was made for you and Me.\n\nAs I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> SentencesResult = SentencesCAPI.Sentences(sentences_data);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(SentencesResult));

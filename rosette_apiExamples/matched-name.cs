@@ -29,8 +29,8 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MatchedNameCAPI = new CAPI(apikey);
-                string matched_name_data1 = "Michael Jackson";
-                string matched_name_data2 = "迈克尔·杰克逊";
+                string matched_name_data1 = @"Michael Jackson";
+                string matched_name_data2 = @"迈克尔·杰克逊";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> MatchedNameResult = MatchedNameCAPI.MatchedName(new Name(matched_name_data1, "eng", null, "PERSON"), new Name(matched_name_data2, null, null, "PERSON"));
                 Console.WriteLine(new JavaScriptSerializer().Serialize(MatchedNameResult));

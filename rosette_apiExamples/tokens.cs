@@ -29,7 +29,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI TokensCAPI = new CAPI(apikey);
-                string tokens_data = "北京大学生物系主任办公室内部会议";
+                string tokens_data = @"北京大学生物系主任办公室内部会议";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> TokensResult = TokensCAPI.Tokens(tokens_data, null, null, "sentence", null);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(TokensResult));
