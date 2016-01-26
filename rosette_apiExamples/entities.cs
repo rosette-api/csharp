@@ -29,8 +29,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI EntitiesCAPI = new CAPI(apikey);
+                string entities_text_data = "Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity("Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS ");
+                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity(entities_text_data);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(EntitiesResult));
             }
             catch (Exception e)

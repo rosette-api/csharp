@@ -29,15 +29,16 @@ namespace rosette_apiExamples
             try
             {
                 CAPI CategoriesCAPI = new CAPI(apikey);
+                string categories_text_data = "Sony Pictures is planning to shoot a good portion of the new "Ghostbusters" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(null, null, null, null, "Sony Pictures is planning to shoot a good portion of the new "Ghostbusters" in Boston as well.");
+                Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(null, null, null, null, categories_text_data);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResult));
 
                 //Rosette API also supports Dictionary inputs
                 //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
                 Dictionary<string, Object> CategoriesResultDic = CategoriesCAPI.Categories(new Dictionary<object, object>()
             {
-                {"contentUri", "Sony Pictures is planning to shoot a good portion of the new "Ghostbusters" in Boston as well."}
+                {"contentUri", "${categories_url_data}"}
 
             });
                 Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResultDic));
