@@ -19,19 +19,21 @@ namespace rosette_apiExamples
         {
             //To use the C# API, you must provide an API key
             string apikey = "Your API key";
+            string alturl = string.Empty;
             
             //You may set the API key via command line argument:
             //categories yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
+                alturl = args.Length > 1 ? args[1] : string.Empty;
             }
             try
             {
-                CAPI CategoriesCAPI = new CAPI(apikey);
-                string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new "Ghostbusters" in Boston as well.";
+                CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new ""Ghostbusters"" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(null, null, null, null, categories_text_data);
+                Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(categories_text_data, null, null, null, null);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResult));
 
                 //Rosette API also supports Dictionary inputs

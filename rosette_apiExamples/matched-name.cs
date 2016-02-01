@@ -19,16 +19,18 @@ namespace rosette_apiExamples
         {
             //To use the C# API, you must provide an API key
             string apikey = "Your API key";
+            string alturl = string.Empty;
 
             //You may set the API key via command line argument:
             //matched_name yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
+                alturl = args.Length > 1 ? args[1] : string.Empty;
             } 
             try
             {
-                CAPI MatchedNameCAPI = new CAPI(apikey);
+                CAPI MatchedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string matched_name_data1 = @"Michael Jackson";
                 string matched_name_data2 = @"迈克尔·杰克逊";
                 //The results of the API call will come back in the form of a Dictionary

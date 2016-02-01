@@ -19,21 +19,23 @@ namespace rosette_apiExamples
         {
             //To use the C# API, you must provide an API key
             string apikey = "Your API key";
+            string alturl = string.Empty;
 
             //You may set the API key via command line argument:
             //entities yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
+                alturl = args.Length > 1 ? args[1] : string.Empty;
             }
             try
             {
-                CAPI EntitiesCAPI = new CAPI(apikey);
+                CAPI EntitiesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
                 var exampleBytes = System.Text.Encoding.UTF8.GetBytes(entities_text_data);
                 String exampleText = System.Convert.ToBase64String(exampleBytes);
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity(exampleText);
+                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity(exampleText, null, "application/octet-stream");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(EntitiesResult));
             }
             catch (Exception e)
