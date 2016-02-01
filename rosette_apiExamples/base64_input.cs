@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 var exampleBytes = System.Text.Encoding.UTF8.GetBytes(entities_text_data);
                 String exampleText = System.Convert.ToBase64String(exampleBytes);
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity(exampleText);
+                Dictionary<string, Object> EntitiesResult = EntitiesCAPI.Entity(exampleText, null, "application/octet-stream");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(EntitiesResult));
             }
             catch (Exception e)

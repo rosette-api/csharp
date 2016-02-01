@@ -5,14 +5,14 @@ These examples are can be run independently to demonstrate the Rosette API funct
 
 Prerequisite: Rosette API must be installed. 
 
-If you are using Visual Studios, you can use the Nuget Package Manager.
+If you are using Visual Studio, you can use the Nuget Package Manager.
 Search for rosette_api in the Online Packages and install.
 
 If you are using Nuget Command line: `nuget install rosette_api`
 
 You can now run your desired endpoint file to see it in action.
 
-Using Visual Studios, create a new command line project and copy/paste the .cs file or code into your project. 
+Using Visual Studio, create a new command line project and copy/paste the .cs file or code into your project. 
 Edit the `apikey` variable to use your API key. Build and run the code to see the output. 
 
 Using command line, copy/paste the .cs file to the same location that you installed the rosette_api dll. 
