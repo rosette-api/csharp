@@ -20,17 +20,19 @@ namespace rosette_apiExamples
         {
             //To use the C# API, you must provide an API key
             string apikey = "Your API key";
+            string alturl = string.Empty;
 
             //You may set the API key via command line argument:
             //sentiment yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
+                alturl = args.Length > 1 ? args[1] : string.Empty;
             }
 
             try
             {
-                CAPI SentimentCAPI = new CAPI(apikey);
+                CAPI SentimentCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 var newFile = Path.GetTempFileName();
                 StreamWriter sw = new StreamWriter(newFile);
                 string sentiment_file_data = @"<html><head><title>New Ghostbusters Film</title></head><body><p>Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”</p></body></html>";
