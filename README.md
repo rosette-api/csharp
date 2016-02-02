@@ -10,7 +10,7 @@ If you use Nuget, you may either use Visual Studios Nuget package manager or com
 
 In Visual Studios: search for the rosette_api package in Nuget(https://www.nuget.org/packages/rosette_api/) and follow the installation instructions.
 
-Using Nuget Command Line: `nuget install rosette_api`
+Using Nuget Command Line: `nuget install rosette_api.
 
 Basic Usage
 -----------
