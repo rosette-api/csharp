@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new "Ghostbusters" in Boston as well.";
+                string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new ""Ghostbusters"" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
                 Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(categories_text_data, null, null, null, null);
                 Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResult));
