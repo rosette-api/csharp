@@ -1,5 +1,5 @@
 ﻿using rosette_api;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,7 +182,7 @@ namespace rosette_apiUnitTests
         public string endpoint { get; set; }
     }
 
-    [TestClass]
+    [TestFixture]
     public class rosette_apiUnitTests
     {
         /// <summary>Setup
@@ -267,7 +267,7 @@ namespace rosette_apiUnitTests
         /// and checking whether or not the API correctly receives the response.
         /// </para>
         /// </summary>
-        [TestMethod]
+        [Test]
         public void CAPITest()
         {
             List<TestDataStructure> mockData = Setup();
