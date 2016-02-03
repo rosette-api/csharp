@@ -17,15 +17,12 @@ fi
 
 executable=$(basename "$1" .cs).exe
 
-# if [ "$executable" -eq "*" ]; then
 for file in ../source/$1; do
+    echo "---------- $file start -------------"
     source="../source/$file"
     executable=$(basename "$file" .cs).exe
     mcs $source -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
     mono $executable $2 $alt_url
+    echo "---------- $file end -------------"
 done
-# else
-#     mcs $source -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
-#     mono $executable $2 $alt_url
-# fi
 
