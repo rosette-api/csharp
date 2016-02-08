@@ -42,9 +42,8 @@ cp -r -n /source/* .
 
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
-    #checkAPI
-    #Build local rosette_api project
-    xbuild /p:Configuration=Release rosette_api.sln
+    #Check API key and if succesful then build local rosette_api project
+    checkAPI && xbuild /p:Configuration=Release rosette_api.sln
     cp /csharp/rosette_api/bin/Release/rosette_api.dll /csharp/rosette_apiExamples
     #Change to dir where examples will be run from
     cd rosette_apiExamples

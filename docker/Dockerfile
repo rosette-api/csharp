@@ -1,7 +1,7 @@
 FROM mono
 MAINTAINER Fiona Hasanaj
 
-RUN apt-get -y update && apt-get install -y vim
+RUN apt-get -y update && apt-get install -y vim && apt-get install curl
 RUN mkdir csharp
 WORKDIR csharp
 COPY compile-and-run.sh compile-and-run.sh
