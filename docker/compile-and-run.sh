@@ -6,12 +6,14 @@ function HELP {
     echo "  API_KEY       - Rosette API key (required)"
     echo "  FILENAME      - C# source file"
     echo "  ALT_URL       - Alternate service URL (optional)"
+    echo "  GIT_USERNAME  - Git username where you would like to push regenerated gh-pages (optional)"
+    echo "  VERSION       - Build version (optional)"
     echo "Compiles and runs the source file using the local development source"
     exit 1
 }
 
 #Gets API_KEY, FILENAME and ALT_URL if present
-while getopts ":API_KEY:FILENAME:ALT_URL" arg; do
+while getopts ":API_KEY:FILENAME:ALT_URL:GIT_USERNAME:VERSION" arg; do
     case "${arg}" in
         API_KEY)
             API_KEY=${OPTARG}
@@ -23,6 +25,14 @@ while getopts ":API_KEY:FILENAME:ALT_URL" arg; do
             ;;
         FILENAME)
             FILENAME=${OPTARG}
+            usage
+            ;;
+        GIT_USERNAME)
+            GIT_USERNAME=${OPTARG}
+            usage
+            ;;
+        VERSION)
+            VERSION=${OPTARG}
             usage
             ;;
     esac
@@ -43,8 +53,11 @@ cp -r -n /source/* .
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
     #Check API key and if succesful then build local rosette_api project
-    checkAPI && xbuild /p:Configuration=Release rosette_api.sln
-    cp /csharp/rosette_api/bin/Release/rosette_api.dll /csharp/rosette_apiExamples
+    checkAPI && nuget restore rosette_api.sln && xbuild /p:Configuration=Release rosette_api.sln
+    #Copy necessary libraries
+    cp /csharp-dev/rosette_api/bin/Release/rosette_api.dll /csharp-dev/rosette_apiExamples
+    cp /csharp-dev/rosette_apiUnitTests/bin/Release/nunit.framework.dll /csharp-dev/rosette_apiUnitTests
+    cp /csharp-dev/rosette_apiUnitTests/bin/Release/rosette_api.dll /csharp-dev/rosette_apiUnitTests
     #Change to dir where examples will be run from
     cd rosette_apiExamples
     if [ ! -z ${FILENAME} ]; then
@@ -62,6 +75,48 @@ if [ ! -z ${API_KEY} ]; then
             echo "---------- $file end -------------"
         done
     fi
+    #Change to dir where unit tests will be run from
+    cd ../rosette_apiUnitTests
+    for file in *.cs; do
+            echo -e "\n---------- $file start -------------"
+            executable=$(basename "$file" .cs).exe
+            mcs $file -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -r:WindowsBase.dll -r:nunit.framework.dll -out:$executable
+            mono $executable 
+            echo "---------- $file end -------------"
+    done
 else 
     HELP
+fi
+
+#Generate gh-pages and push them to git account (if git username and version are provided)
+if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
+    #clone csharp git repo to the root dir
+    cd /
+    git clone git@github.com:${GIT_USERNAME}/csharp.git
+    cd csharp
+    git checkout origin/gh-pages -b gh-pages
+    git branch -d develop
+    #generate gh-pages from development source and output the contents to csharp repo
+    cd /csharp-dev
+    #configure doxygen
+    doxygen -g rosette_api
+    sed -i '/^PROJECT_NAME/c\PROJECT_NAME = "rosette_api"' rosette_api
+    sed -i '/^PROJECT_NUMBER/c\PROJECT_NUMBER = "${VERSION}"' rosette_api
+    sed -i '/^OPTIMIZE_OUTPUT_JAVA/c\OPTIMIZE_OUTPUT_JAVA = YES' rosette_api
+    sed -i '/^EXTRACT_ALL/c\EXTRACT_ALL = YES' rosette_api
+    sed -i '/^EXTRACT_STATIC/c\EXTRACT_STATIC = YES' rosette_api
+    sed -i '/^UML_LOOK/c\UML_LOOK = YES' rosette_api
+    sed -i '/^HAVE_GRAPH/c\HAVE_GRAPH = YES' rosette_api
+    sed -i '/^GENERATE_LATEX/c\GENERATE_LATEX = NO' rosette_api
+    sed -i '/^GENERATE_HTML/c\GENERATE_HTML = YES' rosette_api
+    sed -i '/^INPUT/c\INPUT = ./rosette_api' rosette_api
+    sed -i '/^FILE_PATTERNS/c\FILE_PATTERNS = *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90' rosette_api
+    sed -i '/^OUTPUT_DIRECTORY/c\OUTPUT_DIRECTORY = /csharp' rosette_api
+    sed -i '/^HTML_OUTPUT/c\HTML_OUTPUT = HTML' rosette_api
+    #generate docs
+    doxygen rosette_api
+    cd /csharp
+    git add .
+    git commit -a -m "publish csharp apidocs ${VERSION}"
+    git push
 fi
