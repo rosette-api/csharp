@@ -1,6 +1,7 @@
 var NAVTREEINDEX0 =
 {
 "CAPI_8cs.html":[2,0,0,0],
+"CAPI_8cs_source.html":[2,0,0,0],
 "annotated.html":[1,0],
 "classes.html":[1,1],
 "classrosette__api_1_1CAPI.html":[1,0,0,0],
