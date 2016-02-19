@@ -98,6 +98,7 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     git branch -d develop
     #generate gh-pages from development source and output the contents to csharp repo
     cd /csharp-dev
+    mv /csharp-dev/rosette_api /csharp-dev/rosette_api_dox
     #configure doxygen
     doxygen -g rosette_api
     sed -i '/^\bPROJECT_NAME\b/c\PROJECT_NAME = "rosette_api"' rosette_api
@@ -109,7 +110,7 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     sed -i '/^\bHAVE_GRAPH\b/c\HAVE_GRAPH = YES' rosette_api
     sed -i '/^\bGENERATE_LATEX\b/c\GENERATE_LATEX = NO' rosette_api
     sed -i '/^\bGENERATE_HTML\b/c\GENERATE_HTML = YES' rosette_api
-    sed -i '/^\bINPUT\b/c\INPUT = ./rosette_api' rosette_api
+    sed -i '/^\bINPUT\b/c\INPUT = ./rosette_api_dox' rosette_api
     sed -i '/^\bRECURSIVE\b/c\RECURSIVE = YES' rosette_api
     sed -i '/^\bFILE_PATTERNS\b/c\FILE_PATTERNS = *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90' rosette_api
     sed -i '/^\bOUTPUT_DIRECTORY\b/c\OUTPUT_DIRECTORY = /csharp' rosette_api

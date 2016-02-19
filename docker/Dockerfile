@@ -1,7 +1,7 @@
 FROM mono:4.0.1
 MAINTAINER Fiona Hasanaj
 
-RUN apt-get -y update && apt-get install -y vim && apt-get install curl && apt-get install -y git && apt-get install -y doxygen
+RUN apt-get -y update && apt-get install -y vim && apt-get install curl && apt-get install -y git && apt-get install -y doxygen && apt-get install -y graphviz
 RUN mkdir csharp-dev
 WORKDIR csharp-dev
 COPY compile-and-run.sh compile-and-run.sh
