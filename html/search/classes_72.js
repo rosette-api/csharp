@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['relationships',['relationships',['../classrosette__apiExamples_1_1relationships.html',1,'rosette_apiExamples']]]
+  ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api']]],
+  ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html',1,'rosette_api']]]
 ];

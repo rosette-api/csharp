@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['sentences_2ecs',['sentences.cs',['../sentences_8cs.html',1,'']]],
-  ['sentiment_2ecs',['sentiment.cs',['../sentiment_8cs.html',1,'']]]
+  ['settings_2edesigner_2ecs',['Settings.Designer.cs',['../Settings_8Designer_8cs.html',1,'']]]
 ];
