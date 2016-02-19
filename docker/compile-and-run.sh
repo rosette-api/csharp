@@ -111,14 +111,13 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     sed -i '/^\bGENERATE_LATEX\b/c\GENERATE_LATEX = NO' rosette_api
     sed -i '/^\bGENERATE_HTML\b/c\GENERATE_HTML = YES' rosette_api
     sed -i '/^\bINPUT\b/c\INPUT = ./rosette_api_dox' rosette_api
-    sed -i '/^\bRECURSIVE\b/c\RECURSIVE = YES' rosette_api
     sed -i '/^\bFILE_PATTERNS\b/c\FILE_PATTERNS = *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90' rosette_api
-    sed -i '/^\bOUTPUT_DIRECTORY\b/c\OUTPUT_DIRECTORY = /csharp-dev' rosette_api
+    sed -i '/^\bOUTPUT_DIRECTORY\b/c\OUTPUT_DIRECTORY = /csharp' rosette_api
     sed -i '/^\bHTML_OUTPUT\b/c\HTML_OUTPUT = html' rosette_api
     #generate docs
     doxygen rosette_api
     cd /csharp
-    cp -r -n /csharp-dev/html/* .
+    #cp -r /csharp-dev/html/* .
     git add .
     git commit -a -m "publish csharp apidocs ${VERSION}"
     git push
