@@ -100,19 +100,20 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     cd /csharp-dev
     #configure doxygen
     doxygen -g rosette_api
-    sed -i '/^PROJECT_NAME/c\PROJECT_NAME = "rosette_api"' rosette_api
-    sed -i '/^PROJECT_NUMBER/c\PROJECT_NUMBER = "${VERSION}"' rosette_api
-    sed -i '/^OPTIMIZE_OUTPUT_JAVA/c\OPTIMIZE_OUTPUT_JAVA = YES' rosette_api
-    sed -i '/^EXTRACT_ALL/c\EXTRACT_ALL = YES' rosette_api
-    sed -i '/^EXTRACT_STATIC/c\EXTRACT_STATIC = YES' rosette_api
-    sed -i '/^UML_LOOK/c\UML_LOOK = YES' rosette_api
-    sed -i '/^HAVE_GRAPH/c\HAVE_GRAPH = YES' rosette_api
-    sed -i '/^GENERATE_LATEX/c\GENERATE_LATEX = NO' rosette_api
-    sed -i '/^GENERATE_HTML/c\GENERATE_HTML = YES' rosette_api
-    sed -i '/^INPUT/c\INPUT = ./rosette_api' rosette_api
-    sed -i '/^FILE_PATTERNS/c\FILE_PATTERNS = *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90' rosette_api
-    sed -i '/^OUTPUT_DIRECTORY/c\OUTPUT_DIRECTORY = /csharp' rosette_api
-    sed -i '/^HTML_OUTPUT/c\HTML_OUTPUT = HTML' rosette_api
+    sed -i '/^\bPROJECT_NAME\b/c\PROJECT_NAME = "rosette_api"' rosette_api
+    sed -i "/^\bPROJECT_NUMBER\b/c\PROJECT_NUMBER = $VERSION" rosette_api
+    sed -i '/^\bOPTIMIZE_OUTPUT_JAVA\b/c\OPTIMIZE_OUTPUT_JAVA = YES' rosette_api
+    sed -i '/^\bEXTRACT_ALL\b/c\EXTRACT_ALL = YES' rosette_api
+    sed -i '/^\bEXTRACT_STATIC\b/c\EXTRACT_STATIC = YES' rosette_api
+    sed -i '/^\bUML_LOOK\b/c\UML_LOOK = YES' rosette_api
+    sed -i '/^\bHAVE_GRAPH\b/c\HAVE_GRAPH = YES' rosette_api
+    sed -i '/^\bGENERATE_LATEX\b/c\GENERATE_LATEX = NO' rosette_api
+    sed -i '/^\bGENERATE_HTML\b/c\GENERATE_HTML = YES' rosette_api
+    sed -i '/^\bINPUT\b/c\INPUT = ./rosette_api' rosette_api
+    sed -i '/^\bRECURSIVE\b/c\RECURSIVE = YES' rosette_api
+    sed -i '/^\bFILE_PATTERNS\b/c\FILE_PATTERNS = *.c *.cc *.cxx *.cpp *.c++ *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.py *.f90' rosette_api
+    sed -i '/^\bOUTPUT_DIRECTORY\b/c\OUTPUT_DIRECTORY = /csharp' rosette_api
+    sed -i '/^\bHTML_OUTPUT\b/c\HTML_OUTPUT = html' rosette_api
     #generate docs
     doxygen rosette_api
     cd /csharp
