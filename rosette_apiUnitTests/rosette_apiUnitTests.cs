@@ -30,7 +30,7 @@ namespace rosette_apiUnitTests
             while (!Directory.Exists(mockDir) && retry < 10)
             {
                 baseDirectory = Directory.GetParent(baseDirectory).FullName;
-                mockDir = baseDirectory + @"\mock-data";
+                mockDir = Path.Combine(baseDirectory, "mock-data");
                 retry = retry + 1;
             }
                        
@@ -39,8 +39,8 @@ namespace rosette_apiUnitTests
                 mockDir = @"\..\..\..\mock-data";
             }
 
-            requestDir = mockDir + @"\request\";
-            responseDir = mockDir + @"\response\";
+            requestDir = Path.Combine(mockDir, "request");
+            responseDir = Path.Combine(mockDir, "response");
             RequestDir = requestDir;
             ResponseDir = responseDir;
         }
@@ -194,8 +194,8 @@ namespace rosette_apiUnitTests
             CMockData c = new CMockData();
             List<TestDataStructure> allData = new List<TestDataStructure>()
             {
-                {new TestDataStructure {inpFilename = null, outputStatusFilename = c.ResponseDir + "info.status", outputDataFilename = c.ResponseDir + "info.json", endpoint = "info"}},
-                {new TestDataStructure {inpFilename = null, outputStatusFilename = c.ResponseDir + "ping.status", outputDataFilename = c.ResponseDir + "ping.json", endpoint = "ping"}}
+                {new TestDataStructure {inpFilename = null, outputStatusFilename = Path.Combine(c.ResponseDir, "info.status"), outputDataFilename = Path.Combine(c.ResponseDir,"info.json"), endpoint = "info"}},
+                {new TestDataStructure {inpFilename = null, outputStatusFilename = Path.Combine(c.ResponseDir, "ping.status"), outputDataFilename = Path.Combine(c.ResponseDir,"ping.json"), endpoint = "ping"}}
             };
             List<string> cRequests = new List<string>();
             cRequests = c.getAllRequests();
