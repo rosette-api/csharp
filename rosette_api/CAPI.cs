@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Net.Http.Headers;
 
 namespace rosette_api
 {
@@ -848,17 +849,19 @@ namespace rosette_api
                     }
                     retry = retry + 1;
                 }
-                string text = "";
+                string [] message = new string [2];
+                Dictionary<string, object> dict = null;
                 try
                 {
-                    text = getMessage(responseMsg);
-
+                    message = getMessage(responseMsg);
+                    dict = new JavaScriptSerializer().Deserialize<dynamic>(message[0]);
+                    dict.Add("responseHeaders", new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(message[1]));
                 }
                 catch (RosetteException e)
                 {
                     throw e;
                 }
-                return new JavaScriptSerializer().Deserialize<dynamic>(text);                
+                return dict;               
 
             }
             return null;
@@ -1015,13 +1018,12 @@ namespace rosette_api
                 string text = "";
                 try
                 {
-                    text = getMessage(responseMsg);
+                    text = getMessage(responseMsg)[0];
                 }
                 catch(RosetteException e)
                 {
                     throw e;
                 }
-
                 var result = new JavaScriptSerializer().Deserialize<dynamic>(text);
                 // compatibility with server side is at minor version level of semver
                 string serverVersion = result["version"].ToString();
@@ -1043,18 +1045,26 @@ namespace rosette_api
         /// </summary>
         /// <param name="responseMsg">(HttpResponseMessage): Response Message sent from the server</param>
         /// <returns>(string): Content of the response message</returns>
-        private string getMessage(HttpResponseMessage responseMsg)
+        private string[] getMessage(HttpResponseMessage responseMsg)
         {
             if (responseMsg.IsSuccessStatusCode)
             {
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
+                IEnumerator<KeyValuePair<string, IEnumerable<string>>> responseHeadersEnum = responseMsg.Headers.GetEnumerator();
+                Dictionary<string, string> responseHeadersDict = new Dictionary<string, string>();
+                while(responseHeadersEnum.MoveNext())
+                {
+                    KeyValuePair<string, IEnumerable<string>> pair = responseHeadersEnum.Current;
+                    responseHeadersDict.Add( pair.Key, pair.Value.ToArray()[0]);
+                }
+
                 if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08'))
                 {
                     byteArray = Decompress(byteArray);
                 }
                 MemoryStream stream = new MemoryStream(byteArray);
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                return reader.ReadToEnd();
+                return new string[] {reader.ReadToEnd(), new JavaScriptSerializer().Serialize(responseHeadersDict)};
             }
             else
             {
