@@ -394,6 +394,7 @@ namespace rosette_apiUnitTests
                         if (key != "requestId")
                         {
                             Assert.IsTrue(result.Keys.Contains(key));
+                            Assert.IsTrue(result.Keys.Contains("responseHeaders"));
                             if (result.Keys.Contains(key))
                             {
                                 System.Diagnostics.Debug.WriteLine("Key found");
