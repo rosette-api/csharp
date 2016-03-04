@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class matched_name
+    class translated_name
     {
         /// <summary>
-        /// Example code to call Rosette API to get match score (similarity) for two names.
+        /// Example code to call Rosette API to translate a name from language to another.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,20 +22,18 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //matched_name yourapikeyhere
+            //translated_name yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            } 
+            }
             try
             {
-                CAPI MatchedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string matched_name_data1 = @"Michael Jackson";
-                string matched_name_data2 = @"迈克尔·杰克逊";
+                CAPI TranslatedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string translated_name_data = @"معمر محمد أبو منيار القذاف";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> MatchedNameResult = MatchedNameCAPI.MatchedName(new Name(matched_name_data1, "eng", null, "PERSON"), new Name(matched_name_data2, null, null, "PERSON"));
-                Console.WriteLine(new JavaScriptSerializer().Serialize(MatchedNameResult));
+                Dictionary<string, Object> TranslatedNameResult = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", "IC", null, "PERSON"); Console.WriteLine(new JavaScriptSerializer().Serialize(TranslatedNameResult));
             }
             catch (Exception e)
             {

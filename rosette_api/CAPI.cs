@@ -464,6 +464,26 @@ namespace rosette_api
             return Process(file);
         }
 
+        /// <summary>NameSimilarity
+        /// <para>
+        /// (POST)NameSimilarity Endpoint: Returns the result of matching 2 names.
+        /// </para>
+        /// </summary>
+        /// <param name="n1">Name: First name to be matched</param>
+        /// <param name="n2">Name: Second name to be matched</param>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
+        /// </returns>
+        public Dictionary<string, object> NameSimilarity(Name n1, Name n2)
+        {
+            _uri = "name-similarity/";
+
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, object>(){
+                { "name1", n1},
+                { "name2", n2}
+            }));
+        }
+
+        /// deprecated
         /// <summary>MatchedName
         /// <para>
         /// (POST)MatchedName Endpoint: Returns the result of matching 2 names.
@@ -475,14 +495,24 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> MatchedName(Name n1, Name n2)
         {
-            _uri = "matched-name/";
-
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, object>(){
-                { "name1", n1},
-                { "name2", n2}
-            }));
+            return NameSimilarity(n1, n2);
         }
 
+        /// <summary>NameSimilarity
+        /// <para>
+        /// (POST)NameSimilarity Endpoint: Returns the result of matching 2 names.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
+        /// </returns>
+        public Dictionary<string, object> NameSimilarity(Dictionary<object, object> dict)
+        {
+            _uri = "name-similarity/";
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+        }
+
+        /// deprecated
         /// <summary>MatchedName
         /// <para>
         /// (POST)MatchedName Endpoint: Returns the result of matching 2 names.
@@ -493,10 +523,22 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> MatchedName(Dictionary<object, object> dict)
         {
-            _uri = "matched-name/";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return NameSimilarity(dict);
         }
 
+        /// <summary>NameSimilarityInfo
+        /// <para>
+        /// (GET)NameSimilarityInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
+        /// </para>
+        /// </summary>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
+        public Dictionary<string, object> NameSimilarityInfo()
+        {
+            _uri = "name-similarity/info";
+            return getResponse(SetupClient());
+        }
+
+        /// deprecated
         /// <summary>MatchedNameInfo
         /// <para>
         /// (GET)MatchedNameInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
@@ -505,8 +547,7 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
         public Dictionary<string, object> MatchedNameInfo()
         {
-            _uri = "matched-name/info";
-            return getResponse(SetupClient());
+            return NameSimilarityInfo();
         }
 
         /// <summary>Ping
@@ -756,6 +797,38 @@ namespace rosette_api
             return Process(file);
         }
 
+        /// <summary>NameTranslation
+        /// <para>
+        /// (POST)NameTranslation Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
+        /// </para>
+        /// </summary>
+        /// <param name="name">string: Name to be translated</param>
+        /// <param name="sourceLanguageOfUse">(string, optional): ISO 639-3 code for the name's language of use</param>
+        /// <param name="sourceScript">(string, optional): ISO 15924 code for the name's script</param>
+        /// <param name="targetLanguage">(string): ISO 639-3 code for the translation language</param>
+        /// <param name="targetScript">(string, optional): ISO 15924 code for the translation script</param>
+        /// <param name="targetScheme">(string, optional): transliteration scheme for the translation</param>
+        /// <param name="sourceLanguageOfOrigin">(string, optional): ISO 639-3 code for the name's language of origin</param>
+        /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
+        /// </returns>
+        public Dictionary<string, object> NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null)
+        {
+            _uri = "name-translation/";
+
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, string>(){
+                { "name", name},
+                { "sourceLanguageOfUse", sourceLanguageOfUse},
+                { "sourceScript", sourceScript},
+                { "targetLanguage", targetLanguage},
+                { "targetScript", targetScript},
+                { "targetScheme", targetScheme},
+                { "sourceLanguageOfOrigin", sourceLanguageOfOrigin},
+                { "entityType", entityType}
+            }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value)));
+        }
+
+        /// deprecated
         /// <summary>TranslatedName
         /// <para>
         /// (POST)TranslatedName Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
@@ -773,20 +846,23 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> TranslatedName(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null)
         {
-            _uri = "translated-name/";
-
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, string>(){
-                { "name", name},
-                { "sourceLanguageOfUse", sourceLanguageOfUse},
-                { "sourceScript", sourceScript},
-                { "targetLanguage", targetLanguage},
-                { "targetScript", targetScript},
-                { "targetScheme", targetScheme},
-                { "sourceLanguageOfOrigin", sourceLanguageOfOrigin},
-                { "entityType", entityType}
-            }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value)));
+            return NameTranslation(name, sourceLanguageOfUse, sourceScript, targetLanguage, targetScript, targetScheme, sourceLanguageOfOrigin, entityType);
         }
 
+        /// <summary>NameTranslation
+        /// <para>
+        /// (POST)NameTranslation Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. </returns>
+        public Dictionary<string, object> NameTranslation(Dictionary<object, object> dict)
+        {
+            _uri = "name-translation/";
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+        }
+
+        /// deprecated
         /// <summary>TranslatedName
         /// <para>
         /// (POST)TranslatedName Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
@@ -796,10 +872,22 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. </returns>
         public Dictionary<string, object> TranslatedName(Dictionary<object, object> dict)
         {
-            _uri = "translated-name/";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return NameTranslation(dict);
         }
 
+        /// <summary>NameTranslationInfo
+        /// <para>
+        /// (GET)NameTranslationInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
+        /// </para>
+        /// </summary>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
+        public Dictionary<string, object> NameTranslationInfo()
+        {
+            _uri = "name-translation/info";
+            return getResponse(SetupClient());
+        }
+
+        /// deprecated
         /// <summary>TranslatedNameInfo
         /// <para>
         /// (GET)TranslatedNameInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
@@ -808,8 +896,7 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
         public Dictionary<string, object> TranslatedNameInfo()
         {
-            _uri = "translated-name/info";
-            return getResponse(SetupClient());
+            return NameTranslationInfo();
         }
 
         /// <summary>getResponse
@@ -849,7 +936,7 @@ namespace rosette_api
                     }
                     retry = retry + 1;
                 }
-                string [] message = new string [2];
+                List<string> message = new List<string>();
                 Dictionary<string, object> dict = null;
                 try
                 {
@@ -1045,7 +1132,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="responseMsg">(HttpResponseMessage): Response Message sent from the server</param>
         /// <returns>(string): Content of the response message</returns>
-        private string[] getMessage(HttpResponseMessage responseMsg)
+        private List<string> getMessage(HttpResponseMessage responseMsg)
         {
             if (responseMsg.IsSuccessStatusCode)
             {
@@ -1055,7 +1142,7 @@ namespace rosette_api
                 while(responseHeadersEnum.MoveNext())
                 {
                     KeyValuePair<string, IEnumerable<string>> pair = responseHeadersEnum.Current;
-                    responseHeadersDict.Add( pair.Key, pair.Value.ToArray()[0]);
+                    responseHeadersDict.Add(pair.Key, pair.Value.ToArray()[0]);
                 }
 
                 if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08'))
@@ -1064,7 +1151,10 @@ namespace rosette_api
                 }
                 MemoryStream stream = new MemoryStream(byteArray);
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                return new string[] {reader.ReadToEnd(), new JavaScriptSerializer().Serialize(responseHeadersDict)};
+                List<string> message = new List<string>();
+                message.Add(reader.ReadToEnd());
+                message.Add(new JavaScriptSerializer().Serialize(responseHeadersDict));
+                return message;
             }
             else
             {
