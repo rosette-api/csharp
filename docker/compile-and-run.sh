@@ -42,6 +42,11 @@ ping_url="https://api.rosette.com/rest/v1"
 
 # strip the trailing slash off of the alt_url if necessary
 if [ ! -z "${ALT_URL}" ]; then
+    case ${ALT_URL} in
+        */) ALT_URL=${ALT_URL::-1}
+            echo "Slash detected"
+            ;;
+    esac
     ping_url=${ALT_URL}
 fi
 
