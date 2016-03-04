@@ -2,9 +2,9 @@
 <package >
   <metadata>
     <id>rosette_api</id>
-    <version>0.7.5</version>                                            
-    <authors>wspitzer</authors>
-    <owners>wspitzer</owners>
+    <version>0.8.0</version>                                            
+    <authors>basistech</authors>
+    <owners>basistech</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.Net (C#) Binding for Rosette API</description>
