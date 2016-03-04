@@ -187,18 +187,6 @@ namespace rosette_api
             return Process(file);
         }
 
-        /// <summary>CategoriesInfo
-        /// <para>
-        /// (GETCategoriesInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> CategoriesInfo()
-        {
-            _uri = "categories/info";
-            return getResponse(SetupClient());
-        }
-
         /// <summary>EntitiesLinked
         /// <para>
         /// (POST)EntitiesLinked Endpoint: Links entities in the input to entities in the knowledge base.
@@ -252,18 +240,6 @@ namespace rosette_api
         {
             _uri = "entities/linked/";
             return Process(file);
-        }
-
-        /// <summary>EntitiesLinkedInfo
-        /// <para>
-        /// (GET)EntitiesLinkedInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> EntitiesLinkedInfo()
-        {
-            _uri = "entities/linked/info";
-            return getResponse(SetupClient());
         }
 
         /// <summary>Entity
@@ -322,18 +298,6 @@ namespace rosette_api
         {
             _uri = "entities/";
             return Process(file);
-        }
-
-        /// <summary>EntityInfo
-        /// <para>
-        /// (GET)EntityInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> EntityInfo()
-        {
-            _uri = "entities/info";
-            return getResponse(SetupClient());
         }
 
         /// <summary>Info
@@ -395,18 +359,6 @@ namespace rosette_api
         {
             _uri = "language/";
             return Process(file);
-        }
-
-        /// <summary>LanguageInfo
-        /// <para>
-        /// (GET)LanguageInfo Endpoint: Response is a JSON string with request id and supported languages, each with a list of one or more supported scripts..
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> LanguageInfo()
-        {
-            _uri = "language/info";
-            return getResponse(SetupClient());
         }
 
         /// <summary>Morphology
@@ -524,30 +476,6 @@ namespace rosette_api
         public Dictionary<string, object> MatchedName(Dictionary<object, object> dict)
         {
             return NameSimilarity(dict);
-        }
-
-        /// <summary>NameSimilarityInfo
-        /// <para>
-        /// (GET)NameSimilarityInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> NameSimilarityInfo()
-        {
-            _uri = "name-similarity/info";
-            return getResponse(SetupClient());
-        }
-
-        /// deprecated
-        /// <summary>MatchedNameInfo
-        /// <para>
-        /// (GET)MatchedNameInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> MatchedNameInfo()
-        {
-            return NameSimilarityInfo();
         }
 
         /// <summary>Ping
@@ -736,18 +664,6 @@ namespace rosette_api
             return Process(file);
         }
 
-        /// <summary>SentimentInfo
-        /// <para>
-        /// (GET)SentimentInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> SentimentInfo()
-        {
-            _uri = "sentiment/info";
-            return getResponse(SetupClient());
-        }
-
         /// <summary>Tokens
         /// <para>
         /// (POST)Tokens Endpoint: Divides the input into tokens.
@@ -873,30 +789,6 @@ namespace rosette_api
         public Dictionary<string, object> TranslatedName(Dictionary<object, object> dict)
         {
             return NameTranslation(dict);
-        }
-
-        /// <summary>NameTranslationInfo
-        /// <para>
-        /// (GET)NameTranslationInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> NameTranslationInfo()
-        {
-            _uri = "name-translation/info";
-            return getResponse(SetupClient());
-        }
-
-        /// deprecated
-        /// <summary>TranslatedNameInfo
-        /// <para>
-        /// (GET)TranslatedNameInfo Endpoint: Response is a JSON string with request id, version, build info, and support (null for now).
-        /// </para>
-        /// </summary>
-        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
-        public Dictionary<string, object> TranslatedNameInfo()
-        {
-            return NameTranslationInfo();
         }
 
         /// <summary>getResponse
