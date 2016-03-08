@@ -1,9 +1,10 @@
 language: csharp
-solution: rosette_api.sln
+
+install:
+    - sudo apt-get install nunit-console
 
 script:
-    - xbuild /p:Configuration=Debug rosette_api.sln
-after_script:
+    - xbuild rosette_api.sln
     - nunit-console rosette_apiUnitTests/bin/Debug/rosette_apiUnitTests.dll
 
 notifications:
