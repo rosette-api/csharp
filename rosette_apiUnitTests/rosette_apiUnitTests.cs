@@ -178,7 +178,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             try {
-                var response = _rosetteApi.Categories();
+                _rosetteApi.Categories();
             }
             catch (RosetteException ex) {
                 Assert.AreEqual(ex.Message, "Must supply one of Content or ContentUri");
@@ -193,7 +193,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             try {
-                var response = _rosetteApi.Categories("content", null, null, "contentUri");
+                _rosetteApi.Categories("content", null, null, "contentUri");
             }
             catch (RosetteException ex) {
                 Assert.AreEqual(ex.Message, "Cannot supply both Content and ContentUri");

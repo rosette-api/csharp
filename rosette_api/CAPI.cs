@@ -94,7 +94,7 @@ namespace rosette_api
         /// <summary>
         /// Internal version number that is used to sync with the running Rosette API server
         /// </summary>
-        private static string _bindingVersion = "0.8";
+        private static string _bindingVersion = "0.10";
 
         /// <summary>Version
         /// <para>
@@ -164,8 +164,8 @@ namespace rosette_api
         /// (POST)Categories Endpoint: Returns an ordered list of categories identified in the input. The categories are Tier 1 contextual categories defined in the QAG Taxonomy.
         /// </para>
         /// </summary>
-        /// <param name="dict">Dictionary<object, object>: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>Dictionary<string, object>: Dictionary containing the results of the request.
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request.
         /// The response is the contextual categories identified in the input.
         /// </returns>
         public Dictionary<string, object> Categories(Dictionary<object, object> dict)
@@ -831,7 +831,7 @@ namespace rosette_api
                     dict = new JavaScriptSerializer().Deserialize<dynamic>(message[0]);
                     dict.Add("responseHeaders", new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(message[1]));
                 }
-                catch (RosetteException e)
+                catch (RosetteException)
                 {
                     throw;
                 }
@@ -928,7 +928,7 @@ namespace rosette_api
                 {
                     client.BaseAddress = new Uri(URIstring);
                 }
-                if (client.Timeout == null)
+                if (client.Timeout == TimeSpan.Zero)
                 {
                     client.Timeout = new TimeSpan(0, 0, Timeout);
                 }
@@ -985,13 +985,12 @@ namespace rosette_api
                 {
                     text = getMessage(responseMsg)[0];
                 }
-                catch(RosetteException e)
+                catch(RosetteException)
                 {
                     throw;
                 }
                 var result = new JavaScriptSerializer().Deserialize<dynamic>(text);
                 // compatibility with server side is at minor version level of semver
-                string serverVersion = result["version"].ToString();
                 if (!result["versionChecked"])
                 {
                     throw new RosetteException("The server version is not compatible with binding version " + versionToCheck, -6);

@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string morphology_han_readings_data = @"北京大学生物系主任办公室内部会议";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> MorphologyResult = MorphologyCAPI.Morphology(morphology_han_readings_data, null, null, null, null, "han-readings");
+                Dictionary<string, Object> MorphologyResult = MorphologyCAPI.Morphology(morphology_han_readings_data, null, null, null, "han-readings");
                 Console.WriteLine(new JavaScriptSerializer().Serialize(MorphologyResult));
             }
             catch (Exception e)
