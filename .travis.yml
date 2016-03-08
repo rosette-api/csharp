@@ -1,6 +1,11 @@
 language: csharp
 solution: rosette_api.sln
 
+script:
+    - xbuild /p:Configuration=Debug rosette_api.sln
+after_script:
+    - nunit-console rosette_apiUnitTests/bin/Debug/rosette_apiUnitTests.dll
+
 notifications:
   slack:
     rooms:
