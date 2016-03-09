@@ -1,12 +1,11 @@
 language: csharp
 
 install:
-    - sudo apt-get install nunit-console
     - nuget restore rosette_api.sln
 
 script:
     - xbuild /p:Configuration=Release rosette_api.sln
-    - mono nunit-console rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
+    - mono packages/Nunit.Console.3.0.1/tools/nunit3-console rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
 
 notifications:
   slack:
