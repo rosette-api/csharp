@@ -1,217 +1,84 @@
-﻿using rosette_api;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using rosette_api;
+using RichardSzalay.MockHttp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Script.Serialization;
+using System.Text;
 
 namespace rosette_apiUnitTests
 {
-    /// <summary>Mock Data Handler
-    /// <para>Provides support for getting data from the request/response directories of the mockdata folder</para>
-    /// </summary>
-    class CMockData
-    {
-        private static string mockDir = null;
-        public static string requestDir = null;
-        public static string responseDir = null;
-        public CMockData()
-        {
-            string baseDirectory = Directory.GetCurrentDirectory();
-            int retry = 0;
-            while (!Directory.Exists(mockDir) && retry < 10)
-            {
-                baseDirectory = Directory.GetParent(baseDirectory).FullName;
-                mockDir = Path.Combine(baseDirectory, "mock-data");
-                retry = retry + 1;
-            }
-                       
-            if (!Directory.Exists(mockDir))
-            {
-                mockDir = @"\..\..\..\mock-data";
-            }
-
-            requestDir = Path.Combine(mockDir, "request");
-            responseDir = Path.Combine(mockDir, "response");
-            RequestDir = requestDir;
-            ResponseDir = responseDir;
+    [TestFixture]
+    public class rosette_classTests {
+        [Test]
+        public void NameClassTest() {
+            Name name = new Name("text", "language", "script", "entityType");
+            Assert.AreEqual("text", name.text, "Name does not match");
+            Assert.AreEqual("language", name.language, "Language does not match");
+            Assert.AreEqual("script", name.script, "Script does not match");
+            Assert.AreEqual("entityType", name.entityType, "EntityType does not match");
         }
 
-        public string RequestDir { get; set; }
-        public string ResponseDir { get; set; }
+        [Test]
+        public void RosetteFileClassTest() {
+            string tmpFile = Path.GetTempFileName();
+            StreamWriter sw = File.AppendText(tmpFile);
+            sw.WriteLine("Rosette API Unit Test");
+            sw.Flush();
+            sw.Close();
+            
+            RosetteFile f = new RosetteFile(tmpFile, "dataType", null);
+            Assert.IsNotNull(f.getFilename(), "Filename is null");
+            Assert.AreEqual(tmpFile, f.getFilename(), "Filename does not match");
+            Assert.AreEqual("dataType", f.getDataType(), "DataType does not match");
+            Assert.IsNull(f.getOptions(), "Options does not match");
 
-        /// <summary>getAllRequests
-        /// <para>Gets all the Request file names</para>
-        /// </summary>
-        /// <returns>List<string> of file names in the request directory</returns>
-        public List<string> getAllRequests()
-        {
-            List<string> req = new List<string>();
-            foreach (string s in Directory.EnumerateFiles(requestDir))
-            {
-                req.Add(s);
-            }
-            return req;
+            byte[] b = f.getFileData();
+            Assert.IsTrue(b.Count() > 0, "File is empty");
+
+            string content = f.getFileDataString();
+            Assert.IsTrue(content.Length > 0, "File is empty");
         }
 
-        /// <summary>getFileData
-        /// <para>Gets file data in string form from the file</para>
-        /// </summary>
-        /// <param name="filename">string: path to the file data</param>
-        /// <returns>string form of the file data or null if file does not exist</returns>
-        public string getFileData(string filename)
-        {
-            if (File.Exists(filename))
-            {
-                using (StreamReader file = File.OpenText(filename))
-                {
-                    return file.ReadToEnd();
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
-    }
-
-    /// <summary>Mock HTTP Handler to simulate the HTTP requests and responses
-    /// <para>Checks the user_key and if it matches the correct filename, sends back the response</para>
-    /// </summary>
-    public class FakeHttpMessageHandler : HttpMessageHandler
-    {
-        private HttpResponseMessage response;
-
-        private HttpResponseMessage responseInfo;
-
-        private string filename;
-
-        /// <summary>FakeHttpMessageHandler
-        /// <para>Sets the response and filename if there are any</para>
-        /// </summary>
-        /// <param name="response">HttpResponseMessage: ResponseMessage sent back when an acceptable HTTP request comes in</param>
-        /// <param name="filename">(string optional): Name of file to be checked against the user_key sent by the api request</param>
-        public FakeHttpMessageHandler(HttpResponseMessage response, string filename = null)
-        {
-            this.response = response;
-            this.filename = filename;
-            this.responseInfo = new HttpResponseMessage();
-            this.responseInfo.StatusCode = (HttpStatusCode)(Convert.ToInt32(200));
-            this.responseInfo.Content = new StringContent(new JavaScriptSerializer().Serialize(new Dictionary<string, object>(){
-                    {"buildNumber", "6bafb29d"}, 
-                    {"buildTime", "2015.05.08_12:31:26"}, 
-                    {"name", "Rosette API"}, 
-                    {"version", "0.5.0"},
-                    {"versionChecked", true}
-                })
-            );
+        [Test]
+        public void RosetteExceptionClassTest() {
+            RosetteException ex = new RosetteException("message", 1, "requestID", "file", "line");
+            Assert.AreEqual("message", ex.Message, "Message does not match");
+            Assert.AreEqual(1, ex.Code, "Code does not match");
+            Assert.AreEqual("requestID", ex.RequestID, "RequestID does not match");
+            Assert.AreEqual("file", ex.File, "File does not match");
+            Assert.AreEqual("line", ex.Line, "Line does not match");
         }
 
-        /// <summary>SendAsync
-        /// <para>Handles the Async Get Post requests</para>
-        /// </summary>
-        /// <param name="request">HttpRequestMessage: RequestMessage sent by the API. Contains a user_key (filename for testing) and content</param>
-        /// <param name="cancellationToken">CancellationToken: Sent by Async caller. Not handled manually.</param>
-        /// <returns>Sends back a response message with the set response if the filename matches 
-        /// the user_key sent by the request header.</returns>
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            IEnumerable<string> headerValues = request.Headers.GetValues("user_key");
-            string uri = request.RequestUri.ToString();
-            string user_key = headerValues.FirstOrDefault();
-            var responseTask = new TaskCompletionSource<HttpResponseMessage>();
-            if (uri.Contains("/info"))
-            {
-                responseTask.SetResult(responseInfo);
-            }
-            else
-            {
-                responseTask.SetResult(response);
-            }
-            return responseTask.Task;
+        [Test, ExpectedException(typeof(RosetteException), ExpectedMessage = "RosetteException thrown", MatchType = MessageMatch.Exact)]
+        public void ThrowRosetteExceptionTest() {
+            throw new RosetteException("RosetteException thrown");
         }
-    }
-
-    /// <summary>TestDataStructure
-    /// <para>Data Structure for the Mock Data input in accordance with other language bindings</para>
-    /// </summary>
-    public class TestDataStructure{
-        public TestDataStructure()
-        {
-
-        }
-
-        /// <summary> inpFilename
-        /// <para>
-        /// Getter Setter for inpFilename
-        /// inpFilename: string path to input data file
-        /// </para>
-        /// </summary>
-        public string inpFilename { get; set; }
-
-        /// <summary> outputStatusFilename
-        /// <para>
-        /// Getter Setter for outputStatusFilename
-        /// outputStatusFilename: string path to output status file
-        /// </para>
-        /// </summary>
-        public string outputStatusFilename { get; set; }
-
-        /// <summary> outputDataFilename
-        /// <para>
-        /// Getter Setter for outputDataFilename
-        /// inpFilename: string path to output data file
-        /// </para>
-        /// </summary>
-        public string outputDataFilename { get; set; }
-
-        /// <summary> endpoint
-        /// <para>
-        /// Getter Setter for endpoint
-        /// inpFilename: string describing endpoint
-        /// </para>
-        /// </summary>
-        public string endpoint { get; set; }
     }
 
     [TestFixture]
-    public class rosette_apiUnitTests
-    {
-        /// <summary>Setup
-        /// <para>Setup the List of Test data. Adds Info and Ping as the first two API endpoints to be tested</para>
-        /// </summary>
-        /// <returns>List&ltTestDataStructure&gt: List of Test Data</returns>
-        public List<TestDataStructure> Setup()
-        {
-            CMockData c = new CMockData();
-            List<TestDataStructure> allData = new List<TestDataStructure>()
-            {
-                {new TestDataStructure {inpFilename = null, outputStatusFilename = Path.Combine(c.ResponseDir, "info.status"), outputDataFilename = Path.Combine(c.ResponseDir,"info.json"), endpoint = "info"}},
-                {new TestDataStructure {inpFilename = null, outputStatusFilename = Path.Combine(c.ResponseDir, "ping.status"), outputDataFilename = Path.Combine(c.ResponseDir,"ping.json"), endpoint = "ping"}}
-            };
-            List<string> cRequests = new List<string>();
-            cRequests = c.getAllRequests();
-            foreach (string s in cRequests)
-            {
-                var filename = s.Remove(0, c.RequestDir.Length);
-                TestDataStructure testD = new TestDataStructure();
-                testD.inpFilename = s;
-                testD.outputStatusFilename = c.ResponseDir + filename.Remove(filename.Length - 4, 4) + "status";
-                testD.outputDataFilename = c.ResponseDir + filename;
-                testD.endpoint = filename.Substring(filename.LastIndexOf("-") + 1, filename.Length - filename.LastIndexOf("-") - 6).Replace("_", "/");
-                allData.Add(testD);
-            }
-            return allData;
+    public class rosette_apiUnitTests : IDisposable {
+        bool disposed = false;
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
+        protected virtual void Dispose(bool disposing) {
+            if (disposed) {
+                return;
+            }
+
+            if (disposing) {
+                _mockHttp.Dispose();
+            }
+            disposed = true;
+        }
         /// <summary>Compress
         /// <para>
         /// Takes in byte data and compresses it using gzip.
@@ -220,11 +87,9 @@ namespace rosette_apiUnitTests
         /// </summary>
         /// <param name="raw">(byte[]): Raw data to be compressed</param>
         /// <returns>(byte[]): Compressed data</returns>
-        public static byte[] Compress(byte[] raw)
-        {
+        public static byte[] Compress(byte[] raw) {
             MemoryStream memory = new MemoryStream();
-            using (GZipStream gzip = new GZipStream(memory, CompressionMode.Compress, true))
-            {
+            using (GZipStream gzip = new GZipStream(memory, CompressionMode.Compress, true)) {
                 gzip.Write(raw, 0, raw.Length);
             }
             return memory.ToArray();
@@ -237,22 +102,17 @@ namespace rosette_apiUnitTests
         /// </summary>
         /// <param name="gzip">(byte[]): Data in byte form to decompress</param>
         /// <returns>(byte[]) Decompressed data</returns>
-        private static byte[] Decompress(byte[] gzip)
-        {
+        private static byte[] Decompress(byte[] gzip) {
             // Create a GZIP stream with decompression mode.
             // ... Then create a buffer and write into while reading from the GZIP stream.
-            using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress))
-            {
+            using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress)) {
                 const int size = 4096;
                 byte[] buffer = new byte[size];
-                using (MemoryStream memory = new MemoryStream())
-                {
+                using (MemoryStream memory = new MemoryStream()) {
                     int count = 0;
-                    do
-                    {
+                    do {
                         count = stream.Read(buffer, 0, size);
-                        if (count > 0)
-                        {
+                        if (count > 0) {
                             memory.Write(buffer, 0, count);
                         }
                     }
@@ -262,213 +122,414 @@ namespace rosette_apiUnitTests
             }
         }
 
-        /// <summary>Test Method: Runs through all files in Requests and checks them against Responses
-        /// <para>We are effectively sending the request through the API using the MOCK HTTPclient that has the response
-        /// and checking whether or not the API correctly receives the response.
-        /// </para>
+        private MockHttpMessageHandler _mockHttp;
+        private CAPI _rosetteApi;
+        private string _testUrl = @"https://api.rosette.com/rest/v1/";
+
+        /// <summary>
+        /// Helper to add the checkVersion test, since it gets called for every API instance
         /// </summary>
+        /// <param name="mockHttp"></param>
+        private void addCheckVersion(MockHttpMessageHandler mockHttp) {
+            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}', 'versionChecked': true}}", CAPI.Version);
+
+            mockHttp.When(_testUrl)
+                .WithQueryString(string.Format("clientVersion={0}", CAPI.Version))
+                .Respond("applciation/json", jsonResponse);
+        }
+
+        [SetUp]
+        public void Init() {
+            _mockHttp = new MockHttpMessageHandler();
+            var client = new HttpClient(_mockHttp);
+
+            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}', 'versionChecked': true}}", CAPI.Version);
+
+            _mockHttp.When(_testUrl + "info")
+                .WithQueryString(string.Format("clientVersion={0}", CAPI.Version))
+                .Respond("applciation/json", jsonResponse);
+
+            _rosetteApi = new CAPI("userkey", null, 1, client);
+        }
+
+        //------------------------- Get Calls (Info and Ping) ----------------------------------------
+
         [Test]
-        public void CAPITest()
-        {
-            List<TestDataStructure> mockData = Setup();
-            CMockData cmd = new CMockData();
+        public void InfoTest() {
+            _mockHttp.When(_testUrl + "info")
+                .Respond("application/json", "{'response': 'OK'}");
 
-            foreach (TestDataStructure td in mockData)
-            {
-                System.Diagnostics.Debug.WriteLine("Evaluating " + td.outputDataFilename);
-                Console.WriteLine("Evaluating " + td.outputDataFilename);
-                Dictionary<object, object> tdInputData = null;
-                if (td.inpFilename != null)
-                {
-                    string tdInput = cmd.getFileData(td.inpFilename);
-                    if (tdInput != null)
-                    {
-                        tdInputData = new JavaScriptSerializer().Deserialize<Dictionary<object, object>>(tdInput);
-                    }
-                }
-                
-                Dictionary<string, object> result = new Dictionary<string,object>();
-
-                var fakeResponse = new HttpResponseMessage();
-                string tdStatus = cmd.getFileData(td.outputStatusFilename);
-                fakeResponse.StatusCode = (HttpStatusCode)(Convert.ToInt32(tdStatus));
-
-                string tdOutput = cmd.getFileData(td.outputDataFilename);
-                if (tdOutput.Length > 200)
-                {
-                    System.Diagnostics.Debug.WriteLine("GZipping");
-                    byte[] compress = Compress(Encoding.ASCII.GetBytes(tdOutput));
-                    fakeResponse.Content = new ByteArrayContent(compress);
-                    fakeResponse.Content.Headers.ContentEncoding.Add("gzip");
-                    MemoryStream stream = new MemoryStream(Decompress(compress));
-                    StreamReader reader = new StreamReader(stream);
-                    tdOutput = reader.ReadToEnd();
-                }
-                else
-                {
-                    fakeResponse.Content = new StringContent(tdOutput);
-                }
-
-                var fakeHandler = new FakeHttpMessageHandler(fakeResponse, td.inpFilename);
-                HttpClient httpClient = new HttpClient(fakeHandler);
-                CAPI c = new CAPI(td.inpFilename, null, 3, httpClient);
-
-                string morphofeature = null; 
-                if (td.endpoint.IndexOf("morphology") != -1)
-                {
-                    morphofeature = td.endpoint.Remove(0, td.endpoint.IndexOf("/"));
-                    td.endpoint = td.endpoint.Remove(td.endpoint.IndexOf("/"));
-                }
-                try
-                {
-                    switch (td.endpoint)
-                    {
-                        case "categories":
-                            result = c.Categories(tdInputData);
-                            break;
-                        case "entities":
-                            result = c.Entity(tdInputData);
-                            break;
-                        case "entities/linked":
-                            result = c.EntitiesLinked(tdInputData);
-                            break;
-                        case "info":
-                            result = c.Info();
-                            break;
-                        case "language":
-                            result = c.Entity(tdInputData);
-                            break;
-                        case "morphology":
-                            result = c.Morphology(tdInputData, morphofeature);
-                            break;
-                        case "name":
-                            if (td.inpFilename.Contains("matched"))
-                            {
-                                result = c.MatchedName(tdInputData);
-                            }
-                            else
-                            {
-                                result = c.TranslatedName(tdInputData);
-                            }
-                            break;
-                        case "ping":
-                            result = c.Ping();
-                            break;
-                        case "relationships":
-                            result = c.Relationships(tdInputData);
-                            break;
-                        case "sentences":
-                            result = c.Sentences(tdInputData);
-                            break;
-                        case "sentiment":
-                            result = c.Sentiment(tdInputData);
-                            break;
-                        case "tokens":
-                            result = c.Tokens(tdInputData);
-                            break;
-                    }
-                }
-                catch(RosetteException e)
-                {
-                    result = new Dictionary<string, object>(){
-                        {"message", e.Message}, 
-                        {"code", e.Code}, 
-                        {"requestId", e.RequestID},
-                        {"file", e.File}, 
-                        {"line", e.Line}
-                    };
-                }
-                Dictionary<string, object> outputDict = new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(tdOutput);
-
-                if (result.Keys.Contains("file"))
-                {
-                    Assert.AreEqual(result["code"], Convert.ToInt32(tdStatus));
-                    System.Diagnostics.Debug.WriteLine("Status matched");
-                    Console.WriteLine("Status matched");
-                }
-                else
-                {
-                    bool allResultsMatched = true;
-                    foreach (string key in outputDict.Keys)
-                    {
-                        if (key != "requestId")
-                        {
-                            Assert.IsTrue(result.Keys.Contains(key));
-                            Assert.IsTrue(result.Keys.Contains("responseHeaders"));
-                            if (result.Keys.Contains(key))
-                            {
-                                System.Diagnostics.Debug.WriteLine("Key found");
-                            }
-                            else
-                            {
-                                System.Diagnostics.Debug.WriteLine("Key NOT found");
-                                allResultsMatched = false;
-                            }
-                            if (result[key] is Object)
-                            {
-                                Assert.AreEqual(new JavaScriptSerializer().Serialize(result[key]), new JavaScriptSerializer().Serialize(outputDict[key]));
-                                if (new JavaScriptSerializer().Serialize(result[key]) == new JavaScriptSerializer().Serialize(outputDict[key]))
-                                {
-                                    System.Diagnostics.Debug.WriteLine("Results Matched");
-                                }
-                                else
-                                {
-                                    System.Diagnostics.Debug.WriteLine("Results NOT Matched");
-                                    allResultsMatched = false;
-                                }
-                            }
-                            else
-                            {
-                                Assert.AreEqual(outputDict[key], result[key]);
-                                if (outputDict[key] == result[key])
-                                {
-                                   System.Diagnostics.Debug.WriteLine("Results Matched");
-                                }
-                                else
-                                {
-                                    System.Diagnostics.Debug.WriteLine("Results NOT Matched");
-                                    allResultsMatched = false;
-                                }
-                            }
-                        }
-                    }
-                    if (allResultsMatched)
-                    {
-                        Console.WriteLine("All results matched");
-                    }
-                    else
-                    {
-                        throw new Exception("An Error occurred during the test.");
-                    }
-                }
-
-            }
+            var response = _rosetteApi.Info();
+            Assert.AreEqual(response["response"], "OK");
         }
 
-        
-    }
-    static class CTestsMain
-    {
-        [STAThread]
-        static void Main()
-        {
-            bool success = true;
-            Console.WriteLine("Beginning Tests");
-            try{
-                new rosette_apiUnitTests().CAPITest();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Uncaught Exception: " + e.Message);
-                success = false;
-            }
-            finally
-            {
-                if (success)
-                {
-                    Console.WriteLine("Tests passed successfully");
-                }
-            }
+        [Test]
+        public void PingTest() {
+            _mockHttp.When(_testUrl + "ping")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Ping();
+            Assert.AreEqual(response["response"], "OK");
         }
+
+        //------------------------- Exceptions ----------------------------------------
+
+        // Currently, the two exceptions returned by the binding (not server) occur if
+        // neither content nor contentUri are provided or both are provided.  Categories is
+        // used for convenience, but the tests could be run against almost all of the 
+        // endpoints.
+
+        [Test]
+        public void NoParams_Test() {
+            _mockHttp.When(_testUrl + "categories")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            try {
+                _rosetteApi.Categories();
+            }
+            catch (RosetteException ex) {
+                Assert.AreEqual(ex.Message, "Must supply one of Content or ContentUri");
+                return;
+            }
+            Assert.Fail("Exception not thrown");
+        }
+
+        [Test]
+        public void ConflictingParams_Test() {
+            _mockHttp.When(_testUrl + "categories")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            try {
+                _rosetteApi.Categories("content", null, null, "contentUri");
+            }
+            catch (RosetteException ex) {
+                Assert.AreEqual(ex.Message, "Cannot supply both Content and ContentUri");
+                return;
+            }
+            Assert.Fail("Exception not thrown");
+        }
+
+        //------------------------- Categories ----------------------------------------
+
+        [Test]
+        public void Categories_Content_Test() {
+            _mockHttp.When(_testUrl + "categories")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Categories("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Categories_Dict_Test() {
+            _mockHttp.When(_testUrl + "categories")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Categories(new Dictionary<object, object>(){ {"contentUri", "contentUrl"} });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Categories_File_Test() {
+            _mockHttp.When(_testUrl + "categories")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Categories(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Entities Linked ----------------------------------------
+
+        [Test]
+        public void EntitiesLinked_Content_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.EntitiesLinked("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void EntitiesLinked_Dict_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.EntitiesLinked(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void EntitiesLinked_File_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.EntitiesLinked(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Entity ----------------------------------------
+
+        [Test]
+        public void Entity_Content_Test() {
+            _mockHttp.When(_testUrl + "entities")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Entity("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Entity_Dict_Test() {
+            _mockHttp.When(_testUrl + "entities")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Entity_File_Test() {
+            _mockHttp.When(_testUrl + "entities")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Entity(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Language ----------------------------------------
+
+        [Test]
+        public void Language_Content_Test() {
+            _mockHttp.When(_testUrl + "language")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Language("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Language_Dict_Test() {
+            _mockHttp.When(_testUrl + "language")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Language(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Language_File_Test() {
+            _mockHttp.When(_testUrl + "language")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Language(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Morphology ----------------------------------------
+
+        [Test]
+        public void Morphology_Content_Test() {
+            _mockHttp.When(_testUrl + "morphology/complete")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Morphology("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Morphology_Dict_Test() {
+            _mockHttp.When(_testUrl + "morphology/complete")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Morphology(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Morphology_File_Test() {
+            _mockHttp.When(_testUrl + "morphology/complete")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Morphology(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Name Similarity ----------------------------------------
+
+        [Test]
+        public void NameSimilarity_Content_Test() {
+            _mockHttp.When(_testUrl + "name-similarity")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            Name name1 = new Name("Name One");
+            Name name2 = new Name("Name Two");
+            var response = _rosetteApi.NameSimilarity(name1, name2);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void NameSimilarity_Dict_Test() {
+            _mockHttp.When(_testUrl + "name-similarity")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, {"name2", "Name Two"} });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Relationships ----------------------------------------
+
+        [Test]
+        public void Relationships_Content_Test() {
+            _mockHttp.When(_testUrl + "relationships")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Relationships("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Relationships_Dict_Test() {
+            _mockHttp.When(_testUrl + "relationships")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Relationships(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Relationships_File_Test() {
+            _mockHttp.When(_testUrl + "relationships")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Relationships(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Sentences ----------------------------------------
+
+        [Test]
+        public void Sentences_Content_Test() {
+            _mockHttp.When(_testUrl + "sentences")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Sentences("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Sentences_Dict_Test() {
+            _mockHttp.When(_testUrl + "sentences")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Sentences(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Sentences_File_Test() {
+            _mockHttp.When(_testUrl + "sentences")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Sentences(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Sentiment ----------------------------------------
+
+        [Test]
+        public void Sentiment_Content_Test() {
+            _mockHttp.When(_testUrl + "sentiment")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Sentiment("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Sentiment_Dict_Test() {
+            _mockHttp.When(_testUrl + "sentiment")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Sentiment(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Sentiment_File_Test() {
+            _mockHttp.When(_testUrl + "sentiment")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Sentiment(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Tokens ----------------------------------------
+
+        [Test]
+        public void Tokens_Content_Test() {
+            _mockHttp.When(_testUrl + "tokens")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Tokens("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Tokens_Dict_Test() {
+            _mockHttp.When(_testUrl + "tokens")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Tokens(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void Tokens_File_Test() {
+            _mockHttp.When(_testUrl + "tokens")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            var response = _rosetteApi.Tokens(f);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        //------------------------- Name Translation ----------------------------------------
+
+        [Test]
+        public void NameTranslation_Content_Test() {
+            _mockHttp.When(_testUrl + "name-translation")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.NameTranslation("content");
+            Assert.AreEqual(response["response"], "OK");
+        }
+
+        [Test]
+        public void NameTranslation_Dict_Test() {
+            _mockHttp.When(_testUrl + "name-translation")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            Dictionary<object, object> sampleDict = new Dictionary<object, object>(){
+                { "name", "name"},
+                { "sourceLanguageOfUse", "sourceLanguageOfUse"},
+                { "sourceScript", "sourceScript"},
+                { "targetLanguage", "targetLanguage"},
+                { "targetScript", "targetScript"},
+                { "targetScheme", "targetScheme"},
+                { "sourceLanguageOfOrigin", "sourceLanguageOfOrigin"},
+                { "entityType", "entityType"}
+            };
+            var response = _rosetteApi.NameTranslation(sampleDict);
+            Assert.AreEqual(response["response"], "OK");
+        }
+
     }
 }

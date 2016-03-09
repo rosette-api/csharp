@@ -48,11 +48,6 @@ namespace rosette_api
         /// </summary>
         private DateTime last_version_check;
 
-        /// <summary>
-        /// String to set version number. Must be updated on API update.
-        /// </summary>
-        private string binding_version = "0.7";
-
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -72,7 +67,6 @@ namespace rosette_api
             MaxRetry = (maxRetry == 0) ? 1: maxRetry;
             Debug = false;
             Morphofeatures = new List<string> { "complete", "lemmas", "parts-of-speech", "compound-components", "han-readings" };
-            Version = binding_version;
             Timeout = 300;
             Client = client;
             version_checked = checkVersion();
@@ -97,14 +91,23 @@ namespace rosette_api
         /// </summary>
         public string URIstring { get; set; }
 
+        /// <summary>
+        /// Internal version number that is used to sync with the running Rosette API server
+        /// </summary>
+        private static string _bindingVersion = "0.10";
+
         /// <summary>Version
         /// <para>
         /// Getter, Setter for the Version
         /// Version: Internal Server Version number.
         /// </para>
         /// </summary>
-        private string Version { get; set; }
-
+        public static string Version {
+            get { return _bindingVersion; }
+            private set {
+                _bindingVersion = value;
+            }
+        }
         /// <summary>MaxRetry
         /// <para>
         /// Getter, Setter for the MaxRetry
@@ -146,15 +149,14 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request.
         /// The response is the contextual categories identified in the input.
         /// </returns>
-        public Dictionary<string, object> Categories(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Categories(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "categories/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "categories";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Categories
@@ -168,7 +170,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Categories(Dictionary<object, object> dict)
         {
-            _uri = "categories/";
+            _uri = "categories";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -183,7 +185,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Categories(RosetteFile file)
         {
-            _uri = "categories/";
+            _uri = "categories";
             return Process(file);
         }
 
@@ -195,17 +197,16 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request.
         /// The response identifies the entities in the input that have been linked to entities in the knowledge base. 
         /// Each entity includes an entity id (from the knowledge base), a chain id (all instances of the same entity share a chain id), 
         /// the mention (entity text from the input), and confidence associated with the linking.
         /// </returns>
-        public Dictionary<string, object> EntitiesLinked(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> EntitiesLinked(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "entities/linked/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "entities/linked";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>EntitiesLinked
@@ -221,7 +222,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> EntitiesLinked(Dictionary<object, object> dict)
         {
-            _uri = "entities/linked/";
+            _uri = "entities/linked";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -238,7 +239,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> EntitiesLinked(RosetteFile file)
         {
-            _uri = "entities/linked/";
+            _uri = "entities/linked";
             return Process(file);
         }
 
@@ -250,7 +251,6 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response is a list of extracted entities. 
@@ -258,10 +258,10 @@ namespace rosette_api
         /// normalized text (the most complete form of this entity that appears in the input), count (how many times this entity appears in the input), 
         /// and the confidence associated with the extraction.
         /// </returns>
-        public Dictionary<string, object> Entity(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Entity(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "entities/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "entities";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Entity
@@ -278,7 +278,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Entity(Dictionary<object, object> dict)
         {
-            _uri = "entities/";
+            _uri = "entities";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -296,7 +296,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Entity(RosetteFile file)
         {
-            _uri = "entities/";
+            _uri = "entities";
             return Process(file);
         }
 
@@ -308,7 +308,7 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the info GET.</returns>
         public Dictionary<string, object> Info()
         {
-            _uri = "info/";
+            _uri = "info";
             return getResponse(SetupClient());
         }
 
@@ -320,15 +320,14 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response is an ordered list of detected languages, including language and detection confidence, sorted by descending confidence.
         /// </returns>
-        public Dictionary<string, object> Language(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Language(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "language/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "language";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Language
@@ -342,7 +341,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Language(Dictionary<object, object> dict)
         {
-            _uri = "language/";
+            _uri = "language";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -357,7 +356,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Language(RosetteFile file)
         {
-            _uri = "language/";
+            _uri = "language";
             return Process(file);
         }
 
@@ -369,17 +368,16 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings. 
         /// Support for specific return types depends on language.
         /// </returns>
-        public Dictionary<string, object> Morphology(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null, string feature = "complete")
+        public Dictionary<string, object> Morphology(string content = null, string language = null, string contentType = null, string contentUri = null, string feature = "complete")
         {
             _uri = Morphofeatures.Contains(feature) ? "morphology/" + feature : "morphology/complete";
-            return Process(content, language, contentType, unit, contentUri);
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Morphology
@@ -427,7 +425,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> NameSimilarity(Name n1, Name n2)
         {
-            _uri = "name-similarity/";
+            _uri = "name-similarity";
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, object>(){
                 { "name1", n1},
@@ -435,7 +433,6 @@ namespace rosette_api
             }));
         }
 
-        /// deprecated
         /// <summary>MatchedName
         /// <para>
         /// (POST)MatchedName Endpoint: Returns the result of matching 2 names.
@@ -445,6 +442,7 @@ namespace rosette_api
         /// <param name="n2">Name: Second name to be matched</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// </returns>
+        [Obsolete("Use NameSimilarity")]
         public Dictionary<string, object> MatchedName(Name n1, Name n2)
         {
             return NameSimilarity(n1, n2);
@@ -460,11 +458,10 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> NameSimilarity(Dictionary<object, object> dict)
         {
-            _uri = "name-similarity/";
+            _uri = "name-similarity";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
-        /// deprecated
         /// <summary>MatchedName
         /// <para>
         /// (POST)MatchedName Endpoint: Returns the result of matching 2 names.
@@ -473,6 +470,7 @@ namespace rosette_api
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// </returns>
+        [Obsolete("Use NameSimilarity")]
         public Dictionary<string, object> MatchedName(Dictionary<object, object> dict)
         {
             return NameSimilarity(dict);
@@ -498,7 +496,6 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>
         /// The response is a list of extracted relationships. A relationship contains
@@ -512,10 +509,10 @@ namespace rosette_api
         /// temporals [optional] - usually express the time in which the action expressed by the relationship took place
         /// confidence = a measure of quality of relationship extraction, between 0 - 1
         /// </returns>
-        public Dictionary<string, object> Relationships(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Relationships(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "relationships/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "relationships";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Relationships
@@ -538,7 +535,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Relationships(Dictionary<object, object> dict)
         {
-            _uri = "relationships/";
+            _uri = "relationships";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -562,7 +559,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Relationships(RosetteFile file)
         {
-            _uri = "relationships/";
+            _uri = "relationships";
             return Process(file);
         }
 
@@ -574,15 +571,14 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response contains a list of sentences.
         /// </returns>
-        public Dictionary<string, object> Sentences(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Sentences(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "sentences/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "sentences";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Sentences
@@ -596,7 +592,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Sentences(Dictionary<object, object> dict)
         {
-            _uri = "sentences/";
+            _uri = "sentences";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -611,7 +607,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Sentences(RosetteFile file)
         {
-            _uri = "sentences/";
+            _uri = "sentences";
             return Process(file);
         }
 
@@ -623,15 +619,14 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response contains sentiment analysis results.
         /// </returns>
-        public Dictionary<string, object> Sentiment(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Sentiment(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "sentiment/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "sentiment";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Sentiment
@@ -645,7 +640,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Sentiment(Dictionary<object, object> dict)
         {
-            _uri = "sentiment/";
+            _uri = "sentiment";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -660,7 +655,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Sentiment(RosetteFile file)
         {
-            _uri = "sentiment/";
+            _uri = "sentiment";
             return Process(file);
         }
 
@@ -672,15 +667,14 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response contains a list of tokens.
         /// </returns>
-        public Dictionary<string, object> Tokens(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        public Dictionary<string, object> Tokens(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
-            _uri = "tokens/";
-            return Process(content, language, contentType, unit, contentUri);
+            _uri = "tokens";
+            return Process(content, language, contentType, contentUri);
         }
 
         /// <summary>Tokens
@@ -694,7 +688,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Tokens(Dictionary<object, object> dict)
         {
-            _uri = "tokens/";
+            _uri = "tokens";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -709,7 +703,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> Tokens(RosetteFile file)
         {
-            _uri = "tokens/";
+            _uri = "tokens";
             return Process(file);
         }
 
@@ -730,7 +724,7 @@ namespace rosette_api
         /// </returns>
         public Dictionary<string, object> NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null)
         {
-            _uri = "name-translation/";
+            _uri = "name-translation";
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, string>(){
                 { "name", name},
@@ -744,7 +738,6 @@ namespace rosette_api
             }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value)));
         }
 
-        /// deprecated
         /// <summary>TranslatedName
         /// <para>
         /// (POST)TranslatedName Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
@@ -760,6 +753,7 @@ namespace rosette_api
         /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// </returns>
+        [Obsolete("Use NameTranslation")]
         public Dictionary<string, object> TranslatedName(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null)
         {
             return NameTranslation(name, sourceLanguageOfUse, sourceScript, targetLanguage, targetScript, targetScheme, sourceLanguageOfOrigin, entityType);
@@ -774,7 +768,7 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. </returns>
         public Dictionary<string, object> NameTranslation(Dictionary<object, object> dict)
         {
-            _uri = "name-translation/";
+            _uri = "name-translation";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -786,6 +780,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. </returns>
+        [Obsolete("Use NameTranslation")]
         public Dictionary<string, object> TranslatedName(Dictionary<object, object> dict)
         {
             return NameTranslation(dict);
@@ -836,9 +831,9 @@ namespace rosette_api
                     dict = new JavaScriptSerializer().Deserialize<dynamic>(message[0]);
                     dict.Add("responseHeaders", new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(message[1]));
                 }
-                catch (RosetteException e)
+                catch (RosetteException)
                 {
-                    throw e;
+                    throw;
                 }
                 return dict;               
 
@@ -858,14 +853,12 @@ namespace rosette_api
             Dictionary<string, string> dict = new Dictionary<string, string>(){
                 { "content", file.getFileDataString()},
                 { "contentType", file.getDataType()},
-                { "unit", "doc"},
             };
 
             if(file.getOptions() != null){
                 Dictionary<string, string> opts = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(file.getOptions());
                 dict = (Dictionary<string, string>)dict.Concat(opts.Where(x=> !dict.Keys.Contains(x.Key)));
             }
-
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
@@ -878,10 +871,9 @@ namespace rosette_api
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
-        /// <param name="unit">(string, optional): Input unit: "doc" (document, the default) or "sentence"</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the response from the server from the getResponse call.</returns>
-        private Dictionary<string, Object> Process(string content = null, string language = null, string contentType = null, string unit = null, string contentUri = null)
+        private Dictionary<string, Object> Process(string content = null, string language = null, string contentType = null, string contentUri = null)
         {
             if (content == null){
                 if(contentUri == null){
@@ -893,16 +885,10 @@ namespace rosette_api
                 }
             }
 
-            if (unit == null)
-            {
-                unit = "doc";
-            }
-
             Dictionary<string, string> dict = new Dictionary<string, string>(){
                 { "language", language},
                 { "content", content},
                 { "contentType", contentType},
-                { "unit", unit},
                 { "contentUri", contentUri}
             }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value);
 
@@ -942,7 +928,7 @@ namespace rosette_api
                 {
                     client.BaseAddress = new Uri(URIstring);
                 }
-                if (client.Timeout == null)
+                if (client.Timeout == TimeSpan.Zero)
                 {
                     client.Timeout = new TimeSpan(0, 0, Timeout);
                 }
@@ -959,7 +945,7 @@ namespace rosette_api
             client.DefaultRequestHeaders.Add("user_key", UserKey);
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
-            client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + binding_version);
+            client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
 
             return client;
         }
@@ -999,13 +985,12 @@ namespace rosette_api
                 {
                     text = getMessage(responseMsg)[0];
                 }
-                catch(RosetteException e)
+                catch(RosetteException)
                 {
-                    throw e;
+                    throw;
                 }
                 var result = new JavaScriptSerializer().Deserialize<dynamic>(text);
                 // compatibility with server side is at minor version level of semver
-                string serverVersion = result["version"].ToString();
                 if (!result["versionChecked"])
                 {
                     throw new RosetteException("The server version is not compatible with binding version " + versionToCheck, -6);
@@ -1221,12 +1206,10 @@ namespace rosette_api
         public byte[] getFileData()
         {
             byte[] bytes = null;
-            try
-            {
+            try {
                 bytes = File.ReadAllBytes(_file);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
             }
             return bytes;
@@ -1260,15 +1243,17 @@ namespace rosette_api
         /// </summary>
         /// <returns>string: String of the options</returns>
         public string getOptions(){
-            try{
-                using (StreamReader ff = File.OpenText(_options))
-                {
-                    return ff.ReadToEnd();
+            if (!string.IsNullOrEmpty(_options)) {
+                try {
+                    using (StreamReader ff = File.OpenText(_options)) {
+                        return ff.ReadToEnd();
+                    }
                 }
-            }catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                catch (Exception e) {
+                    System.Diagnostics.Debug.WriteLine(e.ToString());
+                }
             }
+
             return null;
         }
     }

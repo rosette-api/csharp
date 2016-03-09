@@ -67,18 +67,20 @@ function checkAPI {
 }
 
 #Copy the mounted content in /source to current WORKDIR
-cp -r -n /source/* .
+cp -r -n /source/. .
 
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
     #Check API key and if succesful then build local rosette_api project
-    checkAPI && nuget restore rosette_api.sln && xbuild /p:Configuration=Release rosette_api.sln
+    checkAPI && nuget restore rosette_api.sln
+    xbuild /p:Configuration=Release rosette_api.sln
+    xbuild /p:Configuration=Debug rosette_api.sln
     #Copy necessary libraries
     cp /csharp-dev/rosette_api/bin/Release/rosette_api.dll /csharp-dev/rosette_apiExamples
     cp /csharp-dev/rosette_apiUnitTests/bin/Release/nunit.framework.dll /csharp-dev/rosette_apiUnitTests
     cp /csharp-dev/rosette_apiUnitTests/bin/Release/rosette_api.dll /csharp-dev/rosette_apiUnitTests
     #Change to dir where examples will be run from
-    cd rosette_apiExamples
+    pushd rosette_apiExamples
     if [ ! -z ${FILENAME} ]; then
         echo -e "\n---------- ${FILENAME} start -------------"
         executable=$(basename "${FILENAME}" .cs).exe
@@ -94,15 +96,9 @@ if [ ! -z ${API_KEY} ]; then
             echo "---------- $file end -------------"
         done
     fi
-    #Change to dir where unit tests will be run from
-    cd ../rosette_apiUnitTests
-    for file in *.cs; do
-        echo -e "\n---------- $file start -------------"
-        executable=$(basename "$file" .cs).exe
-        mcs $file -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -r:WindowsBase.dll -r:nunit.framework.dll -out:$executable
-        mono $executable 
-        echo "---------- $file end -------------"
-    done
+    # Run the unit tests
+    popd
+    mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Debug/rosette_apiUnitTests.dll
 else 
     HELP
 fi
