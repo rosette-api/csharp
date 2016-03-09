@@ -6,6 +6,7 @@ install:
 script:
     - xbuild /p:Configuration=Release rosette_api.sln
     - pwd
+    - ls ./packages/Nunit.Console.3.0.1/tools
     - mono ./packages/Nunit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
 
 notifications:
