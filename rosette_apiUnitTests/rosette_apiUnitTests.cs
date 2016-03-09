@@ -25,8 +25,15 @@ namespace rosette_apiUnitTests
 
         [Test]
         public void RosetteFileClassTest() {
-            RosetteFile f = new RosetteFile("rosette_api.xml", "dataType", null);
-            Assert.AreEqual("rosette_api.xml", f.getFilename(), "Filename does not match");
+            string tmpFile = Path.GetTempFileName();
+            StreamWriter sw = File.AppendText(tmpFile);
+            sw.WriteLine("Rosette API Unit Test");
+            sw.Flush();
+            sw.Close();
+            
+            RosetteFile f = new RosetteFile(tmpFile, "dataType", null);
+            Assert.IsNotNull(f.getFilename(), "Filename is null");
+            Assert.AreEqual(tmpFile, f.getFilename(), "Filename does not match");
             Assert.AreEqual("dataType", f.getDataType(), "DataType does not match");
             Assert.IsNull(f.getOptions(), "Options does not match");
 

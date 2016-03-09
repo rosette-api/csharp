@@ -1206,12 +1206,10 @@ namespace rosette_api
         public byte[] getFileData()
         {
             byte[] bytes = null;
-            try
-            {
+            try {
                 bytes = File.ReadAllBytes(_file);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
             }
             return bytes;
