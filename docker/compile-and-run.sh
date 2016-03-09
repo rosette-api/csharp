@@ -67,7 +67,7 @@ function checkAPI {
 }
 
 #Copy the mounted content in /source to current WORKDIR
-cp -r -n /source/* .
+cp -r -n /source/. .
 
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
