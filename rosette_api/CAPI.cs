@@ -1245,15 +1245,17 @@ namespace rosette_api
         /// </summary>
         /// <returns>string: String of the options</returns>
         public string getOptions(){
-            try{
-                using (StreamReader ff = File.OpenText(_options))
-                {
-                    return ff.ReadToEnd();
+            if (!string.IsNullOrEmpty(_options)) {
+                try {
+                    using (StreamReader ff = File.OpenText(_options)) {
+                        return ff.ReadToEnd();
+                    }
                 }
-            }catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                catch (Exception e) {
+                    System.Diagnostics.Debug.WriteLine(e.ToString());
+                }
             }
+
             return null;
         }
     }
