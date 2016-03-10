@@ -942,7 +942,7 @@ namespace rosette_api
                 // exception can be ignored
             }
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Add("user_key", UserKey);
+            client.DefaultRequestHeaders.Add("X-RosetteAPI-Key", UserKey);
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
