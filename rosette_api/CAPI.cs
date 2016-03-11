@@ -857,7 +857,7 @@ namespace rosette_api
 
             if(file.getOptions() != null){
                 Dictionary<string, string> opts = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(file.getOptions());
-                dict = (Dictionary<string, string>)dict.Concat(opts.Where(x=> !dict.Keys.Contains(x.Key)));
+                dict = dict.Concat(opts.Where(x=> !dict.Keys.Contains(x.Key))).ToDictionary(x=>x.Key, x=>x.Value);
             }
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
@@ -1156,7 +1156,7 @@ namespace rosette_api
         private string _dataType;
 
         /// <summary>
-        /// Internal string name of the path to the options file
+        /// Internal json string of file options
         /// </summary>
         private string _options;
 
@@ -1167,7 +1167,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="file">string: Path to the data file</param>
         /// <param name="dataType">(string, optional): Description of the datatype of the data file. "application/octet-stream" is used if unsure.</param>
-        /// <param name="options">(string, optional): Json Options file to add extra information</param>
+        /// <param name="options">(string, optional): Json string to add extra information</param>
         public RosetteFile(string file, string dataType = "application/octet-stream", string options = null)
         {
             _file = file;
@@ -1226,7 +1226,10 @@ namespace rosette_api
             {
                 using (StreamReader ff = File.OpenText(_file))
                 {
-                    return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(ff.ReadToEnd()));
+                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(ff.ReadToEnd());
+                    MemoryStream stream = new MemoryStream(byteArray);
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    return reader.ReadToEnd();
                 }
             }
             catch (Exception e)
@@ -1243,18 +1246,7 @@ namespace rosette_api
         /// </summary>
         /// <returns>string: String of the options</returns>
         public string getOptions(){
-            if (!string.IsNullOrEmpty(_options)) {
-                try {
-                    using (StreamReader ff = File.OpenText(_options)) {
-                        return ff.ReadToEnd();
-                    }
-                }
-                catch (Exception e) {
-                    System.Diagnostics.Debug.WriteLine(e.ToString());
-                }
-            }
-
-            return null;
+            return _options;
         }
     }
 

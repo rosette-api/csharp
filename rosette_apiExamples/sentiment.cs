@@ -42,7 +42,7 @@ namespace rosette_apiExamples
                 //Rosette API provides File upload options (shown here)
                 //Simply create a new RosetteFile using the path to a file
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> SentimentResult = SentimentCAPI.Sentiment(new RosetteFile(newFile));
+                Dictionary<string, Object> SentimentResult = SentimentCAPI.Sentiment(new RosetteFile(newFile, @"application/octet-stream", "{\"language\":\"eng\"}"));
                 Console.WriteLine(new JavaScriptSerializer().Serialize(SentimentResult));
 
                 if (File.Exists(newFile)) {
