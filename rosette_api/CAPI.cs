@@ -793,8 +793,9 @@ namespace rosette_api
         /// </summary>
         /// <param name="client">HttpClient: Client to use to access the Rosette server.</param>
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
+        /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the response from the server.</returns>
-        private Dictionary<string, Object> getResponse(HttpClient client, string jsonRequest = null)
+        private Dictionary<string, Object> getResponse(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null)
         {
             if (client != null && version_checked)
             {     
@@ -816,6 +817,9 @@ namespace rosette_api
                         HttpContent content = new StringContent(jsonRequest);
                         content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                         responseMsg = client.PostAsync(wholeURI, content).Result;
+                    }
+                    else if (multiPart != null) {
+                        responseMsg = client.PostAsync(wholeURI, multiPart).Result;
                     }
                     else
                     {
@@ -850,17 +854,19 @@ namespace rosette_api
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the response from the server from the getResponse call.</returns>
         private Dictionary<string, Object> Process(RosetteFile file)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>(){
-                { "content", file.getFileDataString()},
-                { "contentType", file.getDataType()},
-            };
+            //Dictionary<string, string> dict = new Dictionary<string, string>(){
+            //    { "content", file.getFileDataString()},
+            //    { "contentType", file.getDataType()},
+            //};
 
-            if(file.getOptions() != null){
-                Dictionary<string, string> opts = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(file.getOptions());
-                dict = (Dictionary<string, string>)dict.Concat(opts.Where(x=> !dict.Keys.Contains(x.Key)));
-            }
+            //if(file.getOptions() != null){
+            //    Dictionary<string, string> opts = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(file.getOptions());
+            //    dict = (Dictionary<string, string>)dict.Concat(opts.Where(x=> !dict.Keys.Contains(x.Key)));
+            //}
 
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            //return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+
+            return getResponse(SetupClient(), null, file.AsMultipartFormData());
         }
 
         /// <summary>Process
@@ -1167,7 +1173,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="file">string: Path to the data file</param>
         /// <param name="dataType">(string, optional): Description of the datatype of the data file. "application/octet-stream" is used if unsure.</param>
-        /// <param name="options">(string, optional): Json Options file to add extra information</param>
+        /// <param name="options">(string, optional): Endpoint options as a JSON string</param>
         public RosetteFile(string file, string dataType = "application/octet-stream", string options = null)
         {
             _file = file;
@@ -1255,6 +1261,25 @@ namespace rosette_api
             }
 
             return null;
+        }
+
+        public MultipartFormDataContent AsMultipartFormData() {
+            Stream formDataStream = new System.IO.MemoryStream();
+            MultipartFormDataContent content = new MultipartFormDataContent();
+
+            FileStream fs = File.OpenRead(_file);
+            var streamContent = new StreamContent(fs);
+            streamContent.Headers.Add("Content-Type", "text/plain");
+            streamContent.Headers.Add("Content-Disposition", "form-data; name=\"content\"; filename=\"" + Path.GetFileName(_file) + "\"");
+            content.Add(streamContent, "content", Path.GetFileName(_file));
+
+            if (!string.IsNullOrEmpty(_options)) {
+                var stringContent = new StringContent(_options);
+                stringContent.Headers.Add("Content-Disposition", "form-data; name=\"request\"");
+                content.Add(stringContent, "request");
+            }
+
+            return content;
         }
     }
 

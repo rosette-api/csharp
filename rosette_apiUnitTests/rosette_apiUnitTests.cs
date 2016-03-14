@@ -13,6 +13,27 @@ using System.Text;
 namespace rosette_apiUnitTests
 {
     [TestFixture]
+    public class tempMultiPartTest {
+        [Test]
+        public void doTest() {
+            string tmpFile = Path.GetTempFileName();
+            StreamWriter sw = File.AppendText(tmpFile);
+            sw.WriteLine(@"<html><head><title>New Ghostbusters Film</title></head><body><p>Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”</p></body></html>");
+            sw.Flush();
+            sw.Close();
+
+            RosetteFile rf = new RosetteFile(tmpFile);
+
+            CAPI rosetteApi = new CAPI("dbb3a7966e89948bdac7bec2bb115a95", "http://seuss.basistech.net:8181/rest/v1", 1);
+            Dictionary<string, object> result = rosetteApi.Sentiment(rf);
+
+            if (File.Exists(tmpFile)) {
+                File.Delete(tmpFile);
+            }
+        }
+    }
+
+    [TestFixture]
     public class rosette_classTests {
         [Test]
         public void NameClassTest() {
@@ -42,6 +63,10 @@ namespace rosette_apiUnitTests
 
             string content = f.getFileDataString();
             Assert.IsTrue(content.Length > 0, "File is empty");
+
+            if (File.Exists(tmpFile)) {
+                File.Delete(tmpFile);
+            }
         }
 
         [Test]
@@ -125,6 +150,7 @@ namespace rosette_apiUnitTests
         private MockHttpMessageHandler _mockHttp;
         private CAPI _rosetteApi;
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
+        private string _tmpFile = null;
 
         /// <summary>
         /// Helper to add the checkVersion test, since it gets called for every API instance
@@ -138,9 +164,14 @@ namespace rosette_apiUnitTests
                 .Respond("applciation/json", jsonResponse);
         }
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void Init() {
-            _mockHttp = new MockHttpMessageHandler();
+            // Create a temporary file for use with file testing
+            _tmpFile = Path.GetTempFileName();
+            StreamWriter sw = File.AppendText(_tmpFile);
+            sw.WriteLine("Rosette API Unit Test.  This file is used for testing file operations.");
+            sw.Flush();
+            sw.Close(); _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
             string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}', 'versionChecked': true}}", CAPI.Version);
@@ -150,6 +181,13 @@ namespace rosette_apiUnitTests
                 .Respond("applciation/json", jsonResponse);
 
             _rosetteApi = new CAPI("userkey", null, 1, client);
+        }
+
+        [TestFixtureTearDown]
+        public void Cleanup() {
+            if (File.Exists(_tmpFile)) {
+                File.Delete(_tmpFile);
+            }
         }
 
         //------------------------- Get Calls (Info and Ping) ----------------------------------------
@@ -234,7 +272,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "categories")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Categories(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -264,7 +302,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "entities/linked")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.EntitiesLinked(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -294,7 +332,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "entities")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Entity(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -324,7 +362,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "language")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Language(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -354,7 +392,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "morphology/complete")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Morphology(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -406,7 +444,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "relationships")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Relationships(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -436,7 +474,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "sentences")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentences(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -466,7 +504,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "sentiment")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentiment(f);
             Assert.AreEqual(response["response"], "OK");
         }
@@ -496,7 +534,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "tokens")
                 .Respond("application/json", "{'response': 'OK'}");
 
-            RosetteFile f = new RosetteFile("rosette_apiUnitTests.cs");
+            RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Tokens(f);
             Assert.AreEqual(response["response"], "OK");
         }
