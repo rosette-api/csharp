@@ -1,16 +1,16 @@
 [![Build Status](https://travis-ci.org/rosette-api/csharp.svg?branch=master)](https://travis-ci.org/rosette-api/csharp)
 
-.Net (C#) client binding for Rosette API
+.Net (C#) client binding for the Rosette API
 ==================================
 
 Installation
 ------------
 
-If you use Nuget, you may either use Visual Studios Nuget package manager or command line to install Rosette API.
+If you use Nuget, you may use either Visual Studio's Nuget package manager or command line to install the Rosette API binding.
 
-In Visual Studios: search for the rosette_api package in Nuget(https://www.nuget.org/packages/rosette_api/) and follow the installation instructions.
+In Visual Studio: search for the [rosette_api package](https://www.nuget.org/packages/rosette_api/) in Nuget and follow the installation instructions.
 
-Using Nuget Command Line: `nuget install rosette_api.
+Using Nuget Command Line: `nuget install rosette_api`.
 
 Basic Usage
 -----------
