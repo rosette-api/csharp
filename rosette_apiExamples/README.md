@@ -28,7 +28,6 @@ Each example, when run, prints its output to the console.
 
 | File Name                     | What it does                                          | 
 | -------------                 |-------------                                        | 
-| base64_input.cs                    | Gets the entities from a piece of base64 encoded text              | 
 | categories.cs                    | Gets the category of a document at a URL              | 
 | entities.cs                      | Gets the entities from a piece of text                | 
 | entities_linked.cs               | Gets the linked (to Wikipedia) entities from a piece of text |

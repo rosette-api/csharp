@@ -9,12 +9,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace rosette_apiUnitTests
 {
+    /// <summary>
+    /// Live test for multiPart.  To run, uncomment [Test]
+    /// </summary>
     [TestFixture]
     public class tempMultiPartTest {
-        [Test]
+        //[Test]
         public void doTest() {
             string tmpFile = Path.GetTempFileName();
             StreamWriter sw = File.AppendText(tmpFile);
@@ -22,10 +26,11 @@ namespace rosette_apiUnitTests
             sw.Flush();
             sw.Close();
 
-            RosetteFile rf = new RosetteFile(tmpFile);
+            RosetteFile rf = new RosetteFile(tmpFile, "text/plain", @"{""language"":""eng""}");
 
-            CAPI rosetteApi = new CAPI("dbb3a7966e89948bdac7bec2bb115a95", "http://seuss.basistech.net:8181/rest/v1", 1);
+            CAPI rosetteApi = new CAPI("boguskey", "http://seuss.basistech.net:8181/rest/v1", 1);
             Dictionary<string, object> result = rosetteApi.Sentiment(rf);
+            System.Diagnostics.Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
 
             if (File.Exists(tmpFile)) {
                 File.Delete(tmpFile);
@@ -52,17 +57,21 @@ namespace rosette_apiUnitTests
             sw.Flush();
             sw.Close();
             
-            RosetteFile f = new RosetteFile(tmpFile, "dataType", null);
-            Assert.IsNotNull(f.getFilename(), "Filename is null");
-            Assert.AreEqual(tmpFile, f.getFilename(), "Filename does not match");
-            Assert.AreEqual("dataType", f.getDataType(), "DataType does not match");
-            Assert.IsNull(f.getOptions(), "Options does not match");
+            RosetteFile f = new RosetteFile(tmpFile, "application/octet-stream", null);
+            Assert.IsNotNull(f.Filename, "Filename is null");
+            Assert.AreEqual(tmpFile, f.Filename, "Filename does not match");
+            Assert.AreEqual("application/octet-stream", f.ContentType, "ContentType does not match");
+            Assert.IsNull(f.Options, "Options does not match");
 
             byte[] b = f.getFileData();
             Assert.IsTrue(b.Count() > 0, "File is empty");
 
             string content = f.getFileDataString();
             Assert.IsTrue(content.Length > 0, "File is empty");
+
+            MultipartContent multiPart = f.AsMultipart();
+            Assert.IsTrue(multiPart.Headers.Count() > 0, "Multipart not populated");
+            f.Dispose();
 
             if (File.Exists(tmpFile)) {
                 File.Delete(tmpFile);
@@ -415,7 +424,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "name-similarity")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, {"name2", "Name Two"} });
+            var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, { "name2", "Name Two" } });
             Assert.AreEqual(response["response"], "OK");
         }
 
