@@ -756,48 +756,6 @@ namespace rosette_api {
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the response from the server.</returns>
-        private Dictionary<string, Object> getResponse2(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) {
-            if (client != null && version_checked) {
-                HttpResponseMessage responseMsg = null;
-                int retry = 0;
-                string wholeURI = Debug ? _uri + "?debug=true" : _uri;
-                if (wholeURI.StartsWith("/")) {
-                    wholeURI = wholeURI.Substring(1);
-                }
-
-                while (responseMsg == null || (!responseMsg.IsSuccessStatusCode && retry <= MaxRetry)) {
-                    if (retry > 0) {
-                        System.Threading.Thread.Sleep(500);
-                    }
-                    if (jsonRequest != null) {
-                        HttpContent content = new StringContent(jsonRequest);
-                        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        responseMsg = client.PostAsync(wholeURI, content).Result;
-                    }
-                    else if (multiPart != null) {
-                        responseMsg = client.PostAsync(wholeURI, multiPart).Result;
-                    }
-                    else {
-                        responseMsg = client.GetAsync(wholeURI).Result;
-                    }
-                    retry = retry + 1;
-                }
-                List<string> message = new List<string>();
-                Dictionary<string, object> dict = null;
-                try {
-                    message = getMessage(responseMsg);
-                    dict = new JavaScriptSerializer().Deserialize<dynamic>(message[0]);
-                    dict.Add("responseHeaders", new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(message[1]));
-                }
-                catch (RosetteException) {
-                    throw;
-                }
-                return dict;
-
-            }
-            return null;
-        }
-
         private Dictionary<string, Object> getResponse(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) {
             if (client != null && version_checked) {
                 HttpResponseMessage responseMsg = null;
@@ -873,7 +831,6 @@ namespace rosette_api {
             Dictionary<string, string> dict = new Dictionary<string, string>(){
                 { "language", language},
                 { "content", content},
-                { "contentType", contentType},
                 { "contentUri", contentUri}
             }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value);
 
