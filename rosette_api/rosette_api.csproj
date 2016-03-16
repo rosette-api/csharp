@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAPI.cs" />
+    <Compile Include="Name.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RosetteException.cs" />
+    <Compile Include="RosetteFile.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
