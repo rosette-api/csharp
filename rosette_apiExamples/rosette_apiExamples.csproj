@@ -61,19 +61,19 @@
     <Compile Include="entities_linked.cs" />
     <Compile Include="info.cs" />
     <Compile Include="language.cs" />
-    <Compile Include="matched-name.cs" />
     <Compile Include="morphology_complete.cs" />
     <Compile Include="morphology_compound-components.cs" />
     <Compile Include="morphology_han-readings.cs" />
     <Compile Include="morphology_lemmas.cs" />
     <Compile Include="morphology_parts-of-speech.cs" />
+    <Compile Include="name_similarity.cs" />
+    <Compile Include="name_translation.cs" />
     <Compile Include="ping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="relationships.cs" />
     <Compile Include="sentences.cs" />
     <Compile Include="sentiment.cs" />
     <Compile Include="tokens.cs" />
-    <Compile Include="translated-name.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -84,8 +84,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

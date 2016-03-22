@@ -33,8 +33,11 @@ namespace rosette_apiExamples
                 CAPI SentencesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string sentences_data = @"This land is your land. This land is my land\nFrom California to the New York island;\nFrom the red wood forest to the Gulf Stream waters\n\nThis land was made for you and Me.\n\nAs I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> SentencesResult = SentencesCAPI.Sentences(sentences_data);
-                Console.WriteLine(new JavaScriptSerializer().Serialize(SentencesResult));
+                RosetteResponse response = SentencesCAPI.Sentences(sentences_data);
+                foreach (KeyValuePair<string, string> h in response.Headers) {
+                    Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
+                }
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {

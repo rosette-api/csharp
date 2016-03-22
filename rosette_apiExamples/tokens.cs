@@ -33,8 +33,11 @@ namespace rosette_apiExamples
                 CAPI TokensCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string tokens_data = @"北京大学生物系主任办公室内部会议";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> TokensResult = TokensCAPI.Tokens(tokens_data, null, "sentence", null);
-                Console.WriteLine(new JavaScriptSerializer().Serialize(TokensResult));
+                RosetteResponse response = TokensCAPI.Tokens(tokens_data, null, "sentence", null);
+                foreach (KeyValuePair<string, string> h in response.Headers) {
+                    Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
+                }
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {
