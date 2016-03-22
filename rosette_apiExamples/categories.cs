@@ -33,18 +33,21 @@ namespace rosette_apiExamples
                 CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new ""Ghostbusters"" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> CategoriesResult = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
-                Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResult));
+                RosetteResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
+                Console.WriteLine(response.ContentAsJson);
 
                 //Rosette API also supports Dictionary inputs
                 //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
                 string categories_url_data = @"http://www.onlocationvacations.com/2015/03/05/the-new-ghostbusters-movie-begins-filming-in-boston-in-june/";
-                Dictionary<string, Object> CategoriesResultDic = CategoriesCAPI.Categories(new Dictionary<object, object>()
-            {
-                {"contentUri", categories_url_data}
+                response = CategoriesCAPI.Categories(new Dictionary<object, object>()
+                {
+                    {"contentUri", categories_url_data}
 
-            });
-                Console.WriteLine(new JavaScriptSerializer().Serialize(CategoriesResultDic));
+                });
+                foreach (KeyValuePair<string, string> h in response.Headers) {
+                    Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
+                }
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {

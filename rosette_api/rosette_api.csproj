@@ -53,7 +53,9 @@
     <Compile Include="Name.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RosetteException.cs" />
+    <Compile Include="RosetteExtensions.cs" />
     <Compile Include="RosetteFile.cs" />
+    <Compile Include="RosetteResponse.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

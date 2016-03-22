@@ -33,8 +33,11 @@ namespace rosette_apiExamples
                 CAPI LanguageCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string language_data = @"Por favor Señorita, says the man.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> LanguageResult = LanguageCAPI.Language(language_data);
-                Console.WriteLine(new JavaScriptSerializer().Serialize(LanguageResult));
+                RosetteResponse response = LanguageCAPI.Language(language_data);
+                foreach (KeyValuePair<string, string> h in response.Headers) {
+                    Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
+                }
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {

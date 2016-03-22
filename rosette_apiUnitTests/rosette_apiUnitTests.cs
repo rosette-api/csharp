@@ -29,12 +29,90 @@ namespace rosette_apiUnitTests
             RosetteFile rf = new RosetteFile(tmpFile, "text/plain", @"{""language"":""eng""}");
 
             CAPI rosetteApi = new CAPI("boguskey", "http://seuss.basistech.net:8181/rest/v1", 1);
-            Dictionary<string, object> result = rosetteApi.Sentiment(rf);
-            System.Diagnostics.Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
+            RosetteResponse result = rosetteApi.Sentiment(rf);
+            System.Diagnostics.Debug.WriteLine(result.ContentAsJson);
 
             if (File.Exists(tmpFile)) {
                 File.Delete(tmpFile);
             }
+        }
+    }
+
+    [TestFixture]
+    public class rosetteResponseTests {
+        private string _testHeaderKey;
+        private string _testHeaderValue;
+        private string _testJson;
+        private int  _testItemCount;
+
+        [SetUp]
+        public void Init() {
+            _testHeaderKey = "X-RosetteAPI-RequestId";
+            _testHeaderValue = "123456789";
+            _testJson = @"{ ""item1"":""value1"", ""item2"":""value2""}";
+            _testItemCount = 2;
+        }
+
+        [Test]
+        public void RosetteResponse_HeaderTest() {
+            HttpResponseMessage message = new HttpResponseMessage {
+                StatusCode = (HttpStatusCode)200,
+                ReasonPhrase = "OK",
+                Content = new StringContent(_testJson)
+            };
+            message.Headers.Add(_testHeaderKey, _testHeaderValue);
+            RosetteResponse rr = new RosetteResponse(message);
+            Assert.AreEqual(_testHeaderValue, rr.Headers[_testHeaderKey], "RosetteResponse: header mismatch");
+        }
+
+        [Test]
+        public void RosetteResponse_ContentTest() {
+            HttpResponseMessage message = new HttpResponseMessage {
+                StatusCode = (HttpStatusCode)200,
+                ReasonPhrase = "OK",
+                Content = new StringContent(_testJson)
+            };
+            message.Headers.Add(_testHeaderKey, _testHeaderValue);
+            RosetteResponse rr = new RosetteResponse(message);
+            Assert.AreEqual(_testItemCount, rr.Content.Count, "RosetteResponse: header mismatch");
+        }
+
+        [Test]
+        public void RosetteResponse_ContentAsJsonTest() {
+            HttpResponseMessage message = new HttpResponseMessage {
+                StatusCode = (HttpStatusCode)200,
+                ReasonPhrase = "OK",
+                Content = new StringContent(_testJson)
+            };
+            message.Headers.Add(_testHeaderKey, _testHeaderValue);
+            RosetteResponse rr = new RosetteResponse(message);
+            Assert.AreEqual(_testJson, rr.ContentAsJson, "RosetteResponse: json mismatch");
+        }
+
+        [Test]
+        public void RosetteResponse_ExceptionTest() {
+            HttpResponseMessage message = new HttpResponseMessage {
+                StatusCode = (HttpStatusCode)404,
+                ReasonPhrase = "Not Found",
+                Content = new StringContent(_testJson)
+            };
+            message.Headers.Add(_testHeaderKey, _testHeaderValue);
+            try {
+                RosetteResponse rr = new RosetteResponse(message);
+                Assert.Fail("Exception should have been thrown");
+            }
+            catch (RosetteException ex) {
+                Assert.AreEqual(404, ex.Code, "RosetteResponse: Exception mismatch");
+            }
+        }
+    }
+
+    [TestFixture]
+    public class rosetteExtensionsTests {
+        [Test]
+        public void MorphologyEndpointTest() {
+            string expected = "han-readings";
+            Assert.AreEqual(expected, RosetteExtensions.MorphologyEndpoint(MorphologyFeature.hanReadings), "Morphology endpoint mismatch");
         }
     }
 
@@ -207,7 +285,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Info();
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -216,7 +294,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Ping();
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Exceptions ----------------------------------------
@@ -264,7 +342,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Categories("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -273,7 +351,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Categories(new Dictionary<object, object>(){ {"contentUri", "contentUrl"} });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -283,7 +361,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Categories(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Entities Linked ----------------------------------------
@@ -294,7 +372,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.EntitiesLinked("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -303,7 +381,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.EntitiesLinked(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -313,7 +391,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.EntitiesLinked(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Entity ----------------------------------------
@@ -324,7 +402,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -333,7 +411,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -343,7 +421,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Entity(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Language ----------------------------------------
@@ -354,7 +432,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Language("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -363,7 +441,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Language(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -373,7 +451,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Language(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Morphology ----------------------------------------
@@ -384,7 +462,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Morphology("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -393,7 +471,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Morphology(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -403,7 +481,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Morphology(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Name Similarity ----------------------------------------
@@ -416,7 +494,7 @@ namespace rosette_apiUnitTests
             Name name1 = new Name("Name One");
             Name name2 = new Name("Name Two");
             var response = _rosetteApi.NameSimilarity(name1, name2);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -425,7 +503,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, { "name2", "Name Two" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Relationships ----------------------------------------
@@ -436,7 +514,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -445,7 +523,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -455,7 +533,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Relationships(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Sentences ----------------------------------------
@@ -466,7 +544,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -475,7 +553,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -485,7 +563,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentences(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Sentiment ----------------------------------------
@@ -496,7 +574,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -505,7 +583,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -515,7 +593,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentiment(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Tokens ----------------------------------------
@@ -526,7 +604,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -535,7 +613,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -545,7 +623,7 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Tokens(f);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Name Translation ----------------------------------------
@@ -556,7 +634,7 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameTranslation("content");
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         [Test]
@@ -575,7 +653,7 @@ namespace rosette_apiUnitTests
                 { "entityType", "entityType"}
             };
             var response = _rosetteApi.NameTranslation(sampleDict);
-            Assert.AreEqual(response["response"], "OK");
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
     }

@@ -33,8 +33,11 @@ namespace rosette_apiExamples
                 CAPI EntitiesLinkedCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string entities_linked_text_data = @"Last month director Paul Feig announced the movie will have an all-star female cast including Kristen Wiig, Melissa McCarthy, Leslie Jones and Kate McKinnon.";
                 //The results of the API call will come back in the form of a Dictionary
-                Dictionary<string, Object> EntitiesLinkedResult = EntitiesLinkedCAPI.EntitiesLinked(entities_linked_text_data);
-                Console.WriteLine(new JavaScriptSerializer().Serialize(EntitiesLinkedResult));
+                RosetteResponse response = EntitiesLinkedCAPI.EntitiesLinked(entities_linked_text_data);
+                foreach (KeyValuePair<string, string> h in response.Headers) {
+                    Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
+                }
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {
