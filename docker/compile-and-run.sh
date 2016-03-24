@@ -66,6 +66,20 @@ function checkAPI {
     fi  
 }
 
+retcode=0
+function runExample() {
+    result=""
+    echo -e "\n---------- ${1} start -------------"
+    executable=$(basename "${1}" .cs).exe
+    mcs ${1} -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
+    result="$(mono $executable ${API_KEY} ${ALT_URL})"
+    if [[ ${result} == *"Exception"* ]]; then
+        retcode=1
+    fi
+    echo ${result}
+    echo "---------- ${1} end -------------"
+}
+
 #Copy the mounted content in /source to current WORKDIR
 cp -r -n /source/. .
 
@@ -82,18 +96,10 @@ if [ ! -z ${API_KEY} ]; then
     #Change to dir where examples will be run from
     pushd rosette_apiExamples
     if [ ! -z ${FILENAME} ]; then
-        echo -e "\n---------- ${FILENAME} start -------------"
-        executable=$(basename "${FILENAME}" .cs).exe
-        mcs ${FILENAME} -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
-        mono $executable ${API_KEY} ${ALT_URL}
-        echo "---------- ${FILENAME} end -------------"
+        runExample ${FILENAME}
     else
         for file in *.cs; do
-            echo -e "\n---------- $file start -------------"
-            executable=$(basename "$file" .cs).exe
-            mcs $file -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
-            mono $executable ${API_KEY} ${ALT_URL}
-            echo "---------- $file end -------------"
+            runExample ${file}
         done
     fi
     # Run the unit tests
@@ -143,3 +149,6 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     git commit -a -m "publish csharp apidocs ${VERSION}"
     git push
 fi
+
+exit ${retcode}
+
