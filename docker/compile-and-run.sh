@@ -1,8 +1,13 @@
 #!/bin/bash -e
 
+ping_url="https://api.rosette.com/rest/v1"
+retcode=0
+
+#------------------ Functions ----------------------------------------------------
+
 #Gets called when the user doesn't provide any args
 function HELP {
-    echo -e "\nusage: source_file.cs API_KEY [ALT_URL]"
+    echo -e "\nusage: --API_KEY API_KEY [--FILENAME filename] [--ALT_URL altUrl]"
     echo "  API_KEY       - Rosette API key (required)"
     echo "  FILENAME      - C# source file"
     echo "  ALT_URL       - Alternate service URL (optional)"
@@ -11,6 +16,49 @@ function HELP {
     echo "Compiles and runs the source file using the local development source"
     exit 1
 }
+
+#Checks if Rosette API key is valid
+function checkAPI {
+    match=$(curl "${ping_url}/ping" -H "X-RosetteAPI-Key: ${API_KEY}" |  grep -o "forbidden")
+    if [ ! -z $match ]; then
+        echo -e "\nInvalid Rosette API Key"
+        exit 1
+    fi  
+}
+
+function cleanURL() {
+    # strip the trailing slash off of the alt_url if necessary
+    if [ ! -z "${ALT_URL}" ]; then
+        case ${ALT_URL} in
+            */) ALT_URL=${ALT_URL::-1}
+                echo "Slash detected"
+                ;;
+        esac
+        ping_url=${ALT_URL}
+    fi
+}
+
+function validateURL() {
+    match=$(curl "${ping_url}/ping" -H "X-RosetteAPI-Key: ${API_KEY}" |  grep -o "Rosette API")
+    if [ "${match}" = "" ]; then
+        echo -e "\n${ping_url} server not responding\n"
+        exit 1
+    fi  
+}
+
+function runExample() {
+    result=""
+    echo -e "\n---------- ${1} start -------------"
+    executable=$(basename "${1}" .cs).exe
+    mcs ${1} -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
+    result="$(mono $executable ${API_KEY} ${ALT_URL})"
+    if [[ ${result} == *"Exception"* ]]; then
+        retcode=1
+    fi
+    echo ${result}
+    echo "---------- ${1} end -------------"
+}
+#------------------ Functions End ------------------------------------------------
 
 #Gets API_KEY, FILENAME and ALT_URL if present
 while getopts ":API_KEY:FILENAME:ALT_URL:GIT_USERNAME:VERSION" arg; do
@@ -38,47 +86,9 @@ while getopts ":API_KEY:FILENAME:ALT_URL:GIT_USERNAME:VERSION" arg; do
     esac
 done
 
-ping_url="https://api.rosette.com/rest/v1"
+cleanURL
 
-# strip the trailing slash off of the alt_url if necessary
-if [ ! -z "${ALT_URL}" ]; then
-    case ${ALT_URL} in
-        */) ALT_URL=${ALT_URL::-1}
-            echo "Slash detected"
-            ;;
-    esac
-    ping_url=${ALT_URL}
-fi
-
-#Checks for valid url
-match=$(curl "${ping_url}/ping" -H "X-RosetteAPI-Key: ${API_KEY}" |  grep -o "Rosette API")
-if [ "${match}" = "" ]; then
-    echo -e "\n${ping_url} server not responding\n"
-    exit 1
-fi 
-
-#Checks if Rosette API key is valid
-function checkAPI {
-    match=$(curl "${ping_url}/ping" -H "X-RosetteAPI-Key: ${API_KEY}" |  grep -o "forbidden")
-    if [ ! -z $match ]; then
-        echo -e "\nInvalid Rosette API Key"
-        exit 1
-    fi  
-}
-
-retcode=0
-function runExample() {
-    result=""
-    echo -e "\n---------- ${1} start -------------"
-    executable=$(basename "${1}" .cs).exe
-    mcs ${1} -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
-    result="$(mono $executable ${API_KEY} ${ALT_URL})"
-    if [[ ${result} == *"Exception"* ]]; then
-        retcode=1
-    fi
-    echo ${result}
-    echo "---------- ${1} end -------------"
-}
+validateURL
 
 #Copy the mounted content in /source to current WORKDIR
 cp -r -n /source/. .
