@@ -1,0 +1,10 @@
+digraph "C:/Dev/ws-client-bindings/csharp/rosette_api" {
+  bgcolor=transparent;
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_b672fda455621fe6d6b519d7cfec0937 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="csharp" fontname="FreeSans", fontsize="10", URL="dir_b672fda455621fe6d6b519d7cfec0937.html"]
+  dir_9d3cf7ed07cc892ea91808c737cd4c13 [shape=box, label="rosette_api", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9d3cf7ed07cc892ea91808c737cd4c13.html"];
+  }
+}
