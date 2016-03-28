@@ -125,7 +125,6 @@ namespace rosette_api {
         /// </summary>
         /// <returns>Returns the file data as a multipart form-data object</returns>
         public MultipartFormDataContent AsMultipart() {
-            Stream formDataStream = new System.IO.MemoryStream();
             if (_multiPartContent != null) {
                 _multiPartContent.Dispose();
             }
@@ -134,12 +133,12 @@ namespace rosette_api {
             FileStream fs = File.OpenRead(Filename);
             var streamContent = new StreamContent(fs);
             streamContent.Headers.Add("Content-Type", ContentType);
-            streamContent.Headers.Add("Content-Disposition", "form-data; name=\"content\"; filename=\"" + Path.GetFileName(Filename) + "\"");
+            streamContent.Headers.Add("Content-Disposition", "mixed; name=\"content\"; filename=\"" + Path.GetFileName(Filename) + "\"");
             _multiPartContent.Add(streamContent, "content", Path.GetFileName(Filename));
 
             if (!string.IsNullOrEmpty(Options)) {
                 var stringContent = new StringContent(Options, Encoding.UTF8, "application/json");
-                stringContent.Headers.Add("Content-Disposition", "form-data; name=\"request\"");
+                stringContent.Headers.Add("Content-Disposition", "mixed; name=\"request\"");
                 _multiPartContent.Add(stringContent, "request");
             }
 

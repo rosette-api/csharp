@@ -98,7 +98,7 @@ namespace rosette_apiUnitTests
             };
             message.Headers.Add(_testHeaderKey, _testHeaderValue);
             try {
-                RosetteResponse rr = new RosetteResponse(message);
+                new RosetteResponse(message);
                 Assert.Fail("Exception should have been thrown");
             }
             catch (RosetteException ex) {

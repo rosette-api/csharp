@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI TranslatedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string translated_name_data = @"معمر محمد أبو منيار القذاف";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", "IC", null, "PERSON");
+                RosetteResponse response = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", null, null, "PERSON");
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
