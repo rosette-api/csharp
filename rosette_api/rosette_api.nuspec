@@ -19,4 +19,7 @@
 		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
 	</frameworkAssemblies>
   </metadata>
+  <files>
+      <file src="./bin/Release/rosette_api.dll" target="lib\net45"/>
+  </files>
 </package>
