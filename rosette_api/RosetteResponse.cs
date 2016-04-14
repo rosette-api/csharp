@@ -57,6 +57,14 @@ namespace rosette_api {
             }
         }
 
+        private string headersAsString() {
+            StringBuilder itemString = new StringBuilder();
+            foreach (var item in Headers)
+                itemString.AppendFormat("-- {0}:{1} -- ", item.Key, item.Value);
+
+            return itemString.ToString();
+        }
+
 
         /// <summary>Decompress
         /// <para>Method to decompress GZIP files

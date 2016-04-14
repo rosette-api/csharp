@@ -239,18 +239,6 @@ namespace rosette_apiUnitTests
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
         private string _tmpFile = null;
 
-        /// <summary>
-        /// Helper to add the checkVersion test, since it gets called for every API instance
-        /// </summary>
-        /// <param name="mockHttp"></param>
-        private void addCheckVersion(MockHttpMessageHandler mockHttp) {
-            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}', 'versionChecked': true}}", CAPI.Version);
-
-            mockHttp.When(_testUrl)
-                .WithQueryString(string.Format("clientVersion={0}", CAPI.Version))
-                .Respond("applciation/json", jsonResponse);
-        }
-
         [TestFixtureSetUp]
         public void Init() {
             // Create a temporary file for use with file testing
