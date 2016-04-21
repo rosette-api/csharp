@@ -823,7 +823,6 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the response from the server from the getResponse call.</returns>
         private RosetteResponse Process(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
-            Process(string content = null, string language = null, string contentType = null, string contentUri = null) {
             if (content == null) {
                 if (contentUri == null) {
                     throw new RosetteException("Must supply one of Content or ContentUri", -3);
