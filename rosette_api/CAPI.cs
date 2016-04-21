@@ -167,12 +167,13 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request.
         /// The response is the contextual categories identified in the input.
         /// </returns>
-        public RosetteResponse Categories(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Categories(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "categories";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Categories
@@ -212,11 +213,12 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request.
         /// </returns>
-        public RosetteResponse EntitiesLinked(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse EntitiesLinked(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "entities/linked";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>EntitiesLinked
@@ -254,11 +256,12 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
-        public RosetteResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "entities";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Entity
@@ -307,12 +310,13 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// The response is an ordered list of detected languages.
         /// </returns>
-        public RosetteResponse Language(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Language(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "language";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Language
@@ -353,13 +357,14 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings. 
         /// Support for specific return types depends on language.
         /// </returns>
-        public RosetteResponse Morphology(string content = null, string language = null, string contentType = null, string contentUri = null, MorphologyFeature feature = MorphologyFeature.complete) {
+        public RosetteResponse Morphology(string content = null, string language = null, string contentType = null, string contentUri = null, MorphologyFeature feature = MorphologyFeature.complete, string genre = null) {
             _uri = "morphology/" + feature.MorphologyEndpoint();
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Morphology
@@ -472,6 +477,7 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
         /// RosetteResponse of extracted relationships. A relationship contains
         /// 
@@ -483,9 +489,9 @@ namespace rosette_api {
         /// locatives [optional] - usually express the locations the action expressed by the relationship took place
         /// temporals [optional] - usually express the time in which the action expressed by the relationship took place
         /// </returns>
-        public RosetteResponse Relationships(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Relationships(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "relationships";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Relationships
@@ -541,12 +547,13 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>Dictionary&lt;string, object&gt;: Dictionary containing the results of the request. 
         /// The response contains a list of sentences.
         /// </returns>
-        public RosetteResponse Sentences(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Sentences(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "sentences";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Sentences
@@ -586,12 +593,13 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// The response contains sentiment analysis results.
         /// </returns>
-        public RosetteResponse Sentiment(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Sentiment(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "sentiment";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Sentiment
@@ -631,12 +639,13 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// The response contains a list of tokens.
         /// </returns>
-        public RosetteResponse Tokens(string content = null, string language = null, string contentType = null, string contentUri = null) {
+        public RosetteResponse Tokens(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             _uri = "tokens";
-            return Process(content, language, contentType, contentUri);
+            return Process(content, language, contentType, contentUri, genre);
         }
 
         /// <summary>Tokens
@@ -680,9 +689,10 @@ namespace rosette_api {
         /// <param name="targetScheme">(string, optional): transliteration scheme for the translation</param>
         /// <param name="sourceLanguageOfOrigin">(string, optional): ISO 639-3 code for the name's language of origin</param>
         /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
-        public RosetteResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null) {
+        public RosetteResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
             _uri = "name-translation";
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, string>(){
@@ -693,7 +703,8 @@ namespace rosette_api {
                 { "targetScript", targetScript},
                 { "targetScheme", targetScheme},
                 { "sourceLanguageOfOrigin", sourceLanguageOfOrigin},
-                { "entityType", entityType}
+                { "entityType", entityType},
+                { "genre", genre}
             }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value)));
         }
 
@@ -710,11 +721,12 @@ namespace rosette_api {
         /// <param name="targetScheme">(string, optional): transliteration scheme for the translation</param>
         /// <param name="sourceLanguageOfOrigin">(string, optional): ISO 639-3 code for the name's language of origin</param>
         /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
         [Obsolete("Use NameTranslation")]
-        public RosetteResponse TranslatedName(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null) {
-            return NameTranslation(name, sourceLanguageOfUse, sourceScript, targetLanguage, targetScript, targetScheme, sourceLanguageOfOrigin, entityType);
+        public RosetteResponse TranslatedName(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
+            return NameTranslation(name, sourceLanguageOfUse, sourceScript, targetLanguage, targetScript, targetScheme, sourceLanguageOfOrigin, entityType, genre);
         }
 
         /// <summary>NameTranslation
@@ -808,8 +820,9 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the response from the server from the getResponse call.</returns>
-        private RosetteResponse 
+        private RosetteResponse Process(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
             Process(string content = null, string language = null, string contentType = null, string contentUri = null) {
             if (content == null) {
                 if (contentUri == null) {
@@ -825,7 +838,8 @@ namespace rosette_api {
             Dictionary<string, string> dict = new Dictionary<string, string>(){
                 { "language", language},
                 { "content", content},
-                { "contentUri", contentUri}
+                { "contentUri", contentUri},
+                { "genre", genre}
             }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value);
 
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
