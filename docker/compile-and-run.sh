@@ -55,7 +55,7 @@ function runExample() {
     if [[ ${result} == *"Exception"* ]]; then
         retcode=1
     fi
-    echo ${result}
+    echo "${result}"
     echo "---------- ${1} end -------------"
 }
 #------------------ Functions End ------------------------------------------------

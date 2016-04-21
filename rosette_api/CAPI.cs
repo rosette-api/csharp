@@ -70,10 +70,11 @@ namespace rosette_api {
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param> 
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param> 
-        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 1, HttpClient client = null) {
+        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null) {
             UserKey = user_key;
             URIstring = (uristring == null) ? "https://api.rosette.com/rest/v1/" : uristring;
             MaxRetry = (maxRetry == 0) ? 1 : maxRetry;
+            MillisecondsBetweenRetries = 500000;
             Debug = false;
             Timeout = 300;
             Client = client;
@@ -124,6 +125,14 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         public int MaxRetry { get; set; }
+
+        /// <summary>MillisecondsBetweenRetries
+        /// <para>
+        /// Getter, Setter for the MillisecondsBetweenRetries
+        /// MillisecondsBetweenRetries: milliseconds between retry attempts
+        /// </para>
+        /// </summary>
+        public int MillisecondsBetweenRetries { get; set; }
 
         /// <summary>Client
         /// <para>
@@ -762,24 +771,30 @@ namespace rosette_api {
                     wholeURI = wholeURI.Substring(1);
                 }
 
-                if (jsonRequest != null) {
-                    HttpContent content = new StringContent(jsonRequest);
-                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, content));
-                    responseMsg = task.Result;
-                }
-                else if (multiPart != null) {
-                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, multiPart));
-                    responseMsg = task.Result;
-                }
-                else {
-                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.GetAsync(wholeURI));
-                    responseMsg = task.Result;
-                }
+                for (int attempt = 0; attempt < MaxRetry; attempt++) {
+                    if (jsonRequest != null) {
+                        HttpContent content = new StringContent(jsonRequest);
+                        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, content));
+                        responseMsg = task.Result;
+                    }
+                    else if (multiPart != null) {
+                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, multiPart));
+                        responseMsg = task.Result;
+                    }
+                    else {
+                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.GetAsync(wholeURI));
+                        responseMsg = task.Result;
+                    }
+                    if ((int)responseMsg.StatusCode == 429) {
+                        System.Threading.Thread.Sleep(MillisecondsBetweenRetries);
+                        continue;
+                    }
 
-                RosetteResponse response = new RosetteResponse(responseMsg);
+                    RosetteResponse response = new RosetteResponse(responseMsg);
 
-                return response;
+                    return response;
+                }
 
             }
             return null;
@@ -891,67 +906,17 @@ namespace rosette_api {
                 if (versionToCheck == null) {
                     versionToCheck = Version;
                 }
-                HttpClient client = SetupClient();
-                HttpResponseMessage responseMsg = null;
-                int retry = 0;
+                version_checked = true;
+                last_version_check = DateTime.Now;
+                _uri = string.Format("info?clientVersion={0}", versionToCheck);
+                RosetteResponse response = getResponse(SetupClient(), string.Empty);
 
-                while (responseMsg == null || (!responseMsg.IsSuccessStatusCode && retry <= MaxRetry)) {
-                    if (retry > 0) {
-                        System.Threading.Thread.Sleep(500);
-                    }
-                    string url = string.Format("info?clientVersion={0}", versionToCheck);
-                    HttpContent content = new StringContent(string.Empty);
-                    responseMsg = client.PostAsync(url, content).Result;
-                    retry = retry + 1;
-                }
-                string text = "";
-                try {
-                    text = getMessage(responseMsg)[0];
-                }
-                catch (RosetteException) {
-                    throw;
-                }
-                var result = new JavaScriptSerializer().Deserialize<dynamic>(text);
-                // compatibility with server side is at minor version level of semver
-                if (!result["versionChecked"]) {
+                if (!response.Content.ContainsKey("versionChecked") || response.Content["versionChecked"].ToString() != "True") {
+                    version_checked = false;
                     throw new RosetteException("The server version is not compatible with binding version " + versionToCheck, -6);
-                }
-                else {
-                    version_checked = true;
-                    last_version_check = DateTime.Now;
                 }
             }
             return version_checked;
-        }
-
-        /// <summary>getMessage
-        /// <para>Helper function to parse out responseMsg based on gzip or not</para>
-        /// </summary>
-        /// <param name="responseMsg">(HttpResponseMessage): Response Message sent from the server</param>
-        /// <returns>(string): Content of the response message</returns>
-        private List<string> getMessage(HttpResponseMessage responseMsg) {
-            if (responseMsg.IsSuccessStatusCode) {
-                byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
-                IEnumerator<KeyValuePair<string, IEnumerable<string>>> responseHeadersEnum = responseMsg.Headers.GetEnumerator();
-                Dictionary<string, string> responseHeadersDict = new Dictionary<string, string>();
-                while (responseHeadersEnum.MoveNext()) {
-                    KeyValuePair<string, IEnumerable<string>> pair = responseHeadersEnum.Current;
-                    responseHeadersDict.Add(pair.Key, pair.Value.ToArray()[0]);
-                }
-
-                if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08')) {
-                    byteArray = Decompress(byteArray);
-                }
-                MemoryStream stream = new MemoryStream(byteArray);
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                List<string> message = new List<string>();
-                message.Add(reader.ReadToEnd());
-                message.Add(new JavaScriptSerializer().Serialize(responseHeadersDict));
-                return message;
-            }
-            else {
-                throw new RosetteException(responseMsg.ReasonPhrase, (int)responseMsg.StatusCode);
-            }
         }
 
         /// <summary>Decompress
