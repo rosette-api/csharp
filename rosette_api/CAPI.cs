@@ -883,7 +883,9 @@ namespace rosette_api {
                 // exception can be ignored
             }
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Add("X-RosetteAPI-Key", UserKey);
+            if (UserKey != null) {
+                client.DefaultRequestHeaders.Add("X-RosetteAPI-Key", UserKey);
+            }
             if (Debug) {
                 client.DefaultRequestHeaders.Add("X-RosetteAPI-Devel", "true");
             }
