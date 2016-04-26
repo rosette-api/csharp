@@ -103,7 +103,7 @@ namespace rosette_api {
         /// <summary>
         /// Internal version number that is used to sync with the running Rosette API server
         /// </summary>
-        private static string _bindingVersion = "1.0";
+        private static string _bindingVersion = "1.1";
 
         /// <summary>Version
         /// <para>
