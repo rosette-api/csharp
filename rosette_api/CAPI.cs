@@ -204,6 +204,7 @@ namespace rosette_api {
             return Process(file);
         }
 
+        /// deprecated
         /// <summary>EntitiesLinked
         /// <para>
         /// (POST)EntitiesLinked Endpoint: Links entities in the input to entities in the knowledge base.
@@ -216,11 +217,12 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request.
         /// </returns>
+        [Obsolete("Use Entity with resolveEntities param set to true.")]
         public RosetteResponse EntitiesLinked(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
-            _uri = "entities/linked";
-            return Process(content, language, contentType, contentUri, genre);
+            return Entity(content, language, contentType, contentUri, true, genre);
         }
 
+        /// deprecated
         /// <summary>EntitiesLinked
         /// <para>
         /// (POST)EntitiesLinked Endpoint: Links entities in the input to entities in the knowledge base.
@@ -229,11 +231,12 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>RosetteResponse containing the results of the request.
         /// </returns>
+        [Obsolete("Use Entity with resolveEntities param set to true.")]
         public RosetteResponse EntitiesLinked(Dictionary<object, object> dict) {
-            _uri = "entities/linked";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return Entity(dict, true);
         }
 
+        /// deprecated
         /// <summary>EntitiesLinked
         /// <para>
         /// (POST)EntitiesLinked Endpoint: Links entities in the input to entities in the knowledge base.
@@ -242,9 +245,9 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>RosetteResponse containing the results of the request.
         /// </returns>
+        [Obsolete("Use Entity with resolveEntities param set to true.")]
         public RosetteResponse EntitiesLinked(RosetteFile file) {
-            _uri = "entities/linked";
-            return Process(file);
+            return Entity(file, true);
         }
 
         /// <summary>Entity
@@ -256,11 +259,12 @@ namespace rosette_api {
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="resolveEntities">(string, optional): enables entities to be linked</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
-        public RosetteResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
-            _uri = "entities";
+        public RosetteResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null, bool resolveEntities = false, string genre = null) {
+            _uri = resolveEntities ? "entities/linked" : "entities";
             return Process(content, language, contentType, contentUri, genre);
         }
 
@@ -270,10 +274,11 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <param name="resolveEntities">(string, optional): enables entities to be linked</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
-        public RosetteResponse Entity(Dictionary<object, object> dict) {
-            _uri = "entities";
+        public RosetteResponse Entity(Dictionary<object, object> dict, bool resolveEntities = false) {
+            _uri = resolveEntities ? "entities/linked" : "entities";
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
         }
 
@@ -283,10 +288,11 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <param name="resolveEntities">(string, optional): enables entities to be linked</param>
         /// <returns>RosetteResponse containing the results of the request. 
         /// </returns>
-        public RosetteResponse Entity(RosetteFile file) {
-            _uri = "entities";
+        public RosetteResponse Entity(RosetteFile file, bool resolveEntities = false) {
+            _uri = resolveEntities ? "entities/linked" : "entities";
             return Process(file);
         }
 
