@@ -48,16 +48,6 @@ namespace rosette_api {
         /// </summary>
         private string _uri = null;
 
-        /// <summary>
-        /// Internal check to see if the version matches. Defaults to false and set during initialization.
-        /// </summary>
-        private bool version_checked;
-
-        /// <summary>
-        /// Internal time value of the last version check. Set on first version check. Resets the version check after 24hrs. 
-        /// </summary>
-        private DateTime last_version_check;
-
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -78,8 +68,6 @@ namespace rosette_api {
             Debug = false;
             Timeout = 300;
             Client = client;
-            version_checked = checkVersion();
-            last_version_check = default(DateTime);
         }
 
         /// <summary>UserKey
@@ -770,7 +758,7 @@ namespace rosette_api {
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>RosetteResponse</returns>
         private RosetteResponse getResponse(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) {
-            if (client != null && version_checked) {
+            if (client != null) {
                 HttpResponseMessage responseMsg = null;
                 string wholeURI = _uri;
                 if (wholeURI.StartsWith("/")) {
@@ -898,33 +886,10 @@ namespace rosette_api {
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
+            client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding", "csharp");
+            client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding-Version", Version);
 
             return client;
-        }
-
-        /// <summary>checkVersion
-        /// <para>
-        /// checkVersion: Internal function to check whether or not the version matches the server version
-        /// </para>
-        /// </summary>
-        /// <param name="versionToCheck">(string, optional): Version to check against the server version</param>
-        /// <returns>bool: Whether or not the versions match</returns>
-        private bool checkVersion(string versionToCheck = null) {
-            if (!version_checked || last_version_check.AddDays(1) < DateTime.Now) {
-                if (versionToCheck == null) {
-                    versionToCheck = Version;
-                }
-                version_checked = true;
-                last_version_check = DateTime.Now;
-                _uri = string.Format("info?clientVersion={0}", versionToCheck);
-                RosetteResponse response = getResponse(SetupClient(), string.Empty);
-
-                if (!response.Content.ContainsKey("versionChecked") || response.Content["versionChecked"].ToString() != "True") {
-                    version_checked = false;
-                    throw new RosetteException("The server version is not compatible with binding version " + versionToCheck, -6);
-                }
-            }
-            return version_checked;
         }
 
         /// <summary>Decompress

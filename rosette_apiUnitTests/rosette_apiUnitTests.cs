@@ -249,7 +249,7 @@ namespace rosette_apiUnitTests
             sw.Close(); _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
-            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}', 'versionChecked': true}}", CAPI.Version);
+            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}'}}", CAPI.Version);
 
             _mockHttp.When(_testUrl + "info")
                 .WithQueryString(string.Format("clientVersion={0}", CAPI.Version))
