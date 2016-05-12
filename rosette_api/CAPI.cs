@@ -54,6 +54,11 @@ namespace rosette_api {
         private bool version_checked;
 
         /// <summary>
+        /// Internal container for options
+        /// </summary>
+        private Dictionary<string, object> _options;
+
+        /// <summary>
         /// Internal time value of the last version check. Set on first version check. Resets the version check after 24hrs. 
         /// </summary>
         private DateTime last_version_check;
@@ -80,6 +85,7 @@ namespace rosette_api {
             Client = client;
             version_checked = checkVersion();
             last_version_check = default(DateTime);
+            _options = new Dictionary<string, object>();
         }
 
         /// <summary>UserKey
@@ -158,6 +164,48 @@ namespace rosette_api {
         /// </summary>
         public int Timeout { get; set; }
 
+        /// <summary>
+        /// Sets the named option to the provided value
+        /// </summary>
+        /// <param name="name">string option name</param>
+        /// <param name="value">object value</param>
+        public void SetOption(string name, object value) {
+            if (_options.ContainsKey(name) && value == null) {
+                _options.Remove(name);
+                return;
+            }
+            _options[name] = value;
+
+        }
+
+        /// <summary>
+        /// Gets the requested option
+        /// </summary>
+        /// <param name="name">string option name</param>
+        /// <returns>object value if exists</returns>
+        public object GetOption(string name) {
+            if (_options.ContainsKey(name)) {
+                return _options[name];
+            }
+            else {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Clears all of the options
+        /// </summary>
+        public void ClearOptions() {
+            _options.Clear();
+        }
+
+        private Dictionary<object, object> appendOptions(Dictionary<object, object> dict) {
+            if (_options.Count > 0) {
+                dict["options"] = _options;
+            }
+            return dict;
+        }
+
         /// <summary>Categories
         /// <para>
         /// (POST)Categories Endpoint: Returns an ordered list of categories identified in the input. The categories are Tier 1 contextual categories defined in the QAG Taxonomy.
@@ -187,7 +235,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Categories(Dictionary<object, object> dict) {
             _uri = "categories";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Categories
@@ -279,7 +327,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Entity(Dictionary<object, object> dict, bool resolveEntities = false) {
             _uri = resolveEntities ? "entities/linked" : "entities";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Entity
@@ -336,7 +384,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Language(Dictionary<object, object> dict) {
             _uri = "language";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Language
@@ -386,7 +434,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Morphology(Dictionary<object, object> dict, MorphologyFeature feature = MorphologyFeature.complete) {
             _uri = "morphology/" + feature.MorphologyEndpoint();
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Morphology
@@ -417,10 +465,12 @@ namespace rosette_api {
         public RosetteResponse NameSimilarity(Name n1, Name n2) {
             _uri = "name-similarity";
 
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, object>(){
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
                 { "name1", n1},
                 { "name2", n2}
-            }));
+            };
+
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>MatchedName
@@ -447,20 +497,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse NameSimilarity(Dictionary<object, object> dict) {
             _uri = "name-similarity";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
-        }
-
-        /// <summary>MatchedName
-        /// <para>
-        /// (POST)MatchedName Endpoint: Returns the result of matching 2 names.
-        /// </para>
-        /// </summary>
-        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>RosetteResponse containing the results of the request. 
-        /// </returns>
-        [Obsolete("Use NameSimilarity")]
-        public RosetteResponse MatchedName(Dictionary<object, object> dict) {
-            return NameSimilarity(dict);
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Ping
@@ -519,7 +556,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Relationships(Dictionary<object, object> dict) {
             _uri = "relationships";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Relationships
@@ -573,7 +610,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Sentences(Dictionary<object, object> dict) {
             _uri = "sentences";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Sentences
@@ -619,7 +656,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Sentiment(Dictionary<object, object> dict) {
             _uri = "sentiment";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Sentiment
@@ -665,7 +702,7 @@ namespace rosette_api {
         /// </returns>
         public RosetteResponse Tokens(Dictionary<object, object> dict) {
             _uri = "tokens";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Tokens
@@ -701,7 +738,7 @@ namespace rosette_api {
         public RosetteResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
             _uri = "name-translation";
 
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(new Dictionary<string, string>(){
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
                 { "name", name},
                 { "sourceLanguageOfUse", sourceLanguageOfUse},
                 { "sourceScript", sourceScript},
@@ -711,28 +748,9 @@ namespace rosette_api {
                 { "sourceLanguageOfOrigin", sourceLanguageOfOrigin},
                 { "entityType", entityType},
                 { "genre", genre}
-            }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value)));
-        }
+            }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
-        /// <summary>TranslatedName
-        /// <para>
-        /// (POST)TranslatedName Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
-        /// </para>
-        /// </summary>
-        /// <param name="name">string: Name to be translated</param>
-        /// <param name="sourceLanguageOfUse">(string, optional): ISO 639-3 code for the name's language of use</param>
-        /// <param name="sourceScript">(string, optional): ISO 15924 code for the name's script</param>
-        /// <param name="targetLanguage">(string): ISO 639-3 code for the translation language</param>
-        /// <param name="targetScript">(string, optional): ISO 15924 code for the translation script</param>
-        /// <param name="targetScheme">(string, optional): transliteration scheme for the translation</param>
-        /// <param name="sourceLanguageOfOrigin">(string, optional): ISO 639-3 code for the name's language of origin</param>
-        /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
-        /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>RosetteResponse containing the results of the request. 
-        /// </returns>
-        [Obsolete("Use NameTranslation")]
-        public RosetteResponse TranslatedName(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
-            return NameTranslation(name, sourceLanguageOfUse, sourceScript, targetLanguage, targetScript, targetScheme, sourceLanguageOfOrigin, entityType, genre);
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>NameTranslation
@@ -744,20 +762,7 @@ namespace rosette_api {
         /// <returns>RosetteResponse containing the results of the request. </returns>
         public RosetteResponse NameTranslation(Dictionary<object, object> dict) {
             _uri = "name-translation";
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
-        }
-
-        /// deprecated
-        /// <summary>TranslatedName
-        /// <para>
-        /// (POST)TranslatedName Endpoint: Returns the translation of a name. You must specify the name to translate and the target language for the translation.
-        /// </para>
-        /// </summary>
-        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>RosetteResponse containing the results of the request. </returns>
-        [Obsolete("Use NameTranslation")]
-        public RosetteResponse TranslatedName(Dictionary<object, object> dict) {
-            return NameTranslation(dict);
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>getResponse
@@ -840,14 +845,14 @@ namespace rosette_api {
                 }
             }
 
-            Dictionary<string, string> dict = new Dictionary<string, string>(){
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
                 { "language", language},
                 { "content", content},
                 { "contentUri", contentUri},
                 { "genre", genre}
-            }.Where(f => !String.IsNullOrEmpty(f.Value)).ToDictionary(x => x.Key, x => x.Value);
+            }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
-            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(dict));
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>SetupClient
