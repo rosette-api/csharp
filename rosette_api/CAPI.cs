@@ -48,16 +48,11 @@ namespace rosette_api {
         /// </summary>
         private string _uri = null;
 
-        /// Internal container for options
-        /// </summary>
-        private Dictionary<string, object> _options;
-
         /// <summary>
         /// Internal container for options
         /// </summary>
         private Dictionary<string, object> _options;
 
-        /// <summary>
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -69,7 +64,7 @@ namespace rosette_api {
         /// <param name="user_key">string: API key required by the Rosette server to allow access to endpoints</param>
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param> 
-        /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param> 
+        /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
         public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null) {
             UserKey = user_key;
             URIstring = (uristring == null) ? "https://api.rosette.com/rest/v1/" : uristring;
@@ -78,7 +73,6 @@ namespace rosette_api {
             Debug = false;
             Timeout = 300;
             Client = client;
-            _options = new Dictionary<string, object>();
             _options = new Dictionary<string, object>();
         }
 
