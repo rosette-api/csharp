@@ -53,6 +53,11 @@ namespace rosette_api {
         private Dictionary<string, object> _options;
 
         /// <summary>
+        /// Internal container for options
+        /// </summary>
+        private Dictionary<string, object> _options;
+
+        /// <summary>
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -73,6 +78,7 @@ namespace rosette_api {
             Debug = false;
             Timeout = 300;
             Client = client;
+            _options = new Dictionary<string, object>();
             _options = new Dictionary<string, object>();
         }
 
