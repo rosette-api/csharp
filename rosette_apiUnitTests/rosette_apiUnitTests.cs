@@ -265,6 +265,28 @@ namespace rosette_apiUnitTests
             }
         }
 
+        //------------------------- Simple Options Tests ----------------------------------------
+
+
+        [Test]
+        public void OptionsTest() {
+            KeyValuePair<string, string> expected = new KeyValuePair<string, string>("test", "testValue");
+
+            _rosetteApi.SetOption(expected.Key, expected.Value);
+
+            Assert.AreEqual(expected.Value, _rosetteApi.GetOption(expected.Key));
+        }
+
+        [Test]
+        public void ClearOptionsTest() {
+            _rosetteApi.SetOption("option1", "value1");
+            _rosetteApi.SetOption("option2", "value2");
+
+            _rosetteApi.ClearOptions();
+
+            Assert.IsNull(_rosetteApi.GetOption("option1"));
+        }
+
         //------------------------- Get Calls (Info and Ping) ----------------------------------------
 
         [Test]
@@ -359,7 +381,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "entities/linked")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.EntitiesLinked("content");
+            var response = _rosetteApi.Entity("content", null, null, null, true);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -368,7 +390,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "entities/linked")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.EntitiesLinked(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } }, true);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -378,7 +400,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.EntitiesLinked(f);
+            var response = _rosetteApi.Entity(f, true);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
