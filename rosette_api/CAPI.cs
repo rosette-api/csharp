@@ -94,11 +94,6 @@ namespace rosette_api {
         /// </summary>
         public string URIstring { get; set; }
 
-        /// <summary>
-        /// Internal version number that is used to sync with the running Rosette API server
-        /// </summary>
-        private static string _bindingVersion = "1.1";
-
         /// <summary>Version
         /// <para>
         /// Getter, Setter for the Version
@@ -106,10 +101,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         public static string Version {
-            get { return _bindingVersion; }
-            private set {
-                _bindingVersion = value;
-            }
+            get { return typeof(CAPI).Assembly.GetName().Version.ToString(); }
         }
         /// <summary>MaxRetry
         /// <para>
