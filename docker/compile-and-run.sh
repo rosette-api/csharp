@@ -127,6 +127,8 @@ if [ ! -z ${GIT_USERNAME} ] && [ ! -z ${VERSION} ]; then
     cd csharp
     git checkout origin/gh-pages -b gh-pages
     git branch -d develop
+    # remove doc files - they will be replaced below
+    rm -rf *
     #generate gh-pages from development source and output the contents to csharp repo
     cd /csharp-dev
     #configure doxygen
