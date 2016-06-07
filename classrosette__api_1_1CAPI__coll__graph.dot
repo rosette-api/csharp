@@ -1,6 +1,0 @@
-digraph "rosette_api.CAPI"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{rosette_api.CAPI\n|+ UserKey\l+ URIstring\l+ Version\l+ MaxRetry\l+ MillisecondsBetweenRetries\l+ Client\l+ Debug\l+ Timeout\l|+ CAPI()\l+ SetOption()\l+ GetOption()\l+ ClearOptions()\l+ Categories()\l+ Categories()\l+ Categories()\l+ EntitiesLinked()\l+ EntitiesLinked()\l+ EntitiesLinked()\land 28 more...\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-}
