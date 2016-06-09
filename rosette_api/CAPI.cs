@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 
 namespace rosette_api {
     /// <summary>
@@ -53,6 +54,11 @@ namespace rosette_api {
         /// </summary>
         private Dictionary<string, object> _options;
 
+        /// <summary>
+        /// Internal container for custom headers
+        /// </summary>
+        private Dictionary<string, string> _customHeaders;
+
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -74,6 +80,7 @@ namespace rosette_api {
             Timeout = 300;
             Client = client;
             _options = new Dictionary<string, object>();
+            _customHeaders = new Dictionary<string, string>();
         }
 
         /// <summary>UserKey
@@ -177,6 +184,34 @@ namespace rosette_api {
         /// </summary>
         public void ClearOptions() {
             _options.Clear();
+        }
+
+        /// <summary>
+        /// Sets a custom header to the named value
+        /// </summary>
+        /// <param name="key">string custom header key</param>
+        /// <param name="value">custom header value</param>
+        public void SetCustomHeaders(string key, string value) {
+            if (_customHeaders.ContainsKey(key) && value == null) {
+                _customHeaders.Remove(key);
+                return;
+            }
+            _customHeaders[key] = value;
+        }
+
+        /// <summary>
+        /// Gets the custom headers
+        /// </summary>
+        /// <returns>dictionary of custom headers</returns>
+        public Dictionary<string, string> GetCustomHeaders() {
+            return _customHeaders;
+        }
+
+        /// <summary>
+        /// Clears all of the custom headers
+        /// </summary>
+        public void ClearCustomHeaders() {
+            _customHeaders.Clear();
         }
 
         private Dictionary<object, object> appendOptions(Dictionary<object, object> dict) {
@@ -880,6 +915,20 @@ namespace rosette_api {
             if (Debug) {
                 client.DefaultRequestHeaders.Add("X-RosetteAPI-Devel", "true");
             }
+
+            Regex pattern = new Regex("^X-RosetteAPI-");
+            if(_customHeaders.Count > 0) {
+                foreach(KeyValuePair<string, string> entry in _customHeaders) {
+                    Match match = pattern.Match(entry.Key);
+                    if(match.Success) {
+                        client.DefaultRequestHeaders.Add(entry.Key, entry.Value);
+                    } else {
+                        throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\"");
+                    }
+
+                }
+            }
+
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);

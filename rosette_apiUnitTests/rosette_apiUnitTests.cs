@@ -287,6 +287,43 @@ namespace rosette_apiUnitTests
             Assert.IsNull(_rosetteApi.GetOption("option1"));
         }
 
+        //------------------------- Simple Custom Header Tests ----------------------------------------
+
+
+        [Test]
+        public void CustomHeadersTest() {
+            KeyValuePair<string, string> expected = new KeyValuePair<string, string>("X-RosetteAPI-Test", "testValue");
+
+            _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
+
+            Assert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
+        }
+
+        [Test]
+        public void ClearHeadersTest() {
+            _rosetteApi.SetCustomHeaders("X-RosetteAPI-Test", "testValue");
+
+            _rosetteApi.ClearCustomHeaders();
+
+            Assert.IsEmpty(_rosetteApi.GetCustomHeaders());
+        }
+
+        [Test]
+        public void CheckInvalidCustomHeader() {
+            KeyValuePair<string, string> expected = new KeyValuePair<string, string>("Test", "testValue");
+
+            _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
+
+            try {
+                _rosetteApi.Info();
+            }
+            catch (RosetteException ex) {
+                Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\"");
+                return;
+            }
+        }
+
+
         //------------------------- Get Calls (Info and Ping) ----------------------------------------
 
         [Test]
