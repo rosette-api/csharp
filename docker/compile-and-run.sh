@@ -2,6 +2,7 @@
 
 ping_url="https://api.rosette.com/rest/v1"
 retcode=0
+errors=( "Exception" "processingFailure" "badRequest" "ParseError" "ValueError" "SyntaxError" "AttributeError" "ImportError" )
 
 #------------------ Functions ----------------------------------------------------
 
@@ -14,6 +15,10 @@ function HELP {
     echo "Compiles and runs the source file using the local development source"
     exit 1
 }
+
+if [ ! -z ${ALT_URL} ]; then
+    ping_url=${ALT_URL}
+fi
 
 #Checks if Rosette API key is valid
 function checkAPI {
@@ -50,12 +55,15 @@ function runExample() {
     executable=$(basename "${1}" .cs).exe
     mcs ${1} -r:rosette_api.dll -r:System.Net.Http.dll -r:System.Web.Extensions.dll -out:$executable
     result="$(mono $executable ${API_KEY} ${ALT_URL})"
-    if [[ ${result} == *"Exception"* ]]; then
-        retcode=1
-    fi
     echo "${result}"
     echo "---------- ${1} end -------------"
+    for err in "${errors[@]}"; do 
+        if [[ ${result} == *"${err}"* ]]; then
+            retcode=1
+        fi
+    done
 }
+
 #------------------ Functions End ------------------------------------------------
 
 #Gets API_KEY, FILENAME and ALT_URL if present
@@ -93,8 +101,10 @@ if [ ! -z ${API_KEY} ]; then
     #Change to dir where examples will be run from
     pushd rosette_apiExamples
     if [ ! -z ${FILENAME} ]; then
+        echo -e "\nRunning example against: ${ping_url}\n"
         runExample ${FILENAME}
     else
+        echo -e "\nRunning examples against: ${ping_url}\n"
         for file in *.cs; do
             runExample ${file}
         done
