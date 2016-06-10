@@ -24,4 +24,4 @@ COPY rosette_api.sln rosette_api.sln
 
 VOLUME ["/source"]
 
-CMD ./compile-and-run.sh $API_KEY $FILENAME $ALT_URL $GIT_USERNAME $VERSION
+CMD ./compile-and-run.sh
