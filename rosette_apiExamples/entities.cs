@@ -31,9 +31,11 @@ namespace rosette_apiExamples
             try
             {
                 CAPI EntitiesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                // to improve performance, and if you don't need the QID, set this option
+                // EntitiesCAPI.SetOption("linkEntities", false);
                 string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = EntitiesCAPI.Entity(entities_text_data);
+                RosetteResponse response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
