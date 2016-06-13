@@ -87,6 +87,9 @@ validateURL
 
 #Copy the mounted content in /source to current WORKDIR
 cp -r -n /source/. .
+#Remove the obj and bin directories to force clean compile
+rm -rf ./rosette_api/bin
+rm -rf ./rosette_api/obj
 
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
