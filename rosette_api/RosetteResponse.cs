@@ -53,8 +53,13 @@ namespace rosette_api {
                 Content = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
             }
             else {
-                throw new RosetteException(responseMsg.ReasonPhrase, (int)responseMsg.StatusCode);
+                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
             }
+        }
+
+        private string contentToString(HttpContent httpContent) {
+            var readAsStringAsync = httpContent.ReadAsStringAsync();
+            return readAsStringAsync.Result;
         }
 
         private string headersAsString() {
