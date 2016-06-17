@@ -57,9 +57,19 @@ namespace rosette_api {
             }
         }
 
+        /// <summary>
+        /// Reads the httpContent value into a string
+        /// </summary>
+        /// <param name="httpContent"></param>
+        /// <returns></returns>
         private string contentToString(HttpContent httpContent) {
-            var readAsStringAsync = httpContent.ReadAsStringAsync();
-            return readAsStringAsync.Result;
+            if (httpContent != null) {
+                var readAsStringAsync = httpContent.ReadAsStringAsync();
+                return readAsStringAsync.Result;
+            }
+            else {
+                return string.Empty;
+            }
         }
 
         private string headersAsString() {

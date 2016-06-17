@@ -117,6 +117,68 @@ namespace rosette_apiUnitTests
     }
 
     [TestFixture]
+    public class rosette_errorTests : IDisposable {
+        bool disposed = false;
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposed) {
+                return;
+            }
+
+            if (disposing) {
+                _mockHttp.Dispose();
+            }
+            disposed = true;
+        }
+
+        private MockHttpMessageHandler _mockHttp;
+        private CAPI _rosetteApi;
+        private string _testUrl = @"https://api.rosette.com/rest/v1/";
+
+        [TestFixtureSetUp]
+        public void Init() {
+            _mockHttp = new MockHttpMessageHandler();
+            var client = new HttpClient(_mockHttp);
+
+            string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}'}}", CAPI.Version);
+
+            _mockHttp.When(_testUrl + "info")
+                .WithQueryString(string.Format("clientVersion={0}", CAPI.Version))
+                .Respond("applciation/json", jsonResponse);
+
+            _rosetteApi = new CAPI("userkey", null, 1, client);
+        }
+
+        [TestFixtureTearDown]
+        public void Cleanup() {
+        }
+
+        [Test]
+        public void Error409_Test() {
+            _mockHttp.When(_testUrl + "entities")
+                .Respond(HttpStatusCode.Conflict);
+
+            try {
+                var response = _rosetteApi.Entity("content");
+                Assert.Fail("Exception not thrown");
+            }
+            catch (RosetteException ex) {
+                Assert.AreEqual(ex.Code, 409);
+                return;
+            }
+            catch (Exception) {
+                Assert.Fail("RosetteException not thrown");
+                return;
+            }
+        }
+    }
+
+    [TestFixture]
     public class rosette_classTests {
         [Test]
         public void NameClassTest() {
@@ -345,7 +407,7 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Exceptions ----------------------------------------
-
+        
         // Currently, the two exceptions returned by the binding (not server) occur if
         // neither content nor contentUri are provided or both are provided.  Categories is
         // used for convenience, but the tests could be run against almost all of the 
