@@ -42,6 +42,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LinqToExcel, Version=1.10.1.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=x86">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\LinqToExcel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.core, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.dll</HintPath>
       <Private>False</Private>
@@ -61,6 +69,18 @@
     <Reference Include="NUnit.VisualStudio.TestAdapter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Remotion, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.Data.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Interfaces, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.Interfaces.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="RichardSzalay.MockHttp, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RichardSzalay.MockHttp.1.2.2\lib\net45\RichardSzalay.MockHttp.dll</HintPath>
@@ -102,9 +122,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
