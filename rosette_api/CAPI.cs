@@ -75,9 +75,9 @@ namespace rosette_api {
             UserKey = user_key;
             URIstring = (uristring == null) ? "https://api.rosette.com/rest/v1/" : uristring;
             MaxRetry = (maxRetry == 0) ? 1 : maxRetry;
-            MillisecondsBetweenRetries = 500000;
+            MillisecondsBetweenRetries = 5000;
             Debug = false;
-            Timeout = 300;
+            Timeout = 0;
             Client = client;
             _options = new Dictionary<string, object>();
             _customHeaders = new Dictionary<string, string>();
@@ -764,6 +764,7 @@ namespace rosette_api {
                         responseMsg = task.Result;
                     }
                     if ((int)responseMsg.StatusCode == 429) {
+                        System.Diagnostics.Debug.WriteLine("429 Encountered ... Retry");
                         System.Threading.Thread.Sleep(MillisecondsBetweenRetries);
                         continue;
                     }
@@ -842,7 +843,9 @@ namespace rosette_api {
                                                      | DecompressionMethods.Deflate
                         });
                 client.BaseAddress = new Uri(URIstring);
-                client.Timeout = new TimeSpan(0, 0, Timeout);
+                if (Timeout != 0) {
+                    client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+                }
             }
             else {
                 client = Client;
