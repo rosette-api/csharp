@@ -24,14 +24,13 @@ namespace rosette_apiUnitTests
             var excel = new ExcelQueryFactory(@"C:\Dev\Bindings\csharp\testdata.xls");
             var worksheetNames = excel.GetWorksheetNames();
             excel.ReadOnly = true;
-            //CAPI rosetteApi = new CAPI("7c3e0f9f51334a0793dde4be37cb22ce", "http://stage.rosette.com/rest/v1", 1);
 
             foreach (string name in worksheetNames) {
                 var data = from cell in excel.Worksheet(name)
                            select cell;
                 foreach (int i in Enumerable.Range(0, 10)) {
                     foreach (var cell in data) {
-                        CAPI rosetteApi = new CAPI("boguskey", "http://seuss.basistech.net:8181/rest/v1", 1);
+                        CAPI rosetteApi = new CAPI("bogus_key", "https://api.rosette.com/rest/v1", 5);
                         RosetteResponse result = rosetteApi.Sentiment(cell[0].Value.ToString());
                         System.Diagnostics.Debug.WriteLine(result.ContentAsJson);
                     }
