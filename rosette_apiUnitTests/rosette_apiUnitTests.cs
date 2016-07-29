@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LinqToExcel;
+using NUnit.Framework;
 using rosette_api;
 using RichardSzalay.MockHttp;
 using System;
@@ -13,6 +14,31 @@ using System.Web.Script.Serialization;
 
 namespace rosette_apiUnitTests
 {
+    [TestFixture]
+    public class volumeTest {
+        // uncomment [Test] to enable. It's not a true unit test, so it shouldn't run under regular conditions, but 
+        // it is useful for debugging.
+        //[Test]
+        public void testSentiment() {
+            // provide a complete path to a test xls
+            var excel = new ExcelQueryFactory(@"C:\Dev\Bindings\csharp\testdata.xls");
+            var worksheetNames = excel.GetWorksheetNames();
+            excel.ReadOnly = true;
+
+            foreach (string name in worksheetNames) {
+                var data = from cell in excel.Worksheet(name)
+                           select cell;
+                foreach (int i in Enumerable.Range(0, 10)) {
+                    foreach (var cell in data) {
+                        CAPI rosetteApi = new CAPI("bogus_key", "https://api.rosette.com/rest/v1", 5);
+                        RosetteResponse result = rosetteApi.Sentiment(cell[0].Value.ToString());
+                        System.Diagnostics.Debug.WriteLine(result.ContentAsJson);
+                    }
+                }
+            }
+
+        }
+    }
     /// <summary>
     /// Live test for multiPart.  To run, uncomment [Test]
     /// </summary>
@@ -470,6 +496,36 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Categories(f);
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        //------------------------- Entities Linked ----------------------------------------
+
+        [Test]
+        public void EntitiesLinked_Content_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Entity("content", null, null, null, true);
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void EntitiesLinked_Dict_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } }, true);
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void EntitiesLinked_File_Test() {
+            _mockHttp.When(_testUrl + "entities/linked")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.Entity(f, true);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
