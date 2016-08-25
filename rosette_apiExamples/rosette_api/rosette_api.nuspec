@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>rosette_api</id>
+    <version>1.2.0</version>                                            
+    <authors>basistech</authors>
+    <owners>basistech</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.Net (C#) Binding for Rosette API</description>
+    <releaseNotes>.Net (C#) Binding updated for Rosette API</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>RosetteAPI</tags>
+    <dependencies>
+    </dependencies>
+	<frameworkAssemblies>
+		<frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
+		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
+	</frameworkAssemblies>
+  </metadata>
+  <files>
+      <file src="./bin/Release/rosette_api.dll" target="lib\net45"/>
+  </files>
+</package>
