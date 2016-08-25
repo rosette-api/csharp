@@ -334,7 +334,8 @@ namespace rosette_apiUnitTests
             StreamWriter sw = File.AppendText(_tmpFile);
             sw.WriteLine("Rosette API Unit Test.  This file is used for testing file operations.");
             sw.Flush();
-            sw.Close(); _mockHttp = new MockHttpMessageHandler();
+            sw.Close(); 
+            _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
             string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}'}}", CAPI.Version);
@@ -351,6 +352,7 @@ namespace rosette_apiUnitTests
             if (File.Exists(_tmpFile)) {
                 File.Delete(_tmpFile);
             }
+            _mockHttp.Clear();
         }
 
         //------------------------- Simple Options Tests ----------------------------------------
@@ -424,7 +426,79 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void PingTest() {
+        public void InfoTestFull()
+        {
+            Init();
+            string name = "Rosette API";
+            string version = "1.2.3";
+            string buildNumber = null;
+            string buildTime = null;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": 72, \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("name", name);
+            content.Add("version", version);
+            content.Add("buildNumber", buildNumber);
+            content.Add("buildTime", buildTime);
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            _mockHttp.When(_testUrl + "info").Respond(mockedMessage);
+            InfoResponse expected = new InfoResponse(name, version, buildNumber, buildTime, responseHeaders, content);
+            InfoResponse response = _rosetteApi.Info();
+            Assert.AreEqual(expected, response);
+        }
+
+        private HttpResponseMessage MakeMockedMessage(Dictionary<string, string> responseHeaders, HttpStatusCode statusCode, String content)
+        {
+            HttpResponseMessage mockedMessage = new HttpResponseMessage(statusCode);
+            mockedMessage.Content = new StringContent(content);
+            foreach (KeyValuePair<string, string> header in responseHeaders)
+            {
+                try
+                {
+                    mockedMessage.Headers.Add(header.Key, header.Value.ToString());
+                }
+                catch
+                {
+                    try
+                    {
+                        mockedMessage.Content.Headers.Add(header.Key, header.Value.ToString());
+                    }
+                    catch
+                    {
+                        switch (header.Key)
+                        {
+                            case "Content-Type": mockedMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(header.Value);
+                                break;
+                            case "content-length": mockedMessage.Content.Headers.ContentLength = long.Parse(header.Value);
+                                break;
+                            default: throw;
+                        }
+                    }
+                }
+            }
+            return mockedMessage;
+        }
+
+        [Test]
+        public void PingTestFull() {
+            Init();
+            string message = "Rosette API at your service.";
+            long time = 1470930452887;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("message", message);
+            content.Add("time", time);
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            _mockHttp.When(_testUrl + "ping").Respond(mockedMessage);
+            PingResponse expected = new PingResponse(message, time, responseHeaders, content);
+            PingResponse response = _rosetteApi.Ping();
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void PingTest()
+        {
             _mockHttp.When(_testUrl + "ping")
                 .Respond("application/json", "{'response': 'OK'}");
 
@@ -475,9 +549,27 @@ namespace rosette_apiUnitTests
         public void Categories_Content_Test() {
             _mockHttp.When(_testUrl + "categories")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
             var response = _rosetteApi.Categories("content");
             Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void CategoriesContentTestFull()
+        {
+            Init();
+            List<RosetteCategory> categories = new List<RosetteCategory>();
+            RosetteCategory cat0 = new RosetteCategory("ARTS_AND_ENTERTAINMENT", (Decimal)0.23572849069656435);
+            categories.Add(cat0);
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("categories", categories);
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + "} ] }";
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "categories").Respond(mockedMessage);
+            CategoriesResponse expected = new CategoriesResponse(categories, responseHeaders, null, mockedContent);
+            CategoriesResponse response = _rosetteApi.Categories("Sony Pictures is planning to shoot a good portion of the new \"\"Ghostbusters\"\" in Boston as well.");
+            Assert.AreEqual(expected, response);
         }
 
         [Test]

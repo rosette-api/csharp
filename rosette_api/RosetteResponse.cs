@@ -12,7 +12,7 @@ using System.Web.Script.Serialization;
 namespace rosette_api {
     /// <summary>
     /// Encapsulates the response from RosetteAPI
-    /// </summary>
+    /// </summary>  
     public class RosetteResponse {
         /// <summary>
         /// IDictionary of response content
@@ -27,6 +27,13 @@ namespace rosette_api {
         /// </summary>
         public string ContentAsJson { get; private set; }
 
+        public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
+        {
+            this.Content = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();
+            this.Headers = headers != null ? headers : new Dictionary<string, string>();
+            this.ContentAsJson = contentAsJson != null ? contentAsJson : content != null ? new JavaScriptSerializer().Serialize(content) : "";
+        }
+
         /// <summary>
         /// RosetteResponse ctor
         /// </summary>
@@ -38,7 +45,10 @@ namespace rosette_api {
             if (responseMsg.IsSuccessStatusCode) {
                 foreach (var header in responseMsg.Headers) {
                     Headers.Add(header.Key, string.Join("", header.Value));
-
+                }
+                foreach (var header in responseMsg.Content.Headers)
+                {
+                    Headers.Add(header.Key, string.Join("", header.Value));
                 }
 
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
@@ -62,7 +72,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="httpContent"></param>
         /// <returns></returns>
-        private string contentToString(HttpContent httpContent) {
+        internal static string contentToString(HttpContent httpContent) {
             if (httpContent != null) {
                 var readAsStringAsync = httpContent.ReadAsStringAsync();
                 return readAsStringAsync.Result;

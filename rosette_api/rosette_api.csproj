@@ -50,12 +50,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAPI.cs" />
+    <Compile Include="CategoriesResponse.cs" />
+    <Compile Include="EntitiesResponse.cs" />
+    <Compile Include="EntityID.cs" />
+    <Compile Include="InfoResponse.cs" />
+    <Compile Include="LanguageIdentificationResponse.cs" />
+    <Compile Include="MorphologyResponse.cs" />
     <Compile Include="Name.cs" />
+    <Compile Include="NameSimilarityResponse.cs" />
+    <Compile Include="Optional.cs" />
+    <Compile Include="PingResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationshipsResponse.cs" />
+    <Compile Include="ResponseHeaders.cs" />
+    <Compile Include="RosetteEntity.cs" />
     <Compile Include="RosetteException.cs" />
     <Compile Include="RosetteExtensions.cs" />
     <Compile Include="RosetteFile.cs" />
     <Compile Include="RosetteResponse.cs" />
+    <Compile Include="SentenceTaggingResponse.cs" />
+    <Compile Include="SentimentResponse.cs" />
+    <Compile Include="TokenizationResponse.cs" />
+    <Compile Include="TranslateNamesResponse.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
