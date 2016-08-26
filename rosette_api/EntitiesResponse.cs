@@ -14,9 +14,9 @@ namespace rosette_api
     public class EntitiesResponse : RosetteResponse
     {
         /// <summary>
-        /// Gets the collection of identified entities
+        /// Gets or sets the collection of identified entities
         /// </summary
-        public List<RosetteEntity> Entities { get; private set; }
+        public List<RosetteEntity> Entities { get; set; }
 
         /// <summary>
         /// Gets the response headers returned from the API
@@ -62,6 +62,37 @@ namespace rosette_api
             }
             this.Entities = entities;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is EntitiesResponse)
+            {
+                EntitiesResponse other = obj as EntitiesResponse;
+                List<bool> conditions = new List<bool>() {
+                    this.Entities.SequenceEqual(other.Entities),
+                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hashcode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Entities.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 }

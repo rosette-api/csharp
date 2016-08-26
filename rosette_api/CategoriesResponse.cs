@@ -90,7 +90,7 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Categories.GetHashCode() ^ this.ResponseHeaders.GetHashCode() ^ this.ContentAsJson.GetHashCode();
+            return this.Categories.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 

@@ -16,19 +16,19 @@ namespace rosette_api
         private const string timeKey = "time";
 
         /// <summary>
-        /// The status message
+        /// Gets the status message
         /// </summary>
         public string Message { get; private set; }
 
         /// <summary>
-        /// The time of the response
+        /// Gets the time of the response
         /// </summary>
         public Nullable<long> Time { get; private set; }
 
         /// <summary>
-        /// The response headers from the API
+        /// Gets the response headers from the API
         /// </summary>
-        public ResponseHeaders ResponseHeaders;
+        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a PingResposne from the given apiMsg
@@ -41,6 +41,14 @@ namespace rosette_api
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="time"></param>
+        /// <param name="headers"></param>
+        /// <param name="content"></param>
+        /// <param name="contentAsJson"></param>
         public PingResponse(String message, long time, Dictionary<string, string> headers, Dictionary<string, object> content = null, String contentAsJson = null) 
             : base(headers, content, contentAsJson)
         {
@@ -49,6 +57,11 @@ namespace rosette_api
             this.ResponseHeaders = new ResponseHeaders(headers);
         }
 
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="other">The object to compare against</param>
+        /// <returns>True if equal</returns>
         public override bool Equals(Object other)
         {
             if (other is PingResponse)
@@ -57,8 +70,6 @@ namespace rosette_api
                 List<bool> conditions = new List<bool>() {
                     this.Time == otherResponse.Time,
                     this.Message == otherResponse.Message,
-                    (this.Content.Count == otherResponse.Content.Count &! this.Content.Except(otherResponse.Content).Any()) || this.ContentAsJson == otherResponse.ContentAsJson,
-                    this.Headers.Count == otherResponse.Headers.Count &! this.Headers.Except(otherResponse.Headers).Any(),
                     this.ResponseHeaders.Equals(otherResponse.ResponseHeaders)
                 };
                 return conditions.All(condition => condition);
@@ -69,9 +80,13 @@ namespace rosette_api
             }
         }
 
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The HashCode</returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return this.Message.GetHashCode() ^ this.Time.GetHashCode();
         }
     }
 }

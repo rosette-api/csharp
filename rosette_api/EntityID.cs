@@ -45,15 +45,40 @@ namespace rosette_api
     /// </summary>
     public class QID : EntityID
     {
+        private string _ID;
+
         /// <summary>
         /// The QID
         /// </summary>
-        public string ID { get; set; }
+        public string ID
+        {
+            get
+            {
+                if (ID == null)
+                {
+                    ID = _ID;
+                }
+                return ID;
+            }
+
+            set
+            {
+                try
+                {
+                    this.Link = MakeLink(value);
+                }
+                catch
+                {
+                    throw new ArgumentException("The QID's ID could not be set because the attempted ID value is not a valid Wikidata QID.  Try another ID, or create an EntityID of another type.");
+                }
+                this._ID = value;
+            }
+        }
 
         /// <summary>
-        /// The URL to the Wikidata for this QID
+        /// Gets the URL to the Wikidata for this QID
         /// </summary>
-        public string Link;
+        public string Link { get; private set; }
         
         /// <summary>
         /// Creates an Entity ID that is linkable to Wikipedia from the given id string
@@ -62,24 +87,26 @@ namespace rosette_api
         /// <exception cref="ArgumentException">Throws an invalid argument exception if the id param is not a valid Wikidata QID.</exception>
         public QID(String id)
         {
-            String siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + id + "&sitefilter=enwiki&props=sitelinks&format=json");
-            String jsonStr;
             try
             {
-                jsonStr = MakeRequest(siteLink);
+                this.Link = MakeLink(id);
             }
             catch
             {
                 throw new ArgumentException("A QID object could not be created because the given ID is not a valid Wikidata QID.", "id");
             }
-            int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
-            if (lengthOfTitle > 0)
-            {
-                String title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
-                title = title.Replace(" ", "_");
-                this.Link = "https://en.wikipedia.org/wiki/" + (title);
-            }
             this.ID = id;
+        }
+
+        private static string MakeLink(String id) 
+        {
+            String siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + id + "&sitefilter=enwiki&props=sitelinks&format=json");
+            String jsonStr = MakeRequest(siteLink);
+            int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
+            String title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
+            title = title.Replace(" ", "_");
+            string link = "https://en.wikipedia.org/wiki/" + (title);
+            return link;
         }
 
         private static String MakeRequest(string requestUrl)

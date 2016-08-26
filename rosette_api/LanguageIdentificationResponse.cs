@@ -13,19 +13,19 @@ namespace rosette_api
     /// </summary>
     public class LanguageIdentificationResponse : RosetteResponse
     {
-        private static string languageDetectionsKey = "languageDetections";
-        private static string languageKey = "language";
-        private static string confidenceKey = "confidence";
+        private const string languageDetectionsKey = "languageDetections";
+        private const string languageKey = "language";
+        private const string confidenceKey = "confidence";
 
         /// <summary>
-        /// The sorted collection of likely languages and their confidence scores
+        /// Get the sorted collection of likely languages and their confidence scores
         /// </summary>
-        List<LanguageDetection> LanguageDetections;
+        public List<LanguageDetection> LanguageDetections { get; private set; }
 
         /// <summary>
-        /// The response headers returned from the API
+        /// Gets the response headers returned from the API
         /// </summary>
-        public ResponseHeaders ResponseHeaders;
+        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a LanguageIdentificationResponse from the given apiResults
@@ -44,22 +44,53 @@ namespace rosette_api
             this.LanguageDetections = languageDetections;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj is LanguageIdentificationResponse)
+            {
+                LanguageIdentificationResponse other = obj as LanguageIdentificationResponse;
+                List<bool> conditions = new List<bool>() {
+                    this.LanguageDetections.SequenceEqual(other.LanguageDetections),
+                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.LanguageDetections.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+        }
     }
 
     /// <summary>
     /// A struct to represent a detected language and the likelihood it was the correct language to detect
     /// </summary>
-    public struct LanguageDetection
+    public class LanguageDetection
     {
         /// <summary>
-        /// The abbreviated language
+        /// Gets the abbreviated language
         /// </summary>
-        public string Language_Abbr;
+        public string Language_Abbr { get; private set; }
 
         /// <summary>
-        /// The confidence this was the correct language
+        /// Gets the confidence this was the correct language
         /// </summary>
-        public Nullable<double> Confidence;
+        public Nullable<double> Confidence { get; private set; }
 
         /// <summary>
         /// Creates a LanguageDetection, which identifies a language and the confidence that it is the correct language
@@ -70,6 +101,37 @@ namespace rosette_api
         {
             this.Language_Abbr = language_Abbr;
             this.Confidence = confidence;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj is LanguageDetection)
+            {
+                LanguageDetection other = obj as LanguageDetection;
+                List<bool> conditions = new List<bool>() {
+                    this.Language_Abbr == other.Language_Abbr,
+                    this.Confidence == other.Confidence
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Language_Abbr.GetHashCode() ^ this.Confidence.GetHashCode();
         }
     }
 }

@@ -55,6 +55,17 @@ namespace rosette_api
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
+        /// <summary>
+        /// Creates an InfoResponse from its component.  This consturctor was created for testing purposes and is not intended to be used by customers.
+        /// </summary>
+        /// <remarks>This consturctor was created for testing purposes and is not intended to be used by customers.</remarks>
+        /// <param name="name">The name of the API</param>
+        /// <param name="version">The version number of the API</param>
+        /// <param name="buildNumber">The build number of the API</param>
+        /// <param name="buildTime">The time of the last build</param>
+        /// <param name="headers">The headers from the API</param>
+        /// <param name="content">The content of the InfoResponse in dictionary form</param>
+        /// <param name="contentAsJson">The content of the InfoResponse as JSON</param>
         public InfoResponse(String name, String version, String buildNumber, String buildTime, Dictionary<string, string> headers, Dictionary<string, object> content = null, String contentAsJson = null) 
             : base(headers, content, contentAsJson)
         {
@@ -65,18 +76,23 @@ namespace rosette_api
             this.ResponseHeaders = new ResponseHeaders(headers);
         }
 
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="other">The object to compare against</param>
+        /// <returns>True if equal</returns>
         public override bool Equals(Object other)
         {
             if (other is InfoResponse)
             {
                 InfoResponse otherResponse = other as InfoResponse;
                 List<bool> conditions = new List<bool>() {
-                this.BuildNumber == otherResponse.BuildNumber,
-                this.BuildTime == otherResponse.BuildTime,
-                this.Version == otherResponse.Version,
-                this.Name == otherResponse.Name,
-                (this.Content.Count == otherResponse.Content.Count &! this.Content.Except(otherResponse.Content).Any()) || this.ContentAsJson == otherResponse.ContentAsJson,
-                this.Headers.Count == otherResponse.Headers.Count &! this.Headers.Except(otherResponse.Headers).Any()};
+                    this.BuildNumber == otherResponse.BuildNumber,
+                    this.BuildTime == otherResponse.BuildTime,
+                    this.Version == otherResponse.Version,
+                    this.Name == otherResponse.Name,
+                    this.ResponseHeaders.Equals(otherResponse.ResponseHeaders)
+                };
                 return conditions.All(condition => condition);
             }
             else
@@ -85,9 +101,13 @@ namespace rosette_api
             }
         }
 
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ this.Name.GetHashCode() ^ this.Version.GetHashCode() ^ this.BuildTime.GetHashCode() ^ this.BuildNumber.GetHashCode();
+            return this.Name.GetHashCode() ^ this.Version.GetHashCode() ^ this.BuildTime.GetHashCode() ^ this.BuildNumber.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 }

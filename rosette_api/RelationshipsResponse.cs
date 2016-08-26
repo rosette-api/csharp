@@ -13,23 +13,23 @@ namespace rosette_api
     /// </summary>
     public class RelationshipsResponse : RosetteResponse
     {
-        private static string relationshipsKey = "relationships";
-        private static string predicateKey = "predicate";
-        private static string argsKey = "arg";
-        private static string temporalsKey = "temporals";
-        private static string locativesKey = "locatives";
-        private static string adjunctsKey = "adjuncts";
-        private static string confidenceKey = "confidence";
+        private const string relationshipsKey = "relationships";
+        private const string predicateKey = "predicate";
+        private const string argsKey = "arg";
+        private const string temporalsKey = "temporals";
+        private const string locativesKey = "locatives";
+        private const string adjunctsKey = "adjuncts";
+        private const string confidenceKey = "confidence";
 
         /// <summary>
-        /// The relationships extracted by the Rosette API
+        /// Gets or sets the relationships extracted by the Rosette API
         /// </summary>
-        public List<RosetteRelationship> Relationships;
+        public List<RosetteRelationship> Relationships { get; set; }
 
         /// <summary>
-        /// The response headers returned from the API
+        /// Gets the response headers returned from the API
         /// </summary>
-        public ResponseHeaders ResponseHeaders;
+        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a RelationshipsResponse from the given apiResult
@@ -67,6 +67,28 @@ namespace rosette_api
             this.Relationships = relationships;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is RelationshipsResponse)
+            {
+                RelationshipsResponse other = obj as RelationshipsResponse;
+                List<bool> conditions = new List<bool>() {
+                    this.Relationships.Count == other.Relationships.Count &! this.Relationships.Except(other.Relationships).Any(),
+                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -75,34 +97,34 @@ namespace rosette_api
     public class RosetteRelationship
     {
         /// <summary>
-        /// The main action or verb acting on the first argument, or the action connecting multiple arguments.
+        /// Gets or sets the main action or verb acting on the first argument, or the action connecting multiple arguments.
         /// </summary>
-        public String Predicate;
+        public String Predicate { get; set; }
 
         /// <summary>
-        /// One or more subjects in the relationship
+        /// Gets or sets the or more subjects in the relationship
         /// </summary>
-        public List<String> Arguments;
+        public List<String> Arguments { get; set; }
 
         /// <summary>
-        /// Time frame of the action.  May be empty.
+        /// Gets or sets the time frame of the action.  May be empty.
         /// </summary>
-        public List<String> Temporals;
+        public List<String> Temporals { get; set; }
 
         /// <summary>
-        /// Location of the action.  May be empty.
+        /// Gets or sets the location(s) of the action.  May be empty.
         /// </summary>
-        public List<String> Locatives;
+        public List<String> Locatives { get; set; }
 
         /// <summary>
-        /// All other parts of the relationship.  May be empty.
+        /// Gets or sets all other parts of the relationship.  May be empty.
         /// </summary>
-        public List<String> Adjucts;
+        public List<String> Adjucts { get; set; }
 
         /// <summary>
-        /// A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.
+        /// Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.
         /// </summary>
-        public Nullable<double> Confidence;
+        public Nullable<double> Confidence { get; private set; }
 
         /// <summary>
         /// Creates a grammatical relationship
@@ -120,6 +142,38 @@ namespace rosette_api
             this.Locatives = locatives;
             this.Adjucts = adjunts;
             this.Confidence = confidence;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is RosetteRelationship) {
+                RosetteRelationship other = obj as RosetteRelationship;
+                List<bool> conditions = new List<bool>() {
+                    this.Adjucts.SequenceEqual(other.Adjucts),
+                    this.Arguments.SequenceEqual(other.Arguments),
+                    this.Confidence == other.Confidence,
+                    this.Locatives.SequenceEqual(other.Locatives),
+                    this.Predicate == other.Predicate,
+                    this.Temporals.SequenceEqual(other.Temporals)
+                };
+                return conditions.All(condition => condition);
+            } else {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The HashCode</returns>
+        public override int GetHashCode()
+        {
+            return this.Temporals.GetHashCode() ^ this.Predicate.GetHashCode() ^ this.Locatives.GetHashCode() ^ this.Confidence.GetHashCode() ^ this.Arguments.GetHashCode() ^ this.Adjucts.GetHashCode();
         }
     }
 }

@@ -13,22 +13,22 @@ namespace rosette_api
     /// </summary>
     public class MorphologyResponse : RosetteResponse
     {
-        internal static string tokenKey = "tokens";
-        internal static string hanReadingsKey = "hanReadings";
-        internal static string compoundComponentsKey = "compoundComponents";
-        internal static string posTagsKey = "posTags";
-        internal static string lemmasKey = "lemmas";
-        internal static string responseHeadersKey = "responseHeaders";
+        private const string tokenKey = "tokens";
+        private const string hanReadingsKey = "hanReadings";
+        private const string compoundComponentsKey = "compoundComponents";
+        private const string posTagsKey = "posTags";
+        private const string lemmasKey = "lemmas";
+        private const string responseHeadersKey = "responseHeaders";
 
         /// <summary>
-        /// The output of the Rosette API's morphology endpoint, grouped by tokens in order of appearance
+        /// Gets or sets the output of the Rosette API's morphology endpoint, grouped by tokens in order of appearance
         /// </summary>
-        public List<MorphologyItem> Items;
+        public List<MorphologyItem> Items { get; set; }
 
         /// <summary>
-        /// The response headers returned from the API
+        /// Gets the response headers returned from the API
         /// </summary>
-        public ResponseHeaders ResponseHeaders;
+        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a MorphologyResponse from the given apiResponse
@@ -38,26 +38,10 @@ namespace rosette_api
         {
             List<string> tokens = this.Content.ContainsKey(tokenKey) ? this.Content[tokenKey] as List<string>: new List<String>();
             int tokenCount = tokens.Count();
-            string[] lemmas = new String[tokenCount];
-            if (this.Content.ContainsKey(lemmasKey))
-            {
-                lemmas = this.Content[lemmasKey] as string[];
-            }
-            string[] posTags = new String[tokenCount];
-            if (this.Content.ContainsKey(posTagsKey))
-            {
-                posTags = this.Content[posTagsKey] as string[];
-            }
-            List<string>[] compoundComponentsArr = new List<string>[tokenCount];
-            if (this.Content.ContainsKey(compoundComponentsKey))
-            {
-                compoundComponentsArr = this.Content[compoundComponentsKey] as List<string>[];
-            }
-            List<string>[] hanReadingsArr = new List<string>[tokenCount];
-            if (this.Content.ContainsKey(hanReadingsKey))
-            {
-                hanReadingsArr = this.Content[hanReadingsKey] as List<string>[];
-            }
+            string[] lemmas = this.Content.ContainsKey(lemmasKey) ? this.Content[lemmasKey] as string[] : new String[tokenCount];
+            string[] posTags = this.Content.ContainsKey(posTagsKey) ? this.Content[posTagsKey] as string[] : new String[tokenCount];
+            List<string>[] compoundComponentsArr = this.Content.ContainsKey(compoundComponentsKey) ? this.Content[compoundComponentsKey] as List<string>[] : new List<string>[tokenCount];
+            List<string>[] hanReadingsArr = this.Content.ContainsKey(hanReadingsKey) ? this.Content[hanReadingsKey] as List<string>[] : new List<string>[tokenCount];
 
             List<MorphologyItem> items = new List<MorphologyItem>();
             for (int obj = 0; obj < tokenCount; obj++) {
@@ -65,6 +49,37 @@ namespace rosette_api
             }
             this.Items = items;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj is MorphologyResponse)
+            {
+                MorphologyResponse other = obj as MorphologyResponse;
+                List<bool> conditions = new List<bool>() {
+                    this.Items.SequenceEqual(other.Items),
+                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Items.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 
@@ -74,25 +89,25 @@ namespace rosette_api
     public class MorphologyItem
     {
         /// <summary>
-        /// The token on which this morphology item is based
+        /// Gets or sets he token on which this morphology item is based
         /// </summary>
-        public Optional<string> Token;
+        public Optional<string> Token { get; set; }
         /// <summary>
         /// If enabled, the part of speech of the token
         /// </summary>
-        public Optional<string> PosTag;
+        public Optional<string> PosTag { get; set; }
         /// <summary>
         /// If enabled, the lemma of the token
         /// </summary>
-        public Optional<string> Lemma;
+        public Optional<string> Lemma { get; set; }
         /// <summary>
         /// If enabled and present, the Han readings of the token
         /// </summary>
-        public Optional<List<string>> HanReadings;
+        public Optional<List<string>> HanReadings { get; set; }
         /// <summary>
         /// If enabled and present, the compound components of the token
         /// </summary>
-        public Optional<List<string>> CompoundComponents;
+        public Optional<List<string>> CompoundComponents { get; set; }
 
         /// <summary>
         /// Creates a Morphology Item that holds morphology details associated with a given token
@@ -108,6 +123,40 @@ namespace rosette_api
             this.Lemma = lemma;
             this.HanReadings = new Optional<List<string>>(hanReadings);
             this.CompoundComponents = new Optional<List<string>>(compoundComponents);
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(Object obj)
+        {
+            if (obj is MorphologyItem)
+            {
+                MorphologyItem other = obj as MorphologyItem;
+                List<bool> conditions = new List<bool>() {
+                    this.Token == other.Token,
+                    this.PosTag == other.PosTag,
+                    this.Lemma == other.Lemma,
+                    this.HanReadings == other.HanReadings,
+                    this.CompoundComponents == other.CompoundComponents
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Token.GetHashCode() ^ this.Lemma.GetHashCode() ^ this.PosTag.GetHashCode() ^ this.HanReadings.GetHashCode() ^ this.CompoundComponents.GetHashCode();
         }
     }
 }
