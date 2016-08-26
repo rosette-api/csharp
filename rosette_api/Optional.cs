@@ -103,7 +103,7 @@ namespace rosette_api
         /// <summary>
         /// Gets the HashCode of this Optional Object.
         /// </summary>
-        /// <returns>The hashcode of the value of this Optional Object or 0 if it doesn't have a value</returns>
+        /// <returns>The hashcode of the value of this Optional Object or 1 if it doesn't have a value</returns>
         public override int GetHashCode()
         {
             if (this.HasValue)
@@ -112,7 +112,7 @@ namespace rosette_api
             }
             else
             {
-                return 0;
+                return 1;
             }
         }
     }
