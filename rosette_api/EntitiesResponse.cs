@@ -15,7 +15,7 @@ namespace rosette_api
     {
         /// <summary>
         /// Gets or sets the collection of identified entities
-        /// </summary
+        /// </summary>
         public List<RosetteEntity> Entities { get; set; }
 
         /// <summary>

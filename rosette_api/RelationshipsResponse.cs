@@ -89,6 +89,15 @@ namespace rosette_api
                 return false;
             }
         }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Relationships.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+        }
     }
 
     /// <summary>

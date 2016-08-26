@@ -121,5 +121,39 @@ namespace rosette_api
             this.Count = count;
             this.EntityType = entityType;
         }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is RosetteEntity)
+            {
+                RosetteEntity other = obj as RosetteEntity;
+                List<bool> conditions = new List<bool>() {
+                    this.ID.Equals(other.ID),
+                    this.Count == other.Count,
+                    this.EntityType == other.EntityType,
+                    this.Mention == other.Mention,
+                    this.NormalizedMention == other.NormalizedMention
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.NormalizedMention.GetHashCode() ^ this.Mention.GetHashCode() ^ this.ID.GetHashCode() ^ this.Count.GetHashCode() ^ this.EntityType.GetHashCode();
+        }
     }
 }

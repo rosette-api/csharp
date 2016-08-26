@@ -96,6 +96,11 @@ namespace rosette_api
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
             if (obj is TranslateNamesResponse)
@@ -119,5 +124,17 @@ namespace rosette_api
                 return false;
             }
         }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.EntityType.GetHashCode() ^ this.ResponseHeaders.GetHashCode()
+                ^ this.SourceLanguageOfOrigin.GetHashCode() ^ this.SourceLanguageOfUse.GetHashCode()
+                ^ this.SourceScript.GetHashCode() ^ this.TargetLanguage.GetHashCode()
+                ^ this.TargetScheme.GetHashCode() ^ this.TargetScript.GetHashCode() ^ this.Translation.GetHashCode();
+        } 
     }
 }

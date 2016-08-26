@@ -27,6 +27,12 @@ namespace rosette_api {
         /// </summary>
         public string ContentAsJson { get; private set; }
 
+        /// <summary>
+        /// Creates a Rosette Response from its components
+        /// </summary>
+        /// <param name="headers">The headers from the API</param>
+        /// <param name="content">The content of the response in dictionary form</param>
+        /// <param name="contentAsJson">The content of the response in JSON</param>
         public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
         {
             this.Content = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();

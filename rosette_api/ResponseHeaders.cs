@@ -56,6 +56,11 @@ namespace rosette_api
             this.AllResponseHeaders = headers;
         }
 
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
             if (obj is ResponseHeaders)
@@ -74,6 +79,10 @@ namespace rosette_api
             }
         }
 
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
             return this.AllResponseHeaders.GetHashCode();

@@ -13,29 +13,29 @@ namespace rosette_api
     /// </summary>
     public class SentimentResponse : RosetteResponse
     {
-        private string docKey = "document";
-        private string entitiesKey = "entities";
-        private string labelKey = "label";
-        private string confidenceKey = "confidence";
-        private string mentionKey = "mention";
+        private const string docKey = "document";
+        private const string entitiesKey = "entities";
+        private const string labelKey = "label";
+        private const string confidenceKey = "confidence";
+        private const string mentionKey = "mention";
         private const string normalizedMentionKey = "normalizedMention";
         private const string countKey = "count";
-        private string typeKey = "type";
-        private string entityIDKey = "entityId";
+        private const string typeKey = "type";
+        private const string entityIDKey = "entityId";
 
         /// <summary>
-        /// The document-level sentiment identified by the Rosette API
+        /// Gets or sets the document-level sentiment identified by the Rosette API
         /// </summary>
-        public RosetteSentiment DocSentiment;
+        public RosetteSentiment DocSentiment { get; set; }
         /// <summary>
-        /// The entities identified by the Rosette API with sentiment
+        /// Gets or sets the entities identified by the Rosette API with sentiment
         /// </summary>
-        public List<RosetteSentimentEntity> EntitySentiments;
+        public List<RosetteSentimentEntity> EntitySentiments { get; set; }
 
         /// <summary>
-        /// The response headers returned from the API
+        /// Gets the response headers returned from the API
         /// </summary>
-        public ResponseHeaders ResponseHeaders;
+        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a SentimentResponse from the given apiResult
@@ -80,6 +80,38 @@ namespace rosette_api
         }
 
         /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is SentimentResponse)
+            {
+                SentimentResponse other = obj as SentimentResponse;
+                List<bool> conditions = new List<bool>() {
+                    this.DocSentiment.Equals(other.DocSentiment),
+                    this.EntitySentiments.SequenceEqual(other.EntitySentiments),
+                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hashcode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.ResponseHeaders.GetHashCode() ^ this.EntitySentiments.GetHashCode() ^ this.DocSentiment.GetHashCode();
+        }
+
+        /// <summary>
         /// A class for representing sentiments
         /// </summary>
         public class RosetteSentiment
@@ -96,6 +128,7 @@ namespace rosette_api
                 /// <summary>
                 /// The sentiment is neutral
                 /// </summary>
+                /// 
                 neu,
                 /// <summary>
                 /// The sentiment is negative
@@ -127,6 +160,37 @@ namespace rosette_api
                 }
                 this.Confidence = confidence;
             }
+
+            /// <summary>
+            /// Equals override
+            /// </summary>
+            /// <param name="obj">The object to compare against</param>
+            /// <returns>True if equal</returns>
+            public override bool Equals(object obj)
+            {
+                if (obj is RosetteSentiment)
+                {
+                    RosetteSentiment other = obj as RosetteSentiment;
+                    List<bool> conditions = new List<bool>() {
+                        this.Confidence == other.Confidence,
+                        this.Label == other.Label
+                    };
+                    return conditions.All(condition => condition);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            /// <summary>
+            /// HashCode override
+            /// </summary>
+            /// <returns>The hashcode</returns>
+            public override int GetHashCode()
+            {
+                return this.Confidence.GetHashCode() ^ this.Label.GetHashCode();
+            }
         }
     }
 
@@ -144,8 +208,10 @@ namespace rosette_api
         /// Creates an entity that has a sentiment associated with it
         /// </summary>
         /// <param name="mention">The mention of the entity</param>
+        /// <param name="normalizedMention">The normalized mention of the entity</param>
         /// <param name="id">The contextual ID of the entity to compare it against other entities</param>
         /// <param name="entityType">The entity type</param>
+        /// <param name="count">The number of times the entity appeared in the text</param>
         /// <param name="sentiment">The contextual sentiment of the entity</param>
         /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
         public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<double> confidence) : base(mention, normalizedMention, id, entityType, count)
@@ -165,6 +231,41 @@ namespace rosette_api
                 this.ID == other.ID &&
                 this.EntityType == other.EntityType &&
                 this.Count == other.Count;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is RosetteSentimentEntity)
+            {
+                RosetteSentimentEntity other = obj as RosetteSentimentEntity;
+                List<bool> conditions = new List<bool>() {
+                    this.Sentiment.Equals(other.Sentiment),
+                    this.NormalizedMention.Equals(other.NormalizedMention),
+                    this.Mention.Equals(other.Mention),
+                    this.ID.Equals(other.ID),
+                    this.EntityType.Equals(other.EntityType),
+                    this.Count.Equals(other.Count)
+                };
+                return conditions.All(condition => condition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// HashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Count.GetHashCode() ^ this.EntityType.GetHashCode() ^ this.ID.GetHashCode() ^ this.Mention.GetHashCode() ^ this.NormalizedMention.GetHashCode() ^ this.Sentiment.GetHashCode();
         }
     }
 }
