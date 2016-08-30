@@ -16,7 +16,7 @@ namespace rosette_api
         /// <summary>
         /// Gets the collection of identified categories
         /// </summary>
-        public List<RosetteCategory> Categories { get; private set; }
+        public List<RosetteCategory> Categories { get; set; }
 
         /// <summary>
         /// Gets the response headers returned from the API
@@ -102,12 +102,12 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the category label
         /// </summary>
-        public String Label { get; set; }
+        public string Label { get; set; }
         /// <summary>
         /// Gets or sets the confidence:
         /// On a range of 0-1, the confidence in the categorization
         /// </summary>
-        public Nullable<Decimal> Confidence { get; set; }
+        public Nullable<decimal> Confidence { get; set; }
 
         /// <summary>
         /// Creates a Rosette Category from a category label and confidence
