@@ -964,6 +964,29 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Tokens ----------------------------------------
+        [Test]
+        public void TokensTestFull()
+        {
+            Init();
+            List<string> tokens = new List<string>() {
+                "北京大学",
+                "生物系",
+                "主任",
+                "办公室",
+                "内部",
+                "会议"
+            };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", tokens);
+            TokenizationResponse expected = new TokenizationResponse(tokens, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "tokens").Respond(mockedMessage);
+            TokenizationResponse response = _rosetteApi.Tokens("北京大学生物系主任办公室内部会议");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Tokens_Content_Test() {

@@ -31,9 +31,27 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public TokenizationResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            this.Tokens = this.Content.ContainsKey(tokensKey) ? this.Content[tokensKey] as List<string> : new List<string>();
+            if (this.Content.ContainsKey(tokensKey))
+            {
+                object[] tokenObjArr = this.Content[tokensKey] as object[];
+                this.Tokens = tokenObjArr.ToList().ConvertAll<string>((o) => o.ToString());
+            }
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
+
+        /// <summary>
+        /// Creates a TokenizationResponse from its components
+        /// </summary>
+        /// <param name="tokens">The tokens</param>
+        /// <param name="responseHeaders">The response headers returned from the API</param>
+        /// <param name="content">The content (the tokens) in dictionary form</param>
+        /// <param name="contentAsJson">The content in JSON form</param>
+        public TokenizationResponse(List<string> tokens, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
+            : base(responseHeaders, content, contentAsJson)
+        {
+            this.Tokens = tokens;
+            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
+        } 
 
         /// <summary>
         /// Equals override
@@ -45,8 +63,9 @@ namespace rosette_api
             if (obj is TokenizationResponse) {
                 TokenizationResponse other = obj as TokenizationResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Tokens.SequenceEqual(other.Tokens),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.Tokens != null && other.Tokens != null ? this.Tokens.SequenceEqual(other.Tokens) : this.Tokens == other.Tokens,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -62,7 +81,32 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Tokens.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Tokens != null ? this.Tokens.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>This TokenizationResponse in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{\"tokens\": [\"").Append(String.Join("\", \"", this.Tokens)).Append("\"]")
+                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}");
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{\"tokens\": [\"").Append(String.Join("\", \"", this.Tokens)).Append("\"]}");
+            return builder.ToString();
         }
     }
 }
