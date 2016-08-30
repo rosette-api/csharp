@@ -85,7 +85,8 @@ namespace rosette_api
                 RelationshipsResponse other = obj as RelationshipsResponse;
                 List<bool> conditions = new List<bool>() {
                     this.Relationships.SequenceEqual(other.Relationships),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.ResponseHeaders.Equals(other.ResponseHeaders),
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -101,7 +102,9 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Relationships.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Relationships.Aggregate<RosetteRelationship, int>(1, (seed, item) => seed ^ item.GetHashCode());
+            int h1 = this.ResponseHeaders.GetHashCode();
+            return h0 ^ h1;
         }
 
         /// <summary>
