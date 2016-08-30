@@ -128,9 +128,9 @@ namespace rosette_api
         /// </summary>
         /// <param name="language">The language in its abbreviated form</param>
         /// <param name="confidence">The confidence the language was the correct language to identify</param>
-        public LanguageDetection(string language_Abbr, Nullable<decimal> confidence)
+        public LanguageDetection(string language, Nullable<decimal> confidence)
         {
-            this.Language = language_Abbr;
+            this.Language = language;
             this.Confidence = confidence;
         }
 
