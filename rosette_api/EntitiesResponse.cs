@@ -44,18 +44,7 @@ namespace rosette_api
                 String type = dictResult.ContainsKey(typeKey) ? (dictResult[typeKey] as String) : null;
                 String mention = dictResult.ContainsKey(mentionKey) ? dictResult[mentionKey] as String : null;
                 String entityIDStr = dictResult.ContainsKey(entityIDKey) ? dictResult[entityIDKey] as String : null;
-                EntityID entityID = null;
-                if (entityIDStr != null)
-                {
-                    if (entityIDStr.Substring(0, 1).Equals("Q", StringComparison.OrdinalIgnoreCase))
-                    {
-                        entityID = new QID(entityIDStr);
-                    }
-                    else
-                    {
-                        entityID = new TemporaryID(entityIDStr);
-                    }
-                }
+                EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 String normalized = dictResult.ContainsKey(normalizedKey) ? dictResult[normalizedKey] as String : null;
                 Nullable<int> count = dictResult.ContainsKey(countKey) ? dictResult[countKey] as Nullable<int> : null;
                 entities.Add(new RosetteEntity(mention, normalized, entityID, type, count));

@@ -11,102 +11,43 @@ namespace rosette_api
     /// <summary>
     /// An interface for common methods of EntityID classes
     /// </summary>
-    public interface EntityID
+    public class EntityID
     {
         /// <summary>
         /// Gets or sets the ID of this EntityID
         /// </summary>
         /// <returns>The ID of this EntityID, represented as a string</returns>
-        String ID { get; set; }
-    }
-
-    /// <summary>
-    /// A class to represent EntityIDs that are local and not universally recognized
-    /// </summary>
-    public class TemporaryID : EntityID
-    {
-        /// <summary>
-        /// The ID
-        /// </summary>
         public string ID { get; set; }
 
         /// <summary>
         /// Creates an entity ID using the given string
         /// </summary>
         /// <param name="id">The ID value of the new Entity ID</param>
-        public TemporaryID(String id)
+        public EntityID(string id)
         {
             this.ID = id;
         }
-    }
-
-    /// <summary>
-    /// A class to represent EntityIDs that are linkable to Wikidata
-    /// </summary>
-    public class QID : EntityID
-    {
-        private string _ID;
 
         /// <summary>
-        /// The QID
+        /// Creates a link to the Wikipedia article for this EntityID's ID if it is a QID.  If the ID is not a QID, this method returns null.
         /// </summary>
-        public string ID
+        /// <returns>The valid Wikipedia link or null.</returns>
+        public string GetWikipedaURL()
         {
-            get
-            {
-                if (ID == null)
-                {
-                    ID = _ID;
-                }
-                return ID;
-            }
-
-            set
-            {
-                try
-                {
-                    this.Link = MakeLink(value);
-                }
-                catch
-                {
-                    throw new ArgumentException("The QID's ID could not be set because the attempted ID value is not a valid Wikidata QID.  Try another ID, or create an EntityID of another type.");
-                }
-                this._ID = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the URL to the Wikidata for this QID
-        /// </summary>
-        public string Link { get; private set; }
-        
-        /// <summary>
-        /// Creates an Entity ID that is linkable to Wikipedia from the given id string
-        /// </summary>
-        /// <param name="id">The ID value of the new Entity ID</param>
-        /// <exception cref="ArgumentException">Throws an invalid argument exception if the id param is not a valid Wikidata QID.</exception>
-        public QID(String id)
-        {
+            String siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
             try
             {
-                this.Link = MakeLink(id);
+                String jsonStr = MakeRequest(siteLink);
+                int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
+                String title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
+                title = title.Replace(" ", "_");
+                string link = "https://en.wikipedia.org/wiki/" + (title);
+                return link;
             }
             catch
             {
-                throw new ArgumentException("A QID object could not be created because the given ID is not a valid Wikidata QID.", "id");
+                return null;
             }
-            this.ID = id;
-        }
-
-        private static string MakeLink(String id) 
-        {
-            String siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + id + "&sitefilter=enwiki&props=sitelinks&format=json");
-            String jsonStr = MakeRequest(siteLink);
-            int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
-            String title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
-            title = title.Replace(" ", "_");
-            string link = "https://en.wikipedia.org/wiki/" + (title);
-            return link;
         }
 
         private static String MakeRequest(string requestUrl)

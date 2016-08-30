@@ -652,32 +652,26 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void QIDTestPassOnCreation()
+        public void EntityIDTestPassOnCreate()
         {
-            QID pass = new QID("Q1");
-        }
-
-        [Test, ExpectedException(typeof(ArgumentException), ExpectedMessage = "A QID object could not be created because the given ID is not a valid Wikidata QID.", MatchType = MessageMatch.Contains)]
-        public void QIDTestFailOnCreation()
-        {
-            QID fail = new QID("QLSJFDDSLFADJDSFLAJZLJDJFZILJZLIJFZLIFJZLIFJESZLFIJEDE%FLIZHSGLIRODFHGALGIHEWRG");
+            EntityID pass = new EntityID("Q1");
+            pass.ID = "Q1";
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Universe", pass.GetWikipedaURL());
         }
 
         [Test]
-        public void QIDTestPassOnSet()
-        {
-            QID pass = new QID("Q1");
-            pass.ID = "Q1";
-            Assert.AreEqual(pass.Link, "https://en.wikipedia.org/wiki/Universe");
-            pass.ID = "Q2";
-            Assert.AreEqual(pass.Link, "https://en.wikipedia.org/wiki/Earth");
+        public void EntityIDTestLinkValidOnSet() {
+            EntityID tidAtFirst = new EntityID("T423");
+            Assert.AreEqual(null, tidAtFirst.GetWikipedaURL());
+            tidAtFirst.ID = "Q2";
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Earth", tidAtFirst.GetWikipedaURL());
         }
 
-        [Test, ExpectedException(typeof(ArgumentException), ExpectedMessage = "The QID's ID could not be set because the attempted ID value is not a valid Wikidata QID.  Try another ID, or create an EntityID of another type.", MatchType = MessageMatch.Contains)]
-        public void QIDTestFailOnSet()
+        [Test]
+        public void EntityIDLinkNullOnSetToNull()
         {
-            QID pass = new QID("Q1");
-            pass.ID = "dlkfja;lfikj3l1j4341l;34kj324l321j4l3214ji;jdsfpoaisudfyadjifadisayof";
+            EntityID eid = new EntityID(null);
+            Assert.AreEqual(null, eid.GetWikipedaURL());
         }
 
         //------------------------- Language ----------------------------------------

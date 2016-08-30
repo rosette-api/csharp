@@ -58,18 +58,7 @@ namespace rosette_api
                 String mention = dictResult.ContainsKey(mentionKey) ? dictResult[mentionKey] as String : null;
                 String normalizedMention = dictResult.ContainsKey(normalizedMentionKey) ? dictResult[normalizedMentionKey] as String : null;
                 String entityIDStr = dictResult.ContainsKey(entityIDKey) ? dictResult[entityIDKey] as String : null;
-                EntityID entityID = null;
-                if (entityIDStr != null)
-                {
-                    if (entityIDStr.Substring(0, 1).Equals("Q", StringComparison.OrdinalIgnoreCase))
-                    {
-                        entityID = new QID(entityIDStr);
-                    }
-                    else
-                    {
-                        entityID = new TemporaryID(entityIDStr);
-                    }
-                }
+                EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 Nullable<int> count = dictResult.ContainsKey(countKey) ? dictResult[countKey] as Nullable<int> : null;
                 String sentiment = dictResult.ContainsKey(labelKey) ? dictResult[labelKey] as String : null;
                 Nullable<double> confidence = dictResult.ContainsKey(confidenceKey) ? dictResult[confidenceKey] as Nullable<double> : null;
