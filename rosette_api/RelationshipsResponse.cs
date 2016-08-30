@@ -37,35 +37,40 @@ namespace rosette_api
         /// <param name="apiResult">The message from the API</param>
         public RelationshipsResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
-            Dictionary<string, object>[] relationshipResults = this.Content.ContainsKey(relationshipsKey) ? this.Content[relationshipsKey] as Dictionary<string, object>[] : new Dictionary<string, object>[0];
+            object[] relationshipResults = this.Content.ContainsKey(relationshipsKey) ? this.Content[relationshipsKey] as object[] : new object[0];
+            Converter<object, string> converter = new Converter<object, string>(o => o.ToString());
             List<RosetteRelationship> relationships = new List<RosetteRelationship>();
-            foreach (Dictionary<string, object> relationship in relationshipResults)
+            foreach (object relationshipObj in relationshipResults)
             {
+                Dictionary<string, object> relationship = relationshipObj as Dictionary<string, object>;
                 String predicate = relationship.ContainsKey(predicateKey) ? relationship[predicateKey] as String : null;
-                List<String> arguments = new List<string>();
-                if (relationship.Any(kvp => kvp.Key.Contains(argsKey))) { 
-                    arguments.AddRange(relationship.Where(kvp => kvp.Key.Contains(argsKey)).Select(kvp => kvp.Value as String)); 
-                }
-                List<string> temporals = new List<string>();
-                if (relationship.ContainsKey(temporalsKey))
-                {
-                    temporals.AddRange(relationship[temporalsKey] as String[]);
-                }
-                List<string> locatives = new List<string>();
-                if (relationship.ContainsKey(locativesKey))
-                {
-                    locatives.AddRange(relationship[locativesKey] as String[]);
-                }
-                List<string> adjuncts = new List<string>();
-                if (relationship.ContainsKey(adjunctsKey))
-                {
-                    adjuncts.AddRange(relationship[adjunctsKey] as String[]);
-                }
-                Nullable<double> confidence = relationship.ContainsKey(confidenceKey) ?  relationship[confidenceKey] as Nullable<double> : new Nullable<double>();
+                List<String> arguments = relationship.Any(kvp => kvp.Key.Contains(argsKey)) ?
+                    new List<string>(relationship.Where(kvp => kvp.Key.Contains(argsKey)).Select(kvp => kvp.Value as String)) : null;
+                List<string> temporals = relationship.ContainsKey(temporalsKey) ?
+                    new List<string>(Array.ConvertAll<object, string>(relationship[temporalsKey] as object[], converter)) : null;
+                List<string> locatives = relationship.ContainsKey(locativesKey) ?
+                    new List<string>(Array.ConvertAll<object, string>(relationship[locativesKey] as object[], converter)) : null;
+                List<string> adjuncts = relationship.ContainsKey(adjunctsKey) ? 
+                    new List<string>(Array.ConvertAll<object, string>(relationship[adjunctsKey] as object[], converter)) : null;
+                Nullable<decimal> confidence = relationship.ContainsKey(confidenceKey) ?  relationship[confidenceKey] as Nullable<decimal> : new Nullable<decimal>();
                 relationships.Add(new RosetteRelationship(predicate, arguments, temporals, locatives, adjuncts, confidence));
             }
             this.Relationships = relationships;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
+        }
+
+        /// <summary>
+        /// Creates a RelationshipsResponse from its components
+        /// </summary>
+        /// <param name="relationships">The relationships</param>
+        /// <param name="responseHeaders">The response headers returned from the Rosette API</param>
+        /// <param name="content">The content (the relationships) in dictionary form</param>
+        /// <param name="contentAsJson">The content in JSON form</param>
+        public RelationshipsResponse(List<RosetteRelationship> relationships, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
+            : base(responseHeaders, content, contentAsJson)
+        {
+            this.Relationships = relationships;
+            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace rosette_api
             {
                 RelationshipsResponse other = obj as RelationshipsResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Relationships.Count == other.Relationships.Count &! this.Relationships.Except(other.Relationships).Any(),
+                    this.Relationships.SequenceEqual(other.Relationships),
                     this.ResponseHeaders.Equals(other.ResponseHeaders)
                 };
                 return conditions.All(condition => condition);
@@ -97,6 +102,28 @@ namespace rosette_api
         public override int GetHashCode()
         {
             return this.Relationships.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+        }
+
+        /// <summary>
+        /// ToString override.  Writes the RelationshipResponse as JSON.
+        /// </summary>
+        /// <returns>The RelationshipResponse as JSON</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{\"relationships\": [").Append(String.Join(", ", this.Relationships)).Append("]")
+                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}");
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content as a string
+        /// </summary>
+        /// <returns></returns>
+        public string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            return builder.Append("{\"relationships\": [").Append(String.Join<RosetteRelationship>(", ", this.Relationships)).Append("]}").ToString();
         }
     }
 
@@ -133,7 +160,7 @@ namespace rosette_api
         /// <summary>
         /// Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.
         /// </summary>
-        public Nullable<double> Confidence { get; private set; }
+        public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
         /// Creates a grammatical relationship
@@ -144,7 +171,7 @@ namespace rosette_api
         /// <param name="locatives">Locations of the action.  May be empty.</param>
         /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
         /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
-        public RosetteRelationship(String predicate, List<String> arguments, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<double> confidence) {
+        public RosetteRelationship(String predicate, List<String> arguments, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence) {
             this.Predicate = predicate;
             this.Arguments = arguments;
             this.Temporals = temporals;
@@ -163,12 +190,13 @@ namespace rosette_api
             if (obj is RosetteRelationship) {
                 RosetteRelationship other = obj as RosetteRelationship;
                 List<bool> conditions = new List<bool>() {
-                    this.Adjucts.SequenceEqual(other.Adjucts),
-                    this.Arguments.SequenceEqual(other.Arguments),
+                    this.Adjucts != null && other.Adjucts != null ? this.Adjucts.SequenceEqual(other.Adjucts) : this.Adjucts == other.Adjucts,
+                    this.Arguments != null && other.Arguments != null ? this.Arguments.SequenceEqual(other.Arguments) : this.Arguments == other.Arguments,
                     this.Confidence == other.Confidence,
-                    this.Locatives.SequenceEqual(other.Locatives),
+                    this.Locatives != null && other.Locatives != null ? this.Locatives.SequenceEqual(other.Locatives) : this.Locatives == other.Locatives,
                     this.Predicate == other.Predicate,
-                    this.Temporals.SequenceEqual(other.Temporals)
+                    this.Temporals != null && other.Temporals != null ? this.Temporals.SequenceEqual(other.Temporals) : this.Temporals == other.Temporals,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             } else {
@@ -182,7 +210,38 @@ namespace rosette_api
         /// <returns>The HashCode</returns>
         public override int GetHashCode()
         {
-            return this.Temporals.GetHashCode() ^ this.Predicate.GetHashCode() ^ this.Locatives.GetHashCode() ^ this.Confidence.GetHashCode() ^ this.Arguments.GetHashCode() ^ this.Adjucts.GetHashCode();
+            int h0 = this.Temporals != null ? this.Temporals.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.Predicate != null ? this.Predicate.GetHashCode() : 1;
+            int h2 = this.Locatives != null ? this.Locatives.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h3 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
+            int h4 = this.Arguments != null ? this.Arguments.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h5 = this.Adjucts != null ? this.Adjucts.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int hashcode = h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h4 ^ h5;
+            return hashcode;
+        }
+
+        /// <summary>
+        /// ToString override.  Writes this RosetteRelationship in JSON form
+        /// </summary>
+        /// <returns>The relationship as JSON</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Predicate != null) { builder.Append("\"predicate\": \"").Append(this.Predicate).Append("\", "); }
+            if (this.Arguments != null && this.Arguments.Any()) 
+            {
+                for (int a = 1; a <= this.Arguments.Count; a++)
+                {
+                    builder.Append(String.Format("\"arg{0}\": \"{1}\", ", new object[] {a, this.Arguments[a - 1]}));
+                }
+            }
+            if (this.Temporals != null && this.Temporals.Any()) { builder.Append("\"temporals\": [\"").Append(String.Join("\", \"", this.Temporals)).Append("\"], "); }
+            if (this.Locatives != null && this.Locatives.Any()) { builder.Append("\"locatives\": [\"").Append(String.Join("\", \"", this.Locatives)).Append("\"], "); }
+            if (this.Adjucts != null && this.Adjucts.Any()) { builder.Append("\"locatives\": [\"").Append(String.Join("\", \"", this.Adjucts)).Append("\"], "); }
+            if (this.Confidence != null) { builder.Append(String.Format("\"confidence\": {0}, ", this.Confidence)); }
+            builder.Remove(builder.Length - 2, 2);
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 }
