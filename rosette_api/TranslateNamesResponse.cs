@@ -14,37 +14,41 @@ namespace rosette_api
     public class TranslateNamesResponse : RosetteResponse
     {
         /// <summary>
-        /// If present, the type of entity of the name being translated
+        /// Gets or sets the type of entity of the name being translated
         /// </summary>
-        public Optional<string> EntityType { get; private set; }
+        public string EntityType { get; set; }
         /// <summary>
-        /// If present, the script of the name being translated
+        /// Gets or sets the script of the name being translated
         /// </summary>
-        public Optional<string> SourceScript { get; private set; }
+        public string SourceScript { get; set; }
         /// <summary>
-        /// If present, the language of origin of the name being translated
+        /// Gets or sets the language of origin of the name being translated
         /// </summary>
-        public Optional<string> SourceLanguageOfOrigin { get; private set; }
+        public string SourceLanguageOfOrigin { get; set; }
         /// <summary>
-        /// If present, the language in which the name being translated is written
+        /// Gets or sets the language in which the name being translated is written
         /// </summary>
-        public Optional<string> SourceLanguageOfUse { get; private set; }
+        public string SourceLanguageOfUse { get; set; }
         /// <summary>
-        /// If present, the language to which the name has been translated
+        /// Gets or sets the language to which the name has been translated
         /// </summary>
-        public Optional<string> TargetLanguage { get; private set; }
+        public string TargetLanguage { get; set; }
         /// <summary>
-        /// If present, the script in which the translated name is written
+        /// Gets or sets the script in which the translated name is written
         /// </summary>
-        public Optional<string> TargetScript { get; private set; }
+        public string TargetScript { get; set; }
         /// <summary>
-        /// If present, the scheme in which the translated name is written
+        /// Gets or sets the scheme in which the translated name is written
         /// </summary>
-        public Optional<string> TargetScheme { get; private set; }
+        public string TargetScheme { get; set; }
         /// <summary>
-        /// If present, the translation of the name
+        /// Gets or sets the translation of the name
         /// </summary>
-        public Optional<string> Translation { get; private set; }
+        public string Translation { get; set; }
+        /// <summary>
+        /// Gets or sets the confidence of the translation
+        /// </summary>
+        public Nullable<decimal> Confidence { get; set; }
 
         /// <summary>
         /// The response headers returned from the API

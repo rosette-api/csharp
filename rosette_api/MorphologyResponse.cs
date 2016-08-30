@@ -91,23 +91,23 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets he token on which this morphology item is based
         /// </summary>
-        public Optional<string> Token { get; set; }
+        public string Token { get; set; }
         /// <summary>
         /// If enabled, the part of speech of the token
         /// </summary>
-        public Optional<string> PosTag { get; set; }
+        public string PosTag { get; set; }
         /// <summary>
         /// If enabled, the lemma of the token
         /// </summary>
-        public Optional<string> Lemma { get; set; }
+        public string Lemma { get; set; }
         /// <summary>
         /// If enabled and present, the Han readings of the token
         /// </summary>
-        public Optional<List<string>> HanReadings { get; set; }
+        public List<string> HanReadings { get; set; }
         /// <summary>
         /// If enabled and present, the compound components of the token
         /// </summary>
-        public Optional<List<string>> CompoundComponents { get; set; }
+        public List<string> CompoundComponents { get; set; }
 
         /// <summary>
         /// Creates a Morphology Item that holds morphology details associated with a given token
@@ -121,8 +121,8 @@ namespace rosette_api
             this.Token = token;
             this.PosTag = posTag;
             this.Lemma = lemma;
-            this.HanReadings = new Optional<List<string>>(hanReadings);
-            this.CompoundComponents = new Optional<List<string>>(compoundComponents);
+            this.HanReadings = hanReadings;
+            this.CompoundComponents = compoundComponents;
         }
 
         /// <summary>
