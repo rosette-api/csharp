@@ -75,5 +75,42 @@ namespace rosette_api
                 return null;
             }
         }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is EntityID) {
+                EntityID other = obj as EntityID;
+                List<bool> conditions = new List<bool>() {
+                    this.ID != null && other.ID != null ? this.ID.Equals(other.ID) : this.ID == other.ID,
+                    this.GetHashCode() == other.GetHashCode()
+                };
+                return conditions.All(condition => condition);
+            } else {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// GetHashCode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.ID != null ? this.ID.GetHashCode() : 1;
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This EntityID in JSON form</returns>
+        public override string ToString()
+        {
+            return this.ID;
+        }
     }
 }

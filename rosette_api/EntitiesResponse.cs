@@ -23,12 +23,12 @@ namespace rosette_api
         /// </summary>
         public ResponseHeaders ResponseHeaders { get; private set; }
 
-        internal String entitiesKey = "entities";
-        internal String typeKey = "type";
-        internal String mentionKey = "mention";
-        internal String normalizedKey = "normalized";
-        internal String entityIDKey = "entityID";
-        internal String countKey = "count";
+        private const String entitiesKey = "entities";
+        private const String typeKey = "type";
+        private const String mentionKey = "mention";
+        private const String normalizedKey = "normalized";
+        private const String entityIDKey = "entityId";
+        private const String countKey = "count";
 
         /// <summary>
         /// Creates a CategoriesResponse from the API's raw output
@@ -54,6 +54,20 @@ namespace rosette_api
         }
 
         /// <summary>
+        /// Creates an EntitiesResponse from its components
+        /// </summary>
+        /// <param name="entities">The list of entities</param>
+        /// <param name="responseHeaders">The response headers returned from the API</param>
+        /// <param name="content">The content of the response in dictionary form</param>
+        /// <param name="contentAsJson">The content of the response in JSON form</param>
+        public EntitiesResponse(List<RosetteEntity> entities, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
+            : base(responseHeaders, content, contentAsJson)
+        {
+            this.Entities = entities;
+            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
+        }
+
+        /// <summary>
         /// Equals override
         /// </summary>
         /// <param name="obj">The object to compare against</param>
@@ -64,8 +78,9 @@ namespace rosette_api
             {
                 EntitiesResponse other = obj as EntitiesResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Entities.SequenceEqual(other.Entities),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.Entities != null && other.Entities != null ? this.Entities.SequenceEqual(other.Entities) : this.Entities == other.Entities,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -81,7 +96,36 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Entities.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Entities != null ? this.Entities.Aggregate<RosetteEntity, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            string entitiesString = this.Entities != null ? new StringBuilder("[").Append(String.Join(", ", this.Entities)).Append("]").ToString() : null;
+            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
+            builder.Append("\"entities\": ").Append(entitiesString)
+                .Append(", responseHeaders: ").Append(responseHeadersString).Append("}");
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder("{");            
+            string entitiesString = this.Entities != null ? new StringBuilder("[").Append(String.Join(", ", this.Entities)).Append("]").ToString() : null;
+            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
+            builder.Append("\"entities\": ").Append(entitiesString).Append("}");
+            return builder.ToString();
         }
     }
 }

@@ -133,11 +133,12 @@ namespace rosette_api
             {
                 RosetteEntity other = obj as RosetteEntity;
                 List<bool> conditions = new List<bool>() {
-                    this.ID.Equals(other.ID),
+                    this.ID != null && other.ID != null ? this.ID.Equals(other.ID) : this.ID == other.ID,
                     this.Count == other.Count,
                     this.EntityType == other.EntityType,
                     this.Mention == other.Mention,
-                    this.NormalizedMention == other.NormalizedMention
+                    this.NormalizedMention == other.NormalizedMention,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -153,7 +154,29 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.NormalizedMention.GetHashCode() ^ this.Mention.GetHashCode() ^ this.ID.GetHashCode() ^ this.Count.GetHashCode() ^ this.EntityType.GetHashCode();
+            int h0 = this.NormalizedMention != null ? this.NormalizedMention.GetHashCode() : 1;
+            int h1 = this.Mention != null ? this.Mention.GetHashCode() : 1;
+            int h2 = this.ID != null ? this.ID.GetHashCode() : 1;
+            int h3 = this.Count != null ? this.Count.GetHashCode() : 1;
+            int h4 = this.EntityType != null ? this.EntityType.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>This RosetteEntity in JSON form</returns>
+        public override string ToString()
+        {
+            string countString = this.Count != null ?  this.Count.ToString() : null;
+            string idString = this.ID != null ? new StringBuilder("\"").Append(this.ID.ToString()).Append("\"").ToString() : null;
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{\"type\": \"").Append(this.EntityType).Append("\", ")
+                .Append("\"mention\": \"").Append(this.Mention).Append("\", ")
+                .Append("\"normalized\": \"").Append(this.NormalizedMention).Append("\", ")
+                .Append("\"count\": ").Append(countString).Append(", ")
+                .Append("\"entityId\": ").Append(idString).Append("}");
+            return builder.ToString();
         }
     }
 }
