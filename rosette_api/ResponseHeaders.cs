@@ -32,12 +32,12 @@ namespace rosette_api
         /// <summary>
         /// The DateTime of the response
         /// </summary>
-        public String Date;
+        public string Date;
 
         /// <summary>
         /// The language in which the API processed the input text
         /// </summary>
-        public String XRosetteAPIProcessedLanguage;
+        public string XRosetteAPIProcessedLanguage;
 
         /// <summary>
         /// Creaqtes a ResponseHeaders object from the given headers
@@ -67,9 +67,7 @@ namespace rosette_api
             {
                 ResponseHeaders other = obj as ResponseHeaders;
                 List<bool> conditions = new List<bool>() {
-                    this.AllResponseHeaders.Count == other.AllResponseHeaders.Count &! this.AllResponseHeaders.Except(other.AllResponseHeaders).Any(),
-                    (this.Date == null && other.Date == null) || this.Date.Equals(other.Date),
-                    (this.XRosetteAPIProcessedLanguage == null && other.XRosetteAPIProcessedLanguage == null) || this.XRosetteAPIProcessedLanguage.Equals(other.XRosetteAPIProcessedLanguage)
+                    this.AllResponseHeaders.Count == other.AllResponseHeaders.Count &! this.AllResponseHeaders.Except(other.AllResponseHeaders).Any()
                 };
                 return conditions.All(condition => condition);
             }
@@ -85,7 +83,7 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.AllResponseHeaders.GetHashCode();
+            return this.AllResponseHeaders.Aggregate<KeyValuePair<string, string>, int>(1, (seed, kvp) => seed ^ kvp.GetHashCode());
         }
     }
 }
