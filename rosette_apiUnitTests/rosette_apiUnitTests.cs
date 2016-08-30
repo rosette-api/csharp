@@ -749,6 +749,32 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Morphology ----------------------------------------
+        [Test]
+        public void MorphologyTestFullComplete()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("The", "DET", "the", null, null);
+            MorphologyItem m1 = new MorphologyItem("quick", "ADJ", "quick", null, null);
+            MorphologyItem m2 = new MorphologyItem("brown", "ADJ", "brown", null, null);
+            MorphologyItem m3 = new MorphologyItem("fox", "NOUN", "fox", null, null);
+            MorphologyItem m4 = new MorphologyItem("jumped", "VERB", "jump", null, null);
+            MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", null, null);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)));
+            content.Add("posTags", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.PosTag)));
+            content.Add("lemmas", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Lemma)));
+            content.Add("compoundComponents", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.CompoundComponents)));
+            content.Add("hanReadings", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.HanReadings)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/complete").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Morphology_Content_Test() {

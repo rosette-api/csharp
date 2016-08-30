@@ -35,21 +35,43 @@ namespace rosette_api
         /// </summary>
         /// <param name="apiResponse">The message from the API</param>
         public MorphologyResponse(HttpResponseMessage apiResponse) : base(apiResponse)
-        {
-            List<string> tokens = this.Content.ContainsKey(tokenKey) ? this.Content[tokenKey] as List<string>: new List<String>();
-            int tokenCount = tokens.Count();
-            string[] lemmas = this.Content.ContainsKey(lemmasKey) ? this.Content[lemmasKey] as string[] : new String[tokenCount];
-            string[] posTags = this.Content.ContainsKey(posTagsKey) ? this.Content[posTagsKey] as string[] : new String[tokenCount];
-            List<string>[] compoundComponentsArr = this.Content.ContainsKey(compoundComponentsKey) ? this.Content[compoundComponentsKey] as List<string>[] : new List<string>[tokenCount];
-            List<string>[] hanReadingsArr = this.Content.ContainsKey(hanReadingsKey) ? this.Content[hanReadingsKey] as List<string>[] : new List<string>[tokenCount];
-
+        { 
+            object[] tokenObjArr = this.Content.ContainsKey(tokenKey) ? this.Content[tokenKey] as object[] : new object[0];
+            List<string> tokens = tokenObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
+            int tokenCount = tokens != null ? tokens.Count() : 0;
+            object[] lemmaObjArr = this.Content.ContainsKey(lemmasKey) ? this.Content[lemmasKey] as object[] : new object[tokenCount];
+            List<string> lemmas = lemmaObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
+            object[] posTagObjArr = this.Content.ContainsKey(posTagsKey) ? this.Content[posTagsKey] as object[] : new object[tokenCount];
+            List<string> posTags = posTagObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
+            object[] compoundComponentsObjArr = this.Content.ContainsKey(compoundComponentsKey) ? this.Content[compoundComponentsKey] as object[] : new object[tokenCount];
+            List<List<string>> compoundComponentsArr = compoundComponentsObjArr.ToList()
+                .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
+            object[] hanReadingsObjArr = this.Content.ContainsKey(hanReadingsKey) ? this.Content[hanReadingsKey] as object[] : new object[tokenCount];
+            List<List<string>> hanReadingsArr = hanReadingsObjArr.ToList()
+                .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
+            if (compoundComponentsArr == null) { compoundComponentsArr = new List<string>[tokenCount].ToList(); }
+            if (hanReadingsArr == null) { hanReadingsArr = new List<string>[tokenCount].ToList(); }
             List<MorphologyItem> items = new List<MorphologyItem>();
             for (int obj = 0; obj < tokenCount; obj++) {
-                items.Add(new MorphologyItem(tokens[obj], lemmas[obj], posTags[obj], compoundComponentsArr[obj], hanReadingsArr[obj]));
+                items.Add(new MorphologyItem(tokens[obj], posTags[obj], lemmas[obj], compoundComponentsArr[obj], hanReadingsArr[obj]));
             }
             this.Items = items;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
+
+        /// <summary>
+        /// Creates a MorphologyResponse from its components
+        /// </summary>
+        /// <param name="items">The list of morphology items</param>
+        /// <param name="responseHeaders">The response headers returned from the API</param>
+        /// <param name="content">The content of the response in Dictionary form</param>
+        /// <param name="contentAsJson">The content form API </param>
+        public MorphologyResponse(List<MorphologyItem> items, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
+            : base(responseHeaders, content, contentAsJson)
+        {
+            this.Items = items;
+            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
+        } 
 
         /// <summary>
         /// Equals override
@@ -62,8 +84,9 @@ namespace rosette_api
             {
                 MorphologyResponse other = obj as MorphologyResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Items.SequenceEqual(other.Items),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.Items != null && other.Items != null ? this.Items.SequenceEqual(other.Items) : this.Items == other.Items,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -79,7 +102,35 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Items.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Items != null ? this.Items.Aggregate<MorphologyItem, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>The response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Items != null) { builder.AppendFormat("\"{0}\": [{1}]", "items", String.Join<MorphologyItem>(", ", this.Items)).Append(", "); }
+            if (this.ResponseHeaders != null) { builder.AppendFormat("\"{0}\": \"{1}", responseHeadersKey, this.ResponseHeaders).Append("\", "); }
+            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
+            builder.Append("}");
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content of the response in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Items != null) { builder.AppendFormat("\"{0}\": [{1}]", "items", String.Join<MorphologyItem>(", ", this.Items)); }
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 
@@ -139,8 +190,9 @@ namespace rosette_api
                     this.Token == other.Token,
                     this.PosTag == other.PosTag,
                     this.Lemma == other.Lemma,
-                    this.HanReadings == other.HanReadings,
-                    this.CompoundComponents == other.CompoundComponents
+                    this.HanReadings != null && other.HanReadings != null ? this.HanReadings.SequenceEqual(other.HanReadings) : this.HanReadings == other.HanReadings,
+                    this.CompoundComponents != null && other.CompoundComponents != null ? this.CompoundComponents.SequenceEqual(other.CompoundComponents) : this.CompoundComponents == other.CompoundComponents,
+                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }
@@ -156,7 +208,29 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Token.GetHashCode() ^ this.Lemma.GetHashCode() ^ this.PosTag.GetHashCode() ^ this.HanReadings.GetHashCode() ^ this.CompoundComponents.GetHashCode();
+            int h0 = this.Token != null ? this.Token.GetHashCode() : 1;
+            int h1 = this.Lemma != null ? this.Lemma.GetHashCode() : 1;
+            int h2 = this.PosTag != null ? this.PosTag.GetHashCode() : 1;
+            int h3 = this.HanReadings != null ? this.HanReadings.Aggregate<string, int>(1, (seed, item) => item.GetHashCode()) : 1;
+            int h4 = this.CompoundComponents != null ? this.CompoundComponents.Aggregate<string, int>(1, (seed, item) => item.GetHashCode()) : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>The morphology item in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Token != null) { builder.Append("\"token\": \"").Append(this.Token).Append("\", "); }
+            if (this.PosTag != null) { builder.Append("\"posTag\": \"").Append(this.PosTag).Append("\", "); }
+            if (this.Lemma != null) { builder.Append("\"lemma\": \"").Append(this.Lemma).Append("\", "); }
+            if (this.CompoundComponents != null) { builder.AppendFormat("\"compoundComponents\": [{0}]", String.Join<string>(", ", this.CompoundComponents)).Append(", "); }
+            if (this.HanReadings != null) { builder.AppendFormat("\"hanReadings\": [{0}]", String.Join<string>(", ", this.HanReadings)).Append(", "); }
+            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 }
