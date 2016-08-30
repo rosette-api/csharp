@@ -677,6 +677,32 @@ namespace rosette_apiUnitTests
         //------------------------- Language ----------------------------------------
 
         [Test]
+        public void LanguageTestFull()
+        {
+            Init();
+            LanguageDetection lang0 = new LanguageDetection("spa", (Decimal)0.38719602327387076);
+            LanguageDetection lang1 = new LanguageDetection("eng", (Decimal)0.32699986625091865);
+            LanguageDetection lang2 = new LanguageDetection("por", (Decimal)0.05569054210624943);
+            LanguageDetection lang3 = new LanguageDetection("deu", (Decimal)0.030069489878380328);
+            LanguageDetection lang4 = new LanguageDetection("zho", (Decimal)0.23572849069656435);
+            LanguageDetection lang5 = new LanguageDetection("swe", (Decimal)0.027734757034048835);
+            LanguageDetection lang6 = new LanguageDetection("ces", (Decimal)0.02583105013400886);
+            LanguageDetection lang7 = new LanguageDetection("fin", (Decimal)0.23572849069656435);
+            LanguageDetection lang8 = new LanguageDetection("fra", (Decimal)0.023298946617300347);
+            List<LanguageDetection> languageDetections = new List<LanguageDetection>() { lang0, lang1, lang2, lang3, lang4, lang5, lang6, lang7, lang8 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("languageDetections", languageDetections);
+            LanguageIdentificationResponse expected = new LanguageIdentificationResponse(languageDetections, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "language").Respond(mockedMessage);
+            LanguageIdentificationResponse response = _rosetteApi.Language("Por favor Señorita, says the man.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
         public void Language_Content_Test() {
             _mockHttp.When(_testUrl + "language")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");

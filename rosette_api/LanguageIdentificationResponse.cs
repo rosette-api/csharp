@@ -34,15 +34,28 @@ namespace rosette_api
         public LanguageIdentificationResponse(HttpResponseMessage apiResults) : base(apiResults)
         {
             List<LanguageDetection> languageDetections = new List<LanguageDetection>();
-            Dictionary<string, object>[] languageDetectionArr = this.Content.ContainsKey(languageDetectionsKey) ? this.Content[languageDetectionsKey] as Dictionary<string, object>[] : new Dictionary<string, object>[0];
-            foreach (Dictionary<string, object> languageDetection in languageDetectionArr)
+            object[] languageDetectionArr = this.Content.ContainsKey(languageDetectionsKey) ? this.Content[languageDetectionsKey] as object[] : new object[0];
+            foreach (object languageDetectionObj in languageDetectionArr)
             {
+                Dictionary<string, object> languageDetection = languageDetectionObj as Dictionary<string, object>;
                 string language = languageDetection[languageKey] as String;
-                Nullable<double> confidence = languageDetection[confidenceKey] as Nullable<double>;
+                Nullable<decimal> confidence = languageDetection[confidenceKey] as Nullable<decimal>;
                 languageDetections.Add(new LanguageDetection(language, confidence));
             }
             this.LanguageDetections = languageDetections;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
+        }
+        
+        /// <summary>
+        /// Creates a LanguageIdentificationResponse from its components
+        /// </summary>
+        /// <param name="languageDetections">The list of language identifications</param>
+        /// <param name="responseHeaders">The response headers</param>
+        /// <param name="content">The content (language identifications) in dictionary form</param>
+        /// <param name="contentAsJosn">The content in JSON form</param>
+        public LanguageIdentificationResponse(List<LanguageDetection> languageDetections, Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, string contentAsJosn = null) : base(responseHeaders, content, contentAsJosn) {
+            this.LanguageDetections = languageDetections;
+            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -75,6 +88,24 @@ namespace rosette_api
         {
             return this.LanguageDetections.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
+
+        /// <summary>
+        /// ToString override.  Writes this LanguageIdentificationResponse in JSON form.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "{\"languageDetections\": [" + String.Join<LanguageDetection>(", ", this.LanguageDetections) + "], \"responseHeaders\": " + this.ResponseHeaders.ToString() + "}";
+        }
+
+        /// <summary>
+        /// Writes this LanguageIdentificationResponse's content in JSON form
+        /// </summary>
+        /// <returns></returns>
+        public string ContentToString()
+        {
+            return "{\"languageDetections\": [" + String.Join<LanguageDetection>(", ", this.LanguageDetections) + "]}";
+        }
     }
 
     /// <summary>
@@ -85,21 +116,21 @@ namespace rosette_api
         /// <summary>
         /// Gets the abbreviated language
         /// </summary>
-        public string Language_Abbr { get; private set; }
+        public string Language { get; private set; }
 
         /// <summary>
         /// Gets the confidence this was the correct language
         /// </summary>
-        public Nullable<double> Confidence { get; private set; }
+        public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
         /// Creates a LanguageDetection, which identifies a language and the confidence that it is the correct language
         /// </summary>
-        /// <param name="language_Abbr">The language in its abbreviated form</param>
+        /// <param name="language">The language in its abbreviated form</param>
         /// <param name="confidence">The confidence the language was the correct language to identify</param>
-        public LanguageDetection(string language_Abbr, Nullable<double> confidence)
+        public LanguageDetection(string language_Abbr, Nullable<decimal> confidence)
         {
-            this.Language_Abbr = language_Abbr;
+            this.Language = language_Abbr;
             this.Confidence = confidence;
         }
 
@@ -114,7 +145,7 @@ namespace rosette_api
             {
                 LanguageDetection other = obj as LanguageDetection;
                 List<bool> conditions = new List<bool>() {
-                    this.Language_Abbr == other.Language_Abbr,
+                    this.Language == other.Language,
                     this.Confidence == other.Confidence
                 };
                 return conditions.All(condition => condition);
@@ -131,7 +162,16 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Language_Abbr.GetHashCode() ^ this.Confidence.GetHashCode();
+            return this.Language.GetHashCode() ^ this.Confidence.GetHashCode();
+        }
+
+        /// <summary>
+        /// ToString override:  Gets this object in JSON form
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "{" + String.Format("\"language\": \"{0}\", \"confidence\": {1}", new Object[]{this.Language, this.Confidence}) + "}";
         }
     }
 }
