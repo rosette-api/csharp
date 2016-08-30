@@ -994,6 +994,35 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Name Translation ----------------------------------------
+        [Test]
+        public void NameTranslationTestFull()
+        {
+            Init();
+            string translation = "Mu'ammar Muhammad Abu-Minyar al-Qadhaf";
+            string targetLanguage = "eng";
+            string targetScript = "Latn";
+            string targetScheme = "IC";
+            decimal confidence = (decimal)0.06856099342585828;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("translation", translation);
+            content.Add("targetLanguage", targetLanguage);
+            content.Add("targetScript", targetScript);
+            content.Add("targetScheme", targetScheme);
+            content.Add("confidence", confidence);
+            TranslateNamesResponse expected = new TranslateNamesResponse(translation, targetLanguage: targetLanguage, targetScript:targetScript, targetScheme:targetScheme, confidence: confidence, responseHeaders:responseHeaders, content: content);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "name-translation").Respond(mockedMessage);
+            Dictionary<object, object> input = new Dictionary<object, object>() {
+                {"name", "معمر محمد أبو منيار القذاف"},
+                {"targetLanguage", "eng"},
+                {"targetScript", "Latn"}
+            };
+            TranslateNamesResponse response = _rosetteApi.NameTranslation(input);
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void NameTranslation_Content_Test() {
