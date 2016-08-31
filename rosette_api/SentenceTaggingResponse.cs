@@ -102,9 +102,9 @@ namespace rosette_api
         /// <returns>The content in JSON form</returns>
         public string ContentToString()
         {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder("{");
             string sentencesString = this.Sentences != null ? String.Format("[\"{0}\"]", String.Join<string>("\", \"", this.Sentences)) : null;
-            return builder.AppendFormat("{\"sentences\": ", sentencesString).Append("}").ToString();
+            return builder.AppendFormat("\"sentences\": {0}", sentencesString).Append("}").ToString();
         }
     }
 }

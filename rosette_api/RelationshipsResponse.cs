@@ -239,9 +239,9 @@ namespace rosette_api
                     builder.Append(String.Format("\"arg{0}\": \"{1}\", ", new object[] {a, this.Arguments[a - 1]}));
                 }
             }
-            string temporalsString = this.Temporals != null ? String.Format("[\"{0}, \"]", String.Join("\", \"", this.Temporals)) : null;
-            string locativesString = this.Locatives != null ? String.Format("[\"{0}, \"]", String.Join("\", \"", this.Locatives)) : null;
-            string adjunctsString = this.Adjucts != null ? String.Format("[\"{0}, \"]", String.Join("\", \"", this.Adjucts)) : null;
+            string temporalsString = this.Temporals != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Temporals)) : null;
+            string locativesString = this.Locatives != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Locatives)) : null;
+            string adjunctsString = this.Adjucts != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Adjucts)) : null;
             if (this.Temporals != null && this.Temporals.Any()) { builder.AppendFormat("\"temporals\": {0}, ", temporalsString); }
             if (this.Locatives != null && this.Locatives.Any()) { builder.AppendFormat("\"locatives\": {0}, ", locativesString); }
             if (this.Adjucts != null && this.Adjucts.Any()) { builder.AppendFormat("\"adjuncts\": {0}, ", adjunctsString); }
