@@ -42,7 +42,9 @@ namespace rosette_api {
         public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
         {
             this.ContentDictionary = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();
+#pragma warning disable 618
             this.Content = ContentDictionary;
+#pragma warning restore 618
             this.Headers = headers != null ? headers : new Dictionary<string, string>();
             this.ContentAsJson = contentAsJson != null ? contentAsJson : content != null ? new JavaScriptSerializer().Serialize(content) : "";
         }
@@ -74,6 +76,7 @@ namespace rosette_api {
                     }
                 }
                 ContentDictionary = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
+                this.Content = ContentDictionary;
             }
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
