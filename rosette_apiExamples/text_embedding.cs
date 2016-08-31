@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class text_embedding
     {
         /// <summary>
-        /// Example code to call Rosette API to get a document's (located at given URL) categories.
+        /// Example code to call Rosette API to get a document's text-embedding.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //categories yourapikeyhere
+            //text-embedding yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -34,12 +34,11 @@ namespace rosette_apiExamples
                 string embedding_data = @"Cambridge, Massachusetts";
                 //The results of the API call will come back in the form of a Dictionary
                 RosetteResponse response = EmbeddingCAPI.TextEmbedding(embedding_data);
-                Console.WriteLine(response.ContentAsJson);
-
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
+
                 Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
