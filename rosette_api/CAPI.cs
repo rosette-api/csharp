@@ -689,6 +689,55 @@ namespace rosette_api {
             return Process(file);
         }
 
+        /// <summary>Text Embedding
+        /// <para>
+        /// (POST)Text Embedding Endpoint: Return the averaged vector for a word or document
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>RosetteResponse containing the results of the request. 
+        /// The response contains text embedding analysis results.
+        /// </returns>
+        public RosetteResponse TextEmbedding(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
+            _uri = "text-embedding";
+            return Process(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>Sentiment
+        /// <para>
+        /// (POST)Text Embedding Endpoint: Return the averaged vector for a word or document
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>RosetteResponse containing the results of the request. 
+        /// The response contains text embedding analysis results.
+        /// </returns>
+        public RosetteResponse TextEmbedding(Dictionary<object, object> dict)
+        {
+            _uri = "text-embedding";
+            return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
+        /// <summary>Sentiment
+        /// <para>
+        /// (POST)Text Embedding Endpoint: Return the averaged vector for a word or document
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>RosetteResponse containing the results of the request. 
+        /// The response contains text embedding analysis results.
+        /// </returns>
+        public RosetteResponse TextEmbedding(RosetteFile file)
+        {
+            _uri = "text-embedding";
+            return Process(file);
+        }
+
         /// <summary>Tokens
         /// <para>
         /// (POST)Tokens Endpoint: Divides the input into tokens.
