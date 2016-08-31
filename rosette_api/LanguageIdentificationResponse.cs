@@ -178,7 +178,8 @@ namespace rosette_api
         /// <returns></returns>
         public override string ToString()
         {
-            return "{" + String.Format("\"language\": \"{0}\", \"confidence\": {1}", new Object[]{this.Language, this.Confidence}) + "}";
+            string languageString = this.Language != null ? String.Format("\"{0}\"", this.Language) : null;
+            return "{" + String.Format("\"language\": {0}, \"confidence\": {1}", new Object[]{languageString, this.Confidence}) + "}";
         }
     }
 }

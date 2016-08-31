@@ -84,7 +84,7 @@ namespace rosette_api
         /// <returns>The response in JSON form</returns>
         public override string ToString()
         {
-            return "{ score: " + this.Score + ", responseHeaders: " + this.ResponseHeaders.ToString() + "}";
+            return new StringBuilder("{").AppendFormat("\"score\": {0}, \"responseHeaders\": {1}", Score, ResponseHeaders).Append("}").ToString();
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace rosette_api
         /// <returns>The content in JSON</returns>
         public string ContentToString()
         {
-            return "{\"score\":" + this.Score + "}";
+            return new StringBuilder("{").AppendFormat("\"score\": {0}", Score).Append("}").ToString();
         }
     }
 }

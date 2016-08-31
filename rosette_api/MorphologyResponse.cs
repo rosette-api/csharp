@@ -114,7 +114,8 @@ namespace rosette_api
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder("{");
-            if (this.Items != null) { builder.AppendFormat("\"{0}\": [{1}]", "items", String.Join<MorphologyItem>(", ", this.Items)).Append(", "); }
+            string itemsString = this.Items != null ? String.Format("[{0}]", String.Join<MorphologyItem>(", ", this.Items)) : null;
+            if (this.Items != null) { builder.AppendFormat("\"{0}\": {1}", "items", itemsString); }
             if (this.ResponseHeaders != null) { builder.AppendFormat("\"{0}\": \"{1}", responseHeadersKey, this.ResponseHeaders).Append("\", "); }
             if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
             builder.Append("}");
@@ -128,7 +129,8 @@ namespace rosette_api
         public string ContentToString()
         {
             StringBuilder builder = new StringBuilder("{");
-            if (this.Items != null) { builder.AppendFormat("\"{0}\": [{1}]", "items", String.Join<MorphologyItem>(", ", this.Items)); }
+            string itemsString = this.Items != null ? String.Format("[{0}]", String.Join<MorphologyItem>(", ", this.Items)) : null;
+            if (this.Items != null) { builder.AppendFormat("\"{0}\": {1}", "items", itemsString); }
             builder.Append("}");
             return builder.ToString();
         }
