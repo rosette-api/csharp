@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new ""Ghostbusters"" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
+                CategoriesResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
                 Console.WriteLine(response.ContentAsJson);
 
                 //Rosette API also supports Dictionary inputs
@@ -47,7 +47,7 @@ namespace rosette_apiExamples
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {

@@ -32,11 +32,11 @@ namespace rosette_apiExamples
             {
                 CAPI NewCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = NewCAPI.Ping();
+                PingResponse response = NewCAPI.Ping();
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {

@@ -42,11 +42,11 @@ namespace rosette_apiExamples
                 //Rosette API provides File upload options (shown here)
                 //Simply create a new RosetteFile using the path to a file
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = SentimentCAPI.Sentiment(new RosetteFile(newFile, @"application/octet-stream", "{\"language\":\"eng\"}"));
+                SentimentResponse response = SentimentCAPI.Sentiment(new RosetteFile(newFile, @"application/octet-stream", "{\"language\":\"eng\"}"));
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
 
                 if (File.Exists(newFile)) {
                     File.Delete(newFile);
