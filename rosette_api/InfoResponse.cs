@@ -48,10 +48,10 @@ namespace rosette_api
         /// <param name="apiMsg">The message from the API</param>
         public InfoResponse(HttpResponseMessage apiMsg) : base(apiMsg)
         {
-            this.Name = this.Content.ContainsKey(nameKey) ? this.Content[nameKey] as String : null;
-            this.Version = this.Content.ContainsKey(versionKey) ? this.Content[versionKey] as String : null;
-            this.BuildNumber = this.Content.ContainsKey(buildNumberKey) ? this.Content[buildNumberKey] as String : null;
-            this.BuildTime = this.Content.ContainsKey(buildTimeKey) ? this.Content[buildTimeKey] as String : null;
+            this.Name = this.ContentDictionary.ContainsKey(nameKey) ? this.ContentDictionary[nameKey] as String : null;
+            this.Version = this.ContentDictionary.ContainsKey(versionKey) ? this.ContentDictionary[versionKey] as String : null;
+            this.BuildNumber = this.ContentDictionary.ContainsKey(buildNumberKey) ? this.ContentDictionary[buildNumberKey] as String : null;
+            this.BuildTime = this.ContentDictionary.ContainsKey(buildTimeKey) ? this.ContentDictionary[buildTimeKey] as String : null;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
@@ -79,19 +79,19 @@ namespace rosette_api
         /// <summary>
         /// Equals override
         /// </summary>
-        /// <param name="other">The object to compare against</param>
+        /// <param name="obj">The object to compare against</param>
         /// <returns>True if equal</returns>
-        public override bool Equals(Object other)
+        public override bool Equals(Object obj)
         {
-            if (other is InfoResponse)
+            if (obj is InfoResponse)
             {
-                InfoResponse otherResponse = other as InfoResponse;
+                InfoResponse other = obj as InfoResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.BuildNumber == otherResponse.BuildNumber,
-                    this.BuildTime == otherResponse.BuildTime,
-                    this.Version == otherResponse.Version,
-                    this.Name == otherResponse.Name,
-                    this.ResponseHeaders.Equals(otherResponse.ResponseHeaders)
+                    this.BuildNumber == other.BuildNumber,
+                    this.BuildTime == other.BuildTime,
+                    this.Version == other.Version,
+                    this.Name == other.Name,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
             }
@@ -107,7 +107,29 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Name.GetHashCode() ^ this.Version.GetHashCode() ^ this.BuildTime.GetHashCode() ^ this.BuildNumber.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Name != null ? this.Name.GetHashCode() : 1;
+            int h1 = this.Version != null ? this.Version.GetHashCode() : 1;
+            int h2 = this.BuildTime != null ? this.BuildTime.GetHashCode() : 1;
+            int h3 = this.BuildNumber != null ? this.BuildNumber.GetHashCode() : 1;
+            int h4 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>The InfoResponse in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Name != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", nameKey, this.Name); }
+            if (this.Version != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", versionKey, this.Version); }
+            if (this.BuildNumber != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", buildNumberKey, this.BuildNumber); }
+            if (this.BuildTime != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", buildTimeKey, this.BuildTime); }
+            if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", this.ResponseHeaders); }
+            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 }

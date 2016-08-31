@@ -37,7 +37,7 @@ namespace rosette_api
         /// <param name="apiResult">The message from the API</param>
         public RelationshipsResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
-            object[] relationshipResults = this.Content.ContainsKey(relationshipsKey) ? this.Content[relationshipsKey] as object[] : new object[0];
+            object[] relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as object[] : new object[0];
             Converter<object, string> converter = new Converter<object, string>(o => o.ToString());
             List<RosetteRelationship> relationships = new List<RosetteRelationship>();
             foreach (object relationshipObj in relationshipResults)
@@ -84,8 +84,8 @@ namespace rosette_api
             {
                 RelationshipsResponse other = obj as RelationshipsResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Relationships.SequenceEqual(other.Relationships),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders),
+                    this.Relationships != null && other.ResponseHeaders != null ? this.Relationships.SequenceEqual(other.Relationships) : this.Relationships == other.Relationships,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
@@ -102,8 +102,8 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.Relationships.Aggregate<RosetteRelationship, int>(1, (seed, item) => seed ^ item.GetHashCode());
-            int h1 = this.ResponseHeaders.GetHashCode();
+            int h0 = this.Relationships != null ? this.Relationships.Aggregate<RosetteRelationship, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
         }
 
@@ -113,9 +113,10 @@ namespace rosette_api
         /// <returns>The RelationshipResponse as JSON</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"relationships\": [").Append(String.Join(", ", this.Relationships)).Append("]")
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}");
+            StringBuilder builder = new StringBuilder("{");
+            string relationshipsString = this.Relationships != null ? String.Format("[{0}]", String.Join(", ", this.Relationships)) : null;
+            builder.AppendFormat("\"relationships\": {0}", relationshipsString)
+                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}");
             return builder.ToString();
         }
 

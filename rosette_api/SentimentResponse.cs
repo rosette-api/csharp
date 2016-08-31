@@ -46,12 +46,12 @@ namespace rosette_api
             : base(apiResult)
         {
             List<RosetteSentimentEntity> entitySentiments = new List<RosetteSentimentEntity>();
-            Dictionary<string, object> docResult = this.Content.ContainsKey(docKey) ? this.Content[docKey] as Dictionary<string, object> : new Dictionary<string, object>();
+            Dictionary<string, object> docResult = this.ContentDictionary.ContainsKey(docKey) ? this.ContentDictionary[docKey] as Dictionary<string, object> : new Dictionary<string, object>();
             if (docResult.ContainsKey(labelKey) && docResult.ContainsKey(confidenceKey))
             {
                 this.DocSentiment = new RosetteSentiment(docResult[labelKey] as String, docResult[confidenceKey] as Nullable<decimal>);
             }
-            IEnumerable<Object> enumerableResults = this.Content.ContainsKey(entitiesKey) ? this.Content[entitiesKey] as IEnumerable<Object> : new List<object>();
+            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as IEnumerable<Object> : new List<object>();
             foreach (Object result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
@@ -341,9 +341,9 @@ namespace rosette_api
             builder.Append("{\"type\": \"").Append(this.EntityType).Append("\", ")
                 .Append("\"mention\": \"").Append(this.Mention).Append("\", ")
                 .Append("\"normalized\": \"").Append(this.NormalizedMention).Append("\", ")
-                .Append("\"count\": ").Append(this.Count.ToString()).Append(", ")
-                .Append("\"entityId\": \"").Append(this.ID.ToString()).Append("\", ")
-                .Append("\"sentiment\": ").Append(this.Sentiment.ToString()).Append("}");
+                .Append("\"count\": ").Append(this.Count).Append(", ")
+                .Append("\"entityId\": \"").Append(this.ID).Append("\", ")
+                .Append("\"sentiment\": ").Append(this.Sentiment).Append("}");
             return builder.ToString();
         }
     }

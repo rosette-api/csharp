@@ -37,7 +37,7 @@ namespace rosette_api
         public EntitiesResponse(HttpResponseMessage apiResult) : base(apiResult)
         {
             List<RosetteEntity> entities = new List<RosetteEntity>();
-            IEnumerable<Object> enumerableResults = this.Content.ContainsKey(entitiesKey) ? this.Content[entitiesKey] as IEnumerable<Object> : new List<Object>();
+            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as IEnumerable<Object> : new List<Object>();
             foreach (Object result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
@@ -123,7 +123,6 @@ namespace rosette_api
         {
             StringBuilder builder = new StringBuilder("{");            
             string entitiesString = this.Entities != null ? new StringBuilder("[").Append(String.Join(", ", this.Entities)).Append("]").ToString() : null;
-            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
             builder.Append("\"entities\": ").Append(entitiesString).Append("}");
             return builder.ToString();
         }

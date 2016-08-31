@@ -31,9 +31,9 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public TokenizationResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            if (this.Content.ContainsKey(tokensKey))
+            if (this.ContentDictionary.ContainsKey(tokensKey))
             {
-                object[] tokenObjArr = this.Content[tokensKey] as object[];
+                object[] tokenObjArr = this.ContentDictionary[tokensKey] as object[];
                 this.Tokens = tokenObjArr.ToList().ConvertAll<string>((o) => o.ToString());
             }
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
@@ -92,9 +92,10 @@ namespace rosette_api
         /// <returns>This TokenizationResponse in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"tokens\": [\"").Append(String.Join("\", \"", this.Tokens)).Append("\"]")
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}");
+            StringBuilder builder = new StringBuilder("{");
+            string tokensString = this.Tokens != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Tokens)) : null;
+            builder.AppendFormat("\"tokens\": {0}", tokensString)
+                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}");
             return builder.ToString();
         }
 
@@ -104,8 +105,9 @@ namespace rosette_api
         /// <returns>The content in JSON form</returns>
         public string ContentToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"tokens\": [\"").Append(String.Join("\", \"", this.Tokens)).Append("\"]}");
+            StringBuilder builder = new StringBuilder("{");
+            string tokensString = this.Tokens != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Tokens)) : null;
+            builder.AppendFormat("\"tokens\": {0}", tokensString).Append("}");
             return builder.ToString();
         }
     }

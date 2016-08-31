@@ -31,7 +31,7 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public SentenceTaggingResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            object[] sentenceArrOBj = this.Content.ContainsKey(sentencesKey) ? this.Content[sentencesKey] as object[] : new object[0];
+            object[] sentenceArrOBj = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as object[] : new object[0];
             this.Sentences = sentenceArrOBj.ToList().ConvertAll<string>(new Converter<object, string>(o => o.ToString()));
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
@@ -91,8 +91,9 @@ namespace rosette_api
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            return builder.Append("{\"sentences\": [\"").Append(String.Join<string>("\", \"", this.Sentences)).Append("\"]")
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}").ToString();
+            string sentencesString = this.Sentences != null ? String.Format("[\"{0}\"]", String.Join<string>("\", \"", this.Sentences)) : null;
+            return builder.AppendFormat("{\"sentences\": ", sentencesString)
+                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}").ToString();
         }
 
         /// <summary>
@@ -102,7 +103,8 @@ namespace rosette_api
         public string ContentToString()
         {
             StringBuilder builder = new StringBuilder();
-            return builder.Append("{\"sentences\": [\"").Append(String.Join<string>("\", \"", this.Sentences)).Append("\"]}").ToString();
+            string sentencesString = this.Sentences != null ? String.Format("[\"{0}\"]", String.Join<string>("\", \"", this.Sentences)) : null;
+            return builder.AppendFormat("{\"sentences\": ", sentencesString).Append("}").ToString();
         }
     }
 }

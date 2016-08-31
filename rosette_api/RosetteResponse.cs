@@ -14,16 +14,22 @@ namespace rosette_api {
     /// Encapsulates the response from RosetteAPI
     /// </summary>  
     public class RosetteResponse {
+
         /// <summary>
         /// IDictionary of response content
         /// </summary>
+        [Obsolete("The structure of this property is subject to change.  Please use the data structures provided in the Response classes that inherit from the RosetteResponse class instead.")]
         public IDictionary<string, object> Content { get; private set; }
         /// <summary>
-        /// IDictionary of response header
+        /// IDictionary of response content
+        /// </summary>
+        internal IDictionary<string, object> ContentDictionary { get; private set; }
+        /// <summary>
+        /// IDictionary of response headers
         /// </summary>
         public IDictionary<string, string> Headers { get; private set; }
         /// <summary>
-        /// JSON string of response content
+        /// As returned by the API, the JSON string of response content
         /// </summary>
         public string ContentAsJson { get; private set; }
 
@@ -35,7 +41,8 @@ namespace rosette_api {
         /// <param name="contentAsJson">The content of the response in JSON</param>
         public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
         {
-            this.Content = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();
+            this.ContentDictionary = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();
+            this.Content = ContentDictionary;
             this.Headers = headers != null ? headers : new Dictionary<string, string>();
             this.ContentAsJson = contentAsJson != null ? contentAsJson : content != null ? new JavaScriptSerializer().Serialize(content) : "";
         }
@@ -45,7 +52,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="responseMsg">HttpResponseMessage</param>
         public RosetteResponse(HttpResponseMessage responseMsg) {
-            Content = new Dictionary<string, object>();
+            ContentDictionary = new Dictionary<string, object>();
             Headers = new Dictionary<string, string>();
 
             if (responseMsg.IsSuccessStatusCode) {
@@ -66,7 +73,7 @@ namespace rosette_api {
                         ContentAsJson = reader.ReadToEnd();
                     }
                 }
-                Content = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
+                ContentDictionary = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
             }
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);

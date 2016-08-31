@@ -31,9 +31,9 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public NameSimilarityResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            if (this.Content.ContainsKey(scoreKey))
+            if (this.ContentDictionary.ContainsKey(scoreKey))
             {
-                this.Score = (decimal)this.Content[scoreKey];
+                this.Score = (decimal)this.ContentDictionary[scoreKey];
             }
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }

@@ -71,15 +71,15 @@ namespace rosette_api
         /// <param name="apiResult">The message from the API</param>
         public TranslateNamesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
-            this.SourceScript = this.Content.ContainsKey(sourceScriptKey) ? this.SourceScript = this.Content[sourceScriptKey] as string : null;
-            this.SourceLanguageOfOrigin = this.Content.ContainsKey(sourceLanguageOfOriginKey) ? this.Content[sourceLanguageOfOriginKey] as string : null;
-            this.SourceLanguageOfUse = this.Content.ContainsKey(sourceLanguageOfUseKey) ? this.Content[sourceLanguageOfUseKey] as string : null;
-            this.Translation = this.Content.ContainsKey(translationKey) ? this.Content[translationKey] as string : null;
-            this.TargetLanguage = this.Content.ContainsKey(targetLanguageKey) ? this.Content[targetLanguageKey] as string : null;
-            this.TargetScript = this.Content.ContainsKey(targetScriptKey) ? this.Content[targetScriptKey] as string : null;
-            this.TargetScheme = this.Content.ContainsKey(targetSchemeKey) ? this.Content[targetSchemeKey] as string : null;
-            this.EntityType = this.Content.ContainsKey(entityTypeKey) ? this.Content[entityTypeKey] as string : null;
-            this.Confidence = this.Content.ContainsKey(confidenceKey) ? this.Content[confidenceKey] as Nullable<decimal> : null;
+            this.SourceScript = this.ContentDictionary.ContainsKey(sourceScriptKey) ? this.SourceScript = this.ContentDictionary[sourceScriptKey] as string : null;
+            this.SourceLanguageOfOrigin = this.ContentDictionary.ContainsKey(sourceLanguageOfOriginKey) ? this.ContentDictionary[sourceLanguageOfOriginKey] as string : null;
+            this.SourceLanguageOfUse = this.ContentDictionary.ContainsKey(sourceLanguageOfUseKey) ? this.ContentDictionary[sourceLanguageOfUseKey] as string : null;
+            this.Translation = this.ContentDictionary.ContainsKey(translationKey) ? this.ContentDictionary[translationKey] as string : null;
+            this.TargetLanguage = this.ContentDictionary.ContainsKey(targetLanguageKey) ? this.ContentDictionary[targetLanguageKey] as string : null;
+            this.TargetScript = this.ContentDictionary.ContainsKey(targetScriptKey) ? this.ContentDictionary[targetScriptKey] as string : null;
+            this.TargetScheme = this.ContentDictionary.ContainsKey(targetSchemeKey) ? this.ContentDictionary[targetSchemeKey] as string : null;
+            this.EntityType = this.ContentDictionary.ContainsKey(entityTypeKey) ? this.ContentDictionary[entityTypeKey] as string : null;
+            this.Confidence = this.ContentDictionary.ContainsKey(confidenceKey) ? this.ContentDictionary[confidenceKey] as Nullable<decimal> : null;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
@@ -170,15 +170,15 @@ namespace rosette_api
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder("{");
-            if (this.Translation != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", translationKey, this.Translation.ToString()); }
-            if (this.TargetLanguage != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetLanguageKey, this.TargetLanguage.ToString()); }
-            if (this.TargetScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetScriptKey, this.TargetScript.ToString()); }
-            if (this.TargetScheme != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetSchemeKey, this.TargetScheme.ToString()); }
-            if (this.SourceLanguageOfOrigin != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfOrigin.ToString()); }
-            if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse.ToString()); }
-            if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript.ToString()); }
-            if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType.ToString()); }
-            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.ToString()); }
+            if (this.Translation != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", translationKey, this.Translation); }
+            if (this.TargetLanguage != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetLanguageKey, this.TargetLanguage); }
+            if (this.TargetScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetScriptKey, this.TargetScript); }
+            if (this.TargetScheme != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetSchemeKey, this.TargetScheme); }
+            if (this.SourceLanguageOfOrigin != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfOrigin); }
+            if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse); }
+            if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript); }
+            if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType); }
+            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence); }
             if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", this.ResponseHeaders.ToString()); }
             if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
             builder.Append("}");

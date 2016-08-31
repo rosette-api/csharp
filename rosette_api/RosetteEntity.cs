@@ -168,14 +168,16 @@ namespace rosette_api
         /// <returns>This RosetteEntity in JSON form</returns>
         public override string ToString()
         {
-            string countString = this.Count != null ?  this.Count.ToString() : null;
             string idString = this.ID != null ? new StringBuilder("\"").Append(this.ID.ToString()).Append("\"").ToString() : null;
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"type\": \"").Append(this.EntityType).Append("\", ")
-                .Append("\"mention\": \"").Append(this.Mention).Append("\", ")
-                .Append("\"normalized\": \"").Append(this.NormalizedMention).Append("\", ")
-                .Append("\"count\": ").Append(countString).Append(", ")
-                .Append("\"entityId\": ").Append(idString).Append("}");
+            string entityTypeString = this.EntityType != null ? String.Format("\"{0}\"", this.EntityType) : null;
+            string mentionString = this.Mention != null ? String.Format("\"{0}\"", this.Mention) : null;
+            string normalizedString = this.NormalizedMention != null ? String.Format("\"{0}\"", this.NormalizedMention) : null;
+            StringBuilder builder = new StringBuilder("{");
+            builder.AppendFormat("\"type\": {0}, ", entityTypeString)
+                .AppendFormat("\"mention\": {0}, ", mentionString)
+                .AppendFormat("\"normalized\": {0}, ", normalizedString)
+                .AppendFormat("\"count\": {0}, ", this.Count)
+                .AppendFormat("\"entityId\": {0}", idString).Append("}");
             return builder.ToString();
         }
     }

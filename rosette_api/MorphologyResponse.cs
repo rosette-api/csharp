@@ -36,17 +36,17 @@ namespace rosette_api
         /// <param name="apiResponse">The message from the API</param>
         public MorphologyResponse(HttpResponseMessage apiResponse) : base(apiResponse)
         { 
-            object[] tokenObjArr = this.Content.ContainsKey(tokenKey) ? this.Content[tokenKey] as object[] : new object[0];
+            object[] tokenObjArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as object[] : new object[0];
             List<string> tokens = tokenObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
             int tokenCount = tokens != null ? tokens.Count() : 0;
-            object[] lemmaObjArr = this.Content.ContainsKey(lemmasKey) ? this.Content[lemmasKey] as object[] : new object[tokenCount];
+            object[] lemmaObjArr = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as object[] : new object[tokenCount];
             List<string> lemmas = lemmaObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
-            object[] posTagObjArr = this.Content.ContainsKey(posTagsKey) ? this.Content[posTagsKey] as object[] : new object[tokenCount];
+            object[] posTagObjArr = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as object[] : new object[tokenCount];
             List<string> posTags = posTagObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
-            object[] compoundComponentsObjArr = this.Content.ContainsKey(compoundComponentsKey) ? this.Content[compoundComponentsKey] as object[] : new object[tokenCount];
+            object[] compoundComponentsObjArr = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as object[] : new object[tokenCount];
             List<List<string>> compoundComponentsArr = compoundComponentsObjArr.ToList()
                 .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
-            object[] hanReadingsObjArr = this.Content.ContainsKey(hanReadingsKey) ? this.Content[hanReadingsKey] as object[] : new object[tokenCount];
+            object[] hanReadingsObjArr = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as object[] : new object[tokenCount];
             List<List<string>> hanReadingsArr = hanReadingsObjArr.ToList()
                 .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
             if (compoundComponentsArr == null) { compoundComponentsArr = new List<string>[tokenCount].ToList(); }

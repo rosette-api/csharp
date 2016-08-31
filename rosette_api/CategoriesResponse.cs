@@ -23,9 +23,9 @@ namespace rosette_api
         /// </summary>
         public ResponseHeaders ResponseHeaders { get; private set; }
 
-        internal String categoryKey = "label";
-        internal String confidenceKey = "confidence";
-        internal String categoriesKey = "categories";
+        private const String categoryKey = "label";
+        private const String confidenceKey = "confidence";
+        private const String categoriesKey = "categories";
 
         /// <summary>
         /// Creates a CategoriesResponse from the API's raw output
@@ -34,7 +34,7 @@ namespace rosette_api
         public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
-            IEnumerable<Object> enumerableResults = this.Content.ContainsKey(categoriesKey) ? this.Content[categoriesKey] as IEnumerable<Object> : new List<Object>();
+            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as IEnumerable<Object> : new List<Object>();
             foreach (Object result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
@@ -72,9 +72,9 @@ namespace rosette_api
             {
                 CategoriesResponse other = obj as CategoriesResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Categories.SequenceEqual(other.Categories),
+                    this.Categories != null && other.Categories != null ? this.Categories.SequenceEqual(other.Categories) : this.Categories == other.Categories,
                     this.ContentAsJson == other.ContentAsJson,
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
             }
@@ -90,7 +90,35 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Categories.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.Categories != null ? this.Categories.Aggregate<RosetteCategory, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            string categoriesString = this.Categories != null ? new StringBuilder("[").Append(String.Join(", ", this.Categories)).Append("]").ToString() : null;
+            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
+            builder.Append("\"categories\": ").Append(categoriesString)
+                .Append(", responseHeaders: ").Append(responseHeadersString).Append("}");
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            string categoriesString = this.Categories != null ? new StringBuilder("[").Append(String.Join(", ", this.Categories)).Append("]").ToString() : null;
+            builder.Append("\"entities\": ").Append(categoriesString).Append("}");
+            return builder.ToString();
         }
     }
 
@@ -148,7 +176,22 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Label.GetHashCode() ^ this.Confidence.GetHashCode();
+            int h0 = this.Label != null ? this.Label.GetHashCode() : 1;
+            int h1 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This category in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            string labelString = this.Label != null ? new StringBuilder("\"").Append(this.Label).Append("\"").ToString() : null;
+            builder.Append("\"label\": ").Append(labelString).Append(", ")
+                .Append("\"confidence\": ").Append(this.Confidence).Append("}");
+            return builder.ToString();
         }
     }
 }

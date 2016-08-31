@@ -36,8 +36,8 @@ namespace rosette_api
         /// <param name="apiMsg">The message from the API</param>
         public PingResponse(HttpResponseMessage apiMsg) :base(apiMsg)
         {
-            this.Message = this.Content.ContainsKey(messageKey) ? this.Content[messageKey] as String : null;
-            this.Time = this.Content.ContainsKey(timeKey) ? this.Content[timeKey] as Nullable<long>: null;
+            this.Message = this.ContentDictionary.ContainsKey(messageKey) ? this.ContentDictionary[messageKey] as String : null;
+            this.Time = this.ContentDictionary.ContainsKey(timeKey) ? this.ContentDictionary[timeKey] as Nullable<long>: null;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
@@ -60,17 +60,17 @@ namespace rosette_api
         /// <summary>
         /// Equals override
         /// </summary>
-        /// <param name="other">The object to compare against</param>
+        /// <param name="obj">The object to compare against</param>
         /// <returns>True if equal</returns>
-        public override bool Equals(Object other)
+        public override bool Equals(Object obj)
         {
-            if (other is PingResponse)
+            if (obj is PingResponse)
             {
-                PingResponse otherResponse = other as PingResponse;
+                PingResponse other = obj as PingResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Time == otherResponse.Time,
-                    this.Message == otherResponse.Message,
-                    this.ResponseHeaders.Equals(otherResponse.ResponseHeaders)
+                    this.Time == other.Time,
+                    this.Message == other.Message,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) :this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
             }
@@ -86,7 +86,27 @@ namespace rosette_api
         /// <returns>The HashCode</returns>
         public override int GetHashCode()
         {
-            return this.Message.GetHashCode() ^ this.Time.GetHashCode();
+            int h0 = this.Message != null ? this.Message.GetHashCode() : 1;
+            int h1 = this.Time != null ? this.Time.GetHashCode() : 1;
+            return h0 ^ h1;
+        }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>The InfoResponse in JSON form</returns>
+        public override string ToString()
+        {
+            string messageString = this.Message != null ? String.Format("\"{0}\"", this.Message) : null;
+            string timeString = this.Time != null ? String.Format("\"{0}\"", this.Time) : null;
+            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
+            StringBuilder builder = new StringBuilder("{");
+            if (this.Message != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", messageKey, messageString); }
+            if (this.Time != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", timeKey, timeString); }
+            if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", responseHeadersString); }
+            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 }

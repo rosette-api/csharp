@@ -34,7 +34,7 @@ namespace rosette_api
         public LanguageIdentificationResponse(HttpResponseMessage apiResults) : base(apiResults)
         {
             List<LanguageDetection> languageDetections = new List<LanguageDetection>();
-            object[] languageDetectionArr = this.Content.ContainsKey(languageDetectionsKey) ? this.Content[languageDetectionsKey] as object[] : new object[0];
+            object[] languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as object[] : new object[0];
             foreach (object languageDetectionObj in languageDetectionArr)
             {
                 Dictionary<string, object> languageDetection = languageDetectionObj as Dictionary<string, object>;
@@ -69,8 +69,8 @@ namespace rosette_api
             {
                 LanguageIdentificationResponse other = obj as LanguageIdentificationResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.LanguageDetections.SequenceEqual(other.LanguageDetections),
-                    this.ResponseHeaders.Equals(other.ResponseHeaders)
+                    this.LanguageDetections != null && other.LanguageDetections != null ? this.LanguageDetections.SequenceEqual(other.LanguageDetections) : this.LanguageDetections == other.LanguageDetections,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
             }
@@ -86,7 +86,9 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.LanguageDetections.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            int h0 = this.LanguageDetections != null ? this.LanguageDetections.Aggregate<LanguageDetection, int>(1, (seed, item) => seed ^item.GetHashCode()) : 1;
+            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            return h0 ^ h1;
         }
 
         /// <summary>
@@ -95,7 +97,9 @@ namespace rosette_api
         /// <returns></returns>
         public override string ToString()
         {
-            return "{\"languageDetections\": [" + String.Join<LanguageDetection>(", ", this.LanguageDetections) + "], \"responseHeaders\": " + this.ResponseHeaders.ToString() + "}";
+            string languageDetectionsString = this.LanguageDetections != null ? new StringBuilder("[").AppendFormat("{0}]", String.Join<LanguageDetection>(", ", this.LanguageDetections)).ToString() : null;
+            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
+            return new StringBuilder("{").AppendFormat("\"languageDetections\": {0}, \"responseHeaders\": {1}", languageDetectionsString, responseHeadersString).Append("}").ToString();
         }
 
         /// <summary>
@@ -104,7 +108,8 @@ namespace rosette_api
         /// <returns></returns>
         public string ContentToString()
         {
-            return "{\"languageDetections\": [" + String.Join<LanguageDetection>(", ", this.LanguageDetections) + "]}";
+            string languageDetectionsString = this.LanguageDetections != null ? new StringBuilder("[").AppendFormat("{0}]", String.Join<LanguageDetection>(", ", this.LanguageDetections)).ToString() : null;
+            return new StringBuilder("{").AppendFormat("\"languageDetections\": {0}", languageDetectionsString).Append("}").ToString();
         }
     }
 
@@ -162,7 +167,9 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            return this.Language.GetHashCode() ^ this.Confidence.GetHashCode();
+            int h0 = this.Language != null ? this.Language.GetHashCode() : 1;
+            int h1 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
+            return h0 ^ h1;
         }
 
         /// <summary>

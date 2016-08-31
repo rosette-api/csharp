@@ -85,5 +85,24 @@ namespace rosette_api
         {
             return this.AllResponseHeaders.Aggregate<KeyValuePair<string, string>, int>(1, (seed, kvp) => seed ^ kvp.GetHashCode());
         }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>The response headers in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder("{");
+            if (this.AllResponseHeaders != null) {
+                foreach (KeyValuePair<string, string> header in this.AllResponseHeaders) {
+                    builder.AppendFormat("\"{0}\": \"{1}\", ", header.Key, header.Value);
+                }
+                if (this.AllResponseHeaders.Any()) {
+                    builder.Remove(builder.Length - 2, 2);
+                }
+            }
+            builder.Append("}");
+            return builder.ToString();
+        }
     }
 }
