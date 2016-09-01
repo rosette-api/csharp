@@ -135,6 +135,8 @@ namespace rosette_api {
         /// </summary>
         public HttpClient Client { get; set; }
 
+        public int Concurrency { get; set; }
+
         /// <summary>Debug
         /// <para>
         /// Getter, Setter for the Debug
@@ -869,7 +871,14 @@ namespace rosette_api {
                     }
 
                     RosetteResponse response = new RosetteResponse(responseMsg);
-
+                    if (response.Headers.ContainsKey("X-RosetteAPI-Concurrency"))
+                    {
+                        int callConcurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
+                        bool success = Int32.TryParse(response.Headers["X-RosetteAPI-Concurrency"], out callConcurrency);
+                        if (success && callConcurrency != System.Net.ServicePointManager.DefaultConnectionLimit && callConcurrency > 1){
+                            System.Net.ServicePointManager.DefaultConnectionLimit = callConcurrency;
+                        }
+                    }
                     return response;
                 }
 
