@@ -37,7 +37,10 @@ namespace rosette_api
             Console.WriteLine("In CategoriesResponseConstructor");
             Console.WriteLine("Content Dictionary: " + this.ContentDictionary.ToString());
             Console.WriteLine("Content as JSON: " + this.ContentAsJson);
-
+            foreach (KeyValuePair<string, object> kvp in this.ContentDictionary)
+            {
+                Console.WriteLine(String.Format("Content contains KeyValuePair: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key, kvp.Key.GetType(), kvp.Value, kvp.Value.GetType() }));
+            }
             object[] enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as object[] : new object[0];
             Console.WriteLine("EnumerableResults: " + enumerableResults.ToString());
             foreach (Object result in enumerableResults)
