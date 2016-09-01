@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -41,9 +42,9 @@ namespace rosette_api
             {
                 Console.WriteLine(String.Format("Content contains KeyValuePair: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key, kvp.Key.GetType(), kvp.Value, kvp.Value.GetType() }));
             }
-            object[] enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as object[] : new object[0];
-            Console.WriteLine("EnumerableResults: " + enumerableResults.ToString());
-            foreach (Object result in enumerableResults)
+            ArrayList enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as ArrayList : new ArrayList();
+            Console.WriteLine("EnumerableResults: " + enumerableResults.ToString() + "of size" + enumerableResults.Count);
+            foreach (var result in enumerableResults)
             {
                 Console.WriteLine("Object result: " + result.ToString());
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
