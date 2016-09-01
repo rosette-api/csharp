@@ -42,7 +42,7 @@ namespace rosette_api {
                 }
 
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
-                if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08')) {
+                if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
                     byteArray = decompress(byteArray);
                 }
                 using (MemoryStream stream = new MemoryStream(byteArray)) {
