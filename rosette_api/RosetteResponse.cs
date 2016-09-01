@@ -7,13 +7,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace rosette_api {
     /// <summary>
     /// Encapsulates the response from RosetteAPI
     /// </summary>  
     public class RosetteResponse {
+
+        private JsonSerializer Serializer = new JsonSerializer();
 
         /// <summary>
         /// IDictionary of response content
@@ -41,12 +43,32 @@ namespace rosette_api {
         /// <param name="contentAsJson">The content of the response in JSON</param>
         public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
         {
-            this.ContentDictionary = content != null ? content : contentAsJson != null ? new JavaScriptSerializer().Deserialize<dynamic>(contentAsJson) : new Dictionary<string, object>();
+            if (content != null)
+            {
+                this.ContentDictionary = content;
+            }
+            else if (contentAsJson != null)
+            {
+                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(contentAsJson)));
+            }
+            else
+            {
+                this.ContentDictionary = new Dictionary<string, object>();
+            }
 #pragma warning disable 618
             this.Content = ContentDictionary;
 #pragma warning restore 618
             this.Headers = headers != null ? headers : new Dictionary<string, string>();
-            this.ContentAsJson = contentAsJson != null ? contentAsJson : content != null ? new JavaScriptSerializer().Serialize(content) : "";
+            if (contentAsJson != null)
+            {
+                this.ContentAsJson = contentAsJson;
+            } 
+            else if (content != null) 
+            {
+                StringBuilder contentAsJsonWriter = new StringBuilder();
+                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content, typeof(Dictionary<string, object>));
+                this.ContentAsJson = contentAsJsonWriter.ToString();
+            }
         }
 
         /// <summary>
@@ -75,7 +97,7 @@ namespace rosette_api {
                         ContentAsJson = reader.ReadToEnd();
                     }
                 }
-                ContentDictionary = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
+                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
 # pragma warning disable 618
                 this.Content = ContentDictionary;
 # pragma warning restore 618

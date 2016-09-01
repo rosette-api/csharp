@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
 using System.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace rosette_api
 {
@@ -35,15 +37,15 @@ namespace rosette_api
         public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
-            object[] enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as object[] : new object[0];
-            //var x = from category in this.ContentDictionary select new { c = category };
+            JArray enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as JArray : new JArray();
+            //var x = from category in this.ContentDictionary select new { c = category.Key };
+            
             //var y = from c2 in x select new { label = c2.c.Key, confidence = c2.c.Value };
             //ArrayList resultArr = this.ContentDictionary.ContainsKey(categoriesKey) ? new ArrayList( : new ArrayList();
-            foreach (var result in enumerableResults)
+            foreach (JObject result in enumerableResults)
             {
-                Dictionary<string, object> dictResult = result as Dictionary<string, object>;
-                String label = dictResult.ContainsKey(categoryKey) ? dictResult[categoryKey] as String : null;
-                Nullable<Decimal> confidence = dictResult.ContainsKey(confidenceKey) ? new Nullable<decimal>((decimal)dictResult[confidenceKey]) : null;
+                String label = result.Properties().Where<JProperty>((p) => p.Name == categoryKey).Any() ? result[categoryKey].ToString() : null;
+                Nullable<Decimal> confidence = result.Properties().Where<JProperty>((p) => p.Name == confidenceKey).Any() ? new Nullable<decimal>(result[confidenceKey].ToObject<decimal>()) : null;
                 categories.Add(new RosetteCategory(label, confidence));
             }
             this.Categories = categories;

@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace rosette_apiUnitTests
 {
@@ -564,13 +565,14 @@ namespace rosette_apiUnitTests
         public void CategoriesContentTestFull()
         {
             Init();
+            JsonSerializer serializer = new JsonSerializer();
             List<RosetteCategory> categories = new List<RosetteCategory>();
             RosetteCategory cat0 = new RosetteCategory("ARTS_AND_ENTERTAINMENT", (Decimal)0.23572849069656435);
             categories.Add(cat0);
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, object> content = new Dictionary<string, object>();
             content.Add("categories", categories);
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = serializer.Deserialize<Dictionary<string, string>>(new JsonTextReader(new StringReader(headersAsString)));
             String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + "} ] }";
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "categories").Respond(mockedMessage);
@@ -802,6 +804,30 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "morphology/complete").Respond(mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void MorphologyTestFullLemmas()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("The", null, "the", null, null);
+            MorphologyItem m1 = new MorphologyItem("quick", null, "quick", null, null);
+            MorphologyItem m2 = new MorphologyItem("brown", null, "brown", null, null);
+            MorphologyItem m3 = new MorphologyItem("fox", null, "fox", null, null);
+            MorphologyItem m4 = new MorphologyItem("jumped", null, "jump", null, null);
+            MorphologyItem m5 = new MorphologyItem(".", null, ".", null, null);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)));;
+            content.Add("lemmas", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Lemma)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/lemmas").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.", feature: MorphologyFeature.lemmas);
             Assert.AreEqual(expected, response);
         }
 
