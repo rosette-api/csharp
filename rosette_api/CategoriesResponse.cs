@@ -35,20 +35,10 @@ namespace rosette_api
         public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
-            Console.WriteLine("In CategoriesResponseConstructor");
-            Console.WriteLine("Content Dictionary: " + this.ContentDictionary.ToString());
-            Console.WriteLine("Content as JSON: " + this.ContentAsJson);
-            foreach (KeyValuePair<string, object> kvp in this.ContentDictionary)
-            {
-                Console.WriteLine(String.Format("Content contains KeyValuePair: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key, kvp.Key.GetType(), kvp.Value, kvp.Value.GetType() }));
-            }
             ArrayList enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as ArrayList : new ArrayList();
-            Console.WriteLine("EnumerableResults: " + enumerableResults.ToString() + "of size" + enumerableResults.Count);
             foreach (var result in enumerableResults)
             {
-                Console.WriteLine("Object result: " + result.ToString());
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
-                Console.WriteLine("Adding category result: " + result.ToString());
                 String label = dictResult.ContainsKey(categoryKey) ? dictResult[categoryKey] as String : null;
                 Nullable<Decimal> confidence = dictResult.ContainsKey(confidenceKey) ? new Nullable<decimal>((decimal)dictResult[confidenceKey]) : null;
                 categories.Add(new RosetteCategory(label, confidence));

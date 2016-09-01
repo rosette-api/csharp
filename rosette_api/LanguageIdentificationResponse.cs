@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -34,8 +35,8 @@ namespace rosette_api
         public LanguageIdentificationResponse(HttpResponseMessage apiResults) : base(apiResults)
         {
             List<LanguageDetection> languageDetections = new List<LanguageDetection>();
-            object[] languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as object[] : new object[0];
-            foreach (object languageDetectionObj in languageDetectionArr)
+            ArrayList languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as ArrayList : new ArrayList();
+            foreach (var languageDetectionObj in languageDetectionArr)
             {
                 Dictionary<string, object> languageDetection = languageDetectionObj as Dictionary<string, object>;
                 string language = languageDetection[languageKey] as String;

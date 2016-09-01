@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -37,8 +38,8 @@ namespace rosette_api
         public EntitiesResponse(HttpResponseMessage apiResult) : base(apiResult)
         {
             List<RosetteEntity> entities = new List<RosetteEntity>();
-            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as IEnumerable<Object> : new List<Object>();
-            foreach (Object result in enumerableResults)
+            ArrayList enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as ArrayList : new ArrayList();
+            foreach (var result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
                 String type = dictResult.ContainsKey(typeKey) ? (dictResult[typeKey] as String) : null;

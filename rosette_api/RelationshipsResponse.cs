@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -37,10 +38,10 @@ namespace rosette_api
         /// <param name="apiResult">The message from the API</param>
         public RelationshipsResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
-            object[] relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as object[] : new object[0];
+            ArrayList relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as ArrayList : new ArrayList();
             Converter<object, string> converter = new Converter<object, string>(o => o.ToString());
             List<RosetteRelationship> relationships = new List<RosetteRelationship>();
-            foreach (object relationshipObj in relationshipResults)
+            foreach (var relationshipObj in relationshipResults)
             {
                 Dictionary<string, object> relationship = relationshipObj as Dictionary<string, object>;
                 String predicate = relationship.ContainsKey(predicateKey) ? relationship[predicateKey] as String : null;

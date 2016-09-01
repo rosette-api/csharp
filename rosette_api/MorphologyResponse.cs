@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -36,24 +37,15 @@ namespace rosette_api
         /// <param name="apiResponse">The message from the API</param>
         public MorphologyResponse(HttpResponseMessage apiResponse) : base(apiResponse)
         { 
-            object[] tokenObjArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as object[] : new object[0];
-            List<string> tokens = tokenObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
-            int tokenCount = tokens != null ? tokens.Count() : 0;
-            object[] lemmaObjArr = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as object[] : new object[tokenCount];
-            List<string> lemmas = lemmaObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
-            object[] posTagObjArr = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as object[] : new object[tokenCount];
-            List<string> posTags = posTagObjArr.ToList().ConvertAll<string>(o => o != null ? o.ToString() : null);
-            object[] compoundComponentsObjArr = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as object[] : new object[tokenCount];
-            List<List<string>> compoundComponentsArr = compoundComponentsObjArr.ToList()
-                .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
-            object[] hanReadingsObjArr = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as object[] : new object[tokenCount];
-            List<List<string>> hanReadingsArr = hanReadingsObjArr.ToList()
-                .ConvertAll<List<string>>(o => o != null ? (o as object[]).ToList().ConvertAll<string>(i => i != null ? i.ToString() : null) : null);
-            if (compoundComponentsArr == null) { compoundComponentsArr = new List<string>[tokenCount].ToList(); }
-            if (hanReadingsArr == null) { hanReadingsArr = new List<string>[tokenCount].ToList(); }
+            ArrayList tokens = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as ArrayList : new ArrayList();
+            int tokenCount = tokens != null ? tokens.Count : 0;
+            ArrayList lemmas = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as ArrayList : new ArrayList(tokenCount);
+            ArrayList posTags = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as ArrayList : new ArrayList(tokenCount);
+            ArrayList compoundComponents = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as ArrayList : new ArrayList(tokenCount);
+            ArrayList hanReadings = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as ArrayList : new ArrayList(tokenCount);
             List<MorphologyItem> items = new List<MorphologyItem>();
             for (int obj = 0; obj < tokenCount; obj++) {
-                items.Add(new MorphologyItem(tokens[obj], posTags[obj], lemmas[obj], compoundComponentsArr[obj], hanReadingsArr[obj]));
+                items.Add(new MorphologyItem(tokens[obj] as string, posTags[obj] as string, lemmas[obj] as string, compoundComponents[obj] as List<string>, hanReadings[obj] as List<string>));
             }
             this.Items = items;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);

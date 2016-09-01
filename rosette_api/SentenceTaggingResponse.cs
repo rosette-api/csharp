@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -31,8 +32,8 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public SentenceTaggingResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            object[] sentenceArrOBj = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as object[] : new object[0];
-            this.Sentences = sentenceArrOBj.ToList().ConvertAll<string>(new Converter<object, string>(o => o.ToString()));
+            ArrayList sentenceArrOBj = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as ArrayList : new ArrayList();
+            this.Sentences = new List<string>(sentenceArrOBj.OfType<string>());
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
