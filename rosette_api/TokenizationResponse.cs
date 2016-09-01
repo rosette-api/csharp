@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -31,10 +32,31 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public TokenizationResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
+            Console.WriteLine("Creating tokenization response");
+            Console.Write("Content as JSON: " + this.ContentAsJson);
+            Console.WriteLine("Content dictionary: " + this.ContentDictionary.ToString());
+            foreach (KeyValuePair<string, object> kvp in this.ContentDictionary)
+            {
+                Console.WriteLine(String.Format("Content dictionary contains kvp: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key.ToString(), kvp.Key.GetType(), kvp.Value.ToString(), kvp.Value.GetType() }));
+            }
             if (this.ContentDictionary.ContainsKey(tokensKey))
             {
-                object[] tokenObjArr = this.ContentDictionary[tokensKey] as object[];
-                this.Tokens = tokenObjArr.ToList().ConvertAll<string>((o) => o.ToString());
+                ArrayList tokenObjArr = this.ContentDictionary[tokensKey] as ArrayList;
+                Console.WriteLine("Token ArrayList set: " + tokenObjArr.ToString());
+                try
+                {
+                    this.Tokens = new List<string>(tokenObjArr.OfType<string>());
+                    Console.WriteLine("Tokens set in try");
+                }
+                catch
+                {
+                    this.Tokens = new List<string>();
+                    foreach (var token in tokenObjArr)
+                    {
+                        Console.WriteLine("Adding token: " + token.ToString());
+                        this.Tokens.Add(token as string);
+                    }
+                }
             }
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }

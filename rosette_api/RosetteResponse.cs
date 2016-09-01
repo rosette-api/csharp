@@ -54,7 +54,6 @@ namespace rosette_api {
         /// </summary>
         /// <param name="responseMsg">HttpResponseMessage</param>
         public RosetteResponse(HttpResponseMessage responseMsg) {
-            Console.WriteLine("Creating a RosetteResponse");
             ContentDictionary = new Dictionary<string, object>();
             Headers = new Dictionary<string, string>();
 

@@ -39,7 +39,6 @@ namespace rosette_api
         public RelationshipsResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             ArrayList relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as ArrayList : new ArrayList();
-            Converter<object, string> converter = new Converter<object, string>(o => o.ToString());
             List<RosetteRelationship> relationships = new List<RosetteRelationship>();
             foreach (var relationshipObj in relationshipResults)
             {
@@ -48,11 +47,11 @@ namespace rosette_api
                 List<String> arguments = relationship.Any(kvp => kvp.Key.Contains(argsKey)) ?
                     new List<string>(relationship.Where(kvp => kvp.Key.Contains(argsKey)).Select(kvp => kvp.Value as String)) : null;
                 List<string> temporals = relationship.ContainsKey(temporalsKey) ?
-                    new List<string>(Array.ConvertAll<object, string>(relationship[temporalsKey] as object[], converter)) : null;
+                    new List<string>((relationship[temporalsKey] as ArrayList).OfType<string>()) : null;
                 List<string> locatives = relationship.ContainsKey(locativesKey) ?
-                    new List<string>(Array.ConvertAll<object, string>(relationship[locativesKey] as object[], converter)) : null;
+                    new List<string>((relationship[locativesKey] as ArrayList).OfType<string>()) : null;
                 List<string> adjuncts = relationship.ContainsKey(adjunctsKey) ? 
-                    new List<string>(Array.ConvertAll<object, string>(relationship[adjunctsKey] as object[], converter)) : null;
+                    new List<string>((relationship[adjunctsKey] as ArrayList).OfType<string>()) : null;
                 Nullable<decimal> confidence = relationship.ContainsKey(confidenceKey) ?  relationship[confidenceKey] as Nullable<decimal> : new Nullable<decimal>();
                 relationships.Add(new RosetteRelationship(predicate, arguments, temporals, locatives, adjuncts, confidence));
             }

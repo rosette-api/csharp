@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Collections;
 
 namespace rosette_api
 {
@@ -45,31 +46,61 @@ namespace rosette_api
         public SentimentResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
+            Console.WriteLine("Creating a SentimentResponse");
             List<RosetteSentimentEntity> entitySentiments = new List<RosetteSentimentEntity>();
+            Console.Write("Content as JSON: " + this.ContentAsJson);
+            Console.WriteLine("Content dictionary: " + this.ContentDictionary.ToString());
+            foreach (KeyValuePair<string, object> kvp in this.ContentDictionary)
+            {
+                Console.WriteLine(String.Format("Content dictionary contains kvp: Key {0} of type {1} and Value {2} of type {3}", new object[]{kvp.Key.ToString(), kvp.Key.GetType(), kvp.Value.ToString(), kvp.Value.GetType()}));                
+            }
             Dictionary<string, object> docResult = this.ContentDictionary.ContainsKey(docKey) ? this.ContentDictionary[docKey] as Dictionary<string, object> : new Dictionary<string, object>();
+            Console.WriteLine("docResult dictionary made:" + docResult.ToString());
+            foreach (KeyValuePair<string, object> kvp in docResult)
+            {
+                Console.WriteLine(String.Format("Content dictionary contains kvp: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key.ToString(), kvp.Key.GetType(), kvp.Value.ToString(), kvp.Value.GetType() }));
+            }
             if (docResult.ContainsKey(labelKey) && docResult.ContainsKey(confidenceKey))
             {
+                Console.WriteLine("Setting doc sentiment");
                 this.DocSentiment = new RosetteSentiment(docResult[labelKey] as String, docResult[confidenceKey] as Nullable<decimal>);
+                Console.WriteLine("Doc Sentiment:" + DocSentiment.ToString());
             }
-            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as IEnumerable<Object> : new List<object>();
-            foreach (Object result in enumerableResults)
+            ArrayList enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as ArrayList : new ArrayList();
+            Console.WriteLine("Enumerable results: " + enumerableResults.ToString());
+            foreach (var result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
-                String type = dictResult.ContainsKey(typeKey) ? (dictResult[typeKey] as String) : null;
-                String mention = dictResult.ContainsKey(mentionKey) ? dictResult[mentionKey] as String : null;
-                String normalizedMention = dictResult.ContainsKey(normalizedMentionKey) ? dictResult[normalizedMentionKey] as String : null;
-                String entityIDStr = dictResult.ContainsKey(entityIDKey) ? dictResult[entityIDKey] as String : null;
+                Console.WriteLine("dictResult set: " + dictResult.ToString());
+                string type = dictResult.ContainsKey(typeKey) ? (dictResult[typeKey] as string) : null;
+                Console.WriteLine("type set: " + type);
+                string mention = dictResult.ContainsKey(mentionKey) ? dictResult[mentionKey] as string : null;
+                Console.WriteLine("mention set: " + type);
+                string normalizedMention = dictResult.ContainsKey(normalizedMentionKey) ? dictResult[normalizedMentionKey] as string : null;
+                Console.WriteLine("normalizedMention set: " + normalizedMention);
+                string entityIDStr = dictResult.ContainsKey(entityIDKey) ? dictResult[entityIDKey] as string : null;
+                Console.WriteLine("entityIDStr set: " + entityIDStr);
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
+                Console.WriteLine("entityID made: " + entityID);
                 Nullable<int> count = dictResult.ContainsKey(countKey) ? dictResult[countKey] as Nullable<int> : null;
-                String sentiment = null;
+                Console.WriteLine("count set: " + count);
+                string sentiment = null;
                 Nullable<decimal> confidence = null;
                 if (dictResult.ContainsKey(sentimentKey))
                 {
                     Dictionary<string, object> sentimentDict = dictResult[sentimentKey] as Dictionary<string, object>;
+                    Console.WriteLine("sentimentDict set: " + sentimentDict.ToString());
+                    foreach (KeyValuePair<string, object> kvp in sentimentDict)
+                    {
+                        Console.WriteLine(String.Format("Content dictionary contains kvp: Key {0} of type {1} and Value {2} of type {3}", new object[] { kvp.Key.ToString(), kvp.Key.GetType(), kvp.Value.ToString(), kvp.Value.GetType() }));
+                    }
                     sentiment = sentimentDict.ContainsKey(labelKey) ? sentimentDict[labelKey] as String : null;
+                    Console.WriteLine("sentiment set: " + sentiment);
                     confidence = sentimentDict.ContainsKey(confidenceKey) ? sentimentDict[confidenceKey] as Nullable<decimal> : null;
+                    Console.WriteLine("confidence set: " + confidence);
                 }
                 entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence));
+                Console.WriteLine("Entity with sentiment successfully added");
             }
             this.EntitySentiments = entitySentiments;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
