@@ -708,7 +708,7 @@ namespace rosette_api {
             return Process(content, language, contentType, contentUri, genre);
         }
 
-        /// <summary>Sentiment
+        /// <summary>Text Embedding
         /// <para>
         /// (POST)Text Embedding Endpoint: Return the averaged vector for a word or document
         /// </para>
@@ -723,7 +723,7 @@ namespace rosette_api {
             return getResponse(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
-        /// <summary>Sentiment
+        /// <summary>Text Embedding
         /// <para>
         /// (POST)Text Embedding Endpoint: Return the averaged vector for a word or document
         /// </para>
