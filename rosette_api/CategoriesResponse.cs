@@ -38,8 +38,8 @@ namespace rosette_api
             foreach (Object result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
+                Console.WriteLine("Adding category result: " + result.ToString());
                 String label = dictResult.ContainsKey(categoryKey) ? dictResult[categoryKey] as String : null;
-                bool hasConfidence = dictResult.ContainsKey(confidenceKey);
                 Nullable<Decimal> confidence = dictResult.ContainsKey(confidenceKey) ? new Nullable<decimal>((decimal)dictResult[confidenceKey]) : null;
                 categories.Add(new RosetteCategory(label, confidence));
             }
