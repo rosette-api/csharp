@@ -195,6 +195,7 @@ namespace rosette_apiUnitTests
                 Assert.Fail("Exception not thrown");
             }
             catch (RosetteException ex) {
+                Console.WriteLine("Error code: " + ex.Code);
                 Assert.AreEqual(ex.Code, 409);
                 return;
             }
