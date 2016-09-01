@@ -38,7 +38,8 @@ namespace rosette_api
             Console.WriteLine("Content Dictionary: " + this.ContentDictionary.ToString());
             Console.WriteLine("Content as JSON: " + this.ContentAsJson);
 
-            IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as IEnumerable<Object> : new List<Object>();
+            object[] enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as object[] : new object[0];
+            Console.WriteLine("EnumerableResults: " + enumerableResults.ToString());
             foreach (Object result in enumerableResults)
             {
                 Console.WriteLine("Object result: " + result.ToString());
