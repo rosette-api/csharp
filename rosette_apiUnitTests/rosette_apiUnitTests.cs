@@ -734,7 +734,7 @@ namespace rosette_apiUnitTests
         //------------------------- Text Embedding ------------------------------------
 
         [Test]
-        public void Sentiment_Content_Test()
+        public void Embedding_Content_Test()
         {
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
@@ -744,7 +744,7 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void Sentiment_Dict_Test()
+        public void Embedding_Dict_Test()
         {
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
@@ -754,7 +754,7 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void Sentiment_File_Test()
+        public void Embedding_File_Test()
         {
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond("application/json", "{'response': 'OK'}");
