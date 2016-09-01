@@ -35,7 +35,10 @@ namespace rosette_api
         public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
-            ArrayList enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as ArrayList : new ArrayList();
+            object[] enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as object[] : new object[0];
+            //var x = from category in this.ContentDictionary select new { c = category };
+            //var y = from c2 in x select new { label = c2.c.Key, confidence = c2.c.Value };
+            //ArrayList resultArr = this.ContentDictionary.ContainsKey(categoriesKey) ? new ArrayList( : new ArrayList();
             foreach (var result in enumerableResults)
             {
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
