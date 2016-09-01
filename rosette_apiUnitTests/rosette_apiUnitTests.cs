@@ -731,6 +731,39 @@ namespace rosette_apiUnitTests
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
+        //------------------------- Text Embedding ------------------------------------
+
+        [Test]
+        public void Sentiment_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbedding("content");
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void Sentiment_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void Sentiment_File_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.TextEmbedding(f);
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
         //------------------------- Tokens ----------------------------------------
 
         [Test]
