@@ -187,11 +187,10 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void Error409_Test() {
-            _mockHttp.When(_testUrl + "entities")
-                .Respond(HttpStatusCode.Conflict);
-
+        public void Error409_Test() {;
+        Init();
             try {
+                _mockHttp.When(_testUrl + "entities").Respond(HttpStatusCode.Conflict);
                 Assert.Fail("Exception not thrown");
             }
             catch (RosetteException ex) {
