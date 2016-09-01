@@ -35,9 +35,13 @@ namespace rosette_api
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
             Console.WriteLine("In CategoriesResponseConstructor");
+            Console.WriteLine("Content Dictionary: " + this.ContentDictionary.ToString());
+            Console.WriteLine("Content as JSON: " + this.ContentAsJson);
+
             IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as IEnumerable<Object> : new List<Object>();
             foreach (Object result in enumerableResults)
             {
+                Console.WriteLine("Object result: " + result.ToString());
                 Dictionary<string, object> dictResult = result as Dictionary<string, object>;
                 Console.WriteLine("Adding category result: " + result.ToString());
                 String label = dictResult.ContainsKey(categoryKey) ? dictResult[categoryKey] as String : null;
