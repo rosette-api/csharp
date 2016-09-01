@@ -76,7 +76,9 @@ namespace rosette_api {
                     }
                 }
                 ContentDictionary = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
+# pragma warning disable 618
                 this.Content = ContentDictionary;
+# pragma warning restore 618
             }
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);

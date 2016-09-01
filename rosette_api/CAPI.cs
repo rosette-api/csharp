@@ -841,14 +841,13 @@ namespace rosette_api {
                     }
                     if (responseMsg.IsSuccessStatusCode)
                     {
-                        return (T)Activator.CreateInstance(typeof(T), responseMsg);
+                        return (T)Activator.CreateInstance(typeof(T), new object[]{responseMsg});
                     }
                     else
                     {
                         throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, RosetteResponse.contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);                        
                     }
                 }
-
             }
             return null;
         }

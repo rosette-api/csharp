@@ -866,7 +866,9 @@ namespace rosette_apiUnitTests
             Name name1 = new Name("Name One");
             Name name2 = new Name("Name Two");
             var response = _rosetteApi.NameSimilarity(name1, name2);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -875,7 +877,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, { "name2", "Name Two" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Relationships ----------------------------------------
@@ -913,7 +917,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -922,7 +928,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -932,7 +940,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Relationships(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Sentences ----------------------------------------
@@ -963,7 +973,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -972,7 +984,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -982,7 +996,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentences(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Sentiment ----------------------------------------
@@ -1013,7 +1029,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -1022,7 +1040,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -1032,7 +1052,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentiment(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Tokens ----------------------------------------
@@ -1066,7 +1088,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -1075,7 +1099,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -1085,7 +1111,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Tokens(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Name Translation ----------------------------------------
@@ -1125,7 +1153,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameTranslation("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -1144,7 +1174,9 @@ namespace rosette_apiUnitTests
                 { "entityType", "entityType"}
             };
             var response = _rosetteApi.NameTranslation(sampleDict);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
     }
