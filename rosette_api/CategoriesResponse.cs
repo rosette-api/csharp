@@ -34,6 +34,7 @@ namespace rosette_api
         public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
+            Console.WriteLine("In CategoriesResponseConstructor");
             IEnumerable<Object> enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as IEnumerable<Object> : new List<Object>();
             foreach (Object result in enumerableResults)
             {
