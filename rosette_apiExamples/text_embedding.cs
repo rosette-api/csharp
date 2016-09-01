@@ -34,8 +34,6 @@ namespace rosette_apiExamples
                 string embedding_data = @"Cambridge, Massachusetts";
                 //The results of the API call will come back in the form of a Dictionary
                 RosetteResponse response = EmbeddingCAPI.TextEmbedding(embedding_data);
-                Console.WriteLine(response.ContentAsJson);
-
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
