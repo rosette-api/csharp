@@ -38,10 +38,6 @@ namespace rosette_api
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
             JArray enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as JArray : new JArray();
-            //var x = from category in this.ContentDictionary select new { c = category.Key };
-            
-            //var y = from c2 in x select new { label = c2.c.Key, confidence = c2.c.Value };
-            //ArrayList resultArr = this.ContentDictionary.ContainsKey(categoriesKey) ? new ArrayList( : new ArrayList();
             foreach (JObject result in enumerableResults)
             {
                 String label = result.Properties().Where<JProperty>((p) => p.Name == categoryKey).Any() ? result[categoryKey].ToString() : null;
