@@ -79,6 +79,7 @@ namespace rosette_api {
             Debug = false;
             Timeout = 0;
             Client = client;
+            Concurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
             _options = new Dictionary<string, object>();
             _customHeaders = new Dictionary<string, string>();
         }
@@ -134,6 +135,8 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         public HttpClient Client { get; set; }
+
+        public int Concurrency { get; set; }
 
         /// <summary>Debug
         /// <para>
@@ -821,6 +824,10 @@ namespace rosette_api {
 
                     RosetteResponse response = new RosetteResponse(responseMsg);
 
+                    foreach (KeyValuePair<string, string> pair in response.Headers)
+                    {
+                        Console.WriteLine(String.Format("{0}:{1}", pair.Key, pair.Value));
+                    }
                     return response;
                 }
 
@@ -940,6 +947,11 @@ namespace rosette_api {
             client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding-Version", Version);
 
             return client;
+        }
+
+        public int SetConcurrencyFromHeader(){
+            
+            return 2;
         }
 
         /// <summary>Decompress

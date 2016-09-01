@@ -40,7 +40,6 @@ namespace rosette_api {
                     Headers.Add(header.Key, string.Join("", header.Value));
 
                 }
-
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
                 if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08')) {
                     byteArray = decompress(byteArray);
