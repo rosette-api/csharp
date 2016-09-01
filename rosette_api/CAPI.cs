@@ -824,12 +824,10 @@ namespace rosette_api {
                     RosetteResponse response = new RosetteResponse(responseMsg);
                     if (response.Headers.ContainsKey("X-RosetteAPI-Concurrency"))
                     {
-                        Console.WriteLine(System.Net.ServicePointManager.DefaultConnectionLimit);
                         int callConcurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
                         bool success = Int32.TryParse(response.Headers["X-RosetteAPI-Concurrency"], out callConcurrency);
                         if (success && callConcurrency != System.Net.ServicePointManager.DefaultConnectionLimit && callConcurrency > 1){
                             System.Net.ServicePointManager.DefaultConnectionLimit = callConcurrency;
-                            Console.WriteLine(callConcurrency);
                         }
                     }
                     return response;
