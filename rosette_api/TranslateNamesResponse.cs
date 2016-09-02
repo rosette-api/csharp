@@ -48,7 +48,7 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the confidence of the translation
         /// </summary>
-        public Nullable<decimal> Confidence { get; set; }
+        public Nullable<double> Confidence { get; set; }
 
         /// <summary>
         /// The response headers returned from the API
@@ -79,7 +79,7 @@ namespace rosette_api
             this.TargetScript = this.ContentDictionary.ContainsKey(targetScriptKey) ? this.ContentDictionary[targetScriptKey] as string : null;
             this.TargetScheme = this.ContentDictionary.ContainsKey(targetSchemeKey) ? this.ContentDictionary[targetSchemeKey] as string : null;
             this.EntityType = this.ContentDictionary.ContainsKey(entityTypeKey) ? this.ContentDictionary[entityTypeKey] as string : null;
-            this.Confidence = this.ContentDictionary.ContainsKey(confidenceKey) ? this.ContentDictionary[confidenceKey] as Nullable<decimal> : null;
+            this.Confidence = this.ContentDictionary.ContainsKey(confidenceKey) ? this.ContentDictionary[confidenceKey] as double? : null;
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
@@ -99,7 +99,7 @@ namespace rosette_api
         /// <param name="content">The content in Dictionary form</param>
         /// <param name="contentAsJson">The content in JSON form</param>
         public TranslateNamesResponse(string translation, string targetLanguage, string targetScheme = null, string targetScript = null, string entityType = null, string sourceLanguageOfOrigin = null,
-            string sourceLanguageOfUse = null, string sourceScript = null, decimal? confidence = null, Dictionary<string, string> responseHeaders = null, Dictionary<string, object> content = null, string contentAsJson = null) : base(responseHeaders, content, contentAsJson)
+            string sourceLanguageOfUse = null, string sourceScript = null, double? confidence = null, Dictionary<string, string> responseHeaders = null, Dictionary<string, object> content = null, string contentAsJson = null) : base(responseHeaders, content, contentAsJson)
          {
             this.ResponseHeaders = new ResponseHeaders(responseHeaders);
             this.SourceLanguageOfOrigin = sourceLanguageOfOrigin;
@@ -178,7 +178,7 @@ namespace rosette_api
             if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse); }
             if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript); }
             if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType); }
-            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence); }
+            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.Value.ToString("G17")); }
             if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", this.ResponseHeaders.ToString()); }
             if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
             builder.Append("}");
@@ -200,7 +200,7 @@ namespace rosette_api
             if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse.ToString()); }
             if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript.ToString()); }
             if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType.ToString()); }
-            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.ToString()); }
+            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.Value.ToString("G17")); }
             if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
             builder.Append("}");
             return builder.ToString();

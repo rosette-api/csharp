@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Net.Http;
 using System.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace rosette_api
 {
@@ -35,12 +36,11 @@ namespace rosette_api
         public LanguageIdentificationResponse(HttpResponseMessage apiResults) : base(apiResults)
         {
             List<LanguageDetection> languageDetections = new List<LanguageDetection>();
-            ArrayList languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as ArrayList : new ArrayList();
-            foreach (var languageDetectionObj in languageDetectionArr)
+            JArray languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as JArray : new JArray();
+            foreach (JObject languageDetectionObj in languageDetectionArr)
             {
-                Dictionary<string, object> languageDetection = languageDetectionObj as Dictionary<string, object>;
-                string language = languageDetection[languageKey] as String;
-                Nullable<decimal> confidence = languageDetection[confidenceKey] as Nullable<decimal>;
+                string language = languageDetectionObj.Properties().Where((p) => p.Name == languageKey).Any() ? languageDetectionObj[languageKey].ToString() : null;
+                Nullable<decimal> confidence = languageDetectionObj.Properties().Where((p) => p.Name == confidenceKey).Any() ? languageDetectionObj[confidenceKey].ToObject<decimal?>() : null;
                 languageDetections.Add(new LanguageDetection(language, confidence));
             }
             this.LanguageDetections = languageDetections;

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Collections;
 
@@ -38,21 +39,17 @@ namespace rosette_api
         /// <param name="apiResult">The message from the API</param>
         public RelationshipsResponse(HttpResponseMessage apiResult) :base(apiResult)
         {
-            ArrayList relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as ArrayList : new ArrayList();
+            JArray relationshipResults = this.ContentDictionary.ContainsKey(relationshipsKey) ? this.ContentDictionary[relationshipsKey] as JArray : new JArray();
             List<RosetteRelationship> relationships = new List<RosetteRelationship>();
-            foreach (var relationshipObj in relationshipResults)
+            foreach (JObject relationship in relationshipResults)
             {
-                Dictionary<string, object> relationship = relationshipObj as Dictionary<string, object>;
-                String predicate = relationship.ContainsKey(predicateKey) ? relationship[predicateKey] as String : null;
-                List<String> arguments = relationship.Any(kvp => kvp.Key.Contains(argsKey)) ?
-                    new List<string>(relationship.Where(kvp => kvp.Key.Contains(argsKey)).Select(kvp => kvp.Value as String)) : null;
-                List<string> temporals = relationship.ContainsKey(temporalsKey) ?
-                    new List<string>((relationship[temporalsKey] as ArrayList).OfType<string>()) : null;
-                List<string> locatives = relationship.ContainsKey(locativesKey) ?
-                    new List<string>((relationship[locativesKey] as ArrayList).OfType<string>()) : null;
-                List<string> adjuncts = relationship.ContainsKey(adjunctsKey) ? 
-                    new List<string>((relationship[adjunctsKey] as ArrayList).OfType<string>()) : null;
-                Nullable<decimal> confidence = relationship.ContainsKey(confidenceKey) ?  relationship[confidenceKey] as Nullable<decimal> : new Nullable<decimal>();
+                String predicate = relationship.Properties().Where((p) => p.Name == predicateKey).Any() ? relationship[predicateKey].ToString() : null;
+                IEnumerable<JProperty> argProps = relationship.Properties().Where((p) => p.Name.Contains(argsKey));
+                List<string> arguments = argProps.Any() ? argProps.Select<JProperty, string>((p) => p.Value.ToString()).ToList() : null;
+                List<string> temporals = relationship.Properties().Where((p) => p.Name == temporalsKey).Any() ? relationship[temporalsKey].ToObject<List<string>>() : null;
+                List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
+                List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
+                Nullable<decimal> confidence = relationship.Properties().Where((p) => p.Name == confidenceKey).Any() ?  relationship[confidenceKey].ToObject<decimal?>() : new Nullable<decimal>();
                 relationships.Add(new RosetteRelationship(predicate, arguments, temporals, locatives, adjuncts, confidence));
             }
             this.Relationships = relationships;

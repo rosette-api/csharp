@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Collections;
 
@@ -36,19 +37,45 @@ namespace rosette_api
         /// </summary>
         /// <param name="apiResponse">The message from the API</param>
         public MorphologyResponse(HttpResponseMessage apiResponse) : base(apiResponse)
-        { 
-            ArrayList tokens = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as ArrayList : new ArrayList();
+        {
+            JArray tokensArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as JArray : null;
+            List<string> tokens = tokensArr != null ? new List<string>(tokensArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
             int tokenCount = tokens != null ? tokens.Count : 0;
-            ArrayList lemmas = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as ArrayList : new ArrayList(tokenCount);
-            ArrayList posTags = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as ArrayList : new ArrayList(tokenCount);
-            ArrayList compoundComponents = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as ArrayList : new ArrayList(tokenCount);
-            ArrayList hanReadings = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as ArrayList : new ArrayList(tokenCount);
-            List<MorphologyItem> items = new List<MorphologyItem>();
-            for (int obj = 0; obj < tokenCount; obj++) {
-                items.Add(new MorphologyItem(tokens[obj] as string, posTags[obj] as string, lemmas[obj] as string, compoundComponents[obj] as List<string>, hanReadings[obj] as List<string>));
-            }
-            this.Items = items;
+            JArray lemmasArr = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as JArray : null;
+            List<string> lemmas = lemmasArr != null ? new List<string>(lemmasArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+            JArray posTagsArr = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as JArray : null;
+            List<string> posTags = posTagsArr != null ? new List<string>(posTagsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+            JArray compoundComponentsArr = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as JArray : null;
+            List<List<string>> compoundComponents = compoundComponentsArr != null ? new List<List<string>>(compoundComponentsArr.Select<JToken, List<string>>((jToken) => jToken != null ? jToken.ToObject<List<string>>() : null)) : null;
+            JArray hanReadingsArr = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as JArray : null;
+            List<List<string>> hanReadings = hanReadingsArr != null ? new List<List<string>>(hanReadingsArr.Select<JToken, List<string>>((jToken) => jToken != null ? jToken.ToObject<List<string>>() : null)) : null;
+            this.Items = this.MakeMorphologyItems(tokens, lemmas, posTags, compoundComponents, hanReadings);
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
+        }
+
+        /// <summary>
+        /// Creates a list of morphology items from JsonToken arrays of equal length that each contain a type of component to the morphology item
+        /// </summary>
+        /// <param name="tokens">The token list upon which all else in the morphology item is based</param>
+        /// <param name="lemmas">The list of corresponding lemmas</param>
+        /// <param name="posTags">The list of corresponding posTags</param>
+        /// <param name="compoundComponentsArr">The list of corresponding compound components</param>
+        /// <param name="hanReadingsArr">The list of corresponding Han readings</param>
+        /// <returns>A composite list of morphology items</returns>
+        private List<MorphologyItem> MakeMorphologyItems(List<string> tokens, List<string> lemmas, List<string> posTags, List<List<string>> compoundComponentsArr, List<List<string>> hanReadingsArr) 
+        {
+            int tokenCount = tokens != null ? tokens.Count : 0;
+            List<MorphologyItem> items = new List<MorphologyItem>();
+            for (int obj = 0; obj < tokenCount; obj++)
+            {
+                string token = tokens != null && tokens[obj] != null ? tokens[obj].ToString() : null;
+                string posTag = posTags != null && posTags[obj] != null ? posTags[obj].ToString() : null;
+                string lemma = lemmas != null && lemmas[obj] != null ? lemmas[obj].ToString() : null;
+                List<string> compoundComponents = compoundComponentsArr != null && compoundComponentsArr[obj] != null ? compoundComponentsArr[obj] : null;
+                List<string> hanReadings = hanReadingsArr != null && hanReadingsArr[obj] != null ? hanReadingsArr[obj] : null;
+                items.Add(new MorphologyItem(token, posTag, lemma, compoundComponents, hanReadings));
+            }
+            return items;
         }
 
         /// <summary>
@@ -160,9 +187,10 @@ namespace rosette_api
         /// <param name="token">The token on which this Morphology Item is based</param>
         /// <param name="posTag">Optional:  The part of speech of the token</param>
         /// <param name="lemma">Optional:  The lemma of the token</param>
-        /// <param name="hanReadings">Optional:  The Han readings of the token</param>
         /// <param name="compoundComponents">Optional:  The compound components of the token</param>
-        public MorphologyItem(string token, string posTag = null, string lemma = null, List<string> hanReadings = null, List<string> compoundComponents = null) {
+        /// <param name="hanReadings">Optional:  The Han readings of the token</param>
+        public MorphologyItem(string token, string posTag = null, string lemma = null, List<string> compoundComponents = null, List<string> hanReadings = null)
+        {
             this.Token = token;
             this.PosTag = posTag;
             this.Lemma = lemma;

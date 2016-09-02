@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Collections;
+using System.Runtime.Serialization;
 
 namespace rosette_api
 {
@@ -38,16 +40,15 @@ namespace rosette_api
         public EntitiesResponse(HttpResponseMessage apiResult) : base(apiResult)
         {
             List<RosetteEntity> entities = new List<RosetteEntity>();
-            ArrayList enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as ArrayList : new ArrayList();
-            foreach (var result in enumerableResults)
+            JArray enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as JArray : new JArray();
+            foreach (JObject result in enumerableResults)
             {
-                Dictionary<string, object> dictResult = result as Dictionary<string, object>;
-                String type = dictResult.ContainsKey(typeKey) ? (dictResult[typeKey] as String) : null;
-                String mention = dictResult.ContainsKey(mentionKey) ? dictResult[mentionKey] as String : null;
-                String entityIDStr = dictResult.ContainsKey(entityIDKey) ? dictResult[entityIDKey] as String : null;
+                String type = result.Properties().Where((p) => p.Name == typeKey).Any() ? result[typeKey].ToString() : null;
+                String mention = result.Properties().Where((p) => p.Name == mentionKey).Any() ? result[mentionKey].ToString() : null;
+                String entityIDStr = result.Properties().Where((p) => p.Name == entityIDKey).Any() ? result[entityIDKey].ToString() : null;
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
-                String normalized = dictResult.ContainsKey(normalizedKey) ? dictResult[normalizedKey] as String : null;
-                Nullable<int> count = dictResult.ContainsKey(countKey) ? dictResult[countKey] as Nullable<int> : null;
+                String normalized = result.Properties().Where((p) => p.Name == normalizedKey).Any() ? result[normalizedKey].ToString() : null;
+                Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
                 entities.Add(new RosetteEntity(mention, normalized, entityID, type, count));
             }
             this.Entities = entities;

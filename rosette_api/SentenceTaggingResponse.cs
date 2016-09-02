@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Collections;
 
@@ -32,8 +33,8 @@ namespace rosette_api
         /// <param name="apiResults">The message from the API</param>
         public SentenceTaggingResponse(HttpResponseMessage apiResults) :base(apiResults)
         {
-            ArrayList sentenceArrOBj = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as ArrayList : new ArrayList();
-            this.Sentences = new List<string>(sentenceArrOBj.OfType<string>());
+            JArray sentenceArr = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as JArray : new JArray();
+            this.Sentences = new List<string>(sentenceArr.Select<JToken, string>((jsonToken) => jsonToken.ToString()));
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 

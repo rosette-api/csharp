@@ -188,10 +188,10 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
-        public void Error409_Test() {;
-        Init();
+        public void Error409_Test() {
             try {
                 _mockHttp.When(_testUrl + "entities").Respond(HttpStatusCode.Conflict);
+                var response = _rosetteApi.Entity("content");
                 Assert.Fail("Exception not thrown");
             }
             catch (RosetteException ex) {
@@ -567,7 +567,7 @@ namespace rosette_apiUnitTests
             Init();
             JsonSerializer serializer = new JsonSerializer();
             List<RosetteCategory> categories = new List<RosetteCategory>();
-            RosetteCategory cat0 = new RosetteCategory("ARTS_AND_ENTERTAINMENT", (Decimal)0.23572849069656435);
+            RosetteCategory cat0 = new RosetteCategory("ARTS_AND_ENTERTAINMENT", (decimal)0.23572849069656435);
             categories.Add(cat0);
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, object> content = new Dictionary<string, object>();
@@ -723,15 +723,15 @@ namespace rosette_apiUnitTests
         public void LanguageTestFull()
         {
             Init();
-            LanguageDetection lang0 = new LanguageDetection("spa", (Decimal)0.38719602327387076);
-            LanguageDetection lang1 = new LanguageDetection("eng", (Decimal)0.32699986625091865);
-            LanguageDetection lang2 = new LanguageDetection("por", (Decimal)0.05569054210624943);
-            LanguageDetection lang3 = new LanguageDetection("deu", (Decimal)0.030069489878380328);
-            LanguageDetection lang4 = new LanguageDetection("zho", (Decimal)0.23572849069656435);
-            LanguageDetection lang5 = new LanguageDetection("swe", (Decimal)0.027734757034048835);
-            LanguageDetection lang6 = new LanguageDetection("ces", (Decimal)0.02583105013400886);
-            LanguageDetection lang7 = new LanguageDetection("fin", (Decimal)0.23572849069656435);
-            LanguageDetection lang8 = new LanguageDetection("fra", (Decimal)0.023298946617300347);
+            LanguageDetection lang0 = new LanguageDetection("spa", (decimal)0.38719602327387076);
+            LanguageDetection lang1 = new LanguageDetection("eng", (decimal)0.32699986625091865);
+            LanguageDetection lang2 = new LanguageDetection("por", (decimal)0.05569054210624943);
+            LanguageDetection lang3 = new LanguageDetection("deu", (decimal)0.030069489878380328);
+            LanguageDetection lang4 = new LanguageDetection("zho", (decimal)0.23572849069656435);
+            LanguageDetection lang5 = new LanguageDetection("swe", (decimal)0.027734757034048835);
+            LanguageDetection lang6 = new LanguageDetection("ces", (decimal)0.02583105013400886);
+            LanguageDetection lang7 = new LanguageDetection("fin", (decimal)0.23572849069656435);
+            LanguageDetection lang8 = new LanguageDetection("fra", (decimal)0.023298946617300347);
             List<LanguageDetection> languageDetections = new List<LanguageDetection>() { lang0, lang1, lang2, lang3, lang4, lang5, lang6, lang7, lang8 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
@@ -784,12 +784,12 @@ namespace rosette_apiUnitTests
         public void MorphologyTestFullComplete()
         {
             Init();
-            MorphologyItem m0 = new MorphologyItem("The", "DET", "the", null, null);
-            MorphologyItem m1 = new MorphologyItem("quick", "ADJ", "quick", null, null);
-            MorphologyItem m2 = new MorphologyItem("brown", "ADJ", "brown", null, null);
-            MorphologyItem m3 = new MorphologyItem("fox", "NOUN", "fox", null, null);
-            MorphologyItem m4 = new MorphologyItem("jumped", "VERB", "jump", null, null);
-            MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", null, null);
+            MorphologyItem m0 = new MorphologyItem("The", "DET", "the", new List<string>(), new List<string>());
+            MorphologyItem m1 = new MorphologyItem("quick", "ADJ", "quick", new List<string>(), new List<string>());
+            MorphologyItem m2 = new MorphologyItem("brown", "ADJ", "brown", new List<string>(), new List<string>());
+            MorphologyItem m3 = new MorphologyItem("fox", "NOUN", "fox", new List<string>(), new List<string>());
+            MorphologyItem m4 = new MorphologyItem("jumped", "VERB", "jump", new List<string>(), new List<string>());
+            MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", new List<string>(), new List<string>());
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
@@ -832,6 +832,51 @@ namespace rosette_apiUnitTests
         }
 
         [Test]
+        public void MorphologyTestFullCompoundComponents()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("Er", null, null, new List<string>(), null);
+            List<string> compoundComponents = new List<string>() { "Rechts", "Schutz", "Versicherungs", "Gesellschaft" };
+            MorphologyItem m1 = new MorphologyItem("Rechtsschutzversicherungsgesellschaft", null, null, compoundComponents, null);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token))); ;
+            content.Add("compoundComponents", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.CompoundComponents)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/compound-components").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("Er Rechtsschutzversicherungsgesellschaft.", feature: MorphologyFeature.compoundComponents);
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void MorphologyTestFullHanReadings()
+        {
+            Init();
+            List<string> h0 = new List<string>() { "Bei3-jing1-Da4-xue2" };
+            List<string> h1 = null;
+            List<string> h2 = new List<string>() { "zhu3-ren4" };            
+            MorphologyItem m0 = new MorphologyItem("北京大学", null, null, null, h0);
+            MorphologyItem m1 = new MorphologyItem("生物系", null, null, null, h1);
+            MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token))); ;
+            content.Add("hanReadings", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.HanReadings)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/han-readings").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("北京大学生物系主任.", feature: MorphologyFeature.hanReadings);
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
         public void Morphology_Content_Test() {
             _mockHttp.When(_testUrl + "morphology/complete")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
@@ -870,7 +915,7 @@ namespace rosette_apiUnitTests
         public void NameSimilarityTestFull()
         {
             Init();
-            decimal score = (decimal)0.9486632809417912;
+            double score = (double)0.9486632809417912;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object>();
@@ -885,9 +930,7 @@ namespace rosette_apiUnitTests
 
         [Test]
         public void NameSimilarity_Content_Test() {
-            _mockHttp.When(_testUrl + "name-similarity")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
+            _mockHttp.When(_testUrl + "name-similarity").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
             Name name1 = new Name("Name One");
             Name name2 = new Name("Name Two");
             var response = _rosetteApi.NameSimilarity(name1, name2);
@@ -1149,7 +1192,7 @@ namespace rosette_apiUnitTests
             string targetLanguage = "eng";
             string targetScript = "Latn";
             string targetScheme = "IC";
-            decimal confidence = (decimal)0.06856099342585828;
+            double confidence = (double)0.06856099342585828;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object>();

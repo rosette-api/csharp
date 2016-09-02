@@ -41,7 +41,7 @@ namespace rosette_api
             foreach (JObject result in enumerableResults)
             {
                 String label = result.Properties().Where<JProperty>((p) => p.Name == categoryKey).Any() ? result[categoryKey].ToString() : null;
-                Nullable<Decimal> confidence = result.Properties().Where<JProperty>((p) => p.Name == confidenceKey).Any() ? new Nullable<decimal>(result[confidenceKey].ToObject<decimal>()) : null;
+                Nullable<decimal> confidence = result.Properties().Where<JProperty>((p) => p.Name == confidenceKey).Any() ? result[confidenceKey].ToObject<decimal?>() : null;
                 categories.Add(new RosetteCategory(label, confidence));
             }
             this.Categories = categories;
@@ -143,7 +143,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="label">The category label</param>
         /// <param name="confidence">The confidence this was the correct category</param>
-        public RosetteCategory(String label, Nullable<Decimal> confidence)
+        public RosetteCategory(String label, Nullable<decimal> confidence)
         {
             this.Label = label;
             this.Confidence = confidence;

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 
 namespace rosette_api
@@ -18,7 +19,7 @@ namespace rosette_api
         /// <summary>
         /// The score, on a range of 0-1, of how closely the names match
         /// </summary>
-        public decimal Score;
+        public Nullable<double> Score;
 
         /// <summary>
         /// The response headers returned from the API
@@ -33,7 +34,7 @@ namespace rosette_api
         {
             if (this.ContentDictionary.ContainsKey(scoreKey))
             {
-                this.Score = (decimal)this.ContentDictionary[scoreKey];
+                this.Score = this.ContentDictionary[scoreKey] as double?;
             }
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
@@ -45,7 +46,7 @@ namespace rosette_api
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (the score) in dictionary form</param>
         /// <param name="contentAsJSON">The content in JSON</param>
-        public NameSimilarityResponse(decimal score, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJSON) : base(responseHeaders, content, contentAsJSON)
+        public NameSimilarityResponse(double? score, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJSON) : base(responseHeaders, content, contentAsJSON)
         {
             this.Score = score;
             this.ResponseHeaders = new ResponseHeaders(responseHeaders);
@@ -84,7 +85,7 @@ namespace rosette_api
         /// <returns>The response in JSON form</returns>
         public override string ToString()
         {
-            return new StringBuilder("{").AppendFormat("\"score\": {0}, \"responseHeaders\": {1}", Score, ResponseHeaders).Append("}").ToString();
+            return new StringBuilder("{").AppendFormat("\"score\": {0}, \"responseHeaders\": {1}", Score.Value.ToString("G17"), ResponseHeaders).Append("}").ToString();
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace rosette_api
         /// <returns>The content in JSON</returns>
         public string ContentToString()
         {
-            return new StringBuilder("{").AppendFormat("\"score\": {0}", Score).Append("}").ToString();
+            return new StringBuilder("{").AppendFormat("\"score\": {0}", Score.Value.ToString("G17")).Append("}").ToString();
         }
     }
 }
