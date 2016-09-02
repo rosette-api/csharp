@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Net.Http;
 using System.Collections;
 using Newtonsoft.Json;
@@ -118,7 +117,7 @@ namespace rosette_api
         {
             StringBuilder builder = new StringBuilder("{");
             string categoriesString = this.Categories != null ? new StringBuilder("[").Append(String.Join(", ", this.Categories)).Append("]").ToString() : null;
-            builder.Append("\"entities\": ").Append(categoriesString).Append("}");
+            builder.Append("\"categories\": ").Append(categoriesString).Append("}");
             return builder.ToString();
         }
     }
