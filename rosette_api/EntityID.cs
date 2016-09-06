@@ -50,7 +50,7 @@ namespace rosette_api
             }
         }
 
-        private static String MakeRequest(string requestUrl)
+        private String MakeRequest(string requestUrl)
         {
             try
             {

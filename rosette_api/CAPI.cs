@@ -541,6 +541,70 @@ namespace rosette_api {
             return getResponse<PingResponse>(SetupClient());
         }
 
+        /// <summary>TextEmbeddings
+        /// <para>
+        /// (POST)TextEmbeddings Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>
+        /// A TextEmbeddingResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space. 
+        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public TextEmbeddingResponse TextEmbeddings(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
+            _uri = "text-embedding";
+            return Process<TextEmbeddingResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>TextEmbeddings
+        /// <para>
+        /// (POST)TextEmbeddings Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>
+        /// A TextEmbeddingResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space. 
+        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public RelationshipsResponse TextEmbeddings(Dictionary<object, object> dict)
+        {
+            _uri = "text-embedding";
+            return getResponse<RelationshipsResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
+        /// <summary>TextEmbeddings
+        /// <para>
+        /// (POST)TextEmbeddings Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>
+        /// A TextEmbeddingResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space. 
+        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public TextEmbeddingResponse TextEmbeddings(RosetteFile file)
+        {
+            _uri = "text-embedding";
+            return Process<TextEmbeddingResponse>(file);
+        }
+
         /// <summary>Relationships
         /// <para>
         /// (POST)Relationships Endpoint: Returns each relationship extracted from the input.

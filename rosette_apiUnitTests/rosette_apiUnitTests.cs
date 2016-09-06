@@ -1012,6 +1012,61 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
+        //------------------------- Text Embedding ----------------------------------------
+        [Test]
+        public void TextEmbeddingTestFull()
+        {
+            Init();
+            List<float> vector = new List<float>() {0.02164695f, 0.0032850206f, 0.0038508752f, -0.009704393f, -0.0016203842f};
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("embedding", vector);
+            TextEmbeddingResponse expected = new TextEmbeddingResponse(vector, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "text-embedding").Respond(mockedMessage);
+            TextEmbeddingResponse response = _rosetteApi.TextEmbeddings("The Ghostbusters movie was filmed in Boston.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void TextEmbedding_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbeddings("content");
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void TextEmbedding_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void TextEmbedding_File_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.TextEmbeddings(f);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
         //------------------------- Sentences ----------------------------------------
 
         [Test]
