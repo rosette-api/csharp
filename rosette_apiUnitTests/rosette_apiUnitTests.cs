@@ -1017,7 +1017,7 @@ namespace rosette_apiUnitTests
         public void TextEmbeddingTestFull()
         {
             Init();
-            List<float> vector = new List<float>() {0.02164695f, 0.0032850206f, 0.0038508752f, -0.009704393f, -0.0016203842f};
+            List<double> vector = new List<double>() {0.02164695, 0.0032850206, 0.0038508752, -0.009704393, -0.0016203842};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object>();

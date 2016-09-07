@@ -18,7 +18,7 @@ namespace rosette_api
         /// <summary>
         /// Gets the averaged text vector
         /// </summary>
-        public IEnumerable<float> TextEmbedding { get; set; }
+        public IEnumerable<double> TextEmbedding { get; set; }
 
         /// <summary>
         /// Gets the response headers returned from the API
@@ -34,13 +34,13 @@ namespace rosette_api
         public TextEmbeddingResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            List<float> textEmbedding = new List<float>();
+            List<double> textEmbedding = new List<double>();
             JArray enumerableResults = this.ContentDictionary.ContainsKey(embeddingKey) ? this.ContentDictionary[embeddingKey] as JArray : new JArray();
             foreach (JValue result in enumerableResults)
             {
                 textEmbedding.Add(result.ToObject<float>());
             }
-            this.TextEmbedding = new List<float>(textEmbedding.ToArray<float>());
+            this.TextEmbedding = new List<double>(textEmbedding.ToArray<double>());
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
@@ -51,7 +51,7 @@ namespace rosette_api
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public TextEmbeddingResponse(IEnumerable<float> textEmbedding, Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
+        public TextEmbeddingResponse(IEnumerable<double> textEmbedding, Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
             this.TextEmbedding = textEmbedding;
@@ -86,7 +86,7 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.TextEmbedding != null ? this.TextEmbedding.Aggregate<float, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h0 = this.TextEmbedding != null ? this.TextEmbedding.Aggregate<double, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
         }
