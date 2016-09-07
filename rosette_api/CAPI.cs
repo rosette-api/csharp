@@ -43,6 +43,8 @@ namespace rosette_api {
     /// </para>
     /// </summary>
     public class CAPI {
+        private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
+
         /// <summary>
         /// Internal string to hold the uri ending for each endpoint. 
         /// Set when an endpoint is called.
@@ -79,6 +81,7 @@ namespace rosette_api {
             Debug = false;
             Timeout = 0;
             Client = client;
+            Concurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
             _options = new Dictionary<string, object>();
             _customHeaders = new Dictionary<string, string>();
         }
@@ -134,6 +137,11 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         public HttpClient Client { get; set; }
+
+        /// <summary>Concurrency
+        /// Gets and sets the maximum number of concurrent calls for the plan associated with your API key
+        /// </summary>
+        public int Concurrency { get; set; }
 
         /// <summary>Debug
         /// <para>
@@ -905,7 +913,9 @@ namespace rosette_api {
                     }
                     if (responseMsg.IsSuccessStatusCode)
                     {
-                        return (T)Activator.CreateInstance(typeof(T), new object[]{responseMsg});
+                        T response = (T)Activator.CreateInstance(typeof(T), new object[]{responseMsg});
+                        this.SetCallConcurrency(response);
+                        return response;
                     }
                     else
                     {
@@ -914,6 +924,24 @@ namespace rosette_api {
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Sets the call concurrency limit if it has not already been set after API initialization.
+        /// </summary>
+        /// <param name="response"></param>
+        private void SetCallConcurrency(RosetteResponse response)
+        {
+            if (response.Headers.ContainsKey(CONCURRENCY_HEADER))
+            {
+                int callConcurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
+                bool success = Int32.TryParse(response.Headers[CONCURRENCY_HEADER], out callConcurrency);
+                if (success && callConcurrency != System.Net.ServicePointManager.DefaultConnectionLimit && callConcurrency > 1)
+                {
+                    System.Net.ServicePointManager.DefaultConnectionLimit = callConcurrency;
+                    this.Concurrency = callConcurrency;
+                }
+            }
         }
 
         /// <summary>Process
@@ -1020,7 +1048,6 @@ namespace rosette_api {
 
                 }
             }
-
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
