@@ -34,11 +34,11 @@ namespace rosette_apiExamples
                 string matched_name_data1 = @"Michael Jackson";
                 string matched_name_data2 = @"迈克尔·杰克逊";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = MatchedNameCAPI.NameSimilarity(new Name(matched_name_data1, "eng", null, "PERSON"), new Name(matched_name_data2, null, null, "PERSON"));
+                NameSimilarityResponse response = MatchedNameCAPI.NameSimilarity(new Name(matched_name_data1, "eng", null, "PERSON"), new Name(matched_name_data2, null, null, "PERSON"));
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {

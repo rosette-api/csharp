@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace rosette_apiUnitTests
 {
@@ -100,7 +101,9 @@ namespace rosette_apiUnitTests
             };
             message.Headers.Add(_testHeaderKey, _testHeaderValue);
             RosetteResponse rr = new RosetteResponse(message);
+# pragma warning disable 618
             Assert.AreEqual(_testItemCount, rr.Content.Count, "RosetteResponse: header mismatch");
+# pragma warning restore 618
         }
 
         [Test]
@@ -186,14 +189,13 @@ namespace rosette_apiUnitTests
 
         [Test]
         public void Error409_Test() {
-            _mockHttp.When(_testUrl + "entities")
-                .Respond(HttpStatusCode.Conflict);
-
             try {
+                _mockHttp.When(_testUrl + "entities").Respond(HttpStatusCode.Conflict);
                 var response = _rosetteApi.Entity("content");
                 Assert.Fail("Exception not thrown");
             }
             catch (RosetteException ex) {
+                Console.WriteLine("Error code: " + ex.Code);
                 Assert.AreEqual(ex.Code, 409);
                 return;
             }
@@ -334,7 +336,8 @@ namespace rosette_apiUnitTests
             StreamWriter sw = File.AppendText(_tmpFile);
             sw.WriteLine("Rosette API Unit Test.  This file is used for testing file operations.");
             sw.Flush();
-            sw.Close(); _mockHttp = new MockHttpMessageHandler();
+            sw.Close(); 
+            _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
             string jsonResponse = string.Format("{{'response': 'OK', 'version': '{0}'}}", CAPI.Version);
@@ -351,6 +354,7 @@ namespace rosette_apiUnitTests
             if (File.Exists(_tmpFile)) {
                 File.Delete(_tmpFile);
             }
+            _mockHttp.Clear();
         }
 
         //------------------------- Simple Options Tests ----------------------------------------
@@ -420,16 +424,92 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Info();
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
-        public void PingTest() {
+        public void InfoTestFull()
+        {
+            Init();
+            string name = "Rosette API";
+            string version = "1.2.3";
+            string buildNumber = null;
+            string buildTime = null;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": 72, \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("name", name);
+            content.Add("version", version);
+            content.Add("buildNumber", buildNumber);
+            content.Add("buildTime", buildTime);
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            _mockHttp.When(_testUrl + "info").Respond(mockedMessage);
+            InfoResponse expected = new InfoResponse(name, version, buildNumber, buildTime, responseHeaders, content);
+            InfoResponse response = _rosetteApi.Info();
+            Assert.AreEqual(expected, response);
+        }
+
+        private HttpResponseMessage MakeMockedMessage(Dictionary<string, string> responseHeaders, HttpStatusCode statusCode, String content)
+        {
+            HttpResponseMessage mockedMessage = new HttpResponseMessage(statusCode);
+            mockedMessage.Content = new StringContent(content);
+            foreach (KeyValuePair<string, string> header in responseHeaders)
+            {
+                try
+                {
+                    mockedMessage.Headers.Add(header.Key, header.Value.ToString());
+                }
+                catch
+                {
+                    try
+                    {
+                        mockedMessage.Content.Headers.Add(header.Key, header.Value.ToString());
+                    }
+                    catch
+                    {
+                        switch (header.Key)
+                        {
+                            case "Content-Type": mockedMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(header.Value);
+                                break;
+                            case "content-length": mockedMessage.Content.Headers.ContentLength = long.Parse(header.Value);
+                                break;
+                            default: throw;
+                        }
+                    }
+                }
+            }
+            return mockedMessage;
+        }
+
+        [Test]
+        public void PingTestFull() {
+            Init();
+            string message = "Rosette API at your service.";
+            long time = 1470930452887;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("message", message);
+            content.Add("time", time);
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            _mockHttp.When(_testUrl + "ping").Respond(mockedMessage);
+            PingResponse expected = new PingResponse(message, time, responseHeaders, content);
+            PingResponse response = _rosetteApi.Ping();
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void PingTest()
+        {
             _mockHttp.When(_testUrl + "ping")
                 .Respond("application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Ping();
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Exceptions ----------------------------------------
@@ -475,9 +555,30 @@ namespace rosette_apiUnitTests
         public void Categories_Content_Test() {
             _mockHttp.When(_testUrl + "categories")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
             var response = _rosetteApi.Categories("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void CategoriesContentTestFull()
+        {
+            Init();
+            JsonSerializer serializer = new JsonSerializer();
+            List<RosetteCategory> categories = new List<RosetteCategory>();
+            RosetteCategory cat0 = new RosetteCategory("ARTS_AND_ENTERTAINMENT", (decimal)0.23572849069656435);
+            categories.Add(cat0);
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("categories", categories);
+            Dictionary<string, string> responseHeaders = serializer.Deserialize<Dictionary<string, string>>(new JsonTextReader(new StringReader(headersAsString)));
+            String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + "} ] }";
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "categories").Respond(mockedMessage);
+            CategoriesResponse expected = new CategoriesResponse(categories, responseHeaders, null, mockedContent);
+            CategoriesResponse response = _rosetteApi.Categories("Sony Pictures is planning to shoot a good portion of the new \"\"Ghostbusters\"\" in Boston as well.");
+            Assert.AreEqual(expected, response);
         }
 
         [Test]
@@ -486,7 +587,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Categories(new Dictionary<object, object>(){ {"contentUri", "contentUrl"} });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -496,7 +599,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Categories(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Entities Linked ----------------------------------------
@@ -507,7 +612,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity("content", null, null, null, true);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -516,7 +623,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } }, true);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -526,10 +635,30 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Entity(f, true);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Entity ----------------------------------------
+        [Test]
+        public void EntityTestFull()
+        {
+            Init();
+            RosetteEntity e0 = new RosetteEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2);
+            RosetteEntity e1 = new RosetteEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1);
+            List<RosetteEntity> entities = new List<RosetteEntity>() { e0, e1 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("entities", entities);
+            EntitiesResponse expected = new EntitiesResponse(entities, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "entities").Respond(mockedMessage);
+            EntitiesResponse response = _rosetteApi.Entity("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Entity_Content_Test() {
@@ -537,7 +666,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -546,7 +677,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -556,10 +689,61 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Entity(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void EntityIDTestPassOnCreate()
+        {
+            EntityID pass = new EntityID("Q1");
+            pass.ID = "Q1";
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Universe", pass.GetWikipedaURL());
+        }
+
+        [Test]
+        public void EntityIDTestLinkValidOnSet() {
+            EntityID tidAtFirst = new EntityID("T423");
+            Assert.AreEqual(null, tidAtFirst.GetWikipedaURL());
+            tidAtFirst.ID = "Q2";
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Earth", tidAtFirst.GetWikipedaURL());
+        }
+
+        [Test]
+        public void EntityIDLinkNullOnSetToNull()
+        {
+            EntityID eid = new EntityID(null);
+            Assert.AreEqual(null, eid.GetWikipedaURL());
         }
 
         //------------------------- Language ----------------------------------------
+
+        [Test]
+        public void LanguageTestFull()
+        {
+            Init();
+            LanguageDetection lang0 = new LanguageDetection("spa", (decimal)0.38719602327387076);
+            LanguageDetection lang1 = new LanguageDetection("eng", (decimal)0.32699986625091865);
+            LanguageDetection lang2 = new LanguageDetection("por", (decimal)0.05569054210624943);
+            LanguageDetection lang3 = new LanguageDetection("deu", (decimal)0.030069489878380328);
+            LanguageDetection lang4 = new LanguageDetection("zho", (decimal)0.23572849069656435);
+            LanguageDetection lang5 = new LanguageDetection("swe", (decimal)0.027734757034048835);
+            LanguageDetection lang6 = new LanguageDetection("ces", (decimal)0.02583105013400886);
+            LanguageDetection lang7 = new LanguageDetection("fin", (decimal)0.23572849069656435);
+            LanguageDetection lang8 = new LanguageDetection("fra", (decimal)0.023298946617300347);
+            List<LanguageDetection> languageDetections = new List<LanguageDetection>() { lang0, lang1, lang2, lang3, lang4, lang5, lang6, lang7, lang8 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("languageDetections", languageDetections);
+            LanguageIdentificationResponse expected = new LanguageIdentificationResponse(languageDetections, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "language").Respond(mockedMessage);
+            LanguageIdentificationResponse response = _rosetteApi.Language("Por favor Señorita, says the man.");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Language_Content_Test() {
@@ -567,7 +751,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Language("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -576,7 +762,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Language(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -586,10 +774,107 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Language(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Morphology ----------------------------------------
+        [Test]
+        public void MorphologyTestFullComplete()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("The", "DET", "the", new List<string>(), new List<string>());
+            MorphologyItem m1 = new MorphologyItem("quick", "ADJ", "quick", new List<string>(), new List<string>());
+            MorphologyItem m2 = new MorphologyItem("brown", "ADJ", "brown", new List<string>(), new List<string>());
+            MorphologyItem m3 = new MorphologyItem("fox", "NOUN", "fox", new List<string>(), new List<string>());
+            MorphologyItem m4 = new MorphologyItem("jumped", "VERB", "jump", new List<string>(), new List<string>());
+            MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", new List<string>(), new List<string>());
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)));
+            content.Add("posTags", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.PosTag)));
+            content.Add("lemmas", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Lemma)));
+            content.Add("compoundComponents", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.CompoundComponents)));
+            content.Add("hanReadings", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.HanReadings)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/complete").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void MorphologyTestFullLemmas()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("The", null, "the", null, null);
+            MorphologyItem m1 = new MorphologyItem("quick", null, "quick", null, null);
+            MorphologyItem m2 = new MorphologyItem("brown", null, "brown", null, null);
+            MorphologyItem m3 = new MorphologyItem("fox", null, "fox", null, null);
+            MorphologyItem m4 = new MorphologyItem("jumped", null, "jump", null, null);
+            MorphologyItem m5 = new MorphologyItem(".", null, ".", null, null);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)));;
+            content.Add("lemmas", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Lemma)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/lemmas").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.", feature: MorphologyFeature.lemmas);
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void MorphologyTestFullCompoundComponents()
+        {
+            Init();
+            MorphologyItem m0 = new MorphologyItem("Er", null, null, new List<string>(), null);
+            List<string> compoundComponents = new List<string>() { "Rechts", "Schutz", "Versicherungs", "Gesellschaft" };
+            MorphologyItem m1 = new MorphologyItem("Rechtsschutzversicherungsgesellschaft", null, null, compoundComponents, null);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token))); ;
+            content.Add("compoundComponents", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.CompoundComponents)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/compound-components").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("Er Rechtsschutzversicherungsgesellschaft.", feature: MorphologyFeature.compoundComponents);
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void MorphologyTestFullHanReadings()
+        {
+            Init();
+            List<string> h0 = new List<string>() { "Bei3-jing1-Da4-xue2" };
+            List<string> h1 = null;
+            List<string> h2 = new List<string>() { "zhu3-ren4" };            
+            MorphologyItem m0 = new MorphologyItem("北京大学", null, null, null, h0);
+            MorphologyItem m1 = new MorphologyItem("生物系", null, null, null, h1);
+            MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
+            List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token))); ;
+            content.Add("hanReadings", new List<List<string>>(morphology.Select<MorphologyItem, List<string>>((item) => item.HanReadings)));
+            MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
+            String mockedContent = expected.ContentAsJson;
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "morphology/han-readings").Respond(mockedMessage);
+            MorphologyResponse response = _rosetteApi.Morphology("北京大学生物系主任.", feature: MorphologyFeature.hanReadings);
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Morphology_Content_Test() {
@@ -597,7 +882,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Morphology("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -606,7 +893,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Morphology(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -616,20 +905,38 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Morphology(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Name Similarity ----------------------------------------
+        [Test]
+        public void NameSimilarityTestFull()
+        {
+            Init();
+            double score = (double)0.9486632809417912;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("score", score);
+            NameSimilarityResponse expected = new NameSimilarityResponse(score, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "name-similarity").Respond(mockedMessage);
+            NameSimilarityResponse response = _rosetteApi.NameSimilarity(new Name("Влади́мир Влади́мирович Пу́тин", "rus", null, "PERSON"), new Name("Vladmir Putin", "eng", null, "PERSON"));
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void NameSimilarity_Content_Test() {
-            _mockHttp.When(_testUrl + "name-similarity")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
+            _mockHttp.When(_testUrl + "name-similarity").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
             Name name1 = new Name("Name One");
             Name name2 = new Name("Name Two");
             var response = _rosetteApi.NameSimilarity(name1, name2);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -638,10 +945,38 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, { "name2", "Name Two" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Relationships ----------------------------------------
+        [Test]
+        public void RelationshipsTestFull()
+        {
+            Init();
+            decimal confidence = (decimal)0.8541343114184464;
+            string predicate = "be filmed";
+            string arg0 = "The Ghostbusters movie";
+            string loc0 = "in Boston";
+            List<string> locatives = new List<string>() {loc0};
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("predicate", predicate);
+            content.Add("arg1", arg0);
+            content.Add("locatives", locatives);
+            content.Add("confidence", confidence);
+            List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
+                new RosetteRelationship(predicate, new List<string>() {arg0}, null, locatives, null, confidence)
+            };  
+            RelationshipsResponse expected = new RelationshipsResponse(relationships, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
+            RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Relationships_Content_Test() {
@@ -649,7 +984,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -658,7 +995,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Relationships(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -668,10 +1007,87 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Relationships(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        //------------------------- Text Embedding ----------------------------------------
+        [Test]
+        public void TextEmbeddingTestFull()
+        {
+            Init();
+            List<double> vector = new List<double>() {0.02164695, 0.0032850206, 0.0038508752, -0.009704393, -0.0016203842};
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("embedding", vector);
+            TextEmbeddingResponse expected = new TextEmbeddingResponse(vector, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "text-embedding").Respond(mockedMessage);
+            TextEmbeddingResponse response = _rosetteApi.TextEmbeddings("The Ghostbusters movie was filmed in Boston.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void TextEmbedding_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbeddings("content");
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void TextEmbedding_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void TextEmbedding_File_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.TextEmbeddings(f);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Sentences ----------------------------------------
+
+        [Test]
+        public void SentencesTestFull()
+        {
+            Init();
+            string s0 = "This land is your land. ";
+            string s1 = "This land is my land\nFrom California to the New York island;\nFrom the red wood forest to the Gulf Stream waters\n\nThis land was made for you and Me.\n\n";
+            string s2 = "As I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
+            List<string> sentences = new List<string>() { s0, s1, s2 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("sentences", sentences);
+            SentenceTaggingResponse expected = new SentenceTaggingResponse(sentences, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "sentences").Respond(mockedMessage);
+            SentenceTaggingResponse response = _rosetteApi.Sentences("This land is your land. This land is my land\\nFrom California to the New York island;\\nFrom the red wood forest to the Gulf Stream waters\\n\\nThis land was made for you and Me.\\n\\nAs I was walking that ribbon of highway,\\nI saw above me that endless skyway:\\nI saw below me that golden valley:\\nThis land was made for you and me.");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Sentences_Content_Test() {
@@ -679,7 +1095,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -688,7 +1106,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentences(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -698,10 +1118,32 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentences(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Sentiment ----------------------------------------
+        [Test]
+        public void SentimentTestFull()
+        {
+            Init();
+            SentimentResponse.RosetteSentiment docSentiment = new SentimentResponse.RosetteSentiment("pos", (decimal)0.7962072011038756);
+            RosetteSentimentEntity e0 = new RosetteSentimentEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2, "neg", (decimal)0.5005508052749595);
+            RosetteSentimentEntity e1 = new RosetteSentimentEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, "pos", (decimal)0.5338094035254866);
+            List<RosetteSentimentEntity> entities = new List<RosetteSentimentEntity>() { e0, e1 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("document", docSentiment);
+            content.Add("entities", entities);
+            SentimentResponse expected = new SentimentResponse(docSentiment, entities, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "sentiment").Respond(mockedMessage);
+            SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Sentiment_Content_Test() {
@@ -709,7 +1151,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -718,7 +1162,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Sentiment(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -728,7 +1174,9 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentiment(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Text Embedding ------------------------------------
@@ -765,6 +1213,29 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Tokens ----------------------------------------
+        [Test]
+        public void TokensTestFull()
+        {
+            Init();
+            List<string> tokens = new List<string>() {
+                "北京大学",
+                "生物系",
+                "主任",
+                "办公室",
+                "内部",
+                "会议"
+            };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("tokens", tokens);
+            TokenizationResponse expected = new TokenizationResponse(tokens, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "tokens").Respond(mockedMessage);
+            TokenizationResponse response = _rosetteApi.Tokens("北京大学生物系主任办公室内部会议");
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void Tokens_Content_Test() {
@@ -772,7 +1243,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -781,7 +1254,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.Tokens(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -791,10 +1266,41 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Tokens(f);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Name Translation ----------------------------------------
+        [Test]
+        public void NameTranslationTestFull()
+        {
+            Init();
+            string translation = "Mu'ammar Muhammad Abu-Minyar al-Qadhaf";
+            string targetLanguage = "eng";
+            string targetScript = "Latn";
+            string targetScheme = "IC";
+            double confidence = (double)0.06856099342585828;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("translation", translation);
+            content.Add("targetLanguage", targetLanguage);
+            content.Add("targetScript", targetScript);
+            content.Add("targetScheme", targetScheme);
+            content.Add("confidence", confidence);
+            TranslateNamesResponse expected = new TranslateNamesResponse(translation, targetLanguage: targetLanguage, targetScript:targetScript, targetScheme:targetScheme, confidence: confidence, responseHeaders:responseHeaders, content: content);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "name-translation").Respond(mockedMessage);
+            Dictionary<object, object> input = new Dictionary<object, object>() {
+                {"name", "معمر محمد أبو منيار القذاف"},
+                {"targetLanguage", "eng"},
+                {"targetScript", "Latn"}
+            };
+            TranslateNamesResponse response = _rosetteApi.NameTranslation(input);
+            Assert.AreEqual(expected, response);
+        }
 
         [Test]
         public void NameTranslation_Content_Test() {
@@ -802,7 +1308,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.NameTranslation("content");
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         [Test]
@@ -821,7 +1329,9 @@ namespace rosette_apiUnitTests
                 { "entityType", "entityType"}
             };
             var response = _rosetteApi.NameTranslation(sampleDict);
+# pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
     }
