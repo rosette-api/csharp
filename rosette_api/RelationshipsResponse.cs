@@ -7,31 +7,30 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Collections;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace rosette_api
 {
     /// <summary>
     /// A class to represent responses from the Relationships endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class RelationshipsResponse : RosetteResponse
     {
         private const string relationshipsKey = "relationships";
-        private const string predicateKey = "predicate";
-        private const string argsKey = "arg";
-        private const string temporalsKey = "temporals";
-        private const string locativesKey = "locatives";
-        private const string adjunctsKey = "adjuncts";
-        private const string confidenceKey = "confidence";
+        internal const string predicateKey = "predicate";
+        internal const string argsKey = "arg";
+        internal const string temporalsKey = "temporals";
+        internal const string locativesKey = "locatives";
+        internal const string adjunctsKey = "adjuncts";
+        internal const string confidenceKey = "confidence";
 
         /// <summary>
         /// Gets or sets the relationships extracted by the Rosette API
         /// </summary>
+        [JsonProperty(relationshipsKey)]
         public List<RosetteRelationship> Relationships { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a RelationshipsResponse from the given apiResult
@@ -45,7 +44,7 @@ namespace rosette_api
             {
                 String predicate = relationship.Properties().Where((p) => p.Name == predicateKey).Any() ? relationship[predicateKey].ToString() : null;
                 IEnumerable<JProperty> argProps = relationship.Properties().Where((p) => p.Name.Contains(argsKey));
-                List<string> arguments = argProps.Any() ? argProps.Select<JProperty, string>((p) => p.Value.ToString()).ToList() : null;
+                List<string> arguments = argProps.Any() ? argProps.Select<JProperty, string>((p) => p.Value.ToString().Trim()).ToList() : null;
                 List<string> temporals = relationship.Properties().Where((p) => p.Name == temporalsKey).Any() ? relationship[temporalsKey].ToObject<List<string>>() : null;
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
@@ -53,7 +52,6 @@ namespace rosette_api
                 relationships.Add(new RosetteRelationship(predicate, arguments, temporals, locatives, adjuncts, confidence));
             }
             this.Relationships = relationships;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -67,7 +65,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Relationships = relationships;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -103,64 +100,50 @@ namespace rosette_api
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
         }
-
-        /// <summary>
-        /// ToString override.  Writes the RelationshipResponse as JSON.
-        /// </summary>
-        /// <returns>The RelationshipResponse as JSON</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string relationshipsString = this.Relationships != null ? String.Format("[{0}]", String.Join(", ", this.Relationships)) : null;
-            builder.AppendFormat("\"relationships\": {0}", relationshipsString)
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content as a string
-        /// </summary>
-        /// <returns></returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            return builder.Append("{\"relationships\": [").Append(String.Join<RosetteRelationship>(", ", this.Relationships)).Append("]}").ToString();
-        }
     }
 
     /// <summary>
     /// A class to represent a relationship as identified by the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class RosetteRelationship
     {
+        private const string ARGUMENTS = "arguments";        
+
         /// <summary>
         /// Gets or sets the main action or verb acting on the first argument, or the action connecting multiple arguments.
         /// </summary>
+        [JsonProperty(RelationshipsResponse.predicateKey)]
         public String Predicate { get; set; }
 
         /// <summary>
         /// Gets or sets the or more subjects in the relationship
         /// </summary>
+        [JsonProperty(ARGUMENTS)]
         public List<String> Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets the time frame of the action.  May be empty.
         /// </summary>
+        [JsonProperty(RelationshipsResponse.temporalsKey)]
         public List<String> Temporals { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the location(s) of the action.  May be empty.
         /// </summary>
+        [JsonProperty(RelationshipsResponse.locativesKey)]
         public List<String> Locatives { get; set; }
 
         /// <summary>
         /// Gets or sets all other parts of the relationship.  May be empty.
         /// </summary>
+        [JsonProperty(RelationshipsResponse.adjunctsKey)]
         public List<String> Adjucts { get; set; }
 
         /// <summary>
         /// Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.
         /// </summary>
+        [JsonProperty(RelationshipsResponse.confidenceKey)]
         public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>

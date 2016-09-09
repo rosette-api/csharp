@@ -31,6 +31,10 @@ namespace rosette_api {
         /// </summary>
         public IDictionary<string, string> Headers { get; private set; }
         /// <summary>
+        /// The response headers returned from the API
+        /// </summary>
+        public ResponseHeaders ResponseHeaders { get; private set; }
+        /// <summary>
         /// As returned by the API, the JSON string of response content
         /// </summary>
         public string ContentAsJson { get; private set; }
@@ -59,6 +63,7 @@ namespace rosette_api {
             this.Content = ContentDictionary;
 #pragma warning restore 618
             this.Headers = headers != null ? headers : new Dictionary<string, string>();
+            this.ResponseHeaders = new ResponseHeaders(this.Headers);
             if (contentAsJson != null)
             {
                 this.ContentAsJson = contentAsJson;
@@ -66,7 +71,7 @@ namespace rosette_api {
             else if (content != null) 
             {
                 StringBuilder contentAsJsonWriter = new StringBuilder();
-                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content, typeof(Dictionary<string, object>));
+                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content);
                 this.ContentAsJson = contentAsJsonWriter.ToString();
             }
         }
@@ -87,6 +92,7 @@ namespace rosette_api {
                 {
                     Headers.Add(header.Key, string.Join("", header.Value));
                 }
+                this.ResponseHeaders = new ResponseHeaders(this.Headers);
 
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
                 if (responseMsg.Content.Headers.ContentEncoding.Contains("gzip") || (byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08')) {
@@ -105,6 +111,39 @@ namespace rosette_api {
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
             }
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+# pragma warning disable 618
+            IDictionary<string, object> responseAsDictionary = new Dictionary<string, object>(this.Content);
+# pragma warning restore 618
+            responseAsDictionary.Add("responseHeaders", this.ResponseHeaders.ToString());
+            serializer.Serialize(writer, responseAsDictionary);
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public virtual string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+# pragma warning disable 618
+            IDictionary<string, object> responseAsDictionary = new Dictionary<string, object>(this.Content);
+# pragma warning restore 618
+            serializer.Serialize(writer, responseAsDictionary);
+            return builder.ToString();
         }
 
         /// <summary>

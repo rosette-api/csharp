@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CAPI.cs" />
     <Compile Include="CategoriesResponse.cs" />
+    <Compile Include="ConditionalContractResolver.cs" />
     <Compile Include="EntitiesResponse.cs" />
     <Compile Include="EntityID.cs" />
     <Compile Include="InfoResponse.cs" />

@@ -13,21 +13,18 @@ namespace rosette_api
     /// <summary>
     /// A class to represent responses from the Language Identification endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class LanguageIdentificationResponse : RosetteResponse
     {
         private const string languageDetectionsKey = "languageDetections";
-        private const string languageKey = "language";
-        private const string confidenceKey = "confidence";
+        internal const string languageKey = "language";
+        internal const string confidenceKey = "confidence";
 
         /// <summary>
         /// Get the sorted collection of likely languages and their confidence scores
         /// </summary>
+        [JsonProperty(languageDetectionsKey)]
         public List<LanguageDetection> LanguageDetections { get; private set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a LanguageIdentificationResponse from the given apiResults
@@ -39,12 +36,11 @@ namespace rosette_api
             JArray languageDetectionArr = this.ContentDictionary.ContainsKey(languageDetectionsKey) ? this.ContentDictionary[languageDetectionsKey] as JArray : new JArray();
             foreach (JObject languageDetectionObj in languageDetectionArr)
             {
-                string language = languageDetectionObj.Properties().Where((p) => p.Name == languageKey).Any() ? languageDetectionObj[languageKey].ToString() : null;
-                Nullable<decimal> confidence = languageDetectionObj.Properties().Where((p) => p.Name == confidenceKey).Any() ? languageDetectionObj[confidenceKey].ToObject<decimal?>() : null;
+                string language = languageDetectionObj.Properties().Where((p) => String.Equals(p.Name, languageKey, StringComparison.OrdinalIgnoreCase)).Any() ? languageDetectionObj[languageKey].ToString() : null;
+                Nullable<decimal> confidence = languageDetectionObj.Properties().Where((p) => String.Equals(p.Name, confidenceKey, StringComparison.OrdinalIgnoreCase)).Any() ? languageDetectionObj[confidenceKey].ToObject<decimal?>() : null;
                 languageDetections.Add(new LanguageDetection(language, confidence));
             }
             this.LanguageDetections = languageDetections;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
         
         /// <summary>
@@ -56,7 +52,6 @@ namespace rosette_api
         /// <param name="contentAsJosn">The content in JSON form</param>
         public LanguageIdentificationResponse(List<LanguageDetection> languageDetections, Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, string contentAsJosn = null) : base(responseHeaders, content, contentAsJosn) {
             this.LanguageDetections = languageDetections;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -91,42 +86,24 @@ namespace rosette_api
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
         }
-
-        /// <summary>
-        /// ToString override.  Writes this LanguageIdentificationResponse in JSON form.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            string languageDetectionsString = this.LanguageDetections != null ? new StringBuilder("[").AppendFormat("{0}]", String.Join<LanguageDetection>(", ", this.LanguageDetections)).ToString() : null;
-            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
-            return new StringBuilder("{").AppendFormat("\"languageDetections\": {0}, \"responseHeaders\": {1}", languageDetectionsString, responseHeadersString).Append("}").ToString();
-        }
-
-        /// <summary>
-        /// Writes this LanguageIdentificationResponse's content in JSON form
-        /// </summary>
-        /// <returns></returns>
-        public string ContentToString()
-        {
-            string languageDetectionsString = this.LanguageDetections != null ? new StringBuilder("[").AppendFormat("{0}]", String.Join<LanguageDetection>(", ", this.LanguageDetections)).ToString() : null;
-            return new StringBuilder("{").AppendFormat("\"languageDetections\": {0}", languageDetectionsString).Append("}").ToString();
-        }
     }
 
     /// <summary>
     /// A struct to represent a detected language and the likelihood it was the correct language to detect
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class LanguageDetection
     {
         /// <summary>
         /// Gets the abbreviated language
         /// </summary>
+        [JsonProperty(LanguageIdentificationResponse.languageKey)]
         public string Language { get; private set; }
 
         /// <summary>
         /// Gets the confidence this was the correct language
         /// </summary>
+        [JsonProperty(LanguageIdentificationResponse.confidenceKey)]
         public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
@@ -179,8 +156,7 @@ namespace rosette_api
         /// <returns></returns>
         public override string ToString()
         {
-            string languageString = this.Language != null ? String.Format("\"{0}\"", this.Language) : null;
-            return "{" + String.Format("\"language\": {0}, \"confidence\": {1}", new Object[]{languageString, this.Confidence}) + "}";
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
