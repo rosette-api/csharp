@@ -13,6 +13,7 @@ namespace rosette_api {
     /// <summary>
     /// Encapsulates the response from RosetteAPI
     /// </summary>  
+   [JsonObject(MemberSerialization=MemberSerialization.OptIn)]
     public class RosetteResponse {
 
         private JsonSerializer Serializer = new JsonSerializer();
@@ -33,6 +34,7 @@ namespace rosette_api {
         /// <summary>
         /// The response headers returned from the API
         /// </summary>
+        [JsonPropertyAttribute("responseHeaders")]
         public ResponseHeaders ResponseHeaders { get; private set; }
         /// <summary>
         /// As returned by the API, the JSON string of response content
@@ -71,6 +73,7 @@ namespace rosette_api {
             else if (content != null) 
             {
                 StringBuilder contentAsJsonWriter = new StringBuilder();
+                Serializer.ContractResolver = new RosetteResponseContractResolver();
                 Serializer.Serialize(new StringWriter(contentAsJsonWriter), content);
                 this.ContentAsJson = contentAsJsonWriter.ToString();
             }
@@ -122,11 +125,8 @@ namespace rosette_api {
             StringBuilder builder = new StringBuilder();
             JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
             JsonSerializer serializer = JsonSerializer.CreateDefault();
-# pragma warning disable 618
-            IDictionary<string, object> responseAsDictionary = new Dictionary<string, object>(this.Content);
-# pragma warning restore 618
-            responseAsDictionary.Add("responseHeaders", this.ResponseHeaders.ToString());
-            serializer.Serialize(writer, responseAsDictionary);
+            serializer.ContractResolver = new RosetteResponseContractResolver();
+            serializer.Serialize(writer, this);
             return builder.ToString();
         }
 
@@ -139,10 +139,10 @@ namespace rosette_api {
             StringBuilder builder = new StringBuilder();
             JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
             JsonSerializer serializer = JsonSerializer.CreateDefault();
+            serializer.ContractResolver = new RosetteResponseContractResolver();
 # pragma warning disable 618
-            IDictionary<string, object> responseAsDictionary = new Dictionary<string, object>(this.Content);
+            serializer.Serialize(writer, this.Content);
 # pragma warning restore 618
-            serializer.Serialize(writer, responseAsDictionary);
             return builder.ToString();
         }
 

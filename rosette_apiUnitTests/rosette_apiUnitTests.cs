@@ -972,6 +972,7 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
+            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 
@@ -1139,6 +1140,7 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "sentiment").Respond(mockedMessage);
             SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
+            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace rosette_api
 {
@@ -12,6 +14,7 @@ namespace rosette_api
     /// A class to represent the response headers returned by the Rosette API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
+    [JsonConverter(typeof(ResponseHeadersConverter))]
     public class ResponseHeaders
     {
         internal const string responseHeadersKey = "responseHeaders";
@@ -98,6 +101,26 @@ namespace rosette_api
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this.AllResponseHeaders);
+        }
+    }
+
+    internal class ResponseHeadersConverter : JsonConverter
+    {
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType.Equals(typeof(ResponseHeaders));
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return serializer.Deserialize(reader, objectType);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            ResponseHeaders responseHeadersObj = value as ResponseHeaders;
+            serializer.Serialize(writer, responseHeadersObj.AllResponseHeaders);
         }
     }
 }

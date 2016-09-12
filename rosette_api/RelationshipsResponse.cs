@@ -48,7 +48,7 @@ namespace rosette_api
                 List<string> temporals = relationship.Properties().Where((p) => p.Name == temporalsKey).Any() ? relationship[temporalsKey].ToObject<List<string>>() : null;
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
-                Nullable<decimal> confidence = relationship.Properties().Where((p) => p.Name == confidenceKey).Any() ?  relationship[confidenceKey].ToObject<decimal?>() : new Nullable<decimal>();
+                Nullable<decimal> confidence = relationship.Properties().Where((p) => p.Name == confidenceKey).Any() ? relationship[confidenceKey].ToObject<decimal?>() : new Nullable<decimal>();
                 relationships.Add(new RosetteRelationship(predicate, arguments, temporals, locatives, adjuncts, confidence));
             }
             this.Relationships = relationships;
@@ -105,45 +105,45 @@ namespace rosette_api
     /// <summary>
     /// A class to represent a relationship as identified by the Rosette API
     /// </summary>
-    [JsonObject(MemberSerialization.OptOut)]
+    [JsonConverter(typeof(RelationshipConverter))]
     public class RosetteRelationship
     {
-        private const string ARGUMENTS = "arguments";        
+        internal const string ARGUMENTS = "arguments";        
 
         /// <summary>
         /// Gets or sets the main action or verb acting on the first argument, or the action connecting multiple arguments.
         /// </summary>
-        [JsonProperty(RelationshipsResponse.predicateKey)]
+        [JsonProperty(RelationshipsResponse.predicateKey, NullValueHandling = NullValueHandling.Ignore)]
         public String Predicate { get; set; }
 
         /// <summary>
         /// Gets or sets the or more subjects in the relationship
         /// </summary>
-        [JsonProperty(ARGUMENTS)]
+        [JsonProperty(ARGUMENTS, NullValueHandling = NullValueHandling.Ignore)]
         public List<String> Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets the time frame of the action.  May be empty.
         /// </summary>
-        [JsonProperty(RelationshipsResponse.temporalsKey)]
+        [JsonProperty(RelationshipsResponse.temporalsKey, NullValueHandling = NullValueHandling.Ignore)]
         public List<String> Temporals { get; set; }
         
         /// <summary>
         /// Gets or sets the location(s) of the action.  May be empty.
         /// </summary>
-        [JsonProperty(RelationshipsResponse.locativesKey)]
+        [JsonProperty(RelationshipsResponse.locativesKey, NullValueHandling = NullValueHandling.Ignore)]
         public List<String> Locatives { get; set; }
 
         /// <summary>
         /// Gets or sets all other parts of the relationship.  May be empty.
         /// </summary>
-        [JsonProperty(RelationshipsResponse.adjunctsKey)]
+        [JsonProperty(RelationshipsResponse.adjunctsKey, NullValueHandling = NullValueHandling.Ignore)]
         public List<String> Adjucts { get; set; }
 
         /// <summary>
         /// Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.
         /// </summary>
-        [JsonProperty(RelationshipsResponse.confidenceKey)]
+        [JsonProperty(RelationshipsResponse.confidenceKey, NullValueHandling=NullValueHandling.Ignore)]
         public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
@@ -210,25 +210,88 @@ namespace rosette_api
         /// <returns>The relationship as JSON</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.Predicate != null) { builder.Append("\"predicate\": \"").Append(this.Predicate).Append("\", "); }
-            if (this.Arguments != null && this.Arguments.Any()) 
+            return JsonConvert.SerializeObject(this);
+        }
+    }
+
+    internal class RelationshipConverter : JsonConverter
+    {
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType.Equals(typeof(RelationshipsResponse));
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            JsonSerializer relationshipSerializer = new JsonSerializer();
+            relationshipSerializer.NullValueHandling = NullValueHandling.Ignore;
+            relationshipSerializer.ContractResolver = new RelationshipContractResolver(value as RosetteRelationship);
+            JsonObjectContract contract = (JsonObjectContract)relationshipSerializer.ContractResolver.ResolveContract(value.GetType());
+
+            writer.WriteStartObject();
+            foreach (JsonProperty property in contract.Properties)
             {
-                for (int a = 1; a <= this.Arguments.Count; a++)
+                if (!property.Ignored)
                 {
-                    builder.Append(String.Format("\"arg{0}\": \"{1}\", ", new object[] {a, this.Arguments[a - 1]}));
+                    writer.WritePropertyName(property.PropertyName);
+                    relationshipSerializer.Serialize(writer, property.ValueProvider.GetValue(value));
                 }
             }
-            string temporalsString = this.Temporals != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Temporals)) : null;
-            string locativesString = this.Locatives != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Locatives)) : null;
-            string adjunctsString = this.Adjucts != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Adjucts)) : null;
-            if (this.Temporals != null && this.Temporals.Any()) { builder.AppendFormat("\"temporals\": {0}, ", temporalsString); }
-            if (this.Locatives != null && this.Locatives.Any()) { builder.AppendFormat("\"locatives\": {0}, ", locativesString); }
-            if (this.Adjucts != null && this.Adjucts.Any()) { builder.AppendFormat("\"adjuncts\": {0}, ", adjunctsString); }
-            if (this.Confidence != null) { builder.Append(String.Format("\"confidence\": {0}, ", this.Confidence)); }
-            builder.Remove(builder.Length - 2, 2);
-            builder.Append("}");
-            return builder.ToString();
+            writer.WriteEndObject();
+        }
+    }
+
+    internal class RelationshipContractResolver : DefaultContractResolver
+    {
+        private RosetteRelationship Relationship;
+
+        internal RelationshipContractResolver(RosetteRelationship relationship) : base()
+        {
+            this.Relationship = relationship;
+        }
+
+        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
+        {
+            IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
+            IList<JsonProperty> propertiesToRehandle = properties.Where(p => p.PropertyName ==  RosetteRelationship.ARGUMENTS).ToList();
+            IList<JsonProperty> modifiedProperties = new List<JsonProperty>();
+            int order = 0;
+            foreach (JsonProperty jProperty in properties)
+            {
+                if (propertiesToRehandle.Contains(jProperty))
+                {
+                    IList<JsonProperty> newProperties = new List<JsonProperty>();
+                    IList<string> argumentList = Relationship.Arguments;
+                    for (int i = 1; i <= argumentList.Count; i++)
+                    {
+                        JsonProperty argProp = new JsonProperty();
+                        argProp.Order = order;
+                        argProp.PropertyName = RelationshipsResponse.argsKey + i;
+                        argProp.PropertyType = typeof(string);
+                        argProp.HasMemberAttribute = true;
+                        argProp.ValueProvider = new StaticValueProvider(argumentList[i - 1]);
+                        argProp.Ignored = argProp.ValueProvider.GetValue("Not needed") == null;
+                        newProperties.Add(argProp);
+                    }
+                    foreach (JsonProperty newProperty in newProperties)
+                    {
+                        modifiedProperties.Insert(order++, newProperty);
+                    }
+                }
+                else
+                {
+                    jProperty.Order = order;
+                    jProperty.Ignored = jProperty.ValueProvider.GetValue(this.Relationship) == null;
+                    modifiedProperties.Insert(order++, jProperty);
+                }
+            }
+            return modifiedProperties;
         }
     }
 }
