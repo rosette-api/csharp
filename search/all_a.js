@@ -1,8 +1,17 @@
 var searchData=
 [
-  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api']]],
-  ['name',['Name',['../classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4',1,'rosette_api::Name']]],
-  ['name_2ecs',['Name.cs',['../Name_8cs.html',1,'']]],
-  ['namesimilarity',['NameSimilarity',['../classrosette__api_1_1CAPI.html#aa7dbf81479e62209e5f5b9476f138656',1,'rosette_api.CAPI.NameSimilarity(Name n1, Name n2)'],['../classrosette__api_1_1CAPI.html#a017bc4aa9138d2a550335a7b77d3076f',1,'rosette_api.CAPI.NameSimilarity(Dictionary&lt; object, object &gt; dict)']]],
-  ['nametranslation',['NameTranslation',['../classrosette__api_1_1CAPI.html#aa723f89d4cbd87f6b9f1286c085458eb',1,'rosette_api.CAPI.NameTranslation(string name, string sourceLanguageOfUse=null, string sourceScript=null, string targetLanguage=null, string targetScript=null, string targetScheme=null, string sourceLanguageOfOrigin=null, string entityType=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#a9769c1abcb4633de0488a913184ae359',1,'rosette_api.CAPI.NameTranslation(Dictionary&lt; object, object &gt; dict)']]]
+  ['matchedname',['MatchedName',['../classrosette__api_1_1CAPI.html#a6e6ce59d33be9de3b2c526eb0e27a32c',1,'rosette_api::CAPI']]],
+  ['maxretry',['MaxRetry',['../classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d',1,'rosette_api::CAPI']]],
+  ['mention',['Mention',['../classrosette__api_1_1RosetteEntity.html#a3461fa4996e6d9b6b83feacaa91437a8',1,'rosette_api::RosetteEntity']]],
+  ['message',['Message',['../classrosette__api_1_1PingResponse.html#ab0fd2b0fc93aac6e09988cd2d1b78ccb',1,'rosette_api::PingResponse']]],
+  ['millisecondsbetweenretries',['MillisecondsBetweenRetries',['../classrosette__api_1_1CAPI.html#a1a2bca585295fe686085e128ca742367',1,'rosette_api::CAPI']]],
+  ['money',['MONEY',['../classrosette__api_1_1RosetteEntity.html#a72de587c3a2885cea1b963cde09698f1',1,'rosette_api::RosetteEntity']]],
+  ['morphology',['Morphology',['../classrosette__api_1_1CAPI.html#ab7f7802b4a909555f8646ebf2bea3f8c',1,'rosette_api.CAPI.Morphology(string content=null, string language=null, string contentType=null, string contentUri=null, MorphologyFeature feature=MorphologyFeature.complete, string genre=null)'],['../classrosette__api_1_1CAPI.html#aded89f3b87c04ac2d6c45e886e03212c',1,'rosette_api.CAPI.Morphology(Dictionary&lt; object, object &gt; dict, MorphologyFeature feature=MorphologyFeature.complete)'],['../classrosette__api_1_1CAPI.html#adea6fca5b308874ab22660143565c395',1,'rosette_api.CAPI.Morphology(RosetteFile file, MorphologyFeature feature=MorphologyFeature.complete)']]],
+  ['morphologyendpoint',['MorphologyEndpoint',['../classrosette__api_1_1RosetteExtensions.html#a67380b6a3cab3c6cf677146d71d2f21c',1,'rosette_api::RosetteExtensions']]],
+  ['morphologyfeature',['MorphologyFeature',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38',1,'rosette_api']]],
+  ['morphologyitem',['MorphologyItem',['../classrosette__api_1_1MorphologyItem.html',1,'rosette_api']]],
+  ['morphologyitem',['MorphologyItem',['../classrosette__api_1_1MorphologyItem.html#a3d2b7303600c06227cedd6e335362f90',1,'rosette_api::MorphologyItem']]],
+  ['morphologyresponse',['MorphologyResponse',['../classrosette__api_1_1MorphologyResponse.html',1,'rosette_api']]],
+  ['morphologyresponse',['MorphologyResponse',['../classrosette__api_1_1MorphologyResponse.html#a345eb0138b4cbb84dc35046c8272d5c7',1,'rosette_api.MorphologyResponse.MorphologyResponse(HttpResponseMessage apiResponse)'],['../classrosette__api_1_1MorphologyResponse.html#ac6d24fc335a6d0eb4d6b4150e76c33b7',1,'rosette_api.MorphologyResponse.MorphologyResponse(List&lt; MorphologyItem &gt; items, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content, string contentAsJson)']]],
+  ['morphologyresponse_2ecs',['MorphologyResponse.cs',['../MorphologyResponse_8cs.html',1,'']]]
 ];

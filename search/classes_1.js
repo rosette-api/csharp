@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api']]]
+  ['entitiesresponse',['EntitiesResponse',['../classrosette__api_1_1EntitiesResponse.html',1,'rosette_api']]],
+  ['entityid',['EntityID',['../classrosette__api_1_1EntityID.html',1,'rosette_api']]]
 ];

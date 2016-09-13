@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['uristring',['URIstring',['../classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68',1,'rosette_api::CAPI']]],
-  ['userkey',['UserKey',['../classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba',1,'rosette_api::CAPI']]]
+  ['options',['Options',['../classrosette__api_1_1RosetteFile.html#a9f6ac2e4cc2af631f6484330b9587bca',1,'rosette_api::RosetteFile']]]
 ];

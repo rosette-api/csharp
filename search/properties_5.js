@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['language',['language',['../classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889',1,'rosette_api::Name']]],
-  ['line',['Line',['../classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976',1,'rosette_api::RosetteException']]]
+  ['file',['File',['../classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7',1,'rosette_api::RosetteException']]],
+  ['filename',['Filename',['../classrosette__api_1_1RosetteFile.html#a9b49638e1df1617355a10479cc70a77c',1,'rosette_api::RosetteFile']]]
 ];

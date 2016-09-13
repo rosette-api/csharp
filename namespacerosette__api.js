@@ -1,9 +1,31 @@
 var namespacerosette__api =
 [
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
+    [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
+    [ "EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", "classrosette__api_1_1EntitiesResponse" ],
+    [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ],
+    [ "InfoResponse", "classrosette__api_1_1InfoResponse.html", "classrosette__api_1_1InfoResponse" ],
+    [ "LanguageDetection", "classrosette__api_1_1LanguageDetection.html", "classrosette__api_1_1LanguageDetection" ],
+    [ "LanguageIdentificationResponse", "classrosette__api_1_1LanguageIdentificationResponse.html", "classrosette__api_1_1LanguageIdentificationResponse" ],
+    [ "MorphologyItem", "classrosette__api_1_1MorphologyItem.html", "classrosette__api_1_1MorphologyItem" ],
+    [ "MorphologyResponse", "classrosette__api_1_1MorphologyResponse.html", "classrosette__api_1_1MorphologyResponse" ],
     [ "Name", "classrosette__api_1_1Name.html", "classrosette__api_1_1Name" ],
+    [ "NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", "classrosette__api_1_1NameSimilarityResponse" ],
+    [ "PingResponse", "classrosette__api_1_1PingResponse.html", "classrosette__api_1_1PingResponse" ],
+    [ "RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", "classrosette__api_1_1RelationshipsResponse" ],
+    [ "ResponseHeaders", "classrosette__api_1_1ResponseHeaders.html", "classrosette__api_1_1ResponseHeaders" ],
+    [ "RosetteCategory", "classrosette__api_1_1RosetteCategory.html", "classrosette__api_1_1RosetteCategory" ],
+    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html", "classrosette__api_1_1RosetteEntity" ],
     [ "RosetteException", "classrosette__api_1_1RosetteException.html", "classrosette__api_1_1RosetteException" ],
     [ "RosetteExtensions", "classrosette__api_1_1RosetteExtensions.html", "classrosette__api_1_1RosetteExtensions" ],
     [ "RosetteFile", "classrosette__api_1_1RosetteFile.html", "classrosette__api_1_1RosetteFile" ],
-    [ "RosetteResponse", "classrosette__api_1_1RosetteResponse.html", "classrosette__api_1_1RosetteResponse" ]
+    [ "RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", "classrosette__api_1_1RosetteRelationship" ],
+    [ "RosetteResponse", "classrosette__api_1_1RosetteResponse.html", "classrosette__api_1_1RosetteResponse" ],
+    [ "RosetteResponseContractResolver", "classrosette__api_1_1RosetteResponseContractResolver.html", "classrosette__api_1_1RosetteResponseContractResolver" ],
+    [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", "classrosette__api_1_1RosetteSentimentEntity" ],
+    [ "SentenceTaggingResponse", "classrosette__api_1_1SentenceTaggingResponse.html", "classrosette__api_1_1SentenceTaggingResponse" ],
+    [ "SentimentResponse", "classrosette__api_1_1SentimentResponse.html", "classrosette__api_1_1SentimentResponse" ],
+    [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ],
+    [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
+    [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ]
 ];

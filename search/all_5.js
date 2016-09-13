@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['getcustomheaders',['GetCustomHeaders',['../classrosette__api_1_1CAPI.html#a8509e6782ec9f7ccd4cc02f1a4fde2ee',1,'rosette_api::CAPI']]],
-  ['getfiledata',['getFileData',['../classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8',1,'rosette_api::RosetteFile']]],
-  ['getfiledatastring',['getFileDataString',['../classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6',1,'rosette_api::RosetteFile']]],
-  ['getobjectdata',['GetObjectData',['../classrosette__api_1_1RosetteException.html#ad016e3de070391e44cee36adf9633259',1,'rosette_api::RosetteException']]],
-  ['getoption',['GetOption',['../classrosette__api_1_1CAPI.html#a0a2736e02338605839d7e49a01d32979',1,'rosette_api::CAPI']]]
+  ['file',['File',['../classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7',1,'rosette_api::RosetteException']]],
+  ['filename',['Filename',['../classrosette__api_1_1RosetteFile.html#a9b49638e1df1617355a10479cc70a77c',1,'rosette_api::RosetteFile']]]
 ];

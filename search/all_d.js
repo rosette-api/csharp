@@ -1,17 +1,15 @@
 var searchData=
 [
-  ['relationships',['Relationships',['../classrosette__api_1_1CAPI.html#a49210c31ead5710eb4ba7486adc040b2',1,'rosette_api.CAPI.Relationships(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#a9a6e625045f6432dd0bc44aa9425c83c',1,'rosette_api.CAPI.Relationships(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#ac07c29d07c20910b0c58c26a62dfde07',1,'rosette_api.CAPI.Relationships(RosetteFile file)']]],
-  ['requestid',['RequestID',['../classrosette__api_1_1RosetteException.html#a124d4746ae63df0352290ac841019163',1,'rosette_api::RosetteException']]],
-  ['rosette_5fapi',['rosette_api',['../namespacerosette__api.html',1,'']]],
-  ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api']]],
-  ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0',1,'rosette_api::RosetteException']]],
-  ['rosetteexception_2ecs',['RosetteException.cs',['../RosetteException_8cs.html',1,'']]],
-  ['rosetteextensions',['RosetteExtensions',['../classrosette__api_1_1RosetteExtensions.html',1,'rosette_api']]],
-  ['rosetteextensions_2ecs',['RosetteExtensions.cs',['../RosetteExtensions_8cs.html',1,'']]],
-  ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html',1,'rosette_api']]],
-  ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html#a8de9c69baf636b615801c57fa3737acc',1,'rosette_api::RosetteFile']]],
-  ['rosettefile_2ecs',['RosetteFile.cs',['../RosetteFile_8cs.html',1,'']]],
-  ['rosetteresponse',['RosetteResponse',['../classrosette__api_1_1RosetteResponse.html',1,'rosette_api']]],
-  ['rosetteresponse',['RosetteResponse',['../classrosette__api_1_1RosetteResponse.html#ad30f81d4aaf8f0cb77b16bd6eddc6d5b',1,'rosette_api::RosetteResponse']]],
-  ['rosetteresponse_2ecs',['RosetteResponse.cs',['../RosetteResponse_8cs.html',1,'']]]
+  ['partsofspeech',['partsOfSpeech',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38ac83822705e71bb7338fc28bfc7997a94',1,'rosette_api']]],
+  ['person',['PERSON',['../classrosette__api_1_1RosetteEntity.html#afad0517403fa8f3a56d18eec22ec53e9',1,'rosette_api::RosetteEntity']]],
+  ['personal_5fid_5fnum',['PERSONAL_ID_NUM',['../classrosette__api_1_1RosetteEntity.html#a73d9e551f27931d514bc9421a38b0c83',1,'rosette_api::RosetteEntity']]],
+  ['phone_5fnumber',['PHONE_NUMBER',['../classrosette__api_1_1RosetteEntity.html#a0e0b762352c9d8ca2d08b4c5a9268924',1,'rosette_api::RosetteEntity']]],
+  ['ping',['Ping',['../classrosette__api_1_1CAPI.html#ae463ccbd86974beb1b21bc9ec7fdab5e',1,'rosette_api::CAPI']]],
+  ['pingresponse',['PingResponse',['../classrosette__api_1_1PingResponse.html',1,'rosette_api']]],
+  ['pingresponse',['PingResponse',['../classrosette__api_1_1PingResponse.html#a91f6f4de244982771e8ca881a450761a',1,'rosette_api.PingResponse.PingResponse(HttpResponseMessage apiMsg)'],['../classrosette__api_1_1PingResponse.html#a35ecce22a71bf8742a980d751d215b39',1,'rosette_api.PingResponse.PingResponse(String message, long time, Dictionary&lt; string, string &gt; headers, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
+  ['pingresponse_2ecs',['PingResponse.cs',['../PingResponse_8cs.html',1,'']]],
+  ['pos',['pos',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadea5e0bdcbddccca4d66d74ba8c1cee1a68',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
+  ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],
+  ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]],
+  ['product',['PRODUCT',['../classrosette__api_1_1RosetteEntity.html#aa4d61650e314d8246630fa653dc8435f',1,'rosette_api::RosetteEntity']]]
 ];

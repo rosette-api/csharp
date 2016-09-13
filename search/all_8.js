@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['language',['Language',['../classrosette__api_1_1CAPI.html#aef082c05a655511ed09b195be20b882b',1,'rosette_api.CAPI.Language(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#a2939cb8d87d112e2cd79566562553e15',1,'rosette_api.CAPI.Language(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a3a1dc6d58af4820b758942ed8ee3facc',1,'rosette_api.CAPI.Language(RosetteFile file)'],['../classrosette__api_1_1Name.html#ad3b22b7edc76c5494e4ade85ea007889',1,'rosette_api.Name.language()']]],
-  ['lemmas',['lemmas',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38a6d1744dfd7b7cc538ff478677b3ae651',1,'rosette_api']]],
-  ['line',['Line',['../classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976',1,'rosette_api::RosetteException']]]
+  ['id',['ID',['../classrosette__api_1_1EntityID.html#a58c6170d95638072b74b013854e3014c',1,'rosette_api.EntityID.ID()'],['../classrosette__api_1_1RosetteEntity.html#aef65f084ac19da80508466e85acfa946',1,'rosette_api.RosetteEntity.ID()']]],
+  ['ienumerableexpandercontractresolver_2ecs',['IEnumerableExpanderContractResolver.cs',['../IEnumerableExpanderContractResolver_8cs.html',1,'']]],
+  ['info',['Info',['../classrosette__api_1_1CAPI.html#a0380d98312449dbf9be46cbc1c2ee402',1,'rosette_api::CAPI']]],
+  ['inforesponse',['InfoResponse',['../classrosette__api_1_1InfoResponse.html',1,'rosette_api']]],
+  ['inforesponse',['InfoResponse',['../classrosette__api_1_1InfoResponse.html#a4f4da33f125a7a82432ea4761e58c784',1,'rosette_api.InfoResponse.InfoResponse(HttpResponseMessage apiMsg)'],['../classrosette__api_1_1InfoResponse.html#a9b5d9e7f58440183cc6659ea1c77e4f4',1,'rosette_api.InfoResponse.InfoResponse(String name, String version, String buildNumber, String buildTime, Dictionary&lt; string, string &gt; headers, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
+  ['inforesponse_2ecs',['InfoResponse.cs',['../InfoResponse_8cs.html',1,'']]],
+  ['items',['Items',['../classrosette__api_1_1MorphologyResponse.html#a8010ba09509222d3ded9cbed47753eac',1,'rosette_api::MorphologyResponse']]]
 ];

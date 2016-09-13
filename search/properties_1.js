@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['debug',['Debug',['../classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e',1,'rosette_api::CAPI']]]
+  ['buildnumber',['BuildNumber',['../classrosette__api_1_1InfoResponse.html#a8ba1bf15d13530498db7f6d80778bcfd',1,'rosette_api::InfoResponse']]],
+  ['buildtime',['BuildTime',['../classrosette__api_1_1InfoResponse.html#a05a2fc88007b1390004ffb08a27d6f1c',1,'rosette_api::InfoResponse']]]
 ];

@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['entitieslinked',['EntitiesLinked',['../classrosette__api_1_1CAPI.html#a68a1ca0b67b6eb7440354de5df9aa5f3',1,'rosette_api.CAPI.EntitiesLinked(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#a1cae482e3c7103243fad48b0a9a07772',1,'rosette_api.CAPI.EntitiesLinked(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a088c51e8ba2c2ab5bad682e3297ace57',1,'rosette_api.CAPI.EntitiesLinked(RosetteFile file)']]],
-  ['entity',['Entity',['../classrosette__api_1_1CAPI.html#a145240c493494815a967d967f8dcfde9',1,'rosette_api.CAPI.Entity(string content=null, string language=null, string contentType=null, string contentUri=null, bool resolveEntities=false, string genre=null)'],['../classrosette__api_1_1CAPI.html#aee345feaf3235af36f6df36ce67a4ba6',1,'rosette_api.CAPI.Entity(Dictionary&lt; object, object &gt; dict, bool resolveEntities=false)'],['../classrosette__api_1_1CAPI.html#a7410f428b94acfd0c1e22dd31e12e44b',1,'rosette_api.CAPI.Entity(RosetteFile file, bool resolveEntities=false)']]],
-  ['entitytype',['entityType',['../classrosette__api_1_1Name.html#afae65803ecc7dd2b6f52a534fd343a7e',1,'rosette_api::Name']]]
+  ['date',['Date',['../classrosette__api_1_1ResponseHeaders.html#ab4141f55e9ccad896d92c36941e211c1',1,'rosette_api.ResponseHeaders.Date()'],['../classrosette__api_1_1RosetteEntity.html#a9edf7d96c2c269e96f0dcd7ba4cda131',1,'rosette_api.RosetteEntity.DATE()']]],
+  ['debug',['Debug',['../classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e',1,'rosette_api::CAPI']]],
+  ['dispose',['Dispose',['../classrosette__api_1_1RosetteFile.html#ab36c359c31480dd0426b98bd395b08b1',1,'rosette_api.RosetteFile.Dispose()'],['../classrosette__api_1_1RosetteFile.html#ac09c40e8c222e979de2de0d00d57d351',1,'rosette_api.RosetteFile.Dispose(bool disposing)']]],
+  ['distance',['DISTANCE',['../classrosette__api_1_1RosetteEntity.html#a133577fdaf3be8a98ad3dc6013a30153',1,'rosette_api::RosetteEntity']]],
+  ['docsentiment',['DocSentiment',['../classrosette__api_1_1SentimentResponse.html#a0af877dc901c35155b1673ca0fb7cc03',1,'rosette_api::SentimentResponse']]],
+  ['dontignorepropertieswithmemberattributes',['DontIgnorePropertiesWithMemberAttributes',['../classrosette__api_1_1RosetteResponseContractResolver.html#a36c973b46955e011e79d5c94311d3853',1,'rosette_api::RosetteResponseContractResolver']]]
 ];

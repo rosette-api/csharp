@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['version',['Version',['../classrosette__api_1_1CAPI.html#a7f479d20d247d108a9c9c22a21c68d6f',1,'rosette_api::CAPI']]]
+  ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],
+  ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]]
 ];
