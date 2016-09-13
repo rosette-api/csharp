@@ -7,49 +7,114 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace rosette_api {
     /// <summary>
     /// Encapsulates the response from RosetteAPI
-    /// </summary>
+    /// </summary>  
+   [JsonObject(MemberSerialization=MemberSerialization.OptIn)]
     public class RosetteResponse {
+
+        private JsonSerializer Serializer = new JsonSerializer();
+
         /// <summary>
         /// IDictionary of response content
         /// </summary>
+        [Obsolete("The structure of this property is subject to change.  Please use the data structures provided in the Response classes that inherit from the RosetteResponse class instead.")]
         public IDictionary<string, object> Content { get; private set; }
         /// <summary>
-        /// IDictionary of response header
+        /// IDictionary of response content
+        /// </summary>
+        internal IDictionary<string, object> ContentDictionary { get; private set; }
+        /// <summary>
+        /// IDictionary of response headers
         /// </summary>
         public IDictionary<string, string> Headers { get; private set; }
         /// <summary>
-        /// JSON string of response content
+        /// The response headers returned from the API
+        /// </summary>
+        [JsonPropertyAttribute("responseHeaders")]
+        public ResponseHeaders ResponseHeaders { get; private set; }
+        /// <summary>
+        /// As returned by the API, the JSON string of response content
         /// </summary>
         public string ContentAsJson { get; private set; }
+
+        /// <summary>
+        /// Creates a Rosette Response from its components
+        /// </summary>
+        /// <param name="headers">The headers from the API</param>
+        /// <param name="content">The content of the response in dictionary form</param>
+        /// <param name="contentAsJson">The content of the response in JSON</param>
+        public RosetteResponse(IDictionary<string, string> headers, IDictionary<string, object> content= null, string contentAsJson = null)
+        {
+            if (content != null)
+            {
+                this.ContentDictionary = content;
+            }
+            else if (contentAsJson != null)
+            {
+                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(contentAsJson)));
+            }
+            else
+            {
+                this.ContentDictionary = new Dictionary<string, object>();
+            }
+#pragma warning disable 618
+            this.Content = ContentDictionary;
+#pragma warning restore 618
+            this.Headers = headers != null ? headers : new Dictionary<string, string>();
+            this.ResponseHeaders = new ResponseHeaders(this.Headers);
+            if (contentAsJson != null)
+            {
+                this.ContentAsJson = contentAsJson;
+            } 
+            else if (content != null) 
+            {
+                StringBuilder contentAsJsonWriter = new StringBuilder();
+                Serializer.ContractResolver = new RosetteResponseContractResolver();
+                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content);
+                this.ContentAsJson = contentAsJsonWriter.ToString();
+            }
+        }
 
         /// <summary>
         /// RosetteResponse ctor
         /// </summary>
         /// <param name="responseMsg">HttpResponseMessage</param>
         public RosetteResponse(HttpResponseMessage responseMsg) {
-            Content = new Dictionary<string, object>();
+            ContentDictionary = new Dictionary<string, object>();
             Headers = new Dictionary<string, string>();
 
             if (responseMsg.IsSuccessStatusCode) {
                 foreach (var header in responseMsg.Headers) {
                     Headers.Add(header.Key, string.Join("", header.Value));
-
                 }
+                foreach (var header in responseMsg.Content.Headers)
+                {
+                    Headers.Add(header.Key, string.Join("", header.Value));
+                }
+                this.ResponseHeaders = new ResponseHeaders(this.Headers);
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
                 if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
                     byteArray = decompress(byteArray);
                 }
-                using (MemoryStream stream = new MemoryStream(byteArray)) {
+                MemoryStream stream = new MemoryStream(byteArray);
+                try {
                     using (StreamReader reader = new StreamReader(stream, Encoding.UTF8)) {
                         ContentAsJson = reader.ReadToEnd();
                     }
                 }
-                Content = new JavaScriptSerializer().Deserialize<dynamic>(ContentAsJson);
+                finally {
+                    if (stream != null) {
+                        stream.Dispose();
+                    }
+                }
+                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
+# pragma warning disable 618
+                this.Content = ContentDictionary;
+# pragma warning restore 618
             }
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
@@ -57,11 +122,41 @@ namespace rosette_api {
         }
 
         /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            serializer.ContractResolver = new RosetteResponseContractResolver();
+            serializer.Serialize(writer, this);
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public virtual string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            serializer.ContractResolver = new RosetteResponseContractResolver();
+# pragma warning disable 618
+            serializer.Serialize(writer, this.Content);
+# pragma warning restore 618
+            return builder.ToString();
+        }
+
+        /// <summary>
         /// Reads the httpContent value into a string
         /// </summary>
         /// <param name="httpContent"></param>
         /// <returns></returns>
-        private string contentToString(HttpContent httpContent) {
+        internal static string contentToString(HttpContent httpContent) {
             if (httpContent != null) {
                 var readAsStringAsync = httpContent.ReadAsStringAsync();
                 return readAsStringAsync.Result;
