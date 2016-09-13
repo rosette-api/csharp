@@ -91,9 +91,15 @@ namespace rosette_api {
                 if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
                     byteArray = decompress(byteArray);
                 }
-                using (MemoryStream stream = new MemoryStream(byteArray)) {
+                MemoryStream stream = new MemoryStream(byteArray);
+                try {
                     using (StreamReader reader = new StreamReader(stream, Encoding.UTF8)) {
                         ContentAsJson = reader.ReadToEnd();
+                    }
+                }
+                finally {
+                    if (stream != null) {
+                        stream.Dispose();
                     }
                 }
                 this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));

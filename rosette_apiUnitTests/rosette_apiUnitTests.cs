@@ -169,7 +169,7 @@ namespace rosette_apiUnitTests
         private CAPI _rosetteApi;
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init() {
             _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
@@ -183,7 +183,7 @@ namespace rosette_apiUnitTests
             _rosetteApi = new CAPI("userkey", null, 1, client);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void Cleanup() {
         }
 
@@ -256,9 +256,9 @@ namespace rosette_apiUnitTests
             Assert.AreEqual("line", ex.Line, "Line does not match");
         }
 
-        [Test, ExpectedException(typeof(RosetteException), ExpectedMessage = "RosetteException thrown", MatchType = MessageMatch.Exact)]
+        [Test]
         public void ThrowRosetteExceptionTest() {
-            throw new RosetteException("RosetteException thrown");
+           Assert.Throws<RosetteException>(() => new RosetteException("RosetteException thrown"));
         }
     }
 
@@ -329,7 +329,7 @@ namespace rosette_apiUnitTests
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
         private string _tmpFile = null;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init() {
             // Create a temporary file for use with file testing
             _tmpFile = Path.GetTempFileName();
@@ -349,7 +349,7 @@ namespace rosette_apiUnitTests
             _rosetteApi = new CAPI("userkey", null, 1, client);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void Cleanup() {
             if (File.Exists(_tmpFile)) {
                 File.Delete(_tmpFile);
@@ -1187,7 +1187,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbedding("content");
+            var response = _rosetteApi.TextEmbeddings("content");
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -1197,7 +1197,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -1208,7 +1208,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.TextEmbedding(f);
+            var response = _rosetteApi.TextEmbeddings(f);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
