@@ -7,23 +7,22 @@ using System.Net.Http;
 using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace rosette_api
 {
     /// <summary>
     /// Class for representing responses from the API when the Categories endpoint has been called
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class CategoriesResponse : RosetteResponse
     {
         /// <summary>
         /// Gets the collection of identified categories
         /// </summary>
+        [JsonProperty(PropertyName = categoriesKey)]
         public List<RosetteCategory> Categories { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         private const String categoryKey = "label";
         private const String confidenceKey = "confidence";
@@ -33,7 +32,8 @@ namespace rosette_api
         /// Creates a CategoriesResponse from the API's raw output
         /// </summary>
         /// <param name="apiResult">The API's output</param>
-        public CategoriesResponse(HttpResponseMessage apiResult) :base(apiResult)
+        public CategoriesResponse(HttpResponseMessage apiResult)
+            : base(apiResult)
         {
             List<RosetteCategory> categories = new List<RosetteCategory>();
             JArray enumerableResults = this.ContentDictionary.ContainsKey(categoriesKey) ? this.ContentDictionary[categoriesKey] as JArray : new JArray();
@@ -44,7 +44,6 @@ namespace rosette_api
                 categories.Add(new RosetteCategory(label, confidence));
             }
             this.Categories = categories;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -58,7 +57,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Categories = categories;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -94,47 +92,28 @@ namespace rosette_api
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
         }
-
-        /// <summary>
-        /// ToString override.
-        /// </summary>
-        /// <returns>This response in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            string categoriesString = this.Categories != null ? new StringBuilder("[").Append(String.Join(", ", this.Categories)).Append("]").ToString() : null;
-            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
-            builder.Append("\"categories\": ").Append(categoriesString)
-                .Append(", responseHeaders: ").Append(responseHeadersString).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string categoriesString = this.Categories != null ? new StringBuilder("[").Append(String.Join(", ", this.Categories)).Append("]").ToString() : null;
-            builder.Append("\"categories\": ").Append(categoriesString).Append("}");
-            return builder.ToString();
-        }
     }
 
     /// <summary>
     /// Class for representing an identified category and its properties
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class RosetteCategory
     {
+        private const string LABEL = "label";
+        private const string CONFIDENCE = "confidence";
+
         /// <summary>
         /// Gets or sets the category label
         /// </summary>
+        [JsonProperty(PropertyName = LABEL)]
         public string Label { get; set; }
+
         /// <summary>
         /// Gets or sets the confidence:
         /// On a range of 0-1, the confidence in the categorization
         /// </summary>
+        [JsonProperty(PropertyName = CONFIDENCE)]
         public Nullable<decimal> Confidence { get; set; }
 
         /// <summary>
@@ -187,11 +166,7 @@ namespace rosette_api
         /// <returns>This category in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            string labelString = this.Label != null ? new StringBuilder("\"").Append(this.Label).Append("\"").ToString() : null;
-            builder.Append("\"label\": ").Append(labelString).Append(", ")
-                .Append("\"confidence\": ").Append(this.Confidence).Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

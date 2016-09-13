@@ -7,38 +7,37 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Collections;
+using Newtonsoft.Json.Converters;
 
 namespace rosette_api
 {
     /// <summary>
     /// A class for representing responses from the sentiment analysis endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class SentimentResponse : RosetteResponse
     {
         private const string docKey = "document";
         private const string entitiesKey = "entities";
-        private const string labelKey = "label";
-        private const string confidenceKey = "confidence";
-        private const string mentionKey = "mention";
-        private const string normalizedMentionKey = "normalized";
-        private const string countKey = "count";
-        private const string typeKey = "type";
-        private const string entityIDKey = "entityId";
-        private const string sentimentKey = "sentiment";
+        internal const string labelKey = "label";
+        internal const string confidenceKey = "confidence";
+        internal const string mentionKey = "mention";
+        internal const string normalizedMentionKey = "normalized";
+        internal const string countKey = "count";
+        internal const string typeKey = "type";
+        internal const string entityIDKey = "entityId";
+        internal const string sentimentKey = "sentiment";
 
         /// <summary>
         /// Gets or sets the document-level sentiment identified by the Rosette API
         /// </summary>
+        [JsonProperty(docKey)]
         public RosetteSentiment DocSentiment { get; set; }
         /// <summary>
         /// Gets or sets the entities identified by the Rosette API with sentiment
         /// </summary>
+        [JsonProperty(entitiesKey)]
         public List<RosetteSentimentEntity> EntitySentiments { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a SentimentResponse from the given apiResult
@@ -72,7 +71,6 @@ namespace rosette_api
                 entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence));
             }
             this.EntitySentiments = entitySentiments;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -88,7 +86,6 @@ namespace rosette_api
         {
             this.DocSentiment = docSentiment;
             this.EntitySentiments = entitySentiments;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -128,33 +125,9 @@ namespace rosette_api
         }
 
         /// <summary>
-        /// ToString override.
-        /// </summary>
-        /// <returns>This SentimentResponse in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"document\": ").Append(this.DocSentiment.ToString()).Append(", ")
-                .Append("\"entities\": [").Append(String.Join(", ", this.EntitySentiments)).Append("]")
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders.ToString()).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"document\": ").Append(this.DocSentiment.ToString()).Append(", ")
-                .Append("\"entities\": [").Append(String.Join(", ", this.EntitySentiments)).Append("]}");
-            return builder.ToString();
-        }
-
-        /// <summary>
         /// A class for representing sentiments
         /// </summary>
+        [JsonObject(MemberSerialization.OptOut)]
         public class RosetteSentiment
         {
             /// <summary>
@@ -165,24 +138,29 @@ namespace rosette_api
                 /// <summary>
                 /// The sentiment is positive
                 /// </summary>
+                [JsonProperty("pos")]
                 pos,
                 /// <summary>
                 /// The sentiment is neutral
                 /// </summary>
-                /// 
+                [JsonProperty("neu")]
                 neu,
                 /// <summary>
                 /// The sentiment is negative
                 /// </summary>
+                [JsonProperty("neg")]
                 neg
             };
             /// <summary>
             /// On a scale of 0-1, the confidence in the Label's correctness.
             /// </summary>
+            [JsonProperty(confidenceKey)]
             public Nullable<decimal> Confidence;
             /// <summary>
             /// The label indicating the sentiment
             /// </summary>
+            [JsonProperty(labelKey)]
+            [JsonConverter(typeof(StringEnumConverter))]
             public SentimentLabel Label;
 
             /// <summary>
@@ -242,10 +220,7 @@ namespace rosette_api
             /// <returns>Writes this RosetteSentiment in JSON form</returns>
             public override string ToString()
             {
-                StringBuilder builder = new StringBuilder();
-                builder.Append("{\"label\": \"").Append(this.Label.ToString()).Append("\", ")
-                    .Append("\"confidence\": ").Append(this.Confidence.ToString()).Append("}");
-                return builder.ToString();
+                return JsonConvert.SerializeObject(this);
             }
         }
     }
@@ -253,11 +228,13 @@ namespace rosette_api
     /// <summary>
     /// A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class RosetteSentimentEntity : RosetteEntity
     {
         /// <summary>
         /// The sentiment label of this entity
         /// </summary>
+        [JsonProperty(SentimentResponse.sentimentKey)]
         public SentimentResponse.RosetteSentiment Sentiment { get; set; }
 
         /// <summary>
@@ -337,14 +314,7 @@ namespace rosette_api
         /// <returns>This RosetteSentimentEntity in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("{\"type\": \"").Append(this.EntityType).Append("\", ")
-                .Append("\"mention\": \"").Append(this.Mention).Append("\", ")
-                .Append("\"normalized\": \"").Append(this.NormalizedMention).Append("\", ")
-                .Append("\"count\": ").Append(this.Count).Append(", ")
-                .Append("\"entityId\": \"").Append(this.ID).Append("\", ")
-                .Append("\"sentiment\": ").Append(this.Sentiment).Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

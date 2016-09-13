@@ -4,39 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace rosette_api
 {
     /// <summary>
     /// A class to represent the response headers returned by the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
+    [JsonConverter(typeof(ResponseHeadersConverter))]
     public class ResponseHeaders
     {
-        internal static string responseHeadersKey = "responseHeaders";
-        internal static String contentTypeKey = "content-type";
-        internal static String dateKey = "date";
-        internal static String serverKey = "server";
-        internal static string strictTransportSecurityKey = "strict-transport-security";
-        internal static string xRosetteAPIAppIDKey = "x-rosetteapi-app-id";
-        internal static string xRosetteAPIConcurrencyKey = "x-rosetteapi-concurrency";
-        internal static string xRosetteAPIProcessedLanguageKey = "x-rosetteapi-processedlanguage";
-        internal static string xRosetteAPIRequestIDKey = "x-rosetteapi-request-id";
-        internal static string contentLengthKey = "content-length";
-        internal static string connectionKey = "connection";
+        internal const string responseHeadersKey = "responseHeaders";
+        internal const string contentTypeKey = "content-type";
+        internal const string dateKey = "date";
+        internal const string serverKey = "server";
+        internal const string strictTransportSecurityKey = "strict-transport-security";
+        internal const string xRosetteAPIAppIDKey = "x-rosetteapi-app-id";
+        internal const string xRosetteAPIConcurrencyKey = "x-rosetteapi-concurrency";
+        internal const string xRosetteAPIProcessedLanguageKey = "x-rosetteapi-processedlanguage";
+        internal const string xRosetteAPIRequestIDKey = "x-rosetteapi-request-id";
+        internal const string contentLengthKey = "content-length";
+        internal const string connectionKey = "connection";
 
         /// <summary>
         /// The collection of all resposne headers returned by the Rosette API
         /// </summary>
+        [JsonProperty("allResponseHeaders")]
         public IDictionary<string, string> AllResponseHeaders;
 
         /// <summary>
         /// The DateTime of the response
         /// </summary>
+        [JsonIgnore]
         public string Date;
 
         /// <summary>
         /// The language in which the API processed the input text
         /// </summary>
+        [JsonIgnore]
         public string XRosetteAPIProcessedLanguage;
 
         /// <summary>
@@ -92,17 +100,27 @@ namespace rosette_api
         /// <returns>The response headers in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.AllResponseHeaders != null) {
-                foreach (KeyValuePair<string, string> header in this.AllResponseHeaders) {
-                    builder.AppendFormat("\"{0}\": \"{1}\", ", header.Key, header.Value);
-                }
-                if (this.AllResponseHeaders.Any()) {
-                    builder.Remove(builder.Length - 2, 2);
-                }
-            }
-            builder.Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this.AllResponseHeaders);
+        }
+    }
+
+    internal class ResponseHeadersConverter : JsonConverter
+    {
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType.Equals(typeof(ResponseHeaders));
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return serializer.Deserialize(reader, objectType);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            ResponseHeaders responseHeadersObj = value as ResponseHeaders;
+            serializer.Serialize(writer, responseHeadersObj.AllResponseHeaders);
         }
     }
 }

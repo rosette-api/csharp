@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace rosette_api
 {
     /// <summary>
     /// A class for representing an identified entity and its properties
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class RosetteEntity
     {
         /// <summary>
@@ -83,26 +85,33 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the entity's name
         /// </summary>
+        [JsonProperty("mention")]
         public String Mention { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's name, normalized
         /// </summary>
+        [JsonProperty("normalized")]
         public String NormalizedMention { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's ID
         /// </summary>
+        [JsonIgnore]
         public EntityID ID { get; set; }
+        [JsonProperty("entityId")]
+        private string EntityID { get { return ID.ToString(); } }
 
         /// <summary>
         /// Gets or sets the entity's type
         /// </summary>
+        [JsonProperty("type")]
         public String EntityType { get; set; }
 
         /// <summary>
         /// Gets or sets the number of times this entity appeared in the input to the API
         /// </summary>
+        [JsonProperty("count")]
         public Nullable<int> Count { get; set; }
 
         /// <summary>
@@ -168,17 +177,7 @@ namespace rosette_api
         /// <returns>This RosetteEntity in JSON form</returns>
         public override string ToString()
         {
-            string idString = this.ID != null ? new StringBuilder("\"").Append(this.ID.ToString()).Append("\"").ToString() : null;
-            string entityTypeString = this.EntityType != null ? String.Format("\"{0}\"", this.EntityType) : null;
-            string mentionString = this.Mention != null ? String.Format("\"{0}\"", this.Mention) : null;
-            string normalizedString = this.NormalizedMention != null ? String.Format("\"{0}\"", this.NormalizedMention) : null;
-            StringBuilder builder = new StringBuilder("{");
-            builder.AppendFormat("\"type\": {0}, ", entityTypeString)
-                .AppendFormat("\"mention\": {0}, ", mentionString)
-                .AppendFormat("\"normalized\": {0}, ", normalizedString)
-                .AppendFormat("\"count\": {0}, ", this.Count)
-                .AppendFormat("\"entityId\": {0}", idString).Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

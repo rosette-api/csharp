@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace rosette_api
 {
     /// <summary>
     /// A class to represent Rosette API responses when Info() is called
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class InfoResponse : RosetteResponse
     {
         private const string nameKey = "name";
@@ -20,27 +22,32 @@ namespace rosette_api
         /// <summary>
         /// The status message
         /// </summary>
+        [JsonIgnore]
         public string Name { get; private set; }
 
         ///<summary>
         /// The status message
         /// </summary>
+        [JsonIgnore]
         public string Version { get; private set; }
 
         /// <summary>
         /// The status message
         /// </summary>
+        [JsonIgnore]
         public string BuildNumber { get; private set; }
 
         /// <summary>
         /// The status message
         /// </summary>
+        [JsonIgnore]
         public string BuildTime { get; private set; }
 
         /// <summary>
-        /// Gets the response headers returned from the API
+        /// The entire content of the info response message
         /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
+        [JsonProperty("content")]
+        private IDictionary<string, object> AllContent { get { return this.ContentDictionary; } }
 
         /// <summary>
         /// Creates an InfoResponse from the given apiMsg
@@ -52,7 +59,6 @@ namespace rosette_api
             this.Version = this.ContentDictionary.ContainsKey(versionKey) ? this.ContentDictionary[versionKey] as String : null;
             this.BuildNumber = this.ContentDictionary.ContainsKey(buildNumberKey) ? this.ContentDictionary[buildNumberKey] as String : null;
             this.BuildTime = this.ContentDictionary.ContainsKey(buildTimeKey) ? this.ContentDictionary[buildTimeKey] as String : null;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -73,7 +79,6 @@ namespace rosette_api
             this.Version = version;
             this.BuildNumber = buildNumber;
             this.BuildTime = buildTime;
-            this.ResponseHeaders = new ResponseHeaders(headers);
         }
 
         /// <summary>
@@ -113,23 +118,6 @@ namespace rosette_api
             int h3 = this.BuildNumber != null ? this.BuildNumber.GetHashCode() : 1;
             int h4 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1 ^ h2 ^ h3 ^ h4;
-        }
-
-        /// <summary>
-        /// ToString override
-        /// </summary>
-        /// <returns>The InfoResponse in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.Name != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", nameKey, this.Name); }
-            if (this.Version != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", versionKey, this.Version); }
-            if (this.BuildNumber != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", buildNumberKey, this.BuildNumber); }
-            if (this.BuildTime != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", buildTimeKey, this.BuildTime); }
-            if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", this.ResponseHeaders); }
-            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
-            builder.Append("}");
-            return builder.ToString();
         }
     }
 }

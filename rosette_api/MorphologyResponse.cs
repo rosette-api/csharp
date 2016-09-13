@@ -13,6 +13,7 @@ namespace rosette_api
     /// <summary>
     /// A class for representing responses from the Morphology endpoint of the API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class MorphologyResponse : RosetteResponse
     {
         private const string tokenKey = "tokens";
@@ -25,12 +26,8 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the output of the Rosette API's morphology endpoint, grouped by tokens in order of appearance
         /// </summary>
+        [JsonProperty("items")]
         public List<MorphologyItem> Items { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a MorphologyResponse from the given apiResponse
@@ -50,7 +47,6 @@ namespace rosette_api
             JArray hanReadingsArr = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as JArray : null;
             List<List<string>> hanReadings = hanReadingsArr != null ? new List<List<string>>(hanReadingsArr.Select<JToken, List<string>>((jToken) => jToken != null ? jToken.ToObject<List<string>>() : null)) : null;
             this.Items = this.MakeMorphologyItems(tokens, lemmas, posTags, compoundComponents, hanReadings);
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -89,7 +85,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Items = items;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         } 
 
         /// <summary>
@@ -132,53 +127,49 @@ namespace rosette_api
         /// <returns>The response in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            string itemsString = this.Items != null ? String.Format("[{0}]", String.Join<MorphologyItem>(", ", this.Items)) : null;
-            if (this.Items != null) { builder.AppendFormat("\"{0}\": {1}", "items", itemsString); }
-            if (this.ResponseHeaders != null) { builder.AppendFormat("\"{0}\": \"{1}", responseHeadersKey, this.ResponseHeaders).Append("\", "); }
-            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
-            builder.Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this);
         }
 
         /// <summary>
         /// Gets the content of the response in JSON form
         /// </summary>
         /// <returns>The content in JSON form</returns>
-        public string ContentToString()
+        public override string ContentToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            string itemsString = this.Items != null ? String.Format("[{0}]", String.Join<MorphologyItem>(", ", this.Items)) : null;
-            if (this.Items != null) { builder.AppendFormat("\"{0}\": {1}", "items", itemsString); }
-            builder.Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this.Items);
         }
     }
 
     /// <summary>
     /// A class for representing responses from the Morphology endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class MorphologyItem
     {
         /// <summary>
         /// Gets or sets he token on which this morphology item is based
         /// </summary>
+        [JsonProperty("token")]
         public string Token { get; set; }
         /// <summary>
         /// If enabled, the part of speech of the token
         /// </summary>
+        [JsonProperty("posTag")]
         public string PosTag { get; set; }
         /// <summary>
         /// If enabled, the lemma of the token
         /// </summary>
+        [JsonProperty("lemma")]
         public string Lemma { get; set; }
         /// <summary>
         /// If enabled and present, the Han readings of the token
         /// </summary>
+        [JsonProperty("hanReadings")]
         public List<string> HanReadings { get; set; }
         /// <summary>
         /// If enabled and present, the compound components of the token
         /// </summary>
+        [JsonProperty("compoundComponents")]
         public List<string> CompoundComponents { get; set; }
 
         /// <summary>
@@ -244,15 +235,7 @@ namespace rosette_api
         /// <returns>The morphology item in JSON form</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.Token != null) { builder.Append("\"token\": \"").Append(this.Token).Append("\", "); }
-            if (this.PosTag != null) { builder.Append("\"posTag\": \"").Append(this.PosTag).Append("\", "); }
-            if (this.Lemma != null) { builder.Append("\"lemma\": \"").Append(this.Lemma).Append("\", "); }
-            if (this.CompoundComponents != null) { builder.AppendFormat("\"compoundComponents\": [{0}]", String.Join<string>(", ", this.CompoundComponents)).Append(", "); }
-            if (this.HanReadings != null) { builder.AppendFormat("\"hanReadings\": [{0}]", String.Join<string>(", ", this.HanReadings)).Append(", "); }
-            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
-            builder.Append("}");
-            return builder.ToString();
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

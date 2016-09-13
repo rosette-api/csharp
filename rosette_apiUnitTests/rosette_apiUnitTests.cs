@@ -255,11 +255,6 @@ namespace rosette_apiUnitTests
             Assert.AreEqual("file", ex.File, "File does not match");
             Assert.AreEqual("line", ex.Line, "Line does not match");
         }
-
-        [Test]
-        public void ThrowRosetteExceptionTest() {
-           Assert.Throws<RosetteException>(() => new RosetteException("RosetteException thrown"));
-        }
     }
 
     [TestFixture]
@@ -962,19 +957,17 @@ namespace rosette_apiUnitTests
             List<string> locatives = new List<string>() {loc0};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            Dictionary<string, object> content = new Dictionary<string, object>();
-            content.Add("predicate", predicate);
-            content.Add("arg1", arg0);
-            content.Add("locatives", locatives);
-            content.Add("confidence", confidence);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
                 new RosetteRelationship(predicate, new List<string>() {arg0}, null, locatives, null, confidence)
-            };  
+            };
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("relationships", relationships);
             RelationshipsResponse expected = new RelationshipsResponse(relationships, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
+            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 
@@ -1026,7 +1019,7 @@ namespace rosette_apiUnitTests
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "text-embedding").Respond(mockedMessage);
-            TextEmbeddingResponse response = _rosetteApi.TextEmbeddings("The Ghostbusters movie was filmed in Boston.");
+            TextEmbeddingResponse response = _rosetteApi.TextEmbedding("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }
 
@@ -1036,7 +1029,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings("content");
+            var response = _rosetteApi.TextEmbedding("content");
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1048,7 +1041,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1061,7 +1054,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.TextEmbeddings(f);
+            var response = _rosetteApi.TextEmbedding(f);
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1142,6 +1135,7 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "sentiment").Respond(mockedMessage);
             SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
+            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 
@@ -1187,7 +1181,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings("content");
+            var response = _rosetteApi.TextEmbedding("content");
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -1197,7 +1191,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
             Assert.AreEqual(response.Content["response"], "OK");
         }
 
@@ -1208,7 +1202,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.TextEmbeddings(f);
+            var response = _rosetteApi.TextEmbedding(f);
             Assert.AreEqual(response.Content["response"], "OK");
         }
 

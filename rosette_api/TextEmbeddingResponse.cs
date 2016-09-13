@@ -7,23 +7,21 @@ using System.Net.Http;
 using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace rosette_api
 {
     /// <summary>
     /// Class for representing responses from the API when the TextEmbedding endpoint has been called
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class TextEmbeddingResponse : RosetteResponse
     {
         /// <summary>
         /// Gets the averaged text vector
         /// </summary>
+        [JsonProperty(embeddingKey)]
         public IEnumerable<double> TextEmbedding { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         private const String embeddingKey = "embedding";
 
@@ -38,10 +36,9 @@ namespace rosette_api
             JArray enumerableResults = this.ContentDictionary.ContainsKey(embeddingKey) ? this.ContentDictionary[embeddingKey] as JArray : new JArray();
             foreach (JValue result in enumerableResults)
             {
-                textEmbedding.Add(result.ToObject<float>());
+                textEmbedding.Add(result.ToObject<double>());
             }
-            this.TextEmbedding = new List<double>(textEmbedding.ToArray<double>());
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
+            this.TextEmbedding = textEmbedding;
         }
 
         /// <summary>
@@ -55,7 +52,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.TextEmbedding = textEmbedding;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -89,32 +85,6 @@ namespace rosette_api
             int h0 = this.TextEmbedding != null ? this.TextEmbedding.Aggregate<double, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
-        }
-
-        /// <summary>
-        /// ToString override.
-        /// </summary>
-        /// <returns>This response in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            string textEmbeddingString = this.TextEmbedding != null ?  new StringBuilder("[").Append(String.Join(", ", this.TextEmbedding.Select((f) => f.ToString("G17")))).Append("]").ToString() : null;
-            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
-            builder.Append("\"embedding\": ").Append(textEmbeddingString)
-                .Append(", responseHeaders: ").Append(responseHeadersString).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string textEmbeddingString = this.TextEmbedding != null ? new StringBuilder("[").Append(String.Join(", ", this.TextEmbedding.Select((f) => f.ToString("G17")))).Append("]").ToString() : null;
-            builder.Append("\"embedding\": ").Append(textEmbeddingString).Append("}");
-            return builder.ToString();
         }
     }
 }

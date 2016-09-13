@@ -13,19 +13,15 @@ namespace rosette_api
     /// <summary>
     /// A class to represent responses from the Tokenization endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class TokenizationResponse : RosetteResponse
     {
         private const string tokensKey = "tokens";
-
         /// <summary>
         /// Gets the list of tokens
         /// </summary>
+        [JsonProperty(tokensKey)]
         public List<String> Tokens { get; private set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a TokenizationResponse from the given apiResults
@@ -38,7 +34,6 @@ namespace rosette_api
                 JArray tokenArr = this.ContentDictionary[tokensKey] as JArray;
                 this.Tokens = new List<string>(tokenArr.Select<JToken, string>((jToken) => jToken.ToString()));
             }
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -52,7 +47,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Tokens = tokens;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         } 
 
         /// <summary>
@@ -86,31 +80,6 @@ namespace rosette_api
             int h0 = this.Tokens != null ? this.Tokens.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
-        }
-
-        /// <summary>
-        /// ToString override
-        /// </summary>
-        /// <returns>This TokenizationResponse in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string tokensString = this.Tokens != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Tokens)) : null;
-            builder.AppendFormat("\"tokens\": {0}", tokensString)
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string tokensString = this.Tokens != null ? String.Format("[\"{0}\"]", String.Join("\", \"", this.Tokens)) : null;
-            builder.AppendFormat("\"tokens\": {0}", tokensString).Append("}");
-            return builder.ToString();
         }
     }
 }

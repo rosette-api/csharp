@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace rosette_api
 {
     /// <summary>
     /// An interface for common methods of EntityID classes
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class EntityID
     {
         /// <summary>

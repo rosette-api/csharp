@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 using System.Net.Http;
 
 namespace rosette_api
@@ -11,49 +11,54 @@ namespace rosette_api
     /// <summary>
     /// A class to represent responses from the TranslatedNames endpoint of the RosetteAPI
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class TranslateNamesResponse : RosetteResponse
     {
         /// <summary>
         /// Gets or sets the type of entity of the name being translated
         /// </summary>
+        [JsonProperty(entityTypeKey, NullValueHandling=NullValueHandling.Ignore)]
         public string EntityType { get; set; }
         /// <summary>
         /// Gets or sets the script of the name being translated
         /// </summary>
+        [JsonProperty(sourceScriptKey, NullValueHandling = NullValueHandling.Ignore)]
         public string SourceScript { get; set; }
         /// <summary>
         /// Gets or sets the language of origin of the name being translated
         /// </summary>
+        [JsonProperty(sourceLanguageOfOriginKey, NullValueHandling = NullValueHandling.Ignore)]
         public string SourceLanguageOfOrigin { get; set; }
         /// <summary>
         /// Gets or sets the language in which the name being translated is written
         /// </summary>
+        [JsonProperty(sourceLanguageOfUseKey, NullValueHandling = NullValueHandling.Ignore)]
         public string SourceLanguageOfUse { get; set; }
         /// <summary>
         /// Gets or sets the language to which the name has been translated
         /// </summary>
+        [JsonProperty(targetLanguageKey)]
         public string TargetLanguage { get; set; }
         /// <summary>
         /// Gets or sets the script in which the translated name is written
         /// </summary>
+        [JsonProperty(targetScriptKey, NullValueHandling = NullValueHandling.Ignore)]
         public string TargetScript { get; set; }
         /// <summary>
         /// Gets or sets the scheme in which the translated name is written
         /// </summary>
+        [JsonProperty(targetSchemeKey, NullValueHandling=NullValueHandling.Ignore)]
         public string TargetScheme { get; set; }
         /// <summary>
         /// Gets or sets the translation of the name
         /// </summary>
+        [JsonProperty(translationKey)]
         public string Translation { get; set; }
         /// <summary>
         /// Gets or sets the confidence of the translation
         /// </summary>
+        [JsonProperty(confidenceKey, NullValueHandling=NullValueHandling.Ignore)]
         public Nullable<double> Confidence { get; set; }
-
-        /// <summary>
-        /// The response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         private const string sourceScriptKey = "sourceScript";
         private const string sourceLanguageOfOriginKey = "sourceLanguageOfOrigin";
@@ -80,7 +85,6 @@ namespace rosette_api
             this.TargetScheme = this.ContentDictionary.ContainsKey(targetSchemeKey) ? this.ContentDictionary[targetSchemeKey] as string : null;
             this.EntityType = this.ContentDictionary.ContainsKey(entityTypeKey) ? this.ContentDictionary[entityTypeKey] as string : null;
             this.Confidence = this.ContentDictionary.ContainsKey(confidenceKey) ? this.ContentDictionary[confidenceKey] as double? : null;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -101,14 +105,13 @@ namespace rosette_api
         public TranslateNamesResponse(string translation, string targetLanguage, string targetScheme = null, string targetScript = null, string entityType = null, string sourceLanguageOfOrigin = null,
             string sourceLanguageOfUse = null, string sourceScript = null, double? confidence = null, Dictionary<string, string> responseHeaders = null, Dictionary<string, object> content = null, string contentAsJson = null) : base(responseHeaders, content, contentAsJson)
          {
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
             this.SourceLanguageOfOrigin = sourceLanguageOfOrigin;
             this.SourceLanguageOfUse = sourceLanguageOfUse;
             this.SourceScript = sourceScript;
             this.TargetLanguage = targetLanguage;
-            this.TargetScheme = TargetScheme;
+            this.TargetScheme = targetScheme;
             this.Translation = translation;
-            this.TargetScript = TargetScript;
+            this.TargetScript = targetScript;
             this.EntityType = entityType;
             this.Confidence = confidence;
         }
@@ -161,49 +164,6 @@ namespace rosette_api
             int h8 = this.Translation != null ? this.Translation.GetHashCode() : 1;
             int h9 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
             return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5 ^ h6 ^ h7 ^ h8 ^ h9;
-        }
-
-        /// <summary>
-        /// ToString override
-        /// </summary>
-        /// <returns>The TranslationNameResponse in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.Translation != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", translationKey, this.Translation); }
-            if (this.TargetLanguage != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetLanguageKey, this.TargetLanguage); }
-            if (this.TargetScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetScriptKey, this.TargetScript); }
-            if (this.TargetScheme != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetSchemeKey, this.TargetScheme); }
-            if (this.SourceLanguageOfOrigin != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfOrigin); }
-            if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse); }
-            if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript); }
-            if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType); }
-            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.Value.ToString("G17")); }
-            if (this.ResponseHeaders != null) { builder.AppendFormat("responseHeaders: {0}, ", this.ResponseHeaders.ToString()); }
-            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
-            builder.Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            if (this.Translation != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", translationKey, this.Translation.ToString()); }
-            if (this.TargetLanguage != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetLanguageKey, this.TargetLanguage.ToString()); }
-            if (this.TargetScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetScriptKey, this.TargetScript.ToString()); }
-            if (this.TargetScheme != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", targetSchemeKey, this.TargetScheme.ToString()); }
-            if (this.SourceLanguageOfOrigin != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfOrigin.ToString()); }
-            if (this.SourceLanguageOfUse != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceLanguageOfUseKey, this.SourceLanguageOfUse.ToString()); }
-            if (this.SourceScript != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", sourceScriptKey, this.SourceScript.ToString()); }
-            if (this.EntityType != null) { builder.AppendFormat("\"{0}\": \"{1}\", ", entityTypeKey, this.EntityType.ToString()); }
-            if (this.Confidence != null) { builder.AppendFormat("\"{0}\": {1}, ", confidenceKey, this.Confidence.Value.ToString("G17")); }
-            if (builder.Length > 2) { builder.Remove(builder.Length - 2, 2); }
-            builder.Append("}");
-            return builder.ToString();
         }
     }
 }

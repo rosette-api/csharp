@@ -14,17 +14,14 @@ namespace rosette_api
     /// <summary>
     /// A class for representing responses from the API when the Entities endpoint has been called
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class EntitiesResponse : RosetteResponse
     {
         /// <summary>
         /// Gets or sets the collection of identified entities
         /// </summary>
+        [JsonProperty(PropertyName = entitiesKey)]
         public List<RosetteEntity> Entities { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         private const String entitiesKey = "entities";
         private const String typeKey = "type";
@@ -43,16 +40,15 @@ namespace rosette_api
             JArray enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as JArray : new JArray();
             foreach (JObject result in enumerableResults)
             {
-                String type = result.Properties().Where((p) => p.Name == typeKey).Any() ? result[typeKey].ToString() : null;
-                String mention = result.Properties().Where((p) => p.Name == mentionKey).Any() ? result[mentionKey].ToString() : null;
-                String entityIDStr = result.Properties().Where((p) => p.Name == entityIDKey).Any() ? result[entityIDKey].ToString() : null;
+                String type = result.Properties().Where((p) => String.Equals(p.Name, typeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[typeKey].ToString() : null;
+                String mention = result.Properties().Where((p) => String.Equals(p.Name, mentionKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[mentionKey].ToString() : null;
+                String entityIDStr = result.Properties().Where((p) => String.Equals(p.Name, entityIDKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[entityIDKey].ToString() : null;
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
-                String normalized = result.Properties().Where((p) => p.Name == normalizedKey).Any() ? result[normalizedKey].ToString() : null;
-                Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
+                String normalized = result.Properties().Where((p) => String.Equals(p.Name, normalizedKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[normalizedKey].ToString() : null;
+                Nullable<int> count = result.Properties().Where((p) => String.Equals(p.Name, countKey)).Any() ? result[countKey].ToObject<int?>() : null;
                 entities.Add(new RosetteEntity(mention, normalized, entityID, type, count));
             }
             this.Entities = entities;
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -66,7 +62,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Entities = entities;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -101,32 +96,6 @@ namespace rosette_api
             int h0 = this.Entities != null ? this.Entities.Aggregate<RosetteEntity, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
-        }
-
-        /// <summary>
-        /// ToString override.
-        /// </summary>
-        /// <returns>This response in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            string entitiesString = this.Entities != null ? new StringBuilder("[").Append(String.Join(", ", this.Entities)).Append("]").ToString() : null;
-            string responseHeadersString = this.ResponseHeaders != null ? this.ResponseHeaders.ToString() : null;
-            builder.Append("\"entities\": ").Append(entitiesString)
-                .Append(", responseHeaders: ").Append(responseHeadersString).Append("}");
-            return builder.ToString();
-        }
-
-        /// <summary>
-        /// Gets the content in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");            
-            string entitiesString = this.Entities != null ? new StringBuilder("[").Append(String.Join(", ", this.Entities)).Append("]").ToString() : null;
-            builder.Append("\"entities\": ").Append(entitiesString).Append("}");
-            return builder.ToString();
         }
     }
 }

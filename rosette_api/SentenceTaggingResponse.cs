@@ -13,6 +13,7 @@ namespace rosette_api
     /// <summary>
     /// A class to represent responses from the Sentence Tagging endpoint of the Rosette API
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class SentenceTaggingResponse : RosetteResponse
     {
         private const string sentencesKey ="sentences";
@@ -20,12 +21,8 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the sentences identified by the Rosette API
         /// </summary>
+        [JsonProperty(sentencesKey)]
         public List<String> Sentences { get; set; }
-
-        /// <summary>
-        /// Gets the response headers returned from the API
-        /// </summary>
-        public ResponseHeaders ResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates a SentenceTaggingResponse from the given apiResults
@@ -35,7 +32,6 @@ namespace rosette_api
         {
             JArray sentenceArr = this.ContentDictionary.ContainsKey(sentencesKey) ? this.ContentDictionary[sentencesKey] as JArray : new JArray();
             this.Sentences = new List<string>(sentenceArr.Select<JToken, string>((jsonToken) => jsonToken.ToString()));
-            this.ResponseHeaders = new ResponseHeaders(this.Headers);
         }
 
         /// <summary>
@@ -49,7 +45,6 @@ namespace rosette_api
             : base(responseHeaders, content, contentAsJson)
         {
             this.Sentences = sentences;
-            this.ResponseHeaders = new ResponseHeaders(responseHeaders);
         }
 
         /// <summary>
@@ -84,29 +79,6 @@ namespace rosette_api
             int h0 = this.Sentences != null ? this.Sentences.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
             return h0 ^ h1;
-        }
-
-        /// <summary>
-        /// ToString override.
-        /// </summary>
-        /// <returns>This SentenceTaggingResponse in JSON form</returns>
-        public override string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            string sentencesString = this.Sentences != null ? String.Format("[\"{0}\"]", String.Join<string>("\", \"", this.Sentences)) : null;
-            return builder.AppendFormat("{\"sentences\": ", sentencesString)
-                .Append(", responseHeaders: ").Append(this.ResponseHeaders).Append("}").ToString();
-        }
-
-        /// <summary>
-        /// Gets the content of the response in JSON form
-        /// </summary>
-        /// <returns>The content in JSON form</returns>
-        public string ContentToString()
-        {
-            StringBuilder builder = new StringBuilder("{");
-            string sentencesString = this.Sentences != null ? String.Format("[\"{0}\"]", String.Join<string>("\", \"", this.Sentences)) : null;
-            return builder.AppendFormat("\"sentences\": {0}", sentencesString).Append("}").ToString();
         }
     }
 }

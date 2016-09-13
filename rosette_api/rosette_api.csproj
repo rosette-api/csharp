@@ -74,8 +74,10 @@
     <Compile Include="RosetteExtensions.cs" />
     <Compile Include="RosetteFile.cs" />
     <Compile Include="RosetteResponse.cs" />
+    <Compile Include="RosetteResponseContractResolver.cs" />
     <Compile Include="SentenceTaggingResponse.cs" />
     <Compile Include="SentimentResponse.cs" />
+    <Compile Include="StaticValueProvider.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />
     <Compile Include="TokenizationResponse.cs" />
     <Compile Include="TranslateNamesResponse.cs" />

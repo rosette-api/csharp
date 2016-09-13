@@ -13,6 +13,7 @@ namespace rosette_api {
     /// <summary>
     /// Encapsulates the response from RosetteAPI
     /// </summary>  
+   [JsonObject(MemberSerialization=MemberSerialization.OptIn)]
     public class RosetteResponse {
 
         private JsonSerializer Serializer = new JsonSerializer();
@@ -30,6 +31,11 @@ namespace rosette_api {
         /// IDictionary of response headers
         /// </summary>
         public IDictionary<string, string> Headers { get; private set; }
+        /// <summary>
+        /// The response headers returned from the API
+        /// </summary>
+        [JsonPropertyAttribute("responseHeaders")]
+        public ResponseHeaders ResponseHeaders { get; private set; }
         /// <summary>
         /// As returned by the API, the JSON string of response content
         /// </summary>
@@ -59,6 +65,7 @@ namespace rosette_api {
             this.Content = ContentDictionary;
 #pragma warning restore 618
             this.Headers = headers != null ? headers : new Dictionary<string, string>();
+            this.ResponseHeaders = new ResponseHeaders(this.Headers);
             if (contentAsJson != null)
             {
                 this.ContentAsJson = contentAsJson;
@@ -66,7 +73,8 @@ namespace rosette_api {
             else if (content != null) 
             {
                 StringBuilder contentAsJsonWriter = new StringBuilder();
-                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content, typeof(Dictionary<string, object>));
+                Serializer.ContractResolver = new RosetteResponseContractResolver();
+                Serializer.Serialize(new StringWriter(contentAsJsonWriter), content);
                 this.ContentAsJson = contentAsJsonWriter.ToString();
             }
         }
@@ -87,6 +95,7 @@ namespace rosette_api {
                 {
                     Headers.Add(header.Key, string.Join("", header.Value));
                 }
+                this.ResponseHeaders = new ResponseHeaders(this.Headers);
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
                 if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
                     byteArray = decompress(byteArray);
@@ -110,6 +119,36 @@ namespace rosette_api {
             else {
                 throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
             }
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This response in JSON form</returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            serializer.ContractResolver = new RosetteResponseContractResolver();
+            serializer.Serialize(writer, this);
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the content in JSON form
+        /// </summary>
+        /// <returns>The content in JSON form</returns>
+        public virtual string ContentToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            JsonWriter writer = new JsonTextWriter(new StringWriter(builder));
+            JsonSerializer serializer = JsonSerializer.CreateDefault();
+            serializer.ContractResolver = new RosetteResponseContractResolver();
+# pragma warning disable 618
+            serializer.Serialize(writer, this.Content);
+# pragma warning restore 618
+            return builder.ToString();
         }
 
         /// <summary>
