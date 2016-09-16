@@ -90,6 +90,10 @@ validateURL
 #Copy the mounted content in /source to current WORKDIR
 cp -r -n /source/. .
 
+#Update libraries
+nuget restore rosette_api.sln
+cp packages/Newtonsoft*/lib/net45/Newtonsoft.Json.dll rosette_apiExamples
+
 #Run the examples
 if [ ! -z ${API_KEY} ]; then
     #Check API key and if succesful then build local rosette_api project
