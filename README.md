@@ -12,6 +12,16 @@ In Visual Studio: search for the [rosette_api package](https://www.nuget.org/pac
 
 Using Nuget Command Line: `nuget install rosette_api`.
 
+Docker
+------
+A Docker image for running the examples against the compiled source library is available on Docker Hub.
+
+Command: `docker run -e API_KEY=api-key -v "path-to-local-csharp-dir:/source" rosetteapi/docker-csharp`
+
+Additional environment settings:
+`-e ALT_URL=<alternative URL>`
+`-e FILENAME=<single filename>`
+
 Basic Usage
 -----------
 
