@@ -587,10 +587,10 @@ namespace rosette_api {
         /// The semantic space is a multilingual network that maps the input based on the words and their context. 
         /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
         /// </returns>
-        public RelationshipsResponse TextEmbedding(Dictionary<object, object> dict)
+        public TextEmbeddingResponse TextEmbedding(Dictionary<object, object> dict)
         {
             _uri = "text-embedding";
-            return getResponse<RelationshipsResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return getResponse<TextEmbeddingResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>TextEmbeddings

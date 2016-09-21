@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string embedding_data = @"Cambridge, Massachusetts";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = EmbeddingCAPI.TextEmbedding(embedding_data);
+                TextEmbeddingResponse response = EmbeddingCAPI.TextEmbedding(embedding_data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
