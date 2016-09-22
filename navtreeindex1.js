@@ -122,8 +122,8 @@ var NAVTREEINDEX1 =
 "index.html":[],
 "namespacemembers.html":[0,1,0],
 "namespacemembers_enum.html":[0,1,1],
-"namespacerosette__api.html":[0,0,0],
 "namespacerosette__api.html":[1,0,0],
+"namespacerosette__api.html":[0,0,0],
 "namespaces.html":[0,0],
 "pages.html":[]
 };

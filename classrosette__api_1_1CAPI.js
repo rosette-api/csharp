@@ -39,7 +39,7 @@ var classrosette__api_1_1CAPI =
     [ "SetCustomHeaders", "classrosette__api_1_1CAPI.html#a4215d480e6ec9fab284f0971c958a72f", null ],
     [ "SetOption", "classrosette__api_1_1CAPI.html#a29298bf35842ff12fc931302213d538a", null ],
     [ "TextEmbedding", "classrosette__api_1_1CAPI.html#af1b8b8677d2e68f10ab8939da216d026", null ],
-    [ "TextEmbedding", "classrosette__api_1_1CAPI.html#a7d63aae5a198b5d351ecc87c06e8dd6e", null ],
+    [ "TextEmbedding", "classrosette__api_1_1CAPI.html#a6de2063f250626b3cf5a140aefd8ff31", null ],
     [ "TextEmbedding", "classrosette__api_1_1CAPI.html#a26034b2c0a5fb605fe8d59430ca65385", null ],
     [ "Tokens", "classrosette__api_1_1CAPI.html#ac380b00e21c69c4d307bb99b7efaf30c", null ],
     [ "Tokens", "classrosette__api_1_1CAPI.html#ae0465f11cbd64f473e07c2378a37dc6a", null ],
