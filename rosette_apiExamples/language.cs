@@ -34,11 +34,11 @@ namespace rosette_apiExamples
                 string language_data = @"Por favor Señorita, says the man.";
                 //The results of the API call will come back in the form of a Dictionary
                 LanguageCAPI.SetCustomHeaders("X-RosetteAPI-App", "csharp-app");
-                RosetteResponse response = LanguageCAPI.Language(language_data);
+                LanguageIdentificationResponse response = LanguageCAPI.Language(language_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {

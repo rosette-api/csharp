@@ -33,11 +33,11 @@ namespace rosette_apiExamples
                 CAPI EntitiesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = EntitiesCAPI.Entity(entities_text_data, null, null, null, false, "social-media");
+                EntitiesResponse response = EntitiesCAPI.Entity(entities_text_data, null, null, null, false, "social-media");
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {
