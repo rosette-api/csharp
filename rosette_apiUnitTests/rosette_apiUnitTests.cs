@@ -1210,7 +1210,7 @@ namespace rosette_apiUnitTests
 #pragma warning restore 618
         }
 
-        //------------------------- Text Embedding ------------------------------------
+        //------------------------- Syntax Dependencies ------------------------------------
         public void SyntaxDependenciesTestFull()
         {
             Init();
@@ -1219,7 +1219,7 @@ namespace rosette_apiUnitTests
             SyntacticDependenciesResponse.Dependency e2 = new SyntacticDependenciesResponse.Dependency("aux", 3, 2);
             SyntacticDependenciesResponse.Dependency e3 = new SyntacticDependenciesResponse.Dependency("root", -1, 3);
             SyntacticDependenciesResponse.Dependency e4 = new SyntacticDependenciesResponse.Dependency("punc", 3, 4);
-            List<SyntacticDependenciesResponse.Dependency> dependencies = new List<SyntacticDependenciesResponse.Dependency>() { e0, e1 };
+            List<SyntacticDependenciesResponse.Dependency> dependencies = new List<SyntacticDependenciesResponse.Dependency>() { e0, e1, e2, e3, e4 };
             List<string> tokens = new List<string>() { "Sony", "Pictures", "is", "planning", "."};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
