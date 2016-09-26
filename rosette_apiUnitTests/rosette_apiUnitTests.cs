@@ -169,7 +169,7 @@ namespace rosette_apiUnitTests
         private CAPI _rosetteApi;
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init() {
             _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
@@ -183,7 +183,7 @@ namespace rosette_apiUnitTests
             _rosetteApi = new CAPI("userkey", null, 1, client);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void Cleanup() {
         }
 
@@ -191,7 +191,7 @@ namespace rosette_apiUnitTests
         public void Error409_Test() {
             try {
                 _mockHttp.When(_testUrl + "entities").Respond(HttpStatusCode.Conflict);
-                var response = _rosetteApi.Entity("content");
+                _rosetteApi.Entity("content");
                 Assert.Fail("Exception not thrown");
             }
             catch (RosetteException ex) {
@@ -254,11 +254,6 @@ namespace rosette_apiUnitTests
             Assert.AreEqual("requestID", ex.RequestID, "RequestID does not match");
             Assert.AreEqual("file", ex.File, "File does not match");
             Assert.AreEqual("line", ex.Line, "Line does not match");
-        }
-
-        [Test, ExpectedException(typeof(RosetteException), ExpectedMessage = "RosetteException thrown", MatchType = MessageMatch.Exact)]
-        public void ThrowRosetteExceptionTest() {
-            throw new RosetteException("RosetteException thrown");
         }
     }
 
@@ -329,7 +324,7 @@ namespace rosette_apiUnitTests
         private string _testUrl = @"https://api.rosette.com/rest/v1/";
         private string _tmpFile = null;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init() {
             // Create a temporary file for use with file testing
             _tmpFile = Path.GetTempFileName();
@@ -349,7 +344,7 @@ namespace rosette_apiUnitTests
             _rosetteApi = new CAPI("userkey", null, 1, client);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void Cleanup() {
             if (File.Exists(_tmpFile)) {
                 File.Delete(_tmpFile);
@@ -972,7 +967,6 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
-            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 
@@ -1024,7 +1018,7 @@ namespace rosette_apiUnitTests
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "text-embedding").Respond(mockedMessage);
-            TextEmbeddingResponse response = _rosetteApi.TextEmbeddings("The Ghostbusters movie was filmed in Boston.");
+            TextEmbeddingResponse response = _rosetteApi.TextEmbedding("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }
 
@@ -1034,7 +1028,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings("content");
+            var response = _rosetteApi.TextEmbedding("content");
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1046,7 +1040,7 @@ namespace rosette_apiUnitTests
             _mockHttp.When(_testUrl + "text-embedding")
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
-            var response = _rosetteApi.TextEmbeddings(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1059,7 +1053,7 @@ namespace rosette_apiUnitTests
                 .Respond("application/json", "{'response': 'OK'}");
 
             RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.TextEmbeddings(f);
+            var response = _rosetteApi.TextEmbedding(f);
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
@@ -1140,7 +1134,6 @@ namespace rosette_apiUnitTests
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "sentiment").Respond(mockedMessage);
             SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
-            string responseString = response.ToString();
             Assert.AreEqual(expected, response);
         }
 
@@ -1176,6 +1169,39 @@ namespace rosette_apiUnitTests
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
+        }
+
+        //------------------------- Text Embedding ------------------------------------
+
+        [Test]
+        public void Embedding_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbedding("content");
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void Embedding_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void Embedding_File_Test()
+        {
+            _mockHttp.When(_testUrl + "text-embedding")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.TextEmbedding(f);
+            Assert.AreEqual(response.Content["response"], "OK");
         }
 
         //------------------------- Tokens ----------------------------------------
