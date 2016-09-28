@@ -78,7 +78,7 @@
     <Compile Include="SentenceTaggingResponse.cs" />
     <Compile Include="SentimentResponse.cs" />
     <Compile Include="StaticValueProvider.cs" />
-    <Compile Include="SyntacticDependenciesResponse.cs" />
+    <Compile Include="SyntaxDependenciesResponse.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />
     <Compile Include="TokenizationResponse.cs" />
     <Compile Include="TranslateNamesResponse.cs" />
