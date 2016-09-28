@@ -613,9 +613,9 @@ namespace rosette_api {
             return Process<TextEmbeddingResponse>(file);
         }
 
-        /// <summary>SyntacticDependencies
+        /// <summary>SyntaxDependencies
         /// <para>
-        /// (POST)SyntacticDependencies Endpoint: Return the syntactic dependencies of the input text.
+        /// (POST)SyntaxDependencies Endpoint: Return the syntactic dependencies of the input text.
         /// </para>
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
@@ -624,45 +624,45 @@ namespace rosette_api {
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
-        /// A SyntacticDependenciesResponse:
+        /// A SyntaxDependenciesResponse:
         /// The parsed text is represented in terms of syntactic dependencies 
         /// </returns>
-        public SyntacticDependenciesResponse SyntacticDependencies(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SyntaxDependenciesResponse SyntaxDependencies(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
             _uri = "syntax/dependencies";
-            return Process<SyntacticDependenciesResponse>(content, language, contentType, contentUri, genre);
+            return Process<SyntaxDependenciesResponse>(content, language, contentType, contentUri, genre);
         }
 
-        /// <summary>SyntacticDependencies
+        /// <summary>SyntaxDependencies
         /// <para>
-        /// (POST)SyntacticDependencies Endpoint: Return the syntactic dependencies of the input text.
+        /// (POST)SyntaxDependencies Endpoint: Return the syntactic dependencies of the input text.
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>
-        /// A SyntacticDependenciesResponse:
+        /// A SyntaxDependenciesResponse:
         /// The parsed text is represented in terms of syntactic dependencies 
         /// </returns>
-        public SyntacticDependenciesResponse SyntacticDependencies(Dictionary<object, object> dict)
+        public SyntaxDependenciesResponse SyntaxDependencies(Dictionary<object, object> dict)
         {
             _uri = "syntax/dependencies";
-            return getResponse<SyntacticDependenciesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return getResponse<SyntaxDependenciesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
-        /// <summary>SyntacticDependencies
+        /// <summary>SyntaxDependencies
         /// <para>
-        /// (POST)SyntacticDependencies Endpoint: Return the syntactic dependencies of the input text.
+        /// (POST)SyntaxDependencies Endpoint: Return the syntactic dependencies of the input text.
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>
-        /// A SyntacticDependenciesResponse:
+        /// A SyntaxDependenciesResponse:
         /// The parsed text is represented in terms of syntactic dependencies 
         /// </returns>
-        public SyntacticDependenciesResponse SyntacticDependencies(RosetteFile file)
+        public SyntaxDependenciesResponse SyntaxDependencies(RosetteFile file)
         {
             _uri = "syntax/dependencies";
-            return Process<SyntacticDependenciesResponse>(file);
+            return Process<SyntaxDependenciesResponse>(file);
         }
 
         /// <summary>Relationships

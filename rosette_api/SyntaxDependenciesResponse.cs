@@ -15,7 +15,7 @@ namespace rosette_api
     /// A class for representing responses from the syntax/dependencies endpoint of the Rosette API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
-    public class SyntacticDependenciesResponse : RosetteResponse
+    public class SyntaxDependenciesResponse : RosetteResponse
     {
         private const string DEPENDENCIES = "dependencies";
         private const string TOKENS = "tokens";
@@ -36,10 +36,10 @@ namespace rosette_api
         public List<string> Tokens { get; set; }
 
         /// <summary>
-        /// Creates a SyntacticDependenciesResponse from the given apiResult
+        /// Creates a SyntaxDependenciesResponse from the given apiResult
         /// </summary>
         /// <param name="apiResult">The message from the API</param>
-        public SyntacticDependenciesResponse(HttpResponseMessage apiResult)
+        public SyntaxDependenciesResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
             List<Dependency> dependencies = new List<Dependency>();
@@ -57,14 +57,14 @@ namespace rosette_api
         }
 
         /// <summary>
-        /// Creates a SyntacticDependenciesResponse from its components
+        /// Creates a SyntaxDependenciesResponse from its components
         /// </summary>
         /// <param name="dependencies">The syntactic dependencies the entire document/input text</param>
         /// <param name="tokens">The tokens found in the input text</param>
         /// <param name="responseHeaders">The response headers returned from the API</param>
         /// <param name="content">The content (the doc and entity sentiments) in Dictionary form</param>
         /// <param name="contentAsJson">The content in JSON form</param>
-        public SyntacticDependenciesResponse(List<Dependency> dependencies, List<string> tokens, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
+        public SyntaxDependenciesResponse(List<Dependency> dependencies, List<string> tokens, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
             : base(responseHeaders, content, contentAsJson)
         {
             this.Dependencies = dependencies;
@@ -78,9 +78,9 @@ namespace rosette_api
         /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is SyntacticDependenciesResponse)
+            if (obj is SyntaxDependenciesResponse)
             {
-                SyntacticDependenciesResponse other = obj as SyntacticDependenciesResponse;
+                SyntaxDependenciesResponse other = obj as SyntaxDependenciesResponse;
                 List<bool> conditions = new List<bool>() {
                     this.Dependencies != null && other.Dependencies != null ? this.Dependencies.SequenceEqual(other.Dependencies) : this.Dependencies == other.Dependencies,
                     this.Tokens != null && other.Tokens != null ? this.Tokens.SequenceEqual(other.Tokens) : this.Tokens == other.Tokens,
@@ -116,19 +116,19 @@ namespace rosette_api
             /// <summary>
             /// The type of this dependency
             /// </summary>
-            [JsonProperty(SyntacticDependenciesResponse.DEPENDENCY_TYPE)]
+            [JsonProperty(SyntaxDependenciesResponse.DEPENDENCY_TYPE)]
             public string DependencyType { get; set; }
 
             /// <summary>
             /// The index of the token that governs the dependency
             /// </summary>
-            [JsonProperty(SyntacticDependenciesResponse.GOVERNOR_TOKEN_INDEX)]
+            [JsonProperty(SyntaxDependenciesResponse.GOVERNOR_TOKEN_INDEX)]
             public int? GovernorTokenIndex { get; set; }
 
             /// <summary>
             /// The index of the token that is associated with this dependency
             /// </summary>
-            [JsonProperty(SyntacticDependenciesResponse.DEPENDENT_TOKEN_INDEX)]
+            [JsonProperty(SyntaxDependenciesResponse.DEPENDENT_TOKEN_INDEX)]
             public int? DependentTokenIndex { get; set; }
 
             /// <summary>
