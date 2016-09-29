@@ -956,10 +956,12 @@ namespace rosette_apiUnitTests
             string arg1ID = "Q20120108";
             string loc1 = "in Boston";
             List<string> locatives = new List<string>() {loc1};
+            string source = "rules:3";
+            HashSet<string> modalities = new HashSet<string>() {"assertion", "someOtherModality"};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
-                new RosetteRelationship(predicate, new List<string>() {arg1}, new List<string>() {arg1ID}, null, locatives, null, confidence)
+                new RosetteRelationship(predicate, new List<string>() {arg1}, new List<string>() {arg1ID}, null, locatives, null, confidence, source, modalities)
             };
             Dictionary<string, object> content = new Dictionary<string, object>();
             content.Add("relationships", relationships);
@@ -967,7 +969,6 @@ namespace rosette_apiUnitTests
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
-            string expectedString = expected.ToString();
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }

@@ -26,6 +26,8 @@ namespace rosette_api
         internal const string locativesKey = "locatives";
         internal const string adjunctsKey = "adjuncts";
         internal const string confidenceKey = "confidence";
+        internal const string SOURCE = "source";
+        internal const string MODALITIES = "modalities";
 
         /// <summary>
         /// Gets or sets the relationships extracted by the Rosette API
@@ -53,7 +55,9 @@ namespace rosette_api
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
                 Nullable<decimal> confidence = relationship.Properties().Where((p) => p.Name == confidenceKey).Any() ? relationship[confidenceKey].ToObject<decimal?>() : new Nullable<decimal>();
-                relationships.Add(new RosetteRelationship(predicate, argStrings, argIDs, temporals, locatives, adjuncts, confidence));
+                string source = relationship.Properties().Where((p) => p.Name == SOURCE).Any() ? relationship[SOURCE].ToObject<string>() : null;
+                HashSet<string> modalities = relationship.Properties().Where((p) => p.Name == MODALITIES).Any() ? relationship[MODALITIES].ToObject<HashSet<string>>() : null;
+                relationships.Add(new RosetteRelationship(predicate, argStrings, argIDs, temporals, locatives, adjuncts, confidence, source, modalities));
             }
             this.Relationships = relationships;
         }
@@ -158,6 +162,18 @@ namespace rosette_api
         public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
+        /// Gets a source, indicating how the relationship was extracted, for each relationship result.
+        /// </summary>
+        [JsonProperty(RelationshipsResponse.SOURCE, NullValueHandling = NullValueHandling.Ignore)]
+        public string Source { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the modalities of the relationship.
+        /// </summary>
+        [JsonProperty(RelationshipsResponse.MODALITIES, NullValueHandling = NullValueHandling.Ignore)]
+        public HashSet<string> Modalities { get; set; }
+
+        /// <summary>
         /// Creates a grammatical relationship.
         /// Temporary EntityIDs, ordered "T0", "T1"..., are added to the argument strings in an ArgumentsFull property.
         /// </summary>
@@ -189,7 +205,9 @@ namespace rosette_api
         /// <param name="locatives">Locations of the action.  May be empty.</param>
         /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
         /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
-        public RosetteRelationship(string predicate, List<string> arguments, List<string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence)
+        /// <param name="source">A string indicating how the relationship was extracted.</param>
+        /// <param name="modalities">The modalities of the relationship.</param>
+        public RosetteRelationship(string predicate, List<string> arguments, List<string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
         {
             this.Predicate = predicate;
 #pragma warning disable 618
@@ -200,6 +218,8 @@ namespace rosette_api
             this.Locatives = locatives;
             this.Adjucts = adjunts;
             this.Confidence = confidence;
+            this.Source = source;
+            this.Modalities = modalities;
         }
 
         /// <summary>
