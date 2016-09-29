@@ -241,6 +241,8 @@ namespace rosette_api
                     this.Locatives != null && other.Locatives != null ? this.Locatives.SequenceEqual(other.Locatives) : this.Locatives == other.Locatives,
                     this.Predicate == other.Predicate,
                     this.Temporals != null && other.Temporals != null ? this.Temporals.SequenceEqual(other.Temporals) : this.Temporals == other.Temporals,
+                    this.Modalities != null && other.Modalities != null ? this.Modalities.SetEquals(other.Modalities) : this.Modalities == other.Modalities,
+                    this.Source == other.Source,
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
@@ -264,7 +266,9 @@ namespace rosette_api
 #pragma warning restore 618
             int h5 = this.ArgumentsFull != null ? this.ArgumentsFull.Aggregate<Argument, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;            
             int h6 = this.Adjucts != null ? this.Adjucts.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
-            int hashcode = h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h4 ^ h5 ^ h6;
+            int h7 = this.Modalities != null ? this.Modalities.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h8 = this.Source != null ? this.Source.GetHashCode() : 1;
+            int hashcode = h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h4 ^ h5 ^ h6 ^ h7 ^ h8;
             return hashcode;
         }
 
