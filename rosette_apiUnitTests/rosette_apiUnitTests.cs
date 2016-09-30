@@ -1180,7 +1180,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.TextEmbedding("content");
+#pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
         }
 
         [Test]
@@ -1190,7 +1192,9 @@ namespace rosette_apiUnitTests
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
 
             var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+#pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
         }
 
         [Test]
@@ -1201,7 +1205,70 @@ namespace rosette_apiUnitTests
 
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.TextEmbedding(f);
+#pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
+        }
+
+        //------------------------- Syntax Dependencies ------------------------------------
+        public void SyntaxDependenciesTestFull()
+        {
+            Init();
+            SyntaxDependenciesResponse.Dependency e0 = new SyntaxDependenciesResponse.Dependency("compound", 1, 0);
+            SyntaxDependenciesResponse.Dependency e1 = new SyntaxDependenciesResponse.Dependency("nsubj", 3, 1);
+            SyntaxDependenciesResponse.Dependency e2 = new SyntaxDependenciesResponse.Dependency("aux", 3, 2);
+            SyntaxDependenciesResponse.Dependency e3 = new SyntaxDependenciesResponse.Dependency("root", -1, 3);
+            SyntaxDependenciesResponse.Dependency e4 = new SyntaxDependenciesResponse.Dependency("punc", 3, 4);
+            List<SyntaxDependenciesResponse.Dependency> dependencies = new List<SyntaxDependenciesResponse.Dependency>() { e0, e1, e2, e3, e4 };
+            List<string> tokens = new List<string>() { "Sony", "Pictures", "is", "planning", "."};
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object>();
+            content.Add("dependencies", dependencies);
+            content.Add("tokens", tokens);
+            SyntaxDependenciesResponse expected = new SyntaxDependenciesResponse(dependencies, tokens, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "syntax/dependencies").Respond(mockedMessage);
+            SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies("Sony Pictures is planning.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void SyntaxDependencies_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "syntax/dependencies")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies("content");
+#pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
+        }
+
+        [Test]
+        public void SyntaxDependencies_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "syntax/dependencies")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+#pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
+        }
+
+        [Test]
+        public void SyntaxDependencies_File_Test()
+        {
+            _mockHttp.When(_testUrl + "syntax/dependencies")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies(f);
+#pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+#pragma warning restore 618
         }
 
         //------------------------- Tokens ----------------------------------------
