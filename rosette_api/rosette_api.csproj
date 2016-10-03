@@ -39,37 +39,13 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.engine">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\nunit.engine.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.engine.api">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\nunit.engine.api.dll</HintPath>
-    </Reference>
-    <Reference Include="NUnit3.TestAdapter">
-      <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\NUnit3.TestAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>..\packages\System.Numerics.Vectors.4.1.1\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Data.DataSetExtensions" />

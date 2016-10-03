@@ -342,8 +342,11 @@ namespace rosette_api
                     {
                         JsonProperty argStringProp = this.CreateNewCustomProperty(order, RelationshipsResponse.ARGPREFIX + argument.Position, typeof(string), argument.Mention);
                         modifiedProperties.Insert(order++, argStringProp);
-                        JsonProperty argIDProp = this.CreateNewCustomProperty(order, String.Format(RelationshipsResponse.ARG_ID_FORMAT, argument.Position), typeof(string), argument.ID.ID);
-                        modifiedProperties.Insert(order++, argIDProp);
+                        if (argument.ID != null && argument.ID.ID != null)
+                        {
+                            JsonProperty argIDProp = this.CreateNewCustomProperty(order, String.Format(RelationshipsResponse.ARG_ID_FORMAT, argument.Position), typeof(string), argument.ID.ID);
+                            modifiedProperties.Insert(order++, argIDProp);
+                        }
                     }
                 }
                 else
@@ -439,7 +442,7 @@ namespace rosette_api
                 List<bool> conditions = new List<bool>() {
                     this.Mention == other.Mention,
                     this.Position == other.Position,
-                    this.ID.Equals(other.ID),
+                    this.ID != null ? this.ID.Equals(other.ID) : other.ID == null,
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
