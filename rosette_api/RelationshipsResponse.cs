@@ -212,7 +212,7 @@ namespace rosette_api
             this.Predicate = predicate;
 #pragma warning disable 618
             this.Arguments = arguments.Select(kvp => kvp.Value).ToList();
-            this.ArgumentsFull = new List<Argument>(arguments.Select<KeyValuePair<int, string>, Argument>((kvp, index) => new Argument(kvp.Key, kvp.Value, IDs.ContainsKey(kvp.Key) ? new EntityID(IDs[kvp.Key]) : null)));
+            this.ArgumentsFull = new List<Argument>(arguments.Select<KeyValuePair<int, string>, Argument>((kvp, index) => new Argument(kvp.Key, kvp.Value, IDs == null || !IDs.ContainsKey(kvp.Key) || IDs[kvp.Key] == null ? null : new EntityID(IDs[kvp.Key]))));
 #pragma warning restore 618
             this.Temporals = temporals;
             this.Locatives = locatives;
