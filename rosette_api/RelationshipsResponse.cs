@@ -49,8 +49,8 @@ namespace rosette_api
                 IEnumerable<JProperty> allArgRelatedProps = relationship.Properties().Where((p) => p.Name.Contains(ARGPREFIX));
                 IEnumerable<JProperty> argStringProps = allArgRelatedProps.Where((p) => !p.Name.Contains("ID"));
                 IEnumerable<JProperty> argIDProps = allArgRelatedProps.Where((p) => p.Name.Contains("ID"));
-                List<string> argStrings = argStringProps.Any() ? argStringProps.Select<JProperty, string>((p) => p.Value.ToString().Trim()).ToList() : null;
-                List<string> argIDs = argIDProps.Any() ? argIDProps.Select<JProperty, string>((p) => p.Value.ToString().Trim()).ToList() : null;
+                Dictionary<int, string> argStrings = argStringProps.Any() ? argStringProps.ToDictionary(p => Int32.Parse(p.Name.Substring(3, 1)), p => p.Value.ToString().Trim()) : null;
+                Dictionary<int, string> argIDs = argIDProps.Any() ? argIDProps.ToDictionary(p => Int32.Parse(p.Name.Substring(3, 1)), p => p.Value.ToString().Trim()) : null;
                 List<string> temporals = relationship.Properties().Where((p) => p.Name == temporalsKey).Any() ? relationship[temporalsKey].ToObject<List<string>>() : null;
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
@@ -187,7 +187,7 @@ namespace rosette_api
             this.Predicate = predicate;
 #pragma warning disable 618
             this.Arguments = arguments;
-            this.ArgumentsFull = new List<Argument>(this.Arguments.Select<string, Argument>((str, index) => new Argument(index + 1, str, new EntityID(String.Format("T{0}", index)))));
+            this.ArgumentsFull = new List<Argument>(this.Arguments.Select<string, Argument>((str, index) => new Argument(index + 1, str, null)));
 #pragma warning restore 618
             this.Temporals = temporals;
             this.Locatives = locatives;
@@ -199,20 +199,46 @@ namespace rosette_api
         /// Creates a grammatical relationship
         /// </summary>
         /// <param name="predicate">The main action or verb acting on the first argument, or the action connecting multiple arguments.</param>
-        /// <param name="arguments">One or more arguments in the relationship</param>
-        /// <param name="IDs">The corresponding IDs of the arguments.  The ID at index 0 should correspond to the argument at index 0.</param>
+        /// <param name="arguments">The mention(s), mapped to the argument number, of one or more arguments in the relationship</param>
+        /// <param name="IDs">The IDs of the arguments, mapped to the corresponding argument number.  The ID with key 1 should correspond to the argument with key 1.</param>
         /// <param name="temporals">Time frames of the action.  May be empty.</param>
         /// <param name="locatives">Locations of the action.  May be empty.</param>
         /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
         /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
         /// <param name="source">A string indicating how the relationship was extracted.</param>
         /// <param name="modalities">The modalities of the relationship.</param>
-        public RosetteRelationship(string predicate, List<string> arguments, List<string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
+        public RosetteRelationship(string predicate, Dictionary<int, string> arguments, Dictionary<int, string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
         {
             this.Predicate = predicate;
 #pragma warning disable 618
-            this.Arguments = arguments;
-            this.ArgumentsFull = new List<Argument>(this.Arguments.Select<string, Argument>((str, index) => new Argument(index + 1, str, new EntityID(IDs[index]))));
+            this.Arguments = arguments.Select(kvp => kvp.Value).ToList();
+            this.ArgumentsFull = new List<Argument>(arguments.Select<KeyValuePair<int, string>, Argument>((kvp, index) => new Argument(kvp.Key, kvp.Value, IDs.ContainsKey(kvp.Key) ? new EntityID(IDs[kvp.Key]) : null)));
+#pragma warning restore 618
+            this.Temporals = temporals;
+            this.Locatives = locatives;
+            this.Adjucts = adjunts;
+            this.Confidence = confidence;
+            this.Source = source;
+            this.Modalities = modalities;
+        }
+
+        /// <summary>
+        /// Creates a grammatical relationship
+        /// </summary>
+        /// <param name="predicate">The main action or verb acting on the first argument, or the action connecting multiple arguments.</param>
+        /// <param name="arguments">The arguments in the relationship</param>
+        /// <param name="temporals">Time frames of the action.  May be empty.</param>
+        /// <param name="locatives">Locations of the action.  May be empty.</param>
+        /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
+        /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
+        /// <param name="source">A string indicating how the relationship was extracted.</param>
+        /// <param name="modalities">The modalities of the relationship.</param>
+        public RosetteRelationship(string predicate, List<Argument> arguments, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
+        {
+            this.Predicate = predicate;
+#pragma warning disable 618
+            this.Arguments = arguments.Select(a => a.Mention).ToList();
+            this.ArgumentsFull = arguments;
 #pragma warning restore 618
             this.Temporals = temporals;
             this.Locatives = locatives;
