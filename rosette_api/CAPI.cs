@@ -884,46 +884,45 @@ namespace rosette_api {
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>RosetteResponse derivative</returns>
         private T getResponse<T>(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse {
+            HttpResponseMessage responseMsg = null;
             if (client != null) {
-                HttpResponseMessage responseMsg = null;
                 string wholeURI = _uri;
                 if (wholeURI.StartsWith("/")) {
                     wholeURI = wholeURI.Substring(1);
                 }
 
-                for (int attempt = 0; attempt < MaxRetry; attempt++) {
-                    if (jsonRequest != null) {
-                        HttpContent content = new StringContent(jsonRequest);
-                        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, content));
-                        responseMsg = task.Result;
-                    }
-                    else if (multiPart != null) {
-                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, multiPart));
-                        responseMsg = task.Result;
-                    }
-                    else {
-                        Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.GetAsync(wholeURI));
-                        responseMsg = task.Result;
-                    }
-                    if ((int)responseMsg.StatusCode == 429) {
-                        System.Diagnostics.Debug.WriteLine("429 Encountered ... Retry");
-                        System.Threading.Thread.Sleep(MillisecondsBetweenRetries);
-                        continue;
-                    }
-                    if (responseMsg.IsSuccessStatusCode)
-                    {
-                        T response = (T)Activator.CreateInstance(typeof(T), new object[]{responseMsg});
-                        this.SetCallConcurrency(response);
-                        return response;
-                    }
-                    else
-                    {
-                        throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, RosetteResponse.contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);                        
-                    }
+                if (jsonRequest != null)
+                {
+                    HttpContent content = new StringContent(jsonRequest);
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, content));
+                    responseMsg = task.Result;
+                }
+                else if (multiPart != null)
+                {
+                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.PostAsync(wholeURI, multiPart));
+                    responseMsg = task.Result;
+                }
+                else
+                {
+                    Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await client.GetAsync(wholeURI));
+                    responseMsg = task.Result;
                 }
             }
-            return null;
+            if (responseMsg == null)
+            {
+                throw new RosetteException(client == null ? "Client not initialized." : "The server returned a null response.");
+            }
+            if (responseMsg.IsSuccessStatusCode)
+            {
+                T response = (T)Activator.CreateInstance(typeof(T), new object[] { responseMsg });
+                this.SetCallConcurrency(response);
+                return response;
+            }
+            else
+            {
+                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, RosetteResponse.contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
+            }
         }
 
         /// <summary>
