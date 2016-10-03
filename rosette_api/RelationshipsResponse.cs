@@ -354,7 +354,7 @@ namespace rosette_api
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-            IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
+            IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization).Where(p => p.HasMemberAttribute).ToList();
             IList<JsonProperty> propertiesToRehandle = properties.Where(p => p.PropertyName == RosetteRelationship.ARGUMENTS).ToList();
             IList<JsonProperty> modifiedProperties = new List<JsonProperty>();
             int order = 0;
