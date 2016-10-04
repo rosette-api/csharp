@@ -956,12 +956,11 @@ namespace rosette_apiUnitTests
             string arg1ID = "Q20120108";
             string loc1 = "in Boston";
             List<string> locatives = new List<string>() {loc1};
-            string source = "rules:3";
             HashSet<string> modalities = new HashSet<string>() {"assertion", "someOtherModality"};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
-                new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>() {{1, arg1ID}}, null, locatives, null, confidence, source, modalities)
+                new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>() {{1, arg1ID}}, null, locatives, null, confidence, modalities)
             };
             Dictionary<string, object> content = new Dictionary<string, object>();
             content.Add("relationships", relationships);
@@ -982,12 +981,11 @@ namespace rosette_apiUnitTests
             string arg1 = "The Ghostbusters movie";
             string loc1 = "in Boston";
             List<string> locatives = new List<string>() { loc1 };
-            string source = "rules:3";
             HashSet<string> modalities = new HashSet<string>() { "assertion", "someOtherModality" };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
-                new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, source, modalities)
+                new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, modalities)
             };
             Dictionary<string, object> content = new Dictionary<string, object>();
             content.Add("relationships", relationships);
@@ -1011,8 +1009,8 @@ namespace rosette_apiUnitTests
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence); 
-            RosetteRelationship relationshipFromDoubleDictConstructor = new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, null, null);
-            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null, null); 
+            RosetteRelationship relationshipFromDoubleDictConstructor = new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, null);
+            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null); 
             Assert.True(relationshipFromOriginalConstructor.Equals(relationshipFromDoubleDictConstructor) && relationshipFromDoubleDictConstructor.Equals(relationshipFromFullArgumentsConstructor) &&
                 relationshipFromOriginalConstructor.ToString().Equals(relationshipFromDoubleDictConstructor.ToString()) && relationshipFromDoubleDictConstructor.ToString().Equals(relationshipFromFullArgumentsConstructor.ToString()));
         }

@@ -26,7 +26,6 @@ namespace rosette_api
         internal const string locativesKey = "locatives";
         internal const string adjunctsKey = "adjuncts";
         internal const string confidenceKey = "confidence";
-        internal const string SOURCE = "source";
         internal const string MODALITIES = "modalities";
 
         /// <summary>
@@ -55,9 +54,8 @@ namespace rosette_api
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
                 Nullable<decimal> confidence = relationship.Properties().Where((p) => p.Name == confidenceKey).Any() ? relationship[confidenceKey].ToObject<decimal?>() : new Nullable<decimal>();
-                string source = relationship.Properties().Where((p) => p.Name == SOURCE).Any() ? relationship[SOURCE].ToObject<string>() : null;
                 HashSet<string> modalities = relationship.Properties().Where((p) => p.Name == MODALITIES).Any() ? relationship[MODALITIES].ToObject<HashSet<string>>() : null;
-                relationships.Add(new RosetteRelationship(predicate, argStrings, argIDs, temporals, locatives, adjuncts, confidence, source, modalities));
+                relationships.Add(new RosetteRelationship(predicate, argStrings, argIDs, temporals, locatives, adjuncts, confidence, modalities));
             }
             this.Relationships = relationships;
         }
@@ -162,12 +160,6 @@ namespace rosette_api
         public Nullable<decimal> Confidence { get; private set; }
 
         /// <summary>
-        /// Gets a source, indicating how the relationship was extracted, for each relationship result.
-        /// </summary>
-        [JsonProperty(RelationshipsResponse.SOURCE, NullValueHandling = NullValueHandling.Ignore)]
-        public string Source { get; private set; }
-
-        /// <summary>
         /// Gets or sets the modalities of the relationship.
         /// </summary>
         [JsonProperty(RelationshipsResponse.MODALITIES, NullValueHandling = NullValueHandling.Ignore)]
@@ -205,9 +197,8 @@ namespace rosette_api
         /// <param name="locatives">Locations of the action.  May be empty.</param>
         /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
         /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
-        /// <param name="source">A string indicating how the relationship was extracted.</param>
         /// <param name="modalities">The modalities of the relationship.</param>
-        public RosetteRelationship(string predicate, Dictionary<int, string> arguments, Dictionary<int, string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
+        public RosetteRelationship(string predicate, Dictionary<int, string> arguments, Dictionary<int, string> IDs, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, HashSet<string> modalities)
         {
             this.Predicate = predicate;
 #pragma warning disable 618
@@ -218,7 +209,6 @@ namespace rosette_api
             this.Locatives = locatives;
             this.Adjucts = adjunts;
             this.Confidence = confidence;
-            this.Source = source;
             this.Modalities = modalities;
         }
 
@@ -231,9 +221,8 @@ namespace rosette_api
         /// <param name="locatives">Locations of the action.  May be empty.</param>
         /// <param name="adjunts">All other parts of the relationship.  May be empty.</param>
         /// <param name="confidence">A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</param>
-        /// <param name="source">A string indicating how the relationship was extracted.</param>
         /// <param name="modalities">The modalities of the relationship.</param>
-        public RosetteRelationship(string predicate, List<Argument> arguments, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, string source, HashSet<string> modalities)
+        public RosetteRelationship(string predicate, List<Argument> arguments, List<string> temporals, List<string> locatives, List<string> adjunts, Nullable<decimal> confidence, HashSet<string> modalities)
         {
             this.Predicate = predicate;
 #pragma warning disable 618
@@ -244,7 +233,6 @@ namespace rosette_api
             this.Locatives = locatives;
             this.Adjucts = adjunts;
             this.Confidence = confidence;
-            this.Source = source;
             this.Modalities = modalities;
         }
 
@@ -268,7 +256,6 @@ namespace rosette_api
                     this.Predicate == other.Predicate,
                     this.Temporals != null && other.Temporals != null ? this.Temporals.SequenceEqual(other.Temporals) : this.Temporals == other.Temporals,
                     this.Modalities != null && other.Modalities != null ? this.Modalities.SetEquals(other.Modalities) : this.Modalities == other.Modalities,
-                    this.Source == other.Source,
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
@@ -293,8 +280,7 @@ namespace rosette_api
             int h5 = this.ArgumentsFull != null ? this.ArgumentsFull.Aggregate<Argument, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;            
             int h6 = this.Adjucts != null ? this.Adjucts.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h7 = this.Modalities != null ? this.Modalities.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
-            int h8 = this.Source != null ? this.Source.GetHashCode() : 1;
-            int hashcode = h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h4 ^ h5 ^ h6 ^ h7 ^ h8;
+            int hashcode = h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h4 ^ h5 ^ h6 ^ h7;
             return hashcode;
         }
 
