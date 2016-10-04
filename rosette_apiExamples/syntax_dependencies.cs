@@ -30,10 +30,10 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI SyntacticDependenciesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string syntax_dependencies_data = "Sony Pictures is planning to shoot a good portion of the new \"Ghostbusters\" in Boston as well.";
                 //The results of the API call will come back in the form of a Dictionary
-                SyntacticDependenciesResponse response = SyntacticDependenciesCAPI.SyntacticDependencies(syntax_dependencies_data, null, null, null, "social-media");
+                SyntaxDependenciesResponse response = api.SyntaxDependencies(syntax_dependencies_data, null, null, null, "social-media");
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
