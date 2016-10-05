@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string syntax_dependencies_data = "Sony Pictures is planning to shoot a good portion of the new \"Ghostbusters\" in Boston as well.";
+                string syntax_dependencies_data = "Yoshinori Ohsumi, a Japanese cell biologist, was awarded the Nobel Prize in Physiology or Medicine on Monday.";
                 //The results of the API call will come back in the form of a Dictionary
                 SyntaxDependenciesResponse response = api.SyntaxDependencies(syntax_dependencies_data, null, null, null, "social-media");
                 foreach (KeyValuePair<string, string> h in response.Headers) {

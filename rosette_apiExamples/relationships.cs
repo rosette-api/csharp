@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI RelationshipsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string relationships_text_data = @"The Ghostbusters movie was filmed in Boston.";
+                string relationships_text_data = @"Bill Gates, Microsoft's former CEO, is a philanthropist.";
                 //The results of the API call will come back in the form of a Dictionary
                 RelationshipsResponse response = RelationshipsCAPI.Relationships(relationships_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
