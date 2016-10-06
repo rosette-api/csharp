@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteException.html" title="RosetteException Class " alt="" coords="137,5,345,32"/>
+<area shape="rect" id="node1" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties " alt="" coords="5,13,188,39"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteSentimentEntity.html" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API ..." alt="" coords="236,5,449,47"/>
 </map>

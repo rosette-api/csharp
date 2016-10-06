@@ -1,5 +1,6 @@
 var namespacerosette__api =
 [
+    [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
     [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
     [ "EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", "classrosette__api_1_1EntitiesResponse" ],
@@ -25,6 +26,7 @@ var namespacerosette__api =
     [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", "classrosette__api_1_1RosetteSentimentEntity" ],
     [ "SentenceTaggingResponse", "classrosette__api_1_1SentenceTaggingResponse.html", "classrosette__api_1_1SentenceTaggingResponse" ],
     [ "SentimentResponse", "classrosette__api_1_1SentimentResponse.html", "classrosette__api_1_1SentimentResponse" ],
+    [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
     [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ],
     [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
     [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ]

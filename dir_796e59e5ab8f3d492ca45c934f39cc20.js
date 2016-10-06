@@ -34,7 +34,8 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "RelationshipsResponse.cs", "RelationshipsResponse_8cs.html", [
       [ "RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", "classrosette__api_1_1RelationshipsResponse" ],
-      [ "RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", "classrosette__api_1_1RosetteRelationship" ]
+      [ "RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", "classrosette__api_1_1RosetteRelationship" ],
+      [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ]
     ] ],
     [ "ResponseHeaders.cs", "ResponseHeaders_8cs.html", [
       [ "ResponseHeaders", "classrosette__api_1_1ResponseHeaders.html", "classrosette__api_1_1ResponseHeaders" ]
@@ -66,6 +67,10 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
       [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", "classrosette__api_1_1RosetteSentimentEntity" ]
     ] ],
     [ "StaticValueProvider.cs", "StaticValueProvider_8cs.html", null ],
+    [ "SyntaxDependenciesResponse.cs", "SyntaxDependenciesResponse_8cs.html", [
+      [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
+      [ "Dependency", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency" ]
+    ] ],
     [ "TextEmbeddingResponse.cs", "TextEmbeddingResponse_8cs.html", [
       [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ]
     ] ],

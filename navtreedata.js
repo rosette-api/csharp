@@ -29,7 +29,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CAPI_8cs.html",
-"classrosette__api_1_1RosetteFile.html"
+"classrosette__api_1_1RosetteEntity.html#ae0e600210fa979a88950b6fad6df0f59"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

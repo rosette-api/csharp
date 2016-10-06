@@ -1,14 +1,9 @@
 var searchData=
 [
-  ['targetlanguage',['TargetLanguage',['../classrosette__api_1_1TranslateNamesResponse.html#a7d516474f77a873d695ef8d58cd9f165',1,'rosette_api::TranslateNamesResponse']]],
-  ['targetscheme',['TargetScheme',['../classrosette__api_1_1TranslateNamesResponse.html#afba52cc78eb20c117906828b1bd38f9d',1,'rosette_api::TranslateNamesResponse']]],
-  ['targetscript',['TargetScript',['../classrosette__api_1_1TranslateNamesResponse.html#a95bc4d85151cdd61eb4b8191dbd9955f',1,'rosette_api::TranslateNamesResponse']]],
-  ['temporals',['Temporals',['../classrosette__api_1_1RosetteRelationship.html#af8015a2d91b7e4805cc7f810f7ba38e8',1,'rosette_api::RosetteRelationship']]],
-  ['text',['text',['../classrosette__api_1_1Name.html#aea41eeac4d108ba05e5b2857f41752e5',1,'rosette_api::Name']]],
-  ['textembedding',['TextEmbedding',['../classrosette__api_1_1TextEmbeddingResponse.html#ad8eadd4ed7142b752895f16f11d5c356',1,'rosette_api::TextEmbeddingResponse']]],
-  ['time',['Time',['../classrosette__api_1_1PingResponse.html#a6ac53b513b6ba07354b781712e1d09af',1,'rosette_api::PingResponse']]],
-  ['timeout',['Timeout',['../classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1',1,'rosette_api::CAPI']]],
-  ['token',['Token',['../classrosette__api_1_1MorphologyItem.html#a8990d09f037896d40bdecc32df6c7b18',1,'rosette_api::MorphologyItem']]],
-  ['tokens',['Tokens',['../classrosette__api_1_1TokenizationResponse.html#a5318cd768fdfb5924990af5b8ede08e4',1,'rosette_api::TokenizationResponse']]],
-  ['translation',['Translation',['../classrosette__api_1_1TranslateNamesResponse.html#a61c88699af4185510319821ccfd0be2f',1,'rosette_api::TranslateNamesResponse']]]
+  ['script',['script',['../classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd',1,'rosette_api::Name']]],
+  ['sentences',['Sentences',['../classrosette__api_1_1SentenceTaggingResponse.html#ae5a7a448ae626b54ddff2172286806d8',1,'rosette_api::SentenceTaggingResponse']]],
+  ['sentiment',['Sentiment',['../classrosette__api_1_1RosetteSentimentEntity.html#aedfed5df631beca144366e0880067159',1,'rosette_api::RosetteSentimentEntity']]],
+  ['sourcelanguageoforigin',['SourceLanguageOfOrigin',['../classrosette__api_1_1TranslateNamesResponse.html#a6ad8992cb57fa6d17b0076aac8bda051',1,'rosette_api::TranslateNamesResponse']]],
+  ['sourcelanguageofuse',['SourceLanguageOfUse',['../classrosette__api_1_1TranslateNamesResponse.html#a4b91b71a939e54923cc93c2c9c651fe0',1,'rosette_api::TranslateNamesResponse']]],
+  ['sourcescript',['SourceScript',['../classrosette__api_1_1TranslateNamesResponse.html#aa96d7217cd50e1b410c290f0b3369551',1,'rosette_api::TranslateNamesResponse']]]
 ];

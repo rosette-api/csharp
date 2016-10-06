@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['id',['ID',['../classrosette__api_1_1EntityID.html#a58c6170d95638072b74b013854e3014c',1,'rosette_api.EntityID.ID()'],['../classrosette__api_1_1RosetteEntity.html#aef65f084ac19da80508466e85acfa946',1,'rosette_api.RosetteEntity.ID()']]],
-  ['items',['Items',['../classrosette__api_1_1MorphologyResponse.html#a8010ba09509222d3ded9cbed47753eac',1,'rosette_api::MorphologyResponse']]]
+  ['hanreadings',['HanReadings',['../classrosette__api_1_1MorphologyItem.html#ae76e2ea4e9994e4e9f1ffdd4a424674e',1,'rosette_api::MorphologyItem']]],
+  ['headers',['Headers',['../classrosette__api_1_1RosetteResponse.html#aa10c23210d4c3abe7d77974ca99a715d',1,'rosette_api::RosetteResponse']]]
 ];

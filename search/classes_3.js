@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['languagedetection',['LanguageDetection',['../classrosette__api_1_1LanguageDetection.html',1,'rosette_api']]],
-  ['languageidentificationresponse',['LanguageIdentificationResponse',['../classrosette__api_1_1LanguageIdentificationResponse.html',1,'rosette_api']]]
+  ['entitiesresponse',['EntitiesResponse',['../classrosette__api_1_1EntitiesResponse.html',1,'rosette_api']]],
+  ['entityid',['EntityID',['../classrosette__api_1_1EntityID.html',1,'rosette_api']]]
 ];

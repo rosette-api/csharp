@@ -1,9 +1,11 @@
 var hierarchy =
 [
+    [ "rosette_api.Argument", "classrosette__api_1_1Argument.html", null ],
     [ "rosette_api.CAPI", "classrosette__api_1_1CAPI.html", null ],
     [ "DefaultContractResolver", null, [
       [ "rosette_api.RosetteResponseContractResolver", "classrosette__api_1_1RosetteResponseContractResolver.html", null ]
     ] ],
+    [ "rosette_api.SyntaxDependenciesResponse.Dependency", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html", null ],
     [ "rosette_api.EntityID", "classrosette__api_1_1EntityID.html", null ],
     [ "Exception", null, [
       [ "rosette_api.RosetteException", "classrosette__api_1_1RosetteException.html", null ]
@@ -32,6 +34,7 @@ var hierarchy =
       [ "rosette_api.RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", null ],
       [ "rosette_api.SentenceTaggingResponse", "classrosette__api_1_1SentenceTaggingResponse.html", null ],
       [ "rosette_api.SentimentResponse", "classrosette__api_1_1SentimentResponse.html", null ],
+      [ "rosette_api.SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", null ],
       [ "rosette_api.TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", null ],
       [ "rosette_api.TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", null ],
       [ "rosette_api.TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", null ]

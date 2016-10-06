@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rosette_api
-   &#160;<span id="projectnumber">1.3.1</span>
+   &#160;<span id="projectnumber">1.4.0</span>
    </div>
   </td>
  </tr>
@@ -128,8 +128,14 @@ Collaboration diagram for rosette_api.RosetteRelationship:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab03be216c8ee3f953ede5f02abf5b21e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#ab03be216c8ee3f953ede5f02abf5b21e">RosetteRelationship</a> (String predicate, List&lt; String &gt; arguments, List&lt; string &gt; temporals, List&lt; string &gt; locatives, List&lt; string &gt; adjunts, Nullable&lt; decimal &gt; confidence)</td></tr>
-<tr class="memdesc:ab03be216c8ee3f953ede5f02abf5b21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a grammatical relationship  <a href="#ab03be216c8ee3f953ede5f02abf5b21e">More...</a><br /></td></tr>
+<tr class="memdesc:ab03be216c8ee3f953ede5f02abf5b21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a grammatical relationship. Temporary EntityIDs, ordered "T0", "T1"..., are added to the argument strings in an ArgumentsFull property.  <a href="#ab03be216c8ee3f953ede5f02abf5b21e">More...</a><br /></td></tr>
 <tr class="separator:ab03be216c8ee3f953ede5f02abf5b21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6434cccbe76acc8dd0e538975418cde6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#a6434cccbe76acc8dd0e538975418cde6">RosetteRelationship</a> (string predicate, Dictionary&lt; int, string &gt; arguments, Dictionary&lt; int, string &gt; IDs, List&lt; string &gt; temporals, List&lt; string &gt; locatives, List&lt; string &gt; adjunts, Nullable&lt; decimal &gt; confidence, HashSet&lt; string &gt; modalities)</td></tr>
+<tr class="memdesc:a6434cccbe76acc8dd0e538975418cde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a grammatical relationship  <a href="#a6434cccbe76acc8dd0e538975418cde6">More...</a><br /></td></tr>
+<tr class="separator:a6434cccbe76acc8dd0e538975418cde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb3b3b4f2a4fe18fdceb7310c4a58070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#abb3b3b4f2a4fe18fdceb7310c4a58070">RosetteRelationship</a> (string predicate, List&lt; <a class="el" href="classrosette__api_1_1Argument.html">Argument</a> &gt; arguments, List&lt; string &gt; temporals, List&lt; string &gt; locatives, List&lt; string &gt; adjunts, Nullable&lt; decimal &gt; confidence, HashSet&lt; string &gt; modalities)</td></tr>
+<tr class="memdesc:abb3b3b4f2a4fe18fdceb7310c4a58070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a grammatical relationship  <a href="#abb3b3b4f2a4fe18fdceb7310c4a58070">More...</a><br /></td></tr>
+<tr class="separator:abb3b3b4f2a4fe18fdceb7310c4a58070"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae91f256f31efa887c0ece9c09b750de1"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#ae91f256f31efa887c0ece9c09b750de1">Equals</a> (object obj)</td></tr>
 <tr class="memdesc:ae91f256f31efa887c0ece9c09b750de1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equals override  <a href="#ae91f256f31efa887c0ece9c09b750de1">More...</a><br /></td></tr>
 <tr class="separator:ae91f256f31efa887c0ece9c09b750de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,8 +152,11 @@ Properties</h2></td></tr>
 <tr class="memdesc:af05e1e9fcf6bcdd7e7deb134809c7f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the main action or verb acting on the first argument, or the action connecting multiple arguments.  <a href="#af05e1e9fcf6bcdd7e7deb134809c7f86">More...</a><br /></td></tr>
 <tr class="separator:af05e1e9fcf6bcdd7e7deb134809c7f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a745d94b9af97ec81676d77dd842d09fa"><td class="memItemLeft" align="right" valign="top">List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#a745d94b9af97ec81676d77dd842d09fa">Arguments</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a745d94b9af97ec81676d77dd842d09fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the or more subjects in the relationship  <a href="#a745d94b9af97ec81676d77dd842d09fa">More...</a><br /></td></tr>
+<tr class="memdesc:a745d94b9af97ec81676d77dd842d09fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the arguments in the relationship  <a href="#a745d94b9af97ec81676d77dd842d09fa">More...</a><br /></td></tr>
 <tr class="separator:a745d94b9af97ec81676d77dd842d09fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565cb980fe128831e8503ce48e30030b"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classrosette__api_1_1Argument.html">Argument</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#a565cb980fe128831e8503ce48e30030b">ArgumentsFull</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a565cb980fe128831e8503ce48e30030b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the arguments in the relationship. Arguments have extra content, such as IDs.  <a href="#a565cb980fe128831e8503ce48e30030b">More...</a><br /></td></tr>
+<tr class="separator:a565cb980fe128831e8503ce48e30030b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8015a2d91b7e4805cc7f810f7ba38e8"><td class="memItemLeft" align="right" valign="top">List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#af8015a2d91b7e4805cc7f810f7ba38e8">Temporals</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:af8015a2d91b7e4805cc7f810f7ba38e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the time frame of the action. May be empty.  <a href="#af8015a2d91b7e4805cc7f810f7ba38e8">More...</a><br /></td></tr>
 <tr class="separator:af8015a2d91b7e4805cc7f810f7ba38e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,11 +169,14 @@ Properties</h2></td></tr>
 <tr class="memitem:a88976cd423560c6f3a5229508ecc5f4b"><td class="memItemLeft" align="right" valign="top">Nullable&lt; decimal &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#a88976cd423560c6f3a5229508ecc5f4b">Confidence</a><code> [get]</code></td></tr>
 <tr class="memdesc:a88976cd423560c6f3a5229508ecc5f4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.  <a href="#a88976cd423560c6f3a5229508ecc5f4b">More...</a><br /></td></tr>
 <tr class="separator:a88976cd423560c6f3a5229508ecc5f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cc116a8bc3c9c364f371c8a4c2a84c6"><td class="memItemLeft" align="right" valign="top">HashSet&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteRelationship.html#a9cc116a8bc3c9c364f371c8a4c2a84c6">Modalities</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a9cc116a8bc3c9c364f371c8a4c2a84c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the modalities of the relationship.  <a href="#a9cc116a8bc3c9c364f371c8a4c2a84c6">More...</a><br /></td></tr>
+<tr class="separator:a9cc116a8bc3c9c364f371c8a4c2a84c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class to represent a relationship as identified by the Rosette API </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00109">109</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00116">116</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab03be216c8ee3f953ede5f02abf5b21e"></a>
 <div class="memitem">
@@ -214,11 +226,11 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a grammatical relationship </p>
+<p>Creates a grammatical relationship. Temporary EntityIDs, ordered "T0", "T1"..., are added to the argument strings in an ArgumentsFull property. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">predicate</td><td>The main action or verb acting on the first argument, or the action connecting multiple arguments.</td></tr>
-    <tr><td class="paramname">arguments</td><td>One or more subjects in the relationship</td></tr>
+    <tr><td class="paramname">arguments</td><td>One or more arguments in the relationship</td></tr>
     <tr><td class="paramname">temporals</td><td>Time frames of the action. May be empty.</td></tr>
     <tr><td class="paramname">locatives</td><td>Locations of the action. May be empty.</td></tr>
     <tr><td class="paramname">adjunts</td><td>All other parts of the relationship. May be empty.</td></tr>
@@ -227,7 +239,158 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00158">158</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00178">178</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6434cccbe76acc8dd0e538975418cde6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rosette_api.RosetteRelationship.RosetteRelationship </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>predicate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Dictionary&lt; int, string &gt;&#160;</td>
+          <td class="paramname"><em>arguments</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Dictionary&lt; int, string &gt;&#160;</td>
+          <td class="paramname"><em>IDs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>temporals</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>locatives</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>adjunts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Nullable&lt; decimal &gt;&#160;</td>
+          <td class="paramname"><em>confidence</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HashSet&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>modalities</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a grammatical relationship </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>The main action or verb acting on the first argument, or the action connecting multiple arguments.</td></tr>
+    <tr><td class="paramname">arguments</td><td>The mention(s), mapped to the argument number, of one or more arguments in the relationship</td></tr>
+    <tr><td class="paramname">IDs</td><td>The IDs of the arguments, mapped to the corresponding argument number. The ID with key 1 should correspond to the argument with key 1.</td></tr>
+    <tr><td class="paramname">temporals</td><td>Time frames of the action. May be empty.</td></tr>
+    <tr><td class="paramname">locatives</td><td>Locations of the action. May be empty.</td></tr>
+    <tr><td class="paramname">adjunts</td><td>All other parts of the relationship. May be empty.</td></tr>
+    <tr><td class="paramname">confidence</td><td>A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</td></tr>
+    <tr><td class="paramname">modalities</td><td>The modalities of the relationship.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00201">201</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abb3b3b4f2a4fe18fdceb7310c4a58070"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rosette_api.RosetteRelationship.RosetteRelationship </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>predicate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="classrosette__api_1_1Argument.html">Argument</a> &gt;&#160;</td>
+          <td class="paramname"><em>arguments</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>temporals</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>locatives</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>adjunts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Nullable&lt; decimal &gt;&#160;</td>
+          <td class="paramname"><em>confidence</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HashSet&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>modalities</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a grammatical relationship </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>The main action or verb acting on the first argument, or the action connecting multiple arguments.</td></tr>
+    <tr><td class="paramname">arguments</td><td>The arguments in the relationship</td></tr>
+    <tr><td class="paramname">temporals</td><td>Time frames of the action. May be empty.</td></tr>
+    <tr><td class="paramname">locatives</td><td>Locations of the action. May be empty.</td></tr>
+    <tr><td class="paramname">adjunts</td><td>All other parts of the relationship. May be empty.</td></tr>
+    <tr><td class="paramname">confidence</td><td>A score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results.</td></tr>
+    <tr><td class="paramname">modalities</td><td>The modalities of the relationship.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00225">225</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -255,7 +418,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if equal</dd></dl>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00172">172</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00244">244</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -275,7 +438,7 @@ Properties</h2></td></tr>
 <p>HashCode override </p>
 <dl class="section return"><dt>Returns</dt><dd>The HashCode</dd></dl>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00195">195</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00271">271</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -295,7 +458,7 @@ Properties</h2></td></tr>
 <p>ToString override. Writes this <a class="el" href="classrosette__api_1_1RosetteRelationship.html" title="A class to represent a relationship as identified by the Rosette API ">RosetteRelationship</a> in JSON form </p>
 <dl class="section return"><dt>Returns</dt><dd>The relationship as JSON</dd></dl>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00211">211</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00291">291</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -320,7 +483,7 @@ Properties</h2></td></tr>
 
 <p>Gets or sets all other parts of the relationship. May be empty. </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00141">141</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00154">154</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -342,9 +505,33 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the or more subjects in the relationship </p>
+<p>Gets or sets the arguments in the relationship </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00123">123</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00130">130</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a565cb980fe128831e8503ce48e30030b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="classrosette__api_1_1Argument.html">Argument</a>&gt; rosette_api.RosetteRelationship.ArgumentsFull</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets the arguments in the relationship. Arguments have extra content, such as IDs. </p>
+
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00136">136</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -368,7 +555,7 @@ Properties</h2></td></tr>
 
 <p>Gets a score for each relationship result, ranging from 0 to 1. You can use this measurement as a threshold to filter out undesired results. </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00147">147</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00160">160</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -392,7 +579,31 @@ Properties</h2></td></tr>
 
 <p>Gets or sets the location(s) of the action. May be empty. </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00135">135</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00148">148</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9cc116a8bc3c9c364f371c8a4c2a84c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HashSet&lt;string&gt; rosette_api.RosetteRelationship.Modalities</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets the modalities of the relationship. </p>
+
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00166">166</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -416,7 +627,7 @@ Properties</h2></td></tr>
 
 <p>Gets or sets the main action or verb acting on the first argument, or the action connecting multiple arguments. </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00117">117</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00124">124</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -440,7 +651,7 @@ Properties</h2></td></tr>
 
 <p>Gets or sets the time frame of the action. May be empty. </p>
 
-<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00129">129</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
+<p>Definition at line <a class="el" href="RelationshipsResponse_8cs_source.html#l00142">142</a> of file <a class="el" href="RelationshipsResponse_8cs_source.html">RelationshipsResponse.cs</a>.</p>
 
 </div>
 </div>

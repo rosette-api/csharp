@@ -9,6 +9,7 @@ var searchData=
   ['pingresponse',['PingResponse',['../classrosette__api_1_1PingResponse.html#a91f6f4de244982771e8ca881a450761a',1,'rosette_api.PingResponse.PingResponse(HttpResponseMessage apiMsg)'],['../classrosette__api_1_1PingResponse.html#a35ecce22a71bf8742a980d751d215b39',1,'rosette_api.PingResponse.PingResponse(String message, long time, Dictionary&lt; string, string &gt; headers, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
   ['pingresponse_2ecs',['PingResponse.cs',['../PingResponse_8cs.html',1,'']]],
   ['pos',['pos',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadea5e0bdcbddccca4d66d74ba8c1cee1a68',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
+  ['position',['Position',['../classrosette__api_1_1Argument.html#aba0475a89c95815128883f5578e83fe6',1,'rosette_api::Argument']]],
   ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],
   ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]],
   ['product',['PRODUCT',['../classrosette__api_1_1RosetteEntity.html#aa4d61650e314d8246630fa653dc8435f',1,'rosette_api::RosetteEntity']]]
