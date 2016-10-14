@@ -17,7 +17,7 @@ namespace rosette_api
     [JsonObject(MemberSerialization.OptOut)]
     public class SyntaxDependenciesResponse : RosetteResponse
     {
-        internal const string SENTENCE_WITH_DEPENDENCIES = "sentenceWithDependencies";
+        internal const string SENTENCES = "sentences";
         internal const string TOKENS = "tokens";
         internal const string SENTENCE_START_TOKEN_OFFSET = "startOffset";
         internal const string SENTENCE_END_TOKEN_OFFSET = "endOffset";
@@ -29,7 +29,7 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the syntactic dependencies identified by the Rosette API
         /// </summary>
-        [JsonProperty(SENTENCE_WITH_DEPENDENCIES)]
+        [JsonProperty(SENTENCES)]
         public List<SentenceWithDependencies> Sentences { get; set; }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace rosette_api
             : base(apiResult)
         {
             List<SentenceWithDependencies> sentences = new List<SentenceWithDependencies>();
-            JArray enumerableResults = this.ContentDictionary.ContainsKey(SENTENCE_WITH_DEPENDENCIES) ? this.ContentDictionary[SENTENCE_WITH_DEPENDENCIES] as JArray : new JArray();
+            JArray enumerableResults = this.ContentDictionary.ContainsKey(SENTENCES) ? this.ContentDictionary[SENTENCES] as JArray : new JArray();
             foreach (JObject result in enumerableResults)
             {
                 List<Dependency> dependencies = new List<Dependency>();
