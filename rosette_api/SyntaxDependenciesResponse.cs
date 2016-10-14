@@ -166,9 +166,9 @@ namespace rosette_api
                 {
                     SentenceWithDependencies other = obj as SentenceWithDependencies;
                     List<bool> conditions = new List<bool>() {
-                    this.Dependencies == other.Dependencies,
-                    this.StartOffset == other.StartOffset,
-                    this.EndOffset == other.EndOffset,
+                    this.Dependencies != null && other.Dependencies != null ? this.Dependencies.SequenceEqual(other.Dependencies) : this.Dependencies == other.Dependencies,
+                    this.StartOffset.Equals(other.StartOffset),
+                    this.EndOffset.Equals(other.EndOffset),
                     this.GetHashCode() == other.GetHashCode()
                 };
                     return conditions.All(condition => condition);
@@ -249,9 +249,9 @@ namespace rosette_api
                 {
                     Dependency other = obj as Dependency;
                     List<bool> conditions = new List<bool>() {
-                    this.DependencyType == other.DependencyType,
-                    this.GovernorTokenIndex == other.GovernorTokenIndex,
-                    this.DependentTokenIndex == other.DependentTokenIndex,
+                    this.DependencyType.Equals(other.DependencyType),
+                    this.GovernorTokenIndex.Equals(other.GovernorTokenIndex),
+                    this.DependentTokenIndex.Equals(other.DependentTokenIndex),
                     this.GetHashCode() == other.GetHashCode()
                 };
                     return conditions.All(condition => condition);
