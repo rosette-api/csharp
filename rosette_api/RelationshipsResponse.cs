@@ -349,7 +349,6 @@ namespace rosette_api
             {
                 if (propertiesToRehandle.Contains(jProperty))
                 {
-                    IList<JsonProperty> newProperties = new List<JsonProperty>();
                     IList<Argument> argumentList = Relationship.ArgumentsFull;
                     foreach (Argument argument in argumentList)
                     {
