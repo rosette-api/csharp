@@ -47,10 +47,10 @@ namespace rosette_api
             {
                 String predicate = relationship.Properties().Where((p) => p.Name == predicateKey).Any() ? relationship[predicateKey].ToString() : null;
                 IEnumerable<JProperty> allArgRelatedProps = relationship.Properties().Where((p) => p.Name.Contains(ARGPREFIX));
-                IEnumerable<JProperty> argStringProps = allArgRelatedProps.Where((p) => Regex.IsMatch(p.Name, @"arg[a-z]*\d*$", RegexOptions.IgnoreCase));
-                IEnumerable<JProperty> argIDProps = allArgRelatedProps.Where((p) => Regex.IsMatch(p.Name, @"arg[a-z]*\d*Id",RegexOptions.IgnoreCase));
-                Dictionary<int, string> argStrings = argStringProps.Any() ? argStringProps.ToDictionary(p => Int32.Parse(Regex.Match(p.Name, @"\d*").Value), p => p.Value.ToString().Trim()) : null;
-                Dictionary<int, string> argIDs = argIDProps.Any() ? argIDProps.ToDictionary(p => Int32.Parse(Regex.Match(p.Name, @"\d*").Value), p => p.Value.ToString().Trim()) : null;
+                IEnumerable<JProperty> argStringProps = allArgRelatedProps.Where((p) => Regex.IsMatch(p.Name, @"arg[a-z]*\d+$", RegexOptions.IgnoreCase));
+                IEnumerable<JProperty> argIDProps = allArgRelatedProps.Where((p) => Regex.IsMatch(p.Name, @"arg[a-z]*\d+Id",RegexOptions.IgnoreCase));
+                Dictionary<int, string> argStrings = argStringProps.Any() ? argStringProps.ToDictionary(p => Int32.Parse(Regex.Match(p.Name, @"\d+").ToString()), p => p.Value.ToString().Trim()) : null;
+                Dictionary<int, string> argIDs = argIDProps.Any() ? argIDProps.ToDictionary(p => Int32.Parse(Regex.Match(p.Name, @"\d+").ToString()), p => p.Value.ToString().Trim()) : null;
                 List<string> temporals = relationship.Properties().Where((p) => p.Name == temporalsKey).Any() ? relationship[temporalsKey].ToObject<List<string>>() : null;
                 List<string> locatives = relationship.Properties().Where((p) => p.Name == locativesKey).Any() ? relationship[locativesKey].ToObject<List<string>>() : null;
                 List<string> adjuncts = relationship.Properties().Where((p) => p.Name == adjunctsKey).Any() ? relationship[adjunctsKey].ToObject<List<string>>() : null;
