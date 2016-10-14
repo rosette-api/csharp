@@ -37,7 +37,6 @@ namespace rosette_api
         {
             JArray tokensArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as JArray : null;
             List<string> tokens = tokensArr != null ? new List<string>(tokensArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
-            int tokenCount = tokens != null ? tokens.Count : 0;
             JArray lemmasArr = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as JArray : null;
             List<string> lemmas = lemmasArr != null ? new List<string>(lemmasArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
             JArray posTagsArr = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as JArray : null;
