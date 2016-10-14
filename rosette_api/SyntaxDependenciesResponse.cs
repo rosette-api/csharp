@@ -17,7 +17,7 @@ namespace rosette_api
     [JsonObject(MemberSerialization.OptOut)]
     public class SyntaxDependenciesResponse : RosetteResponse
     {
-        internal const string SENTENCE_WITH_DEPENDENCIES = "sentenceWithDependencies";
+        internal const string SENTENCES = "sentences";
         internal const string TOKENS = "tokens";
         internal const string SENTENCE_START_TOKEN_OFFSET = "startOffset";
         internal const string SENTENCE_END_TOKEN_OFFSET = "endOffset";
@@ -29,7 +29,7 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the syntactic dependencies identified by the Rosette API
         /// </summary>
-        [JsonProperty(SENTENCE_WITH_DEPENDENCIES)]
+        [JsonProperty(SENTENCES)]
         public List<SentenceWithDependencies> Sentences { get; set; }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace rosette_api
             : base(apiResult)
         {
             List<SentenceWithDependencies> sentences = new List<SentenceWithDependencies>();
-            JArray enumerableResults = this.ContentDictionary.ContainsKey(SENTENCE_WITH_DEPENDENCIES) ? this.ContentDictionary[SENTENCE_WITH_DEPENDENCIES] as JArray : new JArray();
+            JArray enumerableResults = this.ContentDictionary.ContainsKey(SENTENCES) ? this.ContentDictionary[SENTENCES] as JArray : new JArray();
             foreach (JObject result in enumerableResults)
             {
                 List<Dependency> dependencies = new List<Dependency>();
@@ -166,9 +166,9 @@ namespace rosette_api
                 {
                     SentenceWithDependencies other = obj as SentenceWithDependencies;
                     List<bool> conditions = new List<bool>() {
-                    this.Dependencies == other.Dependencies,
-                    this.StartOffset == other.StartOffset,
-                    this.EndOffset == other.EndOffset,
+                    this.Dependencies != null && other.Dependencies != null ? this.Dependencies.SequenceEqual(other.Dependencies) : this.Dependencies == other.Dependencies,
+                    this.StartOffset.Equals(other.StartOffset),
+                    this.EndOffset.Equals(other.EndOffset),
                     this.GetHashCode() == other.GetHashCode()
                 };
                     return conditions.All(condition => condition);
@@ -249,9 +249,9 @@ namespace rosette_api
                 {
                     Dependency other = obj as Dependency;
                     List<bool> conditions = new List<bool>() {
-                    this.DependencyType == other.DependencyType,
-                    this.GovernorTokenIndex == other.GovernorTokenIndex,
-                    this.DependentTokenIndex == other.DependentTokenIndex,
+                    this.DependencyType.Equals(other.DependencyType),
+                    this.GovernorTokenIndex.Equals(other.GovernorTokenIndex),
+                    this.DependentTokenIndex.Equals(other.DependentTokenIndex),
                     this.GetHashCode() == other.GetHashCode()
                 };
                     return conditions.All(condition => condition);
