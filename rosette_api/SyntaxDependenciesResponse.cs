@@ -19,8 +19,8 @@ namespace rosette_api
     {
         internal const string SENTENCES = "sentences";
         internal const string TOKENS = "tokens";
-        internal const string SENTENCE_START_TOKEN_OFFSET = "startOffset";
-        internal const string SENTENCE_END_TOKEN_OFFSET = "endOffset";
+        internal const string SENTENCE_START_TOKEN_INDEX = "startTokenIndex";
+        internal const string SENTENCE_END_TOKEN_INDEX = "endTokenIndex";
         internal const string DEPENDENCIES = "dependencies";
         internal const string DEPENDENCY_TYPE = "dependencyType";
         internal const string GOVERNOR_TOKEN_INDEX = "governorTokenIndex";
@@ -58,8 +58,8 @@ namespace rosette_api
                     int? dependentTokenIndex = dependency.Properties().Where((p) => p.Name == DEPENDENT_TOKEN_INDEX).Any() ? dependency[DEPENDENT_TOKEN_INDEX].ToObject<int?>() : null;
                     dependencies.Add(new Dependency(dependencyType, governorTokenIndex, dependentTokenIndex));
                 }
-                int? startOffset = result.Properties().Where((p) => p.Name == SENTENCE_START_TOKEN_OFFSET).Any() ? result[SENTENCE_START_TOKEN_OFFSET].ToObject<int?>() : null;
-                int? endOffset = result.Properties().Where((p) => p.Name == SENTENCE_END_TOKEN_OFFSET).Any() ? result[SENTENCE_END_TOKEN_OFFSET].ToObject<int?>() : null;
+                int? startOffset = result.Properties().Where((p) => p.Name == SENTENCE_START_TOKEN_INDEX).Any() ? result[SENTENCE_START_TOKEN_INDEX].ToObject<int?>() : null;
+                int? endOffset = result.Properties().Where((p) => p.Name == SENTENCE_END_TOKEN_INDEX).Any() ? result[SENTENCE_END_TOKEN_INDEX].ToObject<int?>() : null;
                 sentences.Add(new SentenceWithDependencies(startOffset, endOffset, dependencies));
             }
             this.Sentences = sentences;
@@ -131,27 +131,27 @@ namespace rosette_api
             public List<Dependency> Dependencies { get; set; }
 
             /// <summary>
-            /// The start token offset of this sentence
+            /// The token index of the start of this sentence
             /// </summary>
-            [JsonProperty(SyntaxDependenciesResponse.SENTENCE_START_TOKEN_OFFSET)]
-            public int? StartOffset { get; set; }
+            [JsonProperty(SyntaxDependenciesResponse.SENTENCE_START_TOKEN_INDEX)]
+            public int? StartTokenIndex { get; set; }
 
             /// <summary>
-            /// The end token offset of this sentence
+            /// The token index of the end of this sentence
             /// </summary>
-            [JsonProperty(SyntaxDependenciesResponse.SENTENCE_END_TOKEN_OFFSET)]
-            public int? EndOffset { get; set; }
+            [JsonProperty(SyntaxDependenciesResponse.SENTENCE_END_TOKEN_INDEX)]
+            public int? EndTokenIndex { get; set; }
 
             /// <summary>
             /// Creates a list of sentences that has dependencies associated with it
             /// </summary>
-            /// <param name="startOffset">The start token offset of this sentence</param>
-            /// <param name="endOffset">The end token offset of this sentence</param>
+            /// <param name="startTokenIndex">The token index of the start of this sentence</param>
+            /// <param name="endTokenIndex">The token index of the end of this sentence</param>
             /// <param name="dependencies">A list of dependencies</param>
-            public SentenceWithDependencies(int? startOffset, int? endOffset, List<Dependency> dependencies)
+            public SentenceWithDependencies(int? startTokenIndex, int? endTokenIndex, List<Dependency> dependencies)
             {
-                this.StartOffset = startOffset;
-                this.EndOffset = endOffset;
+                this.StartTokenIndex = startTokenIndex;
+                this.EndTokenIndex = endTokenIndex;
                 this.Dependencies = dependencies;
             }
 
@@ -167,8 +167,8 @@ namespace rosette_api
                     SentenceWithDependencies other = obj as SentenceWithDependencies;
                     List<bool> conditions = new List<bool>() {
                     this.Dependencies != null && other.Dependencies != null ? this.Dependencies.SequenceEqual(other.Dependencies) : this.Dependencies == other.Dependencies,
-                    this.StartOffset.Equals(other.StartOffset),
-                    this.EndOffset.Equals(other.EndOffset),
+                    this.StartTokenIndex.Equals(other.StartTokenIndex),
+                    this.EndTokenIndex.Equals(other.EndTokenIndex),
                     this.GetHashCode() == other.GetHashCode()
                 };
                     return conditions.All(condition => condition);
@@ -186,8 +186,8 @@ namespace rosette_api
             public override int GetHashCode()
             {
                 int h0 = this.Dependencies != null ? this.Dependencies.GetHashCode() : 1;
-                int h1 = this.StartOffset != null ? this.StartOffset.GetHashCode() : 1;
-                int h2 = this.EndOffset != null ? this.EndOffset.GetHashCode() : 1;
+                int h1 = this.StartTokenIndex != null ? this.StartTokenIndex.GetHashCode() : 1;
+                int h2 = this.EndTokenIndex != null ? this.EndTokenIndex.GetHashCode() : 1;
                 return h0 ^ h1 ^ h2;
             }
 
