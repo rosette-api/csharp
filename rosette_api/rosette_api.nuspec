@@ -21,6 +21,6 @@
 	</frameworkAssemblies>
   </metadata>
   <files>
-      <file src="./bin/Release/rosette_api.dll" target="lib\net45"/>
+      <file src="./bin/Release/rosette_api.dll" target="lib/net45"/>
   </files>
 </package>
