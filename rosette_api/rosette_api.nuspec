@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>rosette_api</id>
-    <version>1.4.0</version>                                            
+    <version>1.4.1</version>                                            
     <authors>basistech</authors>
     <owners>basistech</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
