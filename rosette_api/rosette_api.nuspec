@@ -17,7 +17,7 @@
 		<frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
-    <frameworkAssembly assemblyName="Newtonsoft.JSON" targetFramework="net45" />
+    <frameworkAssembly assemblyName="Newtonsoft.Json" targetFramework="net45" />
 	</frameworkAssemblies>
   </metadata>
   <files>
