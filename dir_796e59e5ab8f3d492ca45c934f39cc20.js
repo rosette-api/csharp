@@ -69,6 +69,7 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "StaticValueProvider.cs", "StaticValueProvider_8cs.html", null ],
     [ "SyntaxDependenciesResponse.cs", "SyntaxDependenciesResponse_8cs.html", [
       [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
+      [ "SentenceWithDependencies", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies" ],
       [ "Dependency", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency" ]
     ] ],
     [ "TextEmbeddingResponse.cs", "TextEmbeddingResponse_8cs.html", [

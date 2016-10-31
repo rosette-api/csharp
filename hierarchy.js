@@ -39,5 +39,6 @@ var hierarchy =
       [ "rosette_api.TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", null ],
       [ "rosette_api.TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", null ]
     ] ],
-    [ "rosette_api.SentimentResponse.RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", null ]
+    [ "rosette_api.SentimentResponse.RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", null ],
+    [ "rosette_api.SyntaxDependenciesResponse.SentenceWithDependencies", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html", null ]
 ];
