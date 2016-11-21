@@ -614,41 +614,6 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
-        //------------------------- Entities Linked ----------------------------------------
-
-        [Test]
-        public void EntitiesLinked_Content_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.Entity("content", null, null, null, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
-
-        [Test]
-        public void EntitiesLinked_Dict_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } }, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
-
-        [Test]
-        public void EntitiesLinked_File_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond("application/json", "{'response': 'OK'}");
-
-            RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.Entity(f, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
 
         //------------------------- Entity ----------------------------------------
         [Test]
