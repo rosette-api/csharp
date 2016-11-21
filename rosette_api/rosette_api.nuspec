@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>rosette_api</id>
-    <version>1.4.0</version>                                            
+    <version>1.4.1</version>                                            
     <authors>basistech</authors>
     <owners>basistech</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -17,9 +17,10 @@
 		<frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
+    <frameworkAssembly assemblyName="Newtonsoft.Json" targetFramework="net45" />
 	</frameworkAssemblies>
   </metadata>
   <files>
-      <file src="./bin/Release/rosette_api.dll" target="lib\net45"/>
+      <file src="./bin/Release/rosette_api.dll" target="lib/net45"/>
   </files>
 </package>
