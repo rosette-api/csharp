@@ -65,6 +65,21 @@ namespace rosette_apiUnitTests
         }
     }
 
+    /// <summary>
+    /// Live test for Relationships.  To run, uncomment [Test]
+    /// </summary>
+    [TestFixture]
+    public class liveRelationshipTest {
+        //[Test]
+        public void doTest() {
+
+            CAPI rosetteApi = new CAPI("boguskey", "http://jugmaster.basistech.net:8181/rest/v1", 1);
+            RelationshipsResponse result = rosetteApi.Relationships(@"Bill Gates, Microsoft's former CEO, is a philanthropist.");
+            System.Diagnostics.Debug.WriteLine(result.ToString());
+
+        }
+    }
+
     [TestFixture]
     public class rosetteResponseTests {
         private string _testHeaderKey;
@@ -599,41 +614,6 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
-        //------------------------- Entities Linked ----------------------------------------
-
-        [Test]
-        public void EntitiesLinked_Content_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.Entity("content", null, null, null, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
-
-        [Test]
-        public void EntitiesLinked_Dict_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } }, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
-
-        [Test]
-        public void EntitiesLinked_File_Test() {
-            _mockHttp.When(_testUrl + "entities/linked")
-                .Respond("application/json", "{'response': 'OK'}");
-
-            RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.Entity(f, true);
-# pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-# pragma warning restore 618
-        }
 
         //------------------------- Entity ----------------------------------------
         [Test]
