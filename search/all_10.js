@@ -9,7 +9,7 @@ var searchData=
   ['textembeddingresponse',['TextEmbeddingResponse',['../classrosette__api_1_1TextEmbeddingResponse.html',1,'rosette_api']]],
   ['textembeddingresponse',['TextEmbeddingResponse',['../classrosette__api_1_1TextEmbeddingResponse.html#af8370ecacee26af7f3a2e2413652e89d',1,'rosette_api.TextEmbeddingResponse.TextEmbeddingResponse(HttpResponseMessage apiResult)'],['../classrosette__api_1_1TextEmbeddingResponse.html#a22862a978655307cd810acfd17c0d70d',1,'rosette_api.TextEmbeddingResponse.TextEmbeddingResponse(IEnumerable&lt; double &gt; textEmbedding, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
   ['textembeddingresponse_2ecs',['TextEmbeddingResponse.cs',['../TextEmbeddingResponse_8cs.html',1,'']]],
-  ['time',['Time',['../classrosette__api_1_1PingResponse.html#a6ac53b513b6ba07354b781712e1d09af',1,'rosette_api.PingResponse.Time()'],['../classrosette__api_1_1RosetteEntity.html#a9d2c5dcf673298a18e9583792c2c9f92',1,'rosette_api.RosetteEntity.TIME()']]],
+  ['time',['TIME',['../classrosette__api_1_1RosetteEntity.html#a9d2c5dcf673298a18e9583792c2c9f92',1,'rosette_api.RosetteEntity.TIME()'],['../classrosette__api_1_1PingResponse.html#a6ac53b513b6ba07354b781712e1d09af',1,'rosette_api.PingResponse.Time()']]],
   ['timeout',['Timeout',['../classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1',1,'rosette_api::CAPI']]],
   ['title',['TITLE',['../classrosette__api_1_1RosetteEntity.html#acee78f293e4bc55e661ef3d8a6290556',1,'rosette_api::RosetteEntity']]],
   ['token',['Token',['../classrosette__api_1_1MorphologyItem.html#a8990d09f037896d40bdecc32df6c7b18',1,'rosette_api::MorphologyItem']]],

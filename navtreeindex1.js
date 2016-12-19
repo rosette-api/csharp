@@ -1,8 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classrosette__api_1_1RosetteEntity.html#ae0e600210fa979a88950b6fad6df0f59":[1,0,0,16,11],
-"classrosette__api_1_1RosetteEntity.html#aef65f084ac19da80508466e85acfa946":[1,0,0,16,24],
-"classrosette__api_1_1RosetteEntity.html#af6936e336ad3025cda66c5eaec5d2f0b":[1,0,0,16,26],
 "classrosette__api_1_1RosetteEntity.html#afad0517403fa8f3a56d18eec22ec53e9":[1,0,0,16,13],
 "classrosette__api_1_1RosetteException.html":[1,0,0,17],
 "classrosette__api_1_1RosetteException.html#a060ff0690a35a0afbe15ecebe892a5a7":[1,0,0,17,3],
