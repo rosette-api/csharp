@@ -30,7 +30,6 @@ Each example, when run, prints its output to the console.
 | -------------                 |-------------                                        | 
 | categories.cs                    | Gets the category of a document at a URL              | 
 | entities.cs                      | Gets the entities from a piece of text                | 
-| entities_linked.cs               | Gets the linked (to Wikipedia) entities from a piece of text |
 | info.cs                          | Gets information about Rosette API                    | 
 | language.cs                      | Gets the language of a piece of text                  | 
 | matched-name.cs                  | Gets the similarity score of two names                | 
