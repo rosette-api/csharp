@@ -175,7 +175,7 @@ namespace rosette_api
                     case "pos": this.Label = SentimentLabel.pos; break;
                     case "neu": this.Label = SentimentLabel.neu; break;
                     case "neg": this.Label = SentimentLabel.neg; break;
-                    default: throw new ArgumentException("The sentiment label returned by the API has been changed.  The binding needs to be updated.", "sentiment");
+                    default: this.Label = SentimentLabel.neu; break;
                 }
                 this.Confidence = confidence;
             }
