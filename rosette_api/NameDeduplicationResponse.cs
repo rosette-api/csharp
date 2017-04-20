@@ -9,14 +9,16 @@ namespace rosette_api {
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class NameDeduplicationResponse : RosetteResponse {
-        private List<string> _results;
+        private List<string> _results = new List<string>();
 
         /// <summary>
         /// Creates a NameDeduplicationResponse from the given apiResults
         /// </summary>
         /// <param name="apiResults">The message from the API</param>
         public NameDeduplicationResponse(HttpResponseMessage apiResults) : base(apiResults) {
-            this._results = this.ContentDictionary["results"] as List<string>;
+            if (this.ContentDictionary.ContainsKey("results")) {
+                this._results = this.ContentDictionary["results"] as List<string>;
+            }
         }
 
         /// <summary>
@@ -26,7 +28,9 @@ namespace rosette_api {
         /// <param name="content">The content of the response (the score) in dictionary form</param>
         /// <param name="contentAsJSON">The content in JSON</param>
         public NameDeduplicationResponse(Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJSON) : base(responseHeaders, content, contentAsJSON) {
-            this._results = this.ContentDictionary["results"] as List<string>;
+            if (this.ContentDictionary.ContainsKey("results")) {
+                this._results = this.ContentDictionary["results"] as List<string>;
+            }
         }
 
         /// <summary>
