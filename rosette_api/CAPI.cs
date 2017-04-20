@@ -5,11 +5,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Text.RegularExpressions;
@@ -18,17 +13,17 @@ namespace rosette_api {
     /// <summary>
     /// Enum to provide feature options for Morphology
     /// </summary>
-    public enum MorphologyFeature { 
+    public enum MorphologyFeature {
         /// <summary>provide complete morphology</summary>
-        complete, 
+        complete,
         /// <summary>provide lemmas</summary>
-        lemmas, 
+        lemmas,
         /// <summary>provide parts of speech</summary>
-        partsOfSpeech, 
+        partsOfSpeech,
         /// <summary>provide compound components</summary>
-        compoundComponents, 
+        compoundComponents,
         /// <summary>provide han readings</summary>
-        hanReadings 
+        hanReadings
     };
 
     /// <summary>C# Rosette API.
@@ -46,7 +41,7 @@ namespace rosette_api {
         private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
 
         /// <summary>
-        /// Internal string to hold the uri ending for each endpoint. 
+        /// Internal string to hold the uri ending for each endpoint.
         /// Set when an endpoint is called.
         /// </summary>
         private string _uri = null;
@@ -64,14 +59,14 @@ namespace rosette_api {
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
-        /// Requires user_key to start and has 3 additional parameters to be specified. 
-        /// Will run a Version Check against the Rosette Server. If the version check fails, a 
-        /// RosetteException will be thrown. 
+        /// Requires user_key to start and has 3 additional parameters to be specified.
+        /// Will run a Version Check against the Rosette Server. If the version check fails, a
+        /// RosetteException will be thrown.
         /// </para>
         /// </summary>
         /// <param name="user_key">string: API key required by the Rosette server to allow access to endpoints</param>
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
-        /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param> 
+        /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param>
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
         public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null) {
             UserKey = user_key;
@@ -287,7 +282,7 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>EntitiesResponse containing the results of the request. 
+        /// <returns>EntitiesResponse containing the results of the request.
         /// </returns>
         public EntitiesResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
@@ -301,7 +296,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>EntitiesResponse containing the results of the request. 
+        /// <returns>EntitiesResponse containing the results of the request.
         /// </returns>
         public EntitiesResponse Entity(Dictionary<object, object> dict)
         {
@@ -315,7 +310,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
-        /// <returns>EntitiesResponse containing the results of the request. 
+        /// <returns>EntitiesResponse containing the results of the request.
         /// </returns>
         public EntitiesResponse Entity(RosetteFile file) {
             _uri = "entities";
@@ -344,7 +339,7 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): MIME type of the input (required for base64 content; if content type is unknown, set to "application/octet-stream")</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>LanguageIdentificationResponse containing the results of the request. 
+        /// <returns>LanguageIdentificationResponse containing the results of the request.
         /// The response is an ordered list of detected languages.
         /// </returns>
         public LanguageIdentificationResponse Language(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
@@ -359,7 +354,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>LanguageIdentificationResponse containing the results of the request. 
+        /// <returns>LanguageIdentificationResponse containing the results of the request.
         /// The response is an ordered list of detected languages.
         /// </returns>
         public LanguageIdentificationResponse Language(Dictionary<object, object> dict)
@@ -374,7 +369,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
-        /// <returns>LanguageIdentificationResponse containing the results of the request. 
+        /// <returns>LanguageIdentificationResponse containing the results of the request.
         /// The response is an ordered list of detected languages.
         /// </returns>
         public LanguageIdentificationResponse Language(RosetteFile file) {
@@ -393,8 +388,8 @@ namespace rosette_api {
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>MorphologyResponse containing the results of the request. 
-        /// The response may include lemmas, part of speech tags, compound word components, and Han readings. 
+        /// <returns>MorphologyResponse containing the results of the request.
+        /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
         /// </returns>
         public MorphologyResponse Morphology(string content = null, string language = null, string contentType = null, string contentUri = null, MorphologyFeature feature = MorphologyFeature.complete, string genre = null)
@@ -410,8 +405,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
-        /// <returns>MorphologyResponse containing the results of the request. 
-        /// The response may include lemmas, part of speech tags, compound word components, and Han readings. 
+        /// <returns>MorphologyResponse containing the results of the request.
+        /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
         /// </returns>
         public MorphologyResponse Morphology(Dictionary<object, object> dict, MorphologyFeature feature = MorphologyFeature.complete)
@@ -427,8 +422,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
-        /// <returns>MorphologyResponse containing the results of the request. 
-        /// The response may include lemmas, part of speech tags, compound word components, and Han readings. 
+        /// <returns>MorphologyResponse containing the results of the request.
+        /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
         /// </returns>
         public MorphologyResponse Morphology(RosetteFile file, MorphologyFeature feature = MorphologyFeature.complete) {
@@ -443,7 +438,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="n1">Name: First name to be matched</param>
         /// <param name="n2">Name: Second name to be matched</param>
-        /// <returns>NameSimilarityResponse containing the results of the request. 
+        /// <returns>NameSimilarityResponse containing the results of the request.
         /// </returns>
         public NameSimilarityResponse NameSimilarity(Name n1, Name n2)
         {
@@ -464,7 +459,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="n1">Name: First name to be matched</param>
         /// <param name="n2">Name: Second name to be matched</param>
-        /// <returns>NameSimilarityResponse containing the results of the request. 
+        /// <returns>NameSimilarityResponse containing the results of the request.
         /// </returns>
         [Obsolete("Use NameSimilarity")]
         public NameSimilarityResponse MatchedName(Name n1, Name n2)
@@ -478,11 +473,45 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>NameSimilarityResponse containing the results of the request. 
+        /// <returns>NameSimilarityResponse containing the results of the request.
         /// </returns>
         public NameSimilarityResponse NameSimilarity(Dictionary<object, object> dict) {
             _uri = "name-similarity";
             return getResponse<NameSimilarityResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
+        /// <summary>NameDeduplication
+        /// <para>
+        /// (POST)NameDeduplication Endpoint: Returns the result of matching 2 names.
+        /// </para>
+        /// </summary>
+        /// <param name="names">List of Name: List of Name objects to be deduplicated</param>
+        /// <param name="threshold">float: Threshold to be used for cluster sizing</param>
+        /// <returns>NameDeduplicationResponse containing the results of the request.
+        /// </returns>
+        public NameDeduplicationResponse NameDeduplication(List<Name> names, float threshold=0.75f)
+        {
+            _uri = "name-deduplication";
+
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
+                { "names", names},
+                { "threshold", threshold}
+            };
+
+            return getResponse<NameDeduplicationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
+        /// <summary>NameDeduplication
+        /// <para>
+        /// (POST)NameDeduplication Endpoint: Returns the result of matching 2 names.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>NameDeduplicationResponse containing the results of the request.
+        /// </returns>
+        public NameDeduplicationResponse NameDeduplication(Dictionary<object, object> dict) {
+            _uri = "name-deduplication";
+            return getResponse<NameDeduplicationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
         /// <summary>Ping
@@ -508,10 +537,10 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
         /// A TextEmbeddingResponse:
-        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
-        /// The text embedding represents the relationships between words in your document in the semantic space. 
-        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
         /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
@@ -528,10 +557,10 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>
         /// A TextEmbeddingResponse:
-        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
-        /// The text embedding represents the relationships between words in your document in the semantic space. 
-        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
         /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(Dictionary<object, object> dict)
@@ -548,10 +577,10 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>
         /// A TextEmbeddingResponse:
-        /// Contains a single vector of floating point numbers for your input, known as a text embedding. 
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
-        /// The text embedding represents the relationships between words in your document in the semantic space. 
-        /// The semantic space is a multilingual network that maps the input based on the words and their context. 
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
         /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(RosetteFile file)
@@ -572,7 +601,7 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
         /// A SyntaxDependenciesResponse:
-        /// The parsed text is represented in terms of syntactic dependencies 
+        /// The parsed text is represented in terms of syntactic dependencies
         /// </returns>
         public SyntaxDependenciesResponse SyntaxDependencies(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
@@ -588,7 +617,7 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>
         /// A SyntaxDependenciesResponse:
-        /// The parsed text is represented in terms of syntactic dependencies 
+        /// The parsed text is represented in terms of syntactic dependencies
         /// </returns>
         public SyntaxDependenciesResponse SyntaxDependencies(Dictionary<object, object> dict)
         {
@@ -604,7 +633,7 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>
         /// A SyntaxDependenciesResponse:
-        /// The parsed text is represented in terms of syntactic dependencies 
+        /// The parsed text is represented in terms of syntactic dependencies
         /// </returns>
         public SyntaxDependenciesResponse SyntaxDependencies(RosetteFile file)
         {
@@ -624,7 +653,7 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
         /// RosetteResponse of extracted relationships. A relationship contains
-        /// 
+        ///
         /// predicate - usually the main verb, property or action that is expressed by the text
         /// arg1 - usually the subject, agent or main actor of the relationship
         /// arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship
@@ -647,7 +676,7 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>
         /// RelationshipsResponse of extracted relationships. A relationship contains
-        /// 
+        ///
         /// predicate - usually the main verb, property or action that is expressed by the text
         /// arg1 - usually the subject, agent or main actor of the relationship
         /// arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship
@@ -670,7 +699,7 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>
         /// RelationshipsResponse of extracted relationships. A relationship contains
-        /// 
+        ///
         /// predicate - usually the main verb, property or action that is expressed by the text
         /// arg1 - usually the subject, agent or main actor of the relationship
         /// arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship
@@ -694,7 +723,7 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>SentenceTaggingResponse containing the results of the request 
+        /// <returns>SentenceTaggingResponse containing the results of the request
         /// The response contains a list of sentences.
         /// </returns>
         public SentenceTaggingResponse Sentences(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
@@ -709,7 +738,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>SentenceTaggingResponse containing the results of the request. 
+        /// <returns>SentenceTaggingResponse containing the results of the request.
         /// The response contains a list of sentences.
         /// </returns>
         public SentenceTaggingResponse Sentences(Dictionary<object, object> dict)
@@ -724,7 +753,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
-        /// <returns>SentenceTaggingResponse containing the results of the request. 
+        /// <returns>SentenceTaggingResponse containing the results of the request.
         /// The response contains a list of sentences.
         /// </returns>
         public SentenceTaggingResponse Sentences(RosetteFile file) {
@@ -742,7 +771,7 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>SentimentResponse containing the results of the request. 
+        /// <returns>SentimentResponse containing the results of the request.
         /// The response contains sentiment analysis results.
         /// </returns>
         public SentimentResponse Sentiment(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
@@ -757,7 +786,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>SentimentResponse containing the results of the request. 
+        /// <returns>SentimentResponse containing the results of the request.
         /// The response contains sentiment analysis results.
         /// </returns>
         public SentimentResponse Sentiment(Dictionary<object, object> dict)
@@ -772,7 +801,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
-        /// <returns>SentimentResponse containing the results of the request. 
+        /// <returns>SentimentResponse containing the results of the request.
         /// The response contains sentiment analysis results.
         /// </returns>
         public SentimentResponse Sentiment(RosetteFile file) {
@@ -790,7 +819,7 @@ namespace rosette_api {
         /// <param name="contentType">(string, optional): not used at this time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>TokenizationResponse containing the results of the request. 
+        /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
         public TokenizationResponse Tokens(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
@@ -805,7 +834,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <returns>TokenizationResponse containing the results of the request. 
+        /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
         public TokenizationResponse Tokens(Dictionary<object, object> dict) {
@@ -819,7 +848,7 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
-        /// <returns>TokenizationResponse containing the results of the request. 
+        /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
         public TokenizationResponse Tokens(RosetteFile file) {
@@ -841,7 +870,7 @@ namespace rosette_api {
         /// <param name="sourceLanguageOfOrigin">(string, optional): ISO 639-3 code for the name's language of origin</param>
         /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
-        /// <returns>TranslateNamesResponse containing the results of the request. 
+        /// <returns>TranslateNamesResponse containing the results of the request.
         /// </returns>
         public TranslateNamesResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
             _uri = "name-translation";
@@ -989,7 +1018,7 @@ namespace rosette_api {
         /// <summary>SetupClient
         /// <para>
         /// SetupClient: Internal function to setup the HttpClient
-        /// Uses the Client if one has been set. Otherwise create a new one. 
+        /// Uses the Client if one has been set. Otherwise create a new one.
         /// </para>
         /// </summary>
         /// <returns>HttpClient client to use to access the Rosette server.</returns>

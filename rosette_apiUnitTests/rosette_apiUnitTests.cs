@@ -17,7 +17,7 @@ namespace rosette_apiUnitTests
 {
     [TestFixture]
     public class volumeTest {
-        // uncomment [Test] to enable. It's not a true unit test, so it shouldn't run under regular conditions, but 
+        // uncomment [Test] to enable. It's not a true unit test, so it shouldn't run under regular conditions, but
         // it is useful for debugging.
         //[Test]
         public void testSentiment() {
@@ -239,7 +239,7 @@ namespace rosette_apiUnitTests
             sw.WriteLine("Rosette API Unit Test");
             sw.Flush();
             sw.Close();
-            
+
             RosetteFile f = new RosetteFile(tmpFile, "application/octet-stream", null);
             Assert.IsNotNull(f.Filename, "Filename is null");
             Assert.AreEqual(tmpFile, f.Filename, "Filename does not match");
@@ -346,7 +346,7 @@ namespace rosette_apiUnitTests
             StreamWriter sw = File.AppendText(_tmpFile);
             sw.WriteLine("Rosette API Unit Test.  This file is used for testing file operations.");
             sw.Flush();
-            sw.Close(); 
+            sw.Close();
             _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
@@ -523,10 +523,10 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Exceptions ----------------------------------------
-        
+
         // Currently, the two exceptions returned by the binding (not server) occur if
         // neither content nor contentUri are provided or both are provided.  Categories is
-        // used for convenience, but the tests could be run against almost all of the 
+        // used for convenience, but the tests could be run against almost all of the
         // endpoints.
 
         [Test]
@@ -833,7 +833,7 @@ namespace rosette_apiUnitTests
             Init();
             List<string> h0 = new List<string>() { "Bei3-jing1-Da4-xue2" };
             List<string> h1 = null;
-            List<string> h2 = new List<string>() { "zhu3-ren4" };            
+            List<string> h2 = new List<string>() { "zhu3-ren4" };
             MorphologyItem m0 = new MorphologyItem("北京大学", null, null, null, h0);
             MorphologyItem m1 = new MorphologyItem("生物系", null, null, null, h1);
             MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
@@ -925,6 +925,38 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
+
+        //------------------------- Name Deduplication ----------------------------------------
+        [Test]
+        public void NameDeduplication_Content_Test() {
+            _mockHttp.When(_testUrl + "name-deduplication").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
+            List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
+            float threshold = 0.75f;
+
+            var response = _rosetteApi.NameDeduplication(names, threshold);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void NameDeduplication_Dict_Test() {
+            _mockHttp.When(_testUrl + "name-deduplication")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
+            Dictionary<object, object> dict = new Dictionary<object, object>() {
+                { "names", dedup_names.Select(name => new Name(name, "eng", "Latn"))},
+                { "threshold", 0.75f }};
+
+            var response = _rosetteApi.NameDeduplication(dict);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+
         //------------------------- Relationships ----------------------------------------
         [Test]
         public void RelationshipsTestFull()
@@ -986,9 +1018,9 @@ namespace rosette_apiUnitTests
             string arg1 = "The Ghostbusters movie";
             string loc1 = "in Boston";
             List<string> locatives = new List<string>() {loc1};
-            RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence); 
+            RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence);
             RosetteRelationship relationshipFromDoubleDictConstructor = new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, null);
-            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null); 
+            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null);
             Assert.True(relationshipFromOriginalConstructor.Equals(relationshipFromDoubleDictConstructor) && relationshipFromDoubleDictConstructor.Equals(relationshipFromFullArgumentsConstructor) &&
                 relationshipFromOriginalConstructor.ToString().Equals(relationshipFromDoubleDictConstructor.ToString()) && relationshipFromDoubleDictConstructor.ToString().Equals(relationshipFromFullArgumentsConstructor.ToString()));
         }
