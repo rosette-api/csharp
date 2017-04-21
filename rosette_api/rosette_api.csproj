@@ -82,6 +82,7 @@
     <Compile Include="TextEmbeddingResponse.cs" />
     <Compile Include="TokenizationResponse.cs" />
     <Compile Include="TranslateNamesResponse.cs" />
+    <Compile Include="TransliterationResponse.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -482,7 +482,7 @@ namespace rosette_api {
 
         /// <summary>NameDeduplication
         /// <para>
-        /// (POST)NameDeduplication Endpoint: Returns the result of matching 2 names.
+        /// (POST)NameDeduplication Endpoint: Returns the result of deduplicating a list of names.
         /// </para>
         /// </summary>
         /// <param name="names">List of Name: List of Name objects to be deduplicated</param>
@@ -503,7 +503,7 @@ namespace rosette_api {
 
         /// <summary>NameDeduplication
         /// <para>
-        /// (POST)NameDeduplication Endpoint: Returns the result of matching 2 names.
+        /// (POST)NameDeduplication Endpoint: Returns the result deduplicating a list of names.
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
@@ -514,12 +514,60 @@ namespace rosette_api {
             return getResponse<NameDeduplicationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
 
+        /// <summary>Transliteration
+        /// <para>
+        /// (POST)Transliteration Endpoint: Returns the result of transliterating a name.
+        /// </para>
+        /// </summary>
+        /// <param name="content">string: content to be transliterated</param>
+        /// <param name="targetLanguage">string: ISO language code</param>
+        /// <param name="targetScript">string: ISO script code</param>
+        /// <param name="sourceLanguage">string: ISO language code</param>
+        /// <param name="sourceScript">string: ISO script code</param>
+        /// <returns>TransliterationResponse containing the results of the request.
+        /// </returns>
+        public TransliterationResponse Transliteration(string content, string targetLanguage, string targetScript, string sourceLanguage, string sourceScript)
+        {
+            _uri = "transliteration";
+
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
+                { "content", content },
+                { "targetLanguage", targetLanguage },
+                { "targetScript", targetScript },
+                { "sourceLanguage", sourceLanguage },
+                { "sourceScript", sourceScript }
+            };
+
+            return getResponse<TransliterationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
+        /// <summary>Transliteration
+        /// <para>
+        /// (POST)Transliteration Endpoint: Returns the result of transliterating a name.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>TransliterationResponse containing the results of the request.
+        /// </returns>
+        public TransliterationResponse Transliteration(Dictionary<object, object> dict) {
+            _uri = "transliteration";
+            return getResponse<TransliterationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+        }
+
         /// <summary>Ping
         /// (GET)Ping Endpoint: Pings Rosette API for a response indicting that the service is available
         /// </summary>
         /// <returns>PingResponse containing the results of the info GET.
         /// The reponse contains a message and time.
         /// </returns>
+
+        /// <summary>Ping
+        /// (GET)Ping Endpoint: Pings Rosette API for a response indicting that the service is available
+        /// </summary>
+        /// <returns>PingResponse containing the results of the info GET.
+        /// The reponse contains a message and time.
+        /// </returns>
+
         public PingResponse Ping() {
             _uri = "ping";
             return getResponse<PingResponse>(SetupClient());

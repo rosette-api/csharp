@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class name_deduplication
+    class transliteration
     {
         /// <summary>
-        /// Example code to call Rosette API to deduplication a list of names.
+        /// Example code to call Rosette API to transliterate a name.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -31,12 +31,18 @@ namespace rosette_apiExamples
             try
             {
                 CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
-                List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
-                float threshold = 0.75f;
+                string transliteration_data = "George Bush";
+                string transliteration_target_language_data = "eng";
+                string transliteration_target_script_data = "Latn";
+                string transliteration_source_language_data = "eng";
+                string transliteration_source_script_data = "Latn";
 
                 //The results of the API call will come back in the form of a Dictionary
-                NameDeduplicationResponse response = rosetteApi.NameDeduplication(names, threshold);
+                TransliterationResponse response = rosetteApi.Transliteration(transliteration_data,
+                                                                              transliteration_target_language_data,
+                                                                              transliteration_target_script_data,
+                                                                              transliteration_source_language_data,
+                                                                              transliteration_source_script_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

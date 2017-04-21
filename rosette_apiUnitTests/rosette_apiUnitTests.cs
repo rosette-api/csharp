@@ -925,7 +925,6 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
-
         //------------------------- Name Deduplication ----------------------------------------
         [Test]
         public void NameDeduplication_Content_Test() {
@@ -951,6 +950,44 @@ namespace rosette_apiUnitTests
                 { "threshold", 0.75f }};
 
             var response = _rosetteApi.NameDeduplication(dict);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        //------------------------- Transliteration ----------------------------------------
+        [Test]
+        public void Transliteration_Content_Test() {
+            _mockHttp.When(_testUrl + "transliteration").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            string transliteration_data = "George Bush";
+            string transliteration_target_language_data = "eng";
+            string transliteration_target_script_data = "Latn";
+            string transliteration_source_language_data = "eng";
+            string transliteration_source_script_data = "Latn";
+
+            var response = _rosetteApi.Transliteration(transliteration_data,
+                                                       transliteration_target_language_data,
+                                                       transliteration_target_script_data,
+                                                       transliteration_source_language_data,
+                                                       transliteration_source_script_data);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void Transliteration_Dict_Test() {
+            _mockHttp.When(_testUrl + "transliteration")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            Dictionary<object, object> dict = new Dictionary<object, object>() {
+                { "content", "George Bush"},
+                { "targetLanguage", "eng" },
+                { "targetScript", "Latn" },
+                { "sourceLanguage", "eng" },
+                { "sourceScript", "Latn" }};
+
+            var response = _rosetteApi.Transliteration(dict);
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
