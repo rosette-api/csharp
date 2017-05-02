@@ -31,18 +31,12 @@ namespace rosette_apiExamples
             try
             {
                 CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string transliteration_data = "George Bush";
-                string transliteration_target_language_data = "eng";
-                string transliteration_target_script_data = "Latn";
-                string transliteration_source_language_data = "eng";
-                string transliteration_source_script_data = "Latn";
+                string transliteration_data = "haza ya7taj fakat ila an takoun ba3dh el-nousous allati na7n ymkn an tata7awal ila al-3arabizi.";
+                string transliteration_language_data = "ara";
 
                 //The results of the API call will come back in the form of a Dictionary
-                TransliterationResponse response = rosetteApi.Transliteration(transliteration_data,
-                                                                              transliteration_target_language_data,
-                                                                              transliteration_target_script_data,
-                                                                              transliteration_source_language_data,
-                                                                              transliteration_source_script_data);
+                TransliterationResponse response = rosetteApi.Transliteration(transliteration_data, transliteration_language_data);
+
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

@@ -520,23 +520,18 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="content">string: content to be transliterated</param>
-        /// <param name="targetLanguage">string: ISO language code</param>
-        /// <param name="targetScript">string: ISO script code</param>
-        /// <param name="sourceLanguage">string: ISO language code</param>
-        /// <param name="sourceScript">string: ISO script code</param>
+        /// <param name="language">string: optional ISO language code</param>
+
         /// <returns>TransliterationResponse containing the results of the request.
         /// </returns>
-        public TransliterationResponse Transliteration(string content, string targetLanguage, string targetScript, string sourceLanguage, string sourceScript)
+        public TransliterationResponse Transliteration(string content, string language = null)
         {
             _uri = "transliteration";
 
             Dictionary<object, object> dict = new Dictionary<object, object>(){
                 { "content", content },
-                { "targetLanguage", targetLanguage },
-                { "targetScript", targetScript },
-                { "sourceLanguage", sourceLanguage },
-                { "sourceScript", sourceScript }
-            };
+                { "language", language }
+            }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
             return getResponse<TransliterationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
         }
