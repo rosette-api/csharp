@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net.Http;
 
@@ -8,7 +9,13 @@ namespace rosette_api {
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class TransliterationResponse : RosetteResponse {
-        private string _transliteration;
+        private const string transliterationKey = "transliteration";
+
+        /// <summary>
+        /// The transliterated string
+        /// </summary>
+        [JsonProperty(transliterationKey)]
+        public string Transliteration;
 
         /// <summary>
         /// Creates a TransliterationResponse from the given apiResults
@@ -16,7 +23,7 @@ namespace rosette_api {
         /// <param name="apiResults">The message from the API</param>
         public TransliterationResponse(HttpResponseMessage apiResults) : base(apiResults) {
             if (this.ContentDictionary.ContainsKey("transliteration")) {
-                this._transliteration = this.ContentDictionary["transliteration"] as string;
+                this.Transliteration = this.ContentDictionary["transliteration"] as string;
             }
         }
 
@@ -28,7 +35,7 @@ namespace rosette_api {
         /// <param name="contentAsJSON">The content in JSON</param>
         public TransliterationResponse(Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJSON) : base(responseHeaders, content, contentAsJSON) {
             if (this.ContentDictionary.ContainsKey("transliteration")) {
-                this._transliteration = this.ContentDictionary["transliteration"] as string;
+                this.Transliteration = this.ContentDictionary["transliteration"] as string;
             }
         }
 
@@ -40,7 +47,7 @@ namespace rosette_api {
         public override bool Equals(object obj) {
             if (obj is TransliterationResponse) {
                 TransliterationResponse other = obj as TransliterationResponse;
-                return this._transliteration == other._transliteration && this.ResponseHeaders.Equals(other.ResponseHeaders);
+                return this.Transliteration == other.Transliteration && this.ResponseHeaders.Equals(other.ResponseHeaders);
             }
             else {
                 return false;
@@ -52,7 +59,7 @@ namespace rosette_api {
         /// </summary>
         /// <returns>The hashcode</returns>
         public override int GetHashCode() {
-            return this._transliteration.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            return this.Transliteration.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 
 namespace rosette_api {
@@ -9,15 +10,24 @@ namespace rosette_api {
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class NameDeduplicationResponse : RosetteResponse {
-        private List<string> _results = new List<string>();
+        private const string nameDeduplicationKey = "results";
+
+        /// <summary>
+        /// The transliterated string
+        /// </summary>
+        [JsonProperty(nameDeduplicationKey)]
+        public List<string> Results;
 
         /// <summary>
         /// Creates a NameDeduplicationResponse from the given apiResults
         /// </summary>
         /// <param name="apiResults">The message from the API</param>
         public NameDeduplicationResponse(HttpResponseMessage apiResults) : base(apiResults) {
-            if (this.ContentDictionary.ContainsKey("results")) {
-                this._results = this.ContentDictionary["results"] as List<string>;
+            if (this.ContentDictionary.ContainsKey(nameDeduplicationKey)) {
+                this.Results = this.ContentDictionary[nameDeduplicationKey] as List<string>;
+                JArray resultsArr = this.ContentDictionary.ContainsKey(nameDeduplicationKey) ? this.ContentDictionary[nameDeduplicationKey] as JArray : null;
+                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+
             }
         }
 
@@ -28,8 +38,11 @@ namespace rosette_api {
         /// <param name="content">The content of the response (the score) in dictionary form</param>
         /// <param name="contentAsJSON">The content in JSON</param>
         public NameDeduplicationResponse(Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJSON) : base(responseHeaders, content, contentAsJSON) {
-            if (this.ContentDictionary.ContainsKey("results")) {
-                this._results = this.ContentDictionary["results"] as List<string>;
+            if (this.ContentDictionary.ContainsKey(nameDeduplicationKey)) {
+                this.Results = this.ContentDictionary[nameDeduplicationKey] as List<string>;
+                JArray resultsArr = this.ContentDictionary.ContainsKey(nameDeduplicationKey) ? this.ContentDictionary[nameDeduplicationKey] as JArray : null;
+                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+
             }
         }
 
@@ -41,7 +54,7 @@ namespace rosette_api {
         public override bool Equals(object obj) {
             if (obj is NameDeduplicationResponse) {
                 NameDeduplicationResponse other = obj as NameDeduplicationResponse;
-                return this._results == other._results && this.ResponseHeaders.Equals(other.ResponseHeaders);
+                return this.Results == other.Results && this.ResponseHeaders.Equals(other.ResponseHeaders);
             }
             else {
                 return false;
@@ -53,7 +66,7 @@ namespace rosette_api {
         /// </summary>
         /// <returns>The hashcode</returns>
         public override int GetHashCode() {
-            return this._results.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
+            return this.Results.GetHashCode() ^ this.ResponseHeaders.GetHashCode();
         }
     }
 }

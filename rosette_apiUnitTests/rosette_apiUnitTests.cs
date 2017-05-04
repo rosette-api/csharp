@@ -81,6 +81,35 @@ namespace rosette_apiUnitTests
     }
 
     [TestFixture]
+    public class liveTransliterationTest {
+        //[Test]
+        public void doTest() {
+            CAPI rosetteApi = new CAPI("boguskey", "http://jugmaster.basistech.net:8181/rest/v1", 1);
+            string transliteration_data = "haza ya7taj fakat ila an takoun ba3dh el-nousous allati na7n ymkn an tata7awal ila al-3arabizi.";
+            string transliteration_language_data = "ara";
+
+            //The results of the API call will come back in the form of a Dictionary
+            TransliterationResponse response = rosetteApi.Transliteration(transliteration_data, transliteration_language_data);
+            System.Diagnostics.Debug.WriteLine(response.ToString());
+        }
+    }
+
+    [TestFixture]
+    public class liveNameDeduplicationTest {
+        //[Test]
+        public void doTest() {
+            CAPI rosetteApi = new CAPI("boguskey", "http://jugmaster.basistech.net:8181/rest/v1", 1);
+            List<string> dedup_names = new List<string> { "John Smith", "Johnathon Smith", "Fred Jones" };
+            List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
+            float threshold = 0.75f;
+
+            //The results of the API call will come back in the form of a Dictionary
+            NameDeduplicationResponse response = rosetteApi.NameDeduplication(names, threshold);
+            System.Diagnostics.Debug.WriteLine(response.ToString());
+        }
+    }
+
+    [TestFixture]
     public class rosetteResponseTests {
         private string _testHeaderKey;
         private string _testHeaderValue;
