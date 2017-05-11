@@ -13,72 +13,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
-namespace rosette_apiUnitTests
-{
-    [TestFixture]
-    public class volumeTest {
-        // uncomment [Test] to enable. It's not a true unit test, so it shouldn't run under regular conditions, but 
-        // it is useful for debugging.
-        //[Test]
-        public void testSentiment() {
-            // provide a complete path to a test xls
-            var excel = new ExcelQueryFactory(@"C:\Dev\Bindings\csharp\testdata.xls");
-            var worksheetNames = excel.GetWorksheetNames();
-            excel.ReadOnly = true;
-
-            foreach (string name in worksheetNames) {
-                var data = from cell in excel.Worksheet(name)
-                           select cell;
-                foreach (int i in Enumerable.Range(0, 10)) {
-                    foreach (var cell in data) {
-                        CAPI rosetteApi = new CAPI("bogus_key", "https://api.rosette.com/rest/v1", 5);
-                        RosetteResponse result = rosetteApi.Sentiment(cell[0].Value.ToString());
-                        System.Diagnostics.Debug.WriteLine(result.ContentAsJson);
-                    }
-                }
-            }
-
-        }
-    }
-    /// <summary>
-    /// Live test for multiPart.  To run, uncomment [Test]
-    /// </summary>
-    [TestFixture]
-    public class tempMultiPartTest {
-        //[Test]
-        public void doTest() {
-            string tmpFile = Path.GetTempFileName();
-            StreamWriter sw = File.AppendText(tmpFile);
-            sw.WriteLine(@"<html><head><title>New Ghostbusters Film</title></head><body><p>Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”</p></body></html>");
-            sw.Flush();
-            sw.Close();
-
-            RosetteFile rf = new RosetteFile(tmpFile, "text/plain", @"{""language"":""eng""}");
-
-            CAPI rosetteApi = new CAPI("boguskey", "http://seuss.basistech.net:8181/rest/v1", 1);
-            RosetteResponse result = rosetteApi.Sentiment(rf);
-            System.Diagnostics.Debug.WriteLine(result.ContentAsJson);
-
-            if (File.Exists(tmpFile)) {
-                File.Delete(tmpFile);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Live test for Relationships.  To run, uncomment [Test]
-    /// </summary>
-    [TestFixture]
-    public class liveRelationshipTest {
-        //[Test]
-        public void doTest() {
-
-            CAPI rosetteApi = new CAPI("boguskey", "http://jugmaster.basistech.net:8181/rest/v1", 1);
-            RelationshipsResponse result = rosetteApi.Relationships(@"Bill Gates, Microsoft's former CEO, is a philanthropist.");
-            System.Diagnostics.Debug.WriteLine(result.ToString());
-
-        }
-    }
+namespace rosette_apiUnitTests { 
 
     [TestFixture]
     public class rosetteResponseTests {
@@ -239,7 +174,7 @@ namespace rosette_apiUnitTests
             sw.WriteLine("Rosette API Unit Test");
             sw.Flush();
             sw.Close();
-            
+
             RosetteFile f = new RosetteFile(tmpFile, "application/octet-stream", null);
             Assert.IsNotNull(f.Filename, "Filename is null");
             Assert.AreEqual(tmpFile, f.Filename, "Filename does not match");
@@ -346,7 +281,7 @@ namespace rosette_apiUnitTests
             StreamWriter sw = File.AppendText(_tmpFile);
             sw.WriteLine("Rosette API Unit Test.  This file is used for testing file operations.");
             sw.Flush();
-            sw.Close(); 
+            sw.Close();
             _mockHttp = new MockHttpMessageHandler();
             var client = new HttpClient(_mockHttp);
 
@@ -523,10 +458,10 @@ namespace rosette_apiUnitTests
         }
 
         //------------------------- Exceptions ----------------------------------------
-        
+
         // Currently, the two exceptions returned by the binding (not server) occur if
         // neither content nor contentUri are provided or both are provided.  Categories is
-        // used for convenience, but the tests could be run against almost all of the 
+        // used for convenience, but the tests could be run against almost all of the
         // endpoints.
 
         [Test]
@@ -833,7 +768,7 @@ namespace rosette_apiUnitTests
             Init();
             List<string> h0 = new List<string>() { "Bei3-jing1-Da4-xue2" };
             List<string> h1 = null;
-            List<string> h2 = new List<string>() { "zhu3-ren4" };            
+            List<string> h2 = new List<string>() { "zhu3-ren4" };
             MorphologyItem m0 = new MorphologyItem("北京大学", null, null, null, h0);
             MorphologyItem m1 = new MorphologyItem("生物系", null, null, null, h1);
             MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
@@ -925,6 +860,67 @@ namespace rosette_apiUnitTests
 # pragma warning restore 618
         }
 
+        //------------------------- Name Deduplication ----------------------------------------
+        [Test]
+        public void NameDeduplication_Content_Test() {
+            _mockHttp.When(_testUrl + "name-deduplication").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
+            List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
+            float threshold = 0.75f;
+
+            var response = _rosetteApi.NameDeduplication(names, threshold);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void NameDeduplication_Dict_Test() {
+            _mockHttp.When(_testUrl + "name-deduplication")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
+            Dictionary<object, object> dict = new Dictionary<object, object>() {
+                { "names", dedup_names.Select(name => new Name(name, "eng", "Latn"))},
+                { "threshold", 0.75f }};
+
+            var response = _rosetteApi.NameDeduplication(dict);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        //------------------------- Transliteration ----------------------------------------
+        [Test]
+        public void Transliteration_Content_Test() {
+            _mockHttp.When(_testUrl + "transliteration").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            string transliteration_data = "haza ya7taj fakat ila an takoun ba3dh el-nousous allati na7n ymkn an tata7awal ila al-3arabizi.";
+            string language = "ara";
+
+
+            var response = _rosetteApi.Transliteration(transliteration_data, language);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void Transliteration_Dict_Test() {
+            _mockHttp.When(_testUrl + "transliteration")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            Dictionary<object, object> dict = new Dictionary<object, object>() {
+                { "content", "haza ya7taj fakat ila an takoun ba3dh el-nousous allati na7n ymkn an tata7awal ila al-3arabizi."},
+                { "language", "ara" }
+            };
+
+            var response = _rosetteApi.Transliteration(dict);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+
         //------------------------- Relationships ----------------------------------------
         [Test]
         public void RelationshipsTestFull()
@@ -986,9 +982,9 @@ namespace rosette_apiUnitTests
             string arg1 = "The Ghostbusters movie";
             string loc1 = "in Boston";
             List<string> locatives = new List<string>() {loc1};
-            RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence); 
+            RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence);
             RosetteRelationship relationshipFromDoubleDictConstructor = new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, null);
-            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null); 
+            RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null);
             Assert.True(relationshipFromOriginalConstructor.Equals(relationshipFromDoubleDictConstructor) && relationshipFromDoubleDictConstructor.Equals(relationshipFromFullArgumentsConstructor) &&
                 relationshipFromOriginalConstructor.ToString().Equals(relationshipFromDoubleDictConstructor.ToString()) && relationshipFromDoubleDictConstructor.ToString().Equals(relationshipFromFullArgumentsConstructor.ToString()));
         }
