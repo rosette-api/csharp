@@ -29,7 +29,7 @@ namespace rosette_api {
     /// <summary>C# Rosette API.
     /// <para>
     /// Primary class for interfacing with the Rosette API
-    /// @copyright 2014-2015 Basis Technology Corporation.
+    /// @copyright 2014-2017 Basis Technology Corporation.
     /// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
     /// with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
     /// Unless required by applicable law or agreed to in writing, software distributed under the License is
@@ -486,10 +486,10 @@ namespace rosette_api {
         /// </para>
         /// </summary>
         /// <param name="names">List of Name: List of Name objects to be deduplicated</param>
-        /// <param name="threshold">float: Threshold to be used for cluster sizing</param>
+        /// <param name="threshold">float: Threshold to be used for cluster sizing. Can be null for default value.</param>
         /// <returns>NameDeduplicationResponse containing the results of the request.
         /// </returns>
-        public NameDeduplicationResponse NameDeduplication(List<Name> names, float threshold=0.75f)
+        public NameDeduplicationResponse NameDeduplication(List<Name> names, Nullable<float> threshold=null)
         {
             _uri = "name-deduplication";
 
