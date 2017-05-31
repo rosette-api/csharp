@@ -873,6 +873,18 @@ namespace rosette_apiUnitTests {
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
+        
+        [Test]
+        public void NameDeduplication_Content_NoThreshold_Test() {
+            _mockHttp.When(_testUrl + "name-deduplication").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            List<string> dedup_names = new List<string> {"John Smith", "Johnathon Smith", "Fred Jones"};
+            List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
+
+            var response = _rosetteApi.NameDeduplication(names);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
 
         [Test]
         public void NameDeduplication_Dict_Test() {
