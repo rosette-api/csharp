@@ -61,7 +61,7 @@ namespace rosette_api
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
                 string sentiment = null;
-                Nullable<decimal> confidence = null;
+                Nullable<double> confidence = null;
                 if (result.Properties().Where((p) => p.Name == sentimentKey).Any())
                 {
                     JObject entitySentiment = result[sentimentKey].ToObject<JObject>();
@@ -247,7 +247,7 @@ namespace rosette_api
         /// <param name="count">The number of times the entity appeared in the text</param>
         /// <param name="sentiment">The contextual sentiment of the entity</param>
         /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
-        public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<decimal> confidence) : base(mention, normalizedMention, id, entityType, count)
+        public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<double> confidence) : base(mention, normalizedMention, id, entityType, count)
         {
             this.Sentiment = new SentimentResponse.RosetteSentiment(sentiment, confidence);
         }
@@ -265,7 +265,8 @@ namespace rosette_api
                this.Mention != null && other.Mention != null ? this.Mention.Equals(other.Mention) : this.Mention == other.Mention,
                this.ID != null && other.ID != null ? this.ID.Equals(other.ID) : this.ID == other.ID,
                this.EntityType != null && other.EntityType != null ? this.EntityType.Equals(other.EntityType) : this.EntityType == other.EntityType,
-               this.Count != null && other.Count != null ? this.Count.Equals(other.Count) : this.Count == other.Count
+               this.Count != null && other.Count != null ? this.Count.Equals(other.Count) : this.Count == other.Count,
+               this.Confidence != null && other.Confidence != null ? this.Confidence.Equals(other.Confidence) : this.Confidence == other.Confidence
            };
            return conditions.All(condition => condition);
         }
@@ -305,7 +306,8 @@ namespace rosette_api
             int h3 = this.Mention != null ? this.Mention.GetHashCode() : 1;
             int h4 = this.NormalizedMention != null ? this.NormalizedMention.GetHashCode() : 1;
             int h5 = this.Sentiment != null ? this.Sentiment.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5;
+            int h6 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5 ^ h6;
         }
 
         /// <summary>
