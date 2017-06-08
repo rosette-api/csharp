@@ -49,7 +49,7 @@ namespace rosette_api
             List<RosetteSentimentEntity> entitySentiments = new List<RosetteSentimentEntity>();
             JObject docResult = this.ContentDictionary.ContainsKey(docKey) ? this.ContentDictionary[docKey] as JObject : new JObject();
             string docSentiment = docResult.Properties().Where((p) => p.Name == labelKey).Any() ? docResult[labelKey].ToString() : null;
-            decimal? docSentimentConfidence = docResult.Properties().Where((p) => p.Name == confidenceKey).Any() ? docResult[confidenceKey].ToObject<decimal?>() : new decimal?();
+            double? docSentimentConfidence = docResult.Properties().Where((p) => p.Name == confidenceKey).Any() ? docResult[confidenceKey].ToObject<double?>() : new double?();
             this.DocSentiment = docSentiment != null && docSentimentConfidence != null ? new RosetteSentiment(docSentiment, docSentimentConfidence) : null;
             JArray enumerableResults = this.ContentDictionary.ContainsKey(entitiesKey) ? this.ContentDictionary[entitiesKey] as JArray : new JArray();
             foreach (JObject result in enumerableResults)
@@ -66,7 +66,7 @@ namespace rosette_api
                 {
                     JObject entitySentiment = result[sentimentKey].ToObject<JObject>();
                     sentiment = entitySentiment.Properties().Where((p) => p.Name == labelKey).Any() ? entitySentiment[labelKey].ToString() : null;
-                    confidence = entitySentiment.Properties().Where((p) => p.Name == confidenceKey).Any() ? entitySentiment[confidenceKey].ToObject<decimal?>() : new decimal?();
+                    confidence = entitySentiment.Properties().Where((p) => p.Name == confidenceKey).Any() ? entitySentiment[confidenceKey].ToObject<double?>() : new double?();
                 }
                 entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence));
             }
@@ -155,7 +155,7 @@ namespace rosette_api
             /// On a scale of 0-1, the confidence in the Label's correctness.
             /// </summary>
             [JsonProperty(confidenceKey)]
-            public Nullable<decimal> Confidence;
+            public Nullable<double> Confidence;
             /// <summary>
             /// The label indicating the sentiment
             /// </summary>
@@ -168,7 +168,7 @@ namespace rosette_api
             /// </summary>
             /// <param name="sentiment">The sentiment label: "pos", "neu", or "neg"</param>
             /// <param name="confidence">An indicator of confidence in the label being correct.  A range from 0-1.</param>
-            public RosetteSentiment(String sentiment, Nullable<decimal> confidence)
+            public RosetteSentiment(String sentiment, Nullable<double> confidence)
             {
                 switch (sentiment)
                 {
