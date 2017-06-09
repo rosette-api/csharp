@@ -247,7 +247,7 @@ namespace rosette_api
         /// <param name="count">The number of times the entity appeared in the text</param>
         /// <param name="sentiment">The contextual sentiment of the entity</param>
         /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
-        public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<double> confidence) : base(mention, normalizedMention, id, entityType, count)
+        public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<double> confidence) : base(mention, normalizedMention, id, entityType, count, confidence)
         {
             this.Sentiment = new SentimentResponse.RosetteSentiment(sentiment, confidence);
         }
