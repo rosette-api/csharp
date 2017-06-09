@@ -115,6 +115,12 @@ namespace rosette_api
         public Nullable<int> Count { get; set; }
 
         /// <summary>
+        /// Gets or sets the confidence of the extracted entity
+        /// </summary>
+        [JsonProperty("confidence")]
+        public Nullable<double> Confidence { get; set; }
+
+        /// <summary>
         /// Creates an entity
         /// </summary>
         /// <param name="mention">The mention of the entity</param>
@@ -122,13 +128,15 @@ namespace rosette_api
         /// <param name="id">The mention's id</param>
         /// <param name="entityType">The entity type</param>
         /// <param name="count">The number of times this entity appeared in the input to the API</param>
-        public RosetteEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count)
+        /// <param name="confidence">The confidence of this entity appeared in the input to the API</param>
+        public RosetteEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, Nullable<double> confidence)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
             this.ID = id;
             this.Count = count;
             this.EntityType = entityType;
+            this.Confidence = confidence;
         }
 
         /// <summary>
@@ -147,6 +155,7 @@ namespace rosette_api
                     this.EntityType == other.EntityType,
                     this.Mention == other.Mention,
                     this.NormalizedMention == other.NormalizedMention,
+                    this.Confidence == other.Confidence,
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
@@ -168,7 +177,8 @@ namespace rosette_api
             int h2 = this.ID != null ? this.ID.GetHashCode() : 1;
             int h3 = this.Count != null ? this.Count.GetHashCode() : 1;
             int h4 = this.EntityType != null ? this.EntityType.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4;
+            int h5 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5;
         }
 
         /// <summary>

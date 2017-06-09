@@ -13,7 +13,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
-namespace rosette_apiUnitTests { 
+namespace rosette_apiUnitTests {
 
     [TestFixture]
     public class rosetteResponseTests {
@@ -555,8 +555,8 @@ namespace rosette_apiUnitTests {
         public void EntityTestFull()
         {
             Init();
-            RosetteEntity e0 = new RosetteEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2);
-            RosetteEntity e1 = new RosetteEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1);
+            RosetteEntity e0 = new RosetteEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2, 0.99);
+            RosetteEntity e1 = new RosetteEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, null);
             List<RosetteEntity> entities = new List<RosetteEntity>() { e0, e1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
@@ -873,7 +873,7 @@ namespace rosette_apiUnitTests {
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
-        
+
         [Test]
         public void NameDeduplication_Content_NoThreshold_Test() {
             _mockHttp.When(_testUrl + "name-deduplication").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
@@ -1151,9 +1151,9 @@ namespace rosette_apiUnitTests {
         public void SentimentTestFull()
         {
             Init();
-            SentimentResponse.RosetteSentiment docSentiment = new SentimentResponse.RosetteSentiment("pos", (decimal)0.7962072011038756);
-            RosetteSentimentEntity e0 = new RosetteSentimentEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2, "neg", (decimal)0.5005508052749595);
-            RosetteSentimentEntity e1 = new RosetteSentimentEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, "pos", (decimal)0.5338094035254866);
+            SentimentResponse.RosetteSentiment docSentiment = new SentimentResponse.RosetteSentiment("pos", (double)0.7962072011038756);
+            RosetteSentimentEntity e0 = new RosetteSentimentEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2, "neg", (double)0.5005508052749595);
+            RosetteSentimentEntity e1 = new RosetteSentimentEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, "pos", (double)0.5338094035254866);
             List<RosetteSentimentEntity> entities = new List<RosetteSentimentEntity>() { e0, e1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
