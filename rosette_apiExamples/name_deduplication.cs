@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string name_dedupe_data = @"John Smith,Johnathon Smith,Fred Jones";
 
-                List<string> dedup_names = name_dedupe_data.Split(",").ToList<string>();
+                List<string> dedup_names = name_dedupe_data.Split(',').ToList<string>();
                 List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
                 float threshold = 0.75f;
 
