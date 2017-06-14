@@ -11,6 +11,7 @@ var namespacerosette__api =
     [ "MorphologyItem", "classrosette__api_1_1MorphologyItem.html", "classrosette__api_1_1MorphologyItem" ],
     [ "MorphologyResponse", "classrosette__api_1_1MorphologyResponse.html", "classrosette__api_1_1MorphologyResponse" ],
     [ "Name", "classrosette__api_1_1Name.html", "classrosette__api_1_1Name" ],
+    [ "NameDeduplicationResponse", "classrosette__api_1_1NameDeduplicationResponse.html", "classrosette__api_1_1NameDeduplicationResponse" ],
     [ "NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", "classrosette__api_1_1NameSimilarityResponse" ],
     [ "PingResponse", "classrosette__api_1_1PingResponse.html", "classrosette__api_1_1PingResponse" ],
     [ "RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", "classrosette__api_1_1RelationshipsResponse" ],
@@ -29,5 +30,6 @@ var namespacerosette__api =
     [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
     [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ],
     [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
-    [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ]
+    [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ],
+    [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ]
 ];

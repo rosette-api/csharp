@@ -1,6 +1,6 @@
 var classrosette__api_1_1RosetteEntity =
 [
-    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a8b5f56ab0f1d18cb737a1d81fe5fca85", null ],
+    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a656dd12067ae65986b5036d4726aa25a", null ],
     [ "Equals", "classrosette__api_1_1RosetteEntity.html#adbef3d4a3d4741eea5ee547c7dfbf254", null ],
     [ "GetHashCode", "classrosette__api_1_1RosetteEntity.html#a51adbc548bdf98650e7d541d11542860", null ],
     [ "ToString", "classrosette__api_1_1RosetteEntity.html#a3940854adebe873d38bfa9a3a2d6e152", null ],
@@ -21,6 +21,7 @@ var classrosette__api_1_1RosetteEntity =
     [ "TIME", "classrosette__api_1_1RosetteEntity.html#a9d2c5dcf673298a18e9583792c2c9f92", null ],
     [ "TITLE", "classrosette__api_1_1RosetteEntity.html#acee78f293e4bc55e661ef3d8a6290556", null ],
     [ "URL", "classrosette__api_1_1RosetteEntity.html#abc1634e8052330c908294146e3c28fe2", null ],
+    [ "Confidence", "classrosette__api_1_1RosetteEntity.html#a819e020ade891a1d4f91fdf32bf16fac", null ],
     [ "Count", "classrosette__api_1_1RosetteEntity.html#a4f1b338e4995ff9e026acf4c1186d8fb", null ],
     [ "EntityID", "classrosette__api_1_1RosetteEntity.html#adcc6a9ef5e2b0c50419ba2da057b7b13", null ],
     [ "EntityType", "classrosette__api_1_1RosetteEntity.html#ad67ec389c0b5b8c93c1a926c42edaa5f", null ],

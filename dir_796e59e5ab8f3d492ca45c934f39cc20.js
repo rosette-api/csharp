@@ -26,6 +26,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "Name.cs", "Name_8cs.html", [
       [ "Name", "classrosette__api_1_1Name.html", "classrosette__api_1_1Name" ]
     ] ],
+    [ "NameDeduplicationResponse.cs", "NameDeduplicationResponse_8cs.html", [
+      [ "NameDeduplicationResponse", "classrosette__api_1_1NameDeduplicationResponse.html", "classrosette__api_1_1NameDeduplicationResponse" ]
+    ] ],
     [ "NameSimilarityResponse.cs", "NameSimilarityResponse_8cs.html", [
       [ "NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", "classrosette__api_1_1NameSimilarityResponse" ]
     ] ],
@@ -80,5 +83,8 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "TranslateNamesResponse.cs", "TranslateNamesResponse_8cs.html", [
       [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ]
+    ] ],
+    [ "TransliterationResponse.cs", "TransliterationResponse_8cs.html", [
+      [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ]
     ] ]
 ];

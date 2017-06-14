@@ -1,7 +1,7 @@
 var classrosette__api_1_1TranslateNamesResponse =
 [
     [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html#ace046e432d9459636108dfd039f09ab2", null ],
-    [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html#a9521638e58f79734ffe0bdd676ae5d81", null ],
+    [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html#acc5f9c3495ef55e6a018125e4479db0f", null ],
     [ "Equals", "classrosette__api_1_1TranslateNamesResponse.html#adf28f093446841a820ffcc13faf6171f", null ],
     [ "GetHashCode", "classrosette__api_1_1TranslateNamesResponse.html#acb4ada35519b4b3b5ef33dbe0c5fdbee", null ],
     [ "Confidence", "classrosette__api_1_1TranslateNamesResponse.html#ab82aff0d192f10b3e975103884521f84", null ],
