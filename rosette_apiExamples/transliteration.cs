@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class entities
+    class transliteration
     {
         /// <summary>
-        /// Example code to call Rosette API to get syntax dependencies from a piece of text.
+        /// Example code to call Rosette API to transliterate a name.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //entities yourapikeyhere
+            //matched_name yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -30,10 +30,13 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string syntax_dependencies_data = "Yoshinori Ohsumi, a Japanese cell biologist, was awarded the Nobel Prize in Physiology or Medicine on Monday.";
+                CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string transliteration_data = "haza ya7taj fakat ila an takoun ba3dh el-nousous allati na7n ymkn an tata7awal ila al-3arabizi.";
+                string transliteration_language_data = "ara";
+
                 //The results of the API call will come back in the form of a Dictionary
-                SyntaxDependenciesResponse response = api.SyntaxDependencies(syntax_dependencies_data);
+                TransliterationResponse response = rosetteApi.Transliteration(transliteration_data, transliteration_language_data);
+
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

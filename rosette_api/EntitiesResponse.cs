@@ -29,6 +29,7 @@ namespace rosette_api
         private const String normalizedKey = "normalized";
         private const String entityIDKey = "entityId";
         private const String countKey = "count";
+        private const String confidenceKey = "confidence";
 
         /// <summary>
         /// Creates a CategoriesResponse from the API's raw output
@@ -46,7 +47,8 @@ namespace rosette_api
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 String normalized = result.Properties().Where((p) => String.Equals(p.Name, normalizedKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[normalizedKey].ToString() : null;
                 Nullable<int> count = result.Properties().Where((p) => String.Equals(p.Name, countKey)).Any() ? result[countKey].ToObject<int?>() : null;
-                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count));
+                Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
+                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence));
             }
             this.Entities = entities;
         }
