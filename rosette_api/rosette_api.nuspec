@@ -9,15 +9,14 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.Net (C#) Binding for Rosette API</description>
     <releaseNotes>.Net (C#) Binding updated for Rosette API</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>RosetteAPI</tags>
     <dependencies>
+      <dependency id="Newtonsoft" version="9.0.0" />
     </dependencies>
 	<frameworkAssemblies>
-		<frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
 		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
-    <frameworkAssembly assemblyName="Newtonsoft.Json" targetFramework="net45" />
 	</frameworkAssemblies>
   </metadata>
   <files>
