@@ -38,6 +38,13 @@ namespace rosette_apiExamples
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
                 Console.WriteLine(response.ToString());
+
+                // Entities with full ADM
+                EntitiesCAPI.SetUrlParameter("output", "rosette");
+                response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
+                // response.Content contains the IDictionary results of the full ADM.
+                // PrintContent() is a provided method to print the Dictionary to the console
+                response.PrintContent();
             }
             catch (Exception e)
             {
