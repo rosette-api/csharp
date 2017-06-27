@@ -1,15 +1,14 @@
-﻿using LinqToExcel;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using rosette_api;
 using RichardSzalay.MockHttp;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
@@ -358,6 +357,42 @@ namespace rosette_apiUnitTests {
                 Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\"");
                 return;
             }
+        }
+
+
+        //------------------------- Simple URL Parameter Tests ----------------------------------------
+
+
+        [Test]
+        public void CustomUrlParametersTest() {
+            NameValueCollection expected = new NameValueCollection();
+            expected.Add("output", "rosette");
+
+            _rosetteApi.SetUrlParameter("output", "rosette");
+
+            Assert.AreEqual(expected["output"], _rosetteApi.GetUrlParameters()["output"]);
+        }
+
+        [Test]
+        public void ClearUrlParametersTest() {
+            NameValueCollection expected = new NameValueCollection();
+            expected.Add("output", "rosette");
+
+            _rosetteApi.SetUrlParameter("output", "rosette");
+
+            _rosetteApi.ClearUrlParameters();
+
+            Assert.IsEmpty(_rosetteApi.GetUrlParameters());
+        }
+
+        [Test]
+        public void RemoveURLParametersTest() {
+            NameValueCollection expected = new NameValueCollection();
+            expected.Add("output", "rosette");
+
+            _rosetteApi.RemoveUrlParameter("output");
+
+            Assert.IsEmpty(_rosetteApi.GetUrlParameters());
         }
 
 
