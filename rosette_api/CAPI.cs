@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace rosette_api {
     /// <summary>
@@ -70,7 +70,7 @@ namespace rosette_api {
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
         public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null) {
             UserKey = user_key;
-            URIstring = (uristring == null) ? "https://api.rosette.com/rest/v1/" : uristring;
+            URIstring = uristring ?? "https://api.rosette.com/rest/v1/";
             MaxRetry = (maxRetry == 0) ? 1 : maxRetry;
             MillisecondsBetweenRetries = 5000;
             Debug = false;
@@ -217,7 +217,7 @@ namespace rosette_api {
             _customHeaders.Clear();
         }
 
-        private Dictionary<object, object> appendOptions(Dictionary<object, object> dict) {
+        private Dictionary<object, object> AppendOptions(Dictionary<object, object> dict) {
             if (_options.Count > 0) {
                 dict["options"] = _options;
             }
@@ -255,7 +255,7 @@ namespace rosette_api {
         public CategoriesResponse Categories(Dictionary<object, object> dict)
         {
             _uri = "categories";
-            return getResponse<CategoriesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<CategoriesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Categories
@@ -301,7 +301,7 @@ namespace rosette_api {
         public EntitiesResponse Entity(Dictionary<object, object> dict)
         {
             _uri = "entities";
-            return getResponse<EntitiesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<EntitiesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Entity
@@ -326,7 +326,7 @@ namespace rosette_api {
         public InfoResponse Info()
         {
             _uri = "info";
-            return getResponse<InfoResponse>(SetupClient());
+            return GetResponse<InfoResponse>(SetupClient());
         }
 
         /// <summary>Language
@@ -360,7 +360,7 @@ namespace rosette_api {
         public LanguageIdentificationResponse Language(Dictionary<object, object> dict)
         {
             _uri = "language";
-            return getResponse<LanguageIdentificationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<LanguageIdentificationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Language
@@ -412,7 +412,7 @@ namespace rosette_api {
         public MorphologyResponse Morphology(Dictionary<object, object> dict, MorphologyFeature feature = MorphologyFeature.complete)
         {
             _uri = "morphology/" + feature.MorphologyEndpoint();
-            return getResponse<MorphologyResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<MorphologyResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Morphology
@@ -449,7 +449,7 @@ namespace rosette_api {
                 { "name2", n2}
             };
 
-            return getResponse<NameSimilarityResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<NameSimilarityResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>MatchedName
@@ -477,7 +477,7 @@ namespace rosette_api {
         /// </returns>
         public NameSimilarityResponse NameSimilarity(Dictionary<object, object> dict) {
             _uri = "name-similarity";
-            return getResponse<NameSimilarityResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<NameSimilarityResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>NameDeduplication
@@ -498,7 +498,7 @@ namespace rosette_api {
                 { "threshold", threshold}
             };
 
-            return getResponse<NameDeduplicationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<NameDeduplicationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>NameDeduplication
@@ -511,7 +511,7 @@ namespace rosette_api {
         /// </returns>
         public NameDeduplicationResponse NameDeduplication(Dictionary<object, object> dict) {
             _uri = "name-deduplication";
-            return getResponse<NameDeduplicationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<NameDeduplicationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Transliteration
@@ -533,7 +533,7 @@ namespace rosette_api {
                 { "language", language }
             }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
-            return getResponse<TransliterationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TransliterationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Transliteration
@@ -546,7 +546,7 @@ namespace rosette_api {
         /// </returns>
         public TransliterationResponse Transliteration(Dictionary<object, object> dict) {
             _uri = "transliteration";
-            return getResponse<TransliterationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TransliterationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Ping
@@ -565,7 +565,7 @@ namespace rosette_api {
 
         public PingResponse Ping() {
             _uri = "ping";
-            return getResponse<PingResponse>(SetupClient());
+            return GetResponse<PingResponse>(SetupClient());
         }
 
         /// <summary>TextEmbeddings
@@ -609,7 +609,7 @@ namespace rosette_api {
         public TextEmbeddingResponse TextEmbedding(Dictionary<object, object> dict)
         {
             _uri = "text-embedding";
-            return getResponse<TextEmbeddingResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TextEmbeddingResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>TextEmbeddings
@@ -665,7 +665,7 @@ namespace rosette_api {
         public SyntaxDependenciesResponse SyntaxDependencies(Dictionary<object, object> dict)
         {
             _uri = "syntax/dependencies";
-            return getResponse<SyntaxDependenciesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<SyntaxDependenciesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>SyntaxDependencies
@@ -731,7 +731,7 @@ namespace rosette_api {
         public RelationshipsResponse Relationships(Dictionary<object, object> dict)
         {
             _uri = "relationships";
-            return getResponse<RelationshipsResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<RelationshipsResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Relationships
@@ -787,7 +787,7 @@ namespace rosette_api {
         public SentenceTaggingResponse Sentences(Dictionary<object, object> dict)
         {
             _uri = "sentences";
-            return getResponse<SentenceTaggingResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<SentenceTaggingResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Sentences
@@ -835,7 +835,7 @@ namespace rosette_api {
         public SentimentResponse Sentiment(Dictionary<object, object> dict)
         {
             _uri = "sentiment";
-            return getResponse<SentimentResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<SentimentResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Sentiment
@@ -882,7 +882,7 @@ namespace rosette_api {
         /// </returns>
         public TokenizationResponse Tokens(Dictionary<object, object> dict) {
             _uri = "tokens";
-            return getResponse<TokenizationResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TokenizationResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>Tokens
@@ -930,7 +930,7 @@ namespace rosette_api {
                 { "genre", genre}
             }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
-            return getResponse<TranslateNamesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TranslateNamesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>NameTranslation
@@ -942,7 +942,7 @@ namespace rosette_api {
         /// <returns>TranslateNamesResponse containing the results of the request. </returns>
         public TranslateNamesResponse NameTranslation(Dictionary<object, object> dict) {
             _uri = "name-translation";
-            return getResponse<TranslateNamesResponse>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<TranslateNamesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>getResponse
@@ -954,7 +954,7 @@ namespace rosette_api {
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>RosetteResponse derivative</returns>
-        private T getResponse<T>(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse {
+        private T GetResponse<T>(HttpClient client, string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse {
             HttpResponseMessage responseMsg = null;
             if (client != null) {
                 string wholeURI = _uri;
@@ -992,7 +992,7 @@ namespace rosette_api {
             }
             else
             {
-                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, RosetteResponse.contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
+                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, RosetteResponse.ContentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
             }
         }
 
@@ -1022,7 +1022,7 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: File being uploaded to use as a request to the Rosette server.</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
         private T Process<T>(RosetteFile file) where T : RosetteResponse {
-            return getResponse<T>(SetupClient(), null, file.AsMultipart());
+            return GetResponse<T>(SetupClient(), null, file.AsMultipart());
         }
 
         /// <summary>Process
@@ -1055,7 +1055,7 @@ namespace rosette_api {
                 { "genre", genre}
             }.Where(f => f.Value != null).ToDictionary(x => x.Key, x => x.Value);
 
-            return getResponse<T>(SetupClient(), new JavaScriptSerializer().Serialize(appendOptions(dict)));
+            return GetResponse<T>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
         /// <summary>SetupClient
@@ -1077,8 +1077,9 @@ namespace rosette_api {
                         new HttpClientHandler {
                             AutomaticDecompression = DecompressionMethods.GZip
                                                      | DecompressionMethods.Deflate
-                        });
-                client.BaseAddress = new Uri(URIstring);
+                        }) {
+                        BaseAddress = new Uri(URIstring)
+                    };
                 if (Timeout != 0) {
                     client.Timeout = TimeSpan.FromMilliseconds(Timeout);
                 }

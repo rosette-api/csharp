@@ -26,7 +26,7 @@ namespace rosette_api {
             if (this.ContentDictionary.ContainsKey(nameDeduplicationKey)) {
                 this.Results = this.ContentDictionary[nameDeduplicationKey] as List<string>;
                 JArray resultsArr = this.ContentDictionary.ContainsKey(nameDeduplicationKey) ? this.ContentDictionary[nameDeduplicationKey] as JArray : null;
-                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken?.ToString())) : null;
 
             }
         }
@@ -41,7 +41,7 @@ namespace rosette_api {
             if (this.ContentDictionary.ContainsKey(nameDeduplicationKey)) {
                 this.Results = this.ContentDictionary[nameDeduplicationKey] as List<string>;
                 JArray resultsArr = this.ContentDictionary.ContainsKey(nameDeduplicationKey) ? this.ContentDictionary[nameDeduplicationKey] as JArray : null;
-                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+                this.Results = resultsArr != null ? new List<string>(resultsArr.Select<JToken, string>((jToken) => jToken?.ToString())) : null;
 
             }
         }
