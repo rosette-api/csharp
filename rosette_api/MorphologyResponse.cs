@@ -36,15 +36,15 @@ namespace rosette_api
         public MorphologyResponse(HttpResponseMessage apiResponse) : base(apiResponse)
         {
             JArray tokensArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as JArray : null;
-            List<string> tokens = tokensArr != null ? new List<string>(tokensArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+            List<string> tokens = tokensArr != null ? new List<string>(tokensArr.Select((jToken) => jToken?.ToString())) : null;
             JArray lemmasArr = this.ContentDictionary.ContainsKey(lemmasKey) ? this.ContentDictionary[lemmasKey] as JArray : null;
-            List<string> lemmas = lemmasArr != null ? new List<string>(lemmasArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+            List<string> lemmas = lemmasArr != null ? new List<string>(lemmasArr.Select<JToken, string>((jToken) => jToken?.ToString())) : null;
             JArray posTagsArr = this.ContentDictionary.ContainsKey(posTagsKey) ? this.ContentDictionary[posTagsKey] as JArray : null;
-            List<string> posTags = posTagsArr != null ? new List<string>(posTagsArr.Select<JToken, string>((jToken) => jToken != null ? jToken.ToString() : null)) : null;
+            List<string> posTags = posTagsArr != null ? new List<string>(posTagsArr.Select<JToken, string>((jToken) => jToken?.ToString())) : null;
             JArray compoundComponentsArr = this.ContentDictionary.ContainsKey(compoundComponentsKey) ? this.ContentDictionary[compoundComponentsKey] as JArray : null;
-            List<List<string>> compoundComponents = compoundComponentsArr != null ? new List<List<string>>(compoundComponentsArr.Select<JToken, List<string>>((jToken) => jToken != null ? jToken.ToObject<List<string>>() : null)) : null;
+            List<List<string>> compoundComponents = compoundComponentsArr != null ? new List<List<string>>(compoundComponentsArr.Select<JToken, List<string>>((jToken) => jToken?.ToObject<List<string>>())) : null;
             JArray hanReadingsArr = this.ContentDictionary.ContainsKey(hanReadingsKey) ? this.ContentDictionary[hanReadingsKey] as JArray : null;
-            List<List<string>> hanReadings = hanReadingsArr != null ? new List<List<string>>(hanReadingsArr.Select<JToken, List<string>>((jToken) => jToken != null ? jToken.ToObject<List<string>>() : null)) : null;
+            List<List<string>> hanReadings = hanReadingsArr != null ? new List<List<string>>(hanReadingsArr.Select<JToken, List<string>>((jToken) => jToken?.ToObject<List<string>>())) : null;
             this.Items = this.MakeMorphologyItems(tokens, lemmas, posTags, compoundComponents, hanReadings);
         }
 

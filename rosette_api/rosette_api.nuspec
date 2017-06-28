@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>rosette_api</id>
-    <version>1.7.2</version>                                            
+    <version>1.7.2</version>
     <authors>basistech</authors>
     <owners>basistech</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -16,7 +16,6 @@
     </dependencies>
 	<frameworkAssemblies>
 		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
-		<frameworkAssembly assemblyName="System.Web.Extensions" targetFramework="net45" />
 	</frameworkAssemblies>
   </metadata>
   <files>

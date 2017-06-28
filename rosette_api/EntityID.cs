@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
+using System.Net.Http;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -36,39 +36,39 @@ namespace rosette_api
         /// <returns>The valid Wikipedia link or null.</returns>
         public string GetWikipedaURL()
         {
-            String siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
+            string siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
             try
             {
-                String jsonStr = MakeRequest(siteLink);
+                string jsonStr =  MakeRequest(siteLink).Result;
                 int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
-                String title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
+                string title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
                 title = title.Replace(" ", "_");
                 string link = "https://en.wikipedia.org/wiki/" + (title);
                 return link;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
 
-        private String MakeRequest(string requestUrl)
+        private async Task<string> MakeRequest(string requestUrl)
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
-                request.Method = "GET";
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    if (response.StatusCode != HttpStatusCode.OK)
-                        throw new Exception(String.Format(
-                        "Server error (HTTP {0}: {1}).",
-                        response.StatusCode,
-                        response.StatusDescription));
-                    Stream stream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                    String responseString = reader.ReadToEnd();
-                    return responseString;
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(requestUrl))
+                using (HttpContent content = response.Content) {
+                    if (response.IsSuccessStatusCode) {
+                        Stream result = await content.ReadAsStreamAsync();
+                        StreamReader reader = new StreamReader(result, Encoding.UTF8);
+                        string responseString = reader.ReadToEnd();
+                        return responseString;
+                    }
+                    else {
+                        throw new Exception(String.Format("Server error (HTTP {0}: {1}).", response.StatusCode, response.ReasonPhrase));
+                    }
                 }
             }
             catch (Exception e)
