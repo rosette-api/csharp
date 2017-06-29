@@ -11,5 +11,6 @@ var searchData=
   ['position',['Position',['../classrosette__api_1_1Argument.html#aba0475a89c95815128883f5578e83fe6',1,'rosette_api::Argument']]],
   ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],
   ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]],
+  ['printcontent',['PrintContent',['../classrosette__api_1_1RosetteResponse.html#a53f0765bb3ad6f56962a8c5eecc9f2a7',1,'rosette_api::RosetteResponse']]],
   ['product',['PRODUCT',['../classrosette__api_1_1RosetteEntity.html#aa4d61650e314d8246630fa653dc8435f',1,'rosette_api::RosetteEntity']]]
 ];

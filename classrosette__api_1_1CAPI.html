@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">rosette_api
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.3</span>
    </div>
   </td>
  </tr>
@@ -122,6 +122,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0ccd841456fd820a7b4d16ddc54803b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#a0ccd841456fd820a7b4d16ddc54803b6">ClearCustomHeaders</a> ()</td></tr>
 <tr class="memdesc:a0ccd841456fd820a7b4d16ddc54803b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all of the custom headers  <a href="#a0ccd841456fd820a7b4d16ddc54803b6">More...</a><br /></td></tr>
 <tr class="separator:a0ccd841456fd820a7b4d16ddc54803b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a019977f0ca9699312c5b6e3a50a2a27a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#a019977f0ca9699312c5b6e3a50a2a27a">SetUrlParameter</a> (string key, string value)</td></tr>
+<tr class="memdesc:a019977f0ca9699312c5b6e3a50a2a27a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a value to a url parameter  <a href="#a019977f0ca9699312c5b6e3a50a2a27a">More...</a><br /></td></tr>
+<tr class="separator:a019977f0ca9699312c5b6e3a50a2a27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b25badf80bff4bf9e84d3f35660ac83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#a3b25badf80bff4bf9e84d3f35660ac83">RemoveUrlParameter</a> (string key)</td></tr>
+<tr class="memdesc:a3b25badf80bff4bf9e84d3f35660ac83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the values for a given Url parameter key  <a href="#a3b25badf80bff4bf9e84d3f35660ac83">More...</a><br /></td></tr>
+<tr class="separator:a3b25badf80bff4bf9e84d3f35660ac83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac27118e591ec46a027890af65ee18441"><td class="memItemLeft" align="right" valign="top">NameValueCollection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#ac27118e591ec46a027890af65ee18441">GetUrlParameters</a> ()</td></tr>
+<tr class="memdesc:ac27118e591ec46a027890af65ee18441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the URL Parameters  <a href="#ac27118e591ec46a027890af65ee18441">More...</a><br /></td></tr>
+<tr class="separator:ac27118e591ec46a027890af65ee18441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49e59573a977316688b5694703d2f7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#ae49e59573a977316688b5694703d2f7b">ClearUrlParameters</a> ()</td></tr>
+<tr class="memdesc:ae49e59573a977316688b5694703d2f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all URL parameters  <a href="#ae49e59573a977316688b5694703d2f7b">More...</a><br /></td></tr>
+<tr class="separator:ae49e59573a977316688b5694703d2f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf8f36f90de8d55a9e78b3a55d3d8649"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrosette__api_1_1CategoriesResponse.html">CategoriesResponse</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1CAPI.html#aaf8f36f90de8d55a9e78b3a55d3d8649">Categories</a> (string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)</td></tr>
 <tr class="memdesc:aaf8f36f90de8d55a9e78b3a55d3d8649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Categories  <a href="#aaf8f36f90de8d55a9e78b3a55d3d8649">More...</a><br /></td></tr>
 <tr class="separator:aaf8f36f90de8d55a9e78b3a55d3d8649"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,7 +292,7 @@ Properties</h2></td></tr>
 <div class="textblock"><p>C# Rosette API. </p>
 <p>Primary class for interfacing with the Rosette API </p><dl class="section copyright"><dt>Copyright</dt><dd>2014-2017 Basis Technology Corporation. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a> Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00040">40</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00042">42</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a37f291cc373c9f5aa2fb73771fc209cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37f291cc373c9f5aa2fb73771fc209cc">&#9670;&nbsp;</a></span>CAPI()</h2>
@@ -332,7 +344,7 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00071">71</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00078">78</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -395,7 +407,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1CategoriesResponse.html" title="Class for representing responses from the API when the Categories endpoint has been called ...">CategoriesResponse</a> containing the results of the request. The response is the contextual categories identified in the input. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00240">240</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00280">280</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -425,7 +437,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1CategoriesResponse.html" title="Class for representing responses from the API when the Categories endpoint has been called ...">CategoriesResponse</a> containing the results of the request. The response is the contextual categories identified in the input. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00255">255</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00295">295</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -455,7 +467,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI ">RosetteResponse</a> containing the results of the request. The response is the contextual categories identified in the input. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00270">270</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00310">310</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -476,7 +488,7 @@ Properties</h2></td></tr>
 
 <p>Clears all of the custom headers </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00216">216</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00224">224</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -497,7 +509,28 @@ Properties</h2></td></tr>
 
 <p>Clears all of the options </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00188">188</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00196">196</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+
+</div>
+</div>
+<a id="ae49e59573a977316688b5694703d2f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae49e59573a977316688b5694703d2f7b">&#9670;&nbsp;</a></span>ClearUrlParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rosette_api.CAPI.ClearUrlParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes all URL parameters </p>
+
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00263">263</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -559,7 +592,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1EntitiesResponse.html" title="A class for representing responses from the API when the Entities endpoint has been called ...">EntitiesResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00287">287</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00327">327</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -589,7 +622,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1EntitiesResponse.html" title="A class for representing responses from the API when the Entities endpoint has been called ...">EntitiesResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00301">301</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00341">341</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -619,7 +652,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1EntitiesResponse.html" title="A class for representing responses from the API when the Entities endpoint has been called ...">EntitiesResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00315">315</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00355">355</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -641,7 +674,7 @@ Properties</h2></td></tr>
 <p>Gets the custom headers </p>
 <dl class="section return"><dt>Returns</dt><dd>dictionary of custom headers</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00209">209</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00217">217</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -670,7 +703,29 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object value if exists</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00176">176</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00184">184</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+
+</div>
+</div>
+<a id="ac27118e591ec46a027890af65ee18441"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac27118e591ec46a027890af65ee18441">&#9670;&nbsp;</a></span>GetUrlParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NameValueCollection rosette_api.CAPI.GetUrlParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the URL Parameters </p>
+<dl class="section return"><dt>Returns</dt><dd>NameValueCollection</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00256">256</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -693,7 +748,7 @@ Properties</h2></td></tr>
 <p>(GET)Info Endpoint: Response is a JSON string with Rosette API information including buildNumber, name, version, and buildTime. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1InfoResponse.html" title="A class to represent Rosette API responses when Info() is called ">InfoResponse</a> containing the results of the info GET.</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00326">326</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00366">366</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -755,7 +810,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1LanguageIdentificationResponse.html" title="A class to represent responses from the Language Identification endpoint of the Rosette API ...">LanguageIdentificationResponse</a> containing the results of the request. The response is an ordered list of detected languages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00345">345</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00385">385</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -785,7 +840,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1LanguageIdentificationResponse.html" title="A class to represent responses from the Language Identification endpoint of the Rosette API ...">LanguageIdentificationResponse</a> containing the results of the request. The response is an ordered list of detected languages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00360">360</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00400">400</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -815,7 +870,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1LanguageIdentificationResponse.html" title="A class to represent responses from the Language Identification endpoint of the Rosette API ...">LanguageIdentificationResponse</a> containing the results of the request. The response is an ordered list of detected languages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00375">375</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00415">415</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -856,7 +911,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1NameSimilarityResponse.html" title="A class to represnt the results from the Name Similarity endpoint of the Rosette API ...">NameSimilarityResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00465">465</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00505">505</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -925,7 +980,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1MorphologyResponse.html" title="A class for representing responses from the Morphology endpoint of the API ">MorphologyResponse</a> containing the results of the request. The response may include lemmas, part of speech tags, compound word components, and Han readings. Support for specific return types depends on language. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00395">395</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00435">435</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -966,7 +1021,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1MorphologyResponse.html" title="A class for representing responses from the Morphology endpoint of the API ">MorphologyResponse</a> containing the results of the request. The response may include lemmas, part of speech tags, compound word components, and Han readings. Support for specific return types depends on language. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00412">412</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00452">452</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1007,7 +1062,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1MorphologyResponse.html" title="A class for representing responses from the Morphology endpoint of the API ">MorphologyResponse</a> containing the results of the request. The response may include lemmas, part of speech tags, compound word components, and Han readings. Support for specific return types depends on language. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00429">429</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00469">469</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1048,7 +1103,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1NameDeduplicationResponse.html" title="A class to represent the results from the Name Deduplication endpoint of the Rosette API ...">NameDeduplicationResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00492">492</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00532">532</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +1133,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1NameDeduplicationResponse.html" title="A class to represent the results from the Name Deduplication endpoint of the Rosette API ...">NameDeduplicationResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00512">512</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00552">552</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1119,7 +1174,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1NameSimilarityResponse.html" title="A class to represnt the results from the Name Similarity endpoint of the Rosette API ...">NameSimilarityResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00443">443</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00483">483</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1149,7 +1204,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1NameSimilarityResponse.html" title="A class to represnt the results from the Name Similarity endpoint of the Rosette API ...">NameSimilarityResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00478">478</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00518">518</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1239,7 +1294,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TranslateNamesResponse.html" title="A class to represent responses from the TranslatedNames endpoint of the RosetteAPI ...">TranslateNamesResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00918">918</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00958">958</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1269,7 +1324,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TranslateNamesResponse.html" title="A class to represent responses from the TranslatedNames endpoint of the RosetteAPI ...">TranslateNamesResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00943">943</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00983">983</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1348,7 @@ Properties</h2></td></tr>
 <p>Ping (GET)Ping Endpoint: Pings Rosette API for a response indicting that the service is available </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1PingResponse.html" title="A class to represent Rosette API responses when Ping() is called ">PingResponse</a> containing the results of the info GET. The reponse contains a message and time. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00566">566</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00606">606</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1357,7 +1412,7 @@ Properties</h2></td></tr>
 <p class="enddd">predicate - usually the main verb, property or action that is expressed by the text arg1 - usually the subject, agent or main actor of the relationship arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship arg3 [optional] - usually an additional object in ditransitive verbs adjuncts [optional] - contain all optional parts of a relationship which are not temporal or locative expressions locatives [optional] - usually express the locations the action expressed by the relationship took place temporals [optional] - usually express the time in which the action expressed by the relationship took place </p>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00708">708</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00748">748</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1389,7 +1444,7 @@ Properties</h2></td></tr>
 <p class="enddd">predicate - usually the main verb, property or action that is expressed by the text arg1 - usually the subject, agent or main actor of the relationship arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship arg3 [optional] - usually an additional object in ditransitive verbs adjuncts [optional] - contain all optional parts of a relationship which are not temporal or locative expressions locatives [optional] - usually express the locations the action expressed by the relationship took place temporals [optional] - usually express the time in which the action expressed by the relationship took place </p>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00731">731</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00771">771</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1421,7 +1476,35 @@ Properties</h2></td></tr>
 <p class="enddd">predicate - usually the main verb, property or action that is expressed by the text arg1 - usually the subject, agent or main actor of the relationship arg2 [optional] - complements the predicate and is usually the object, theme or patient of the relationship arg3 [optional] - usually an additional object in ditransitive verbs adjuncts [optional] - contain all optional parts of a relationship which are not temporal or locative expressions locatives [optional] - usually express the locations the action expressed by the relationship took place temporals [optional] - usually express the time in which the action expressed by the relationship took place </p>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00754">754</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00794">794</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+
+</div>
+</div>
+<a id="a3b25badf80bff4bf9e84d3f35660ac83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b25badf80bff4bf9e84d3f35660ac83">&#9670;&nbsp;</a></span>RemoveUrlParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rosette_api.CAPI.RemoveUrlParameter </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes the values for a given Url parameter key </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td><a class="el" href="classrosette__api_1_1Name.html" title="Name Class ">Name</a> of parameter</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00248">248</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1483,7 +1566,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentenceTaggingResponse.html" title="A class to represent responses from the Sentence Tagging endpoint of the Rosette API ...">SentenceTaggingResponse</a> containing the results of the request The response contains a list of sentences. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00772">772</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00812">812</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1513,7 +1596,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentenceTaggingResponse.html" title="A class to represent responses from the Sentence Tagging endpoint of the Rosette API ...">SentenceTaggingResponse</a> containing the results of the request. The response contains a list of sentences. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00787">787</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00827">827</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1543,7 +1626,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentenceTaggingResponse.html" title="A class to represent responses from the Sentence Tagging endpoint of the Rosette API ...">SentenceTaggingResponse</a> containing the results of the request. The response contains a list of sentences. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00802">802</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00842">842</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1605,7 +1688,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentimentResponse.html" title="A class for representing responses from the sentiment analysis endpoint of the Rosette API ...">SentimentResponse</a> containing the results of the request. The response contains sentiment analysis results. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00820">820</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00860">860</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1635,7 +1718,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentimentResponse.html" title="A class for representing responses from the sentiment analysis endpoint of the Rosette API ...">SentimentResponse</a> containing the results of the request. The response contains sentiment analysis results. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00835">835</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00875">875</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1665,7 +1748,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1SentimentResponse.html" title="A class for representing responses from the sentiment analysis endpoint of the Rosette API ...">SentimentResponse</a> containing the results of the request. The response contains sentiment analysis results. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00850">850</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00890">890</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1704,7 +1787,7 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00197">197</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00205">205</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1743,7 +1826,46 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00162">162</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00170">170</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+
+</div>
+</div>
+<a id="a019977f0ca9699312c5b6e3a50a2a27a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a019977f0ca9699312c5b6e3a50a2a27a">&#9670;&nbsp;</a></span>SetUrlParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rosette_api.CAPI.SetUrlParameter </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a value to a url parameter </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Parameter name</td></tr>
+    <tr><td class="paramname">value</td><td>Parameter value</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00240">240</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1805,7 +1927,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1SyntaxDependenciesResponse.html" title="A class for representing responses from the syntax/dependencies endpoint of the Rosette API ...">SyntaxDependenciesResponse</a>: The parsed text is represented in terms of syntactic dependencies </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00649">649</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00689">689</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1835,7 +1957,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1SyntaxDependenciesResponse.html" title="A class for representing responses from the syntax/dependencies endpoint of the Rosette API ...">SyntaxDependenciesResponse</a>: The parsed text is represented in terms of syntactic dependencies </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00665">665</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00705">705</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1865,7 +1987,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1SyntaxDependenciesResponse.html" title="A class for representing responses from the syntax/dependencies endpoint of the Rosette API ...">SyntaxDependenciesResponse</a>: The parsed text is represented in terms of syntactic dependencies </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00681">681</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00721">721</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1927,7 +2049,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called ...">TextEmbeddingResponse</a>: Contains a single vector of floating point numbers for your input, known as a text embedding. Among other uses, a text embedding enables you to calculate the similarity between two documents or two words. The text embedding represents the relationships between words in your document in the semantic space. The semantic space is a multilingual network that maps the input based on the words and their context. Words with similar meanings have similar contexts, and Rosette maps them close to each other </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00589">589</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00629">629</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1957,7 +2079,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called ...">TextEmbeddingResponse</a>: Contains a single vector of floating point numbers for your input, known as a text embedding. Among other uses, a text embedding enables you to calculate the similarity between two documents or two words. The text embedding represents the relationships between words in your document in the semantic space. The semantic space is a multilingual network that maps the input based on the words and their context. Words with similar meanings have similar contexts, and Rosette maps them close to each other </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00609">609</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00649">649</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -1987,7 +2109,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called ...">TextEmbeddingResponse</a>: Contains a single vector of floating point numbers for your input, known as a text embedding. Among other uses, a text embedding enables you to calculate the similarity between two documents or two words. The text embedding represents the relationships between words in your document in the semantic space. The semantic space is a multilingual network that maps the input based on the words and their context. Words with similar meanings have similar contexts, and Rosette maps them close to each other </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00629">629</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00669">669</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2049,7 +2171,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TokenizationResponse.html" title="A class to represent responses from the Tokenization endpoint of the Rosette API ">TokenizationResponse</a> containing the results of the request. The response contains a list of tokens. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00868">868</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00908">908</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2079,7 +2201,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TokenizationResponse.html" title="A class to represent responses from the Tokenization endpoint of the Rosette API ">TokenizationResponse</a> containing the results of the request. The response contains a list of tokens. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00883">883</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00923">923</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2109,7 +2231,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TokenizationResponse.html" title="A class to represent responses from the Tokenization endpoint of the Rosette API ">TokenizationResponse</a> containing the results of the request. The response contains a list of tokens. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00897">897</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00937">937</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2150,7 +2272,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TransliterationResponse.html" title="A class to represnt the results from the Name Deduplication endpoint of the Rosette API ...">TransliterationResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00527">527</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00567">567</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2180,7 +2302,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classrosette__api_1_1TransliterationResponse.html" title="A class to represnt the results from the Name Deduplication endpoint of the Rosette API ...">TransliterationResponse</a> containing the results of the request. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00547">547</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00587">587</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2208,7 +2330,7 @@ Properties</h2></td></tr>
 <p>Client </p>
 <p>Getter, Setter for the Client Client: Forces the API to use a custom HttpClient. </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00134">134</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00142">142</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2234,7 +2356,7 @@ Properties</h2></td></tr>
 
 <p>Concurrency Gets and sets the maximum number of concurrent calls for the plan associated with your API key </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00139">139</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00147">147</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2261,7 +2383,7 @@ Properties</h2></td></tr>
 <p>Debug </p>
 <p>Getter, Setter for the Debug Debug: Sets the debug mode parameter for the Rosette server. </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00147">147</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00155">155</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2288,7 +2410,7 @@ Properties</h2></td></tr>
 <p>MaxRetry </p>
 <p>Getter, Setter for the MaxRetry MaxRetry: Maximum number of times to retry a request on HTTPResponse error. Allows users to change their MaxRetry later (e.g. if instantiated class incorrectly) </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00118">118</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00126">126</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2315,7 +2437,7 @@ Properties</h2></td></tr>
 <p>MillisecondsBetweenRetries </p>
 <p>Getter, Setter for the MillisecondsBetweenRetries MillisecondsBetweenRetries: milliseconds between retry attempts </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00126">126</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00134">134</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2342,7 +2464,7 @@ Properties</h2></td></tr>
 <p>Timeout </p>
 <p>Getter, Setter for the Timeout Timeout: Sets the Timeout for the HttpClient. </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00155">155</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00163">163</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2369,7 +2491,7 @@ Properties</h2></td></tr>
 <p>URIstring </p>
 <p>Getter, Setter for the URIstring URIstring: Base URI for the HttpClient. Allows users to change their URIstring later (e.g. if instantiated class incorrectly) </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00100">100</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00108">108</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2396,7 +2518,7 @@ Properties</h2></td></tr>
 <p>UserKey </p>
 <p>Getter, Setter for the UserKey UserKey: API key required by the Rosette Server Allows users to change their UserKey later (e.g. if instantiated class incorrectly) </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00091">91</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00099">99</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>
@@ -2423,7 +2545,7 @@ Properties</h2></td></tr>
 <p>Version </p>
 <p>Getter, Setter for the Version Version: Internal Server Version number. </p>
 
-<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00108">108</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CAPI_8cs_source.html#l00116">116</a> of file <a class="el" href="CAPI_8cs_source.html">CAPI.cs</a>.</p>
 
 </div>
 </div>

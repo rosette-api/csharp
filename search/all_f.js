@@ -12,6 +12,7 @@ var searchData=
   ['sentimentresponse_2ecs',['SentimentResponse.cs',['../SentimentResponse_8cs.html',1,'']]],
   ['setcustomheaders',['SetCustomHeaders',['../classrosette__api_1_1CAPI.html#a4215d480e6ec9fab284f0971c958a72f',1,'rosette_api::CAPI']]],
   ['setoption',['SetOption',['../classrosette__api_1_1CAPI.html#a29298bf35842ff12fc931302213d538a',1,'rosette_api::CAPI']]],
+  ['seturlparameter',['SetUrlParameter',['../classrosette__api_1_1CAPI.html#a019977f0ca9699312c5b6e3a50a2a27a',1,'rosette_api::CAPI']]],
   ['sourcelanguageoforigin',['SourceLanguageOfOrigin',['../classrosette__api_1_1TranslateNamesResponse.html#a6ad8992cb57fa6d17b0076aac8bda051',1,'rosette_api::TranslateNamesResponse']]],
   ['sourcelanguageofuse',['SourceLanguageOfUse',['../classrosette__api_1_1TranslateNamesResponse.html#a4b91b71a939e54923cc93c2c9c651fe0',1,'rosette_api::TranslateNamesResponse']]],
   ['sourcescript',['SourceScript',['../classrosette__api_1_1TranslateNamesResponse.html#aa96d7217cd50e1b410c290f0b3369551',1,'rosette_api::TranslateNamesResponse']]],
