@@ -7,10 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-<<<<<<< HEAD
-=======
 using System.Text;
->>>>>>> 86f6a7c52ef4253b42d45733ad82507d16ada37f
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -986,8 +983,6 @@ namespace rosette_api {
         public TranslateNamesResponse NameTranslation(Dictionary<object, object> dict) {
             _uri = "name-translation";
             return GetResponse<TranslateNamesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
-<<<<<<< HEAD
-=======
         }
 
         /// <summary>
@@ -1010,7 +1005,6 @@ namespace rosette_api {
             }
 
             return sb.ToString();
->>>>>>> 86f6a7c52ef4253b42d45733ad82507d16ada37f
         }
 
         /// <summary>getResponse
