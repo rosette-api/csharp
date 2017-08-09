@@ -21,7 +21,6 @@ namespace rosette_api {
         /// <summary>
         /// IDictionary of response content
         /// </summary>
-        [Obsolete("The structure of this property is subject to change.  Please use the data structures provided in the Response classes that inherit from the RosetteResponse class instead.")]
         public IDictionary<string, object> Content { get; private set; }
         /// <summary>
         /// IDictionary of response content
@@ -143,6 +142,22 @@ namespace rosette_api {
             serializer.Serialize(writer, this.Content);
 # pragma warning restore 618
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Provides a method for recursively printing the Content dictionary to the console.
+        /// </summary>
+        public void PrintContent(IDictionary<string, object> content = null) {
+            if (content == null) {
+                content = Content;
+            }
+
+            foreach (var pair in content) {
+                if (content[pair.Key].GetType().GetInterfaces().Any(x => x.Name == "IDictionary")) {
+                    PrintContent((IDictionary<string, object>)(content[pair.Key]));
+                }
+                Console.WriteLine("{0}: {1}", pair.Key, pair.Value.ToString());
+            }
         }
 
         /// <summary>

@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+<<<<<<< HEAD
+=======
+using System.Text;
+>>>>>>> 86f6a7c52ef4253b42d45733ad82507d16ada37f
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -56,6 +61,11 @@ namespace rosette_api {
         /// </summary>
         private Dictionary<string, string> _customHeaders;
 
+        /// <summary>
+        /// Internal container for URL parameters
+        /// </summary>
+        private NameValueCollection _urlParameters;
+
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
         /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
@@ -79,6 +89,7 @@ namespace rosette_api {
             Concurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
             _options = new Dictionary<string, object>();
             _customHeaders = new Dictionary<string, string>();
+            _urlParameters = new NameValueCollection();
         }
 
         /// <summary>UserKey
@@ -222,6 +233,38 @@ namespace rosette_api {
                 dict["options"] = _options;
             }
             return dict;
+        }
+
+        /// <summary>
+        /// Adds a value to a url parameter
+        /// </summary>
+        /// <param name="key">Parameter name</param>
+        /// <param name="value">Parameter value</param>
+        public void SetUrlParameter(string key, string value) {
+            _urlParameters.Add(key, value);
+        }
+
+        /// <summary>
+        /// Removes the values for a given Url parameter key
+        /// </summary>
+        /// <param name="key">Name of parameter</param>
+        public void RemoveUrlParameter(string key) {
+            _urlParameters.Remove(key);
+        }
+
+        /// <summary>
+        /// Returns the URL Parameters
+        /// </summary>
+        /// <returns>NameValueCollection</returns>
+        public NameValueCollection GetUrlParameters() {
+            return _urlParameters;
+        }
+
+        /// <summary>
+        /// Removes all URL parameters
+        /// </summary>
+        public void ClearUrlParameters() {
+            _urlParameters.Clear();
         }
 
         /// <summary>Categories
@@ -943,6 +986,31 @@ namespace rosette_api {
         public TranslateNamesResponse NameTranslation(Dictionary<object, object> dict) {
             _uri = "name-translation";
             return GetResponse<TranslateNamesResponse>(SetupClient(), JsonConvert.SerializeObject(AppendOptions(dict)));
+<<<<<<< HEAD
+=======
+        }
+
+        /// <summary>
+        /// Converts a NameValueCollection into a query string
+        /// </summary>
+        /// <param name="urlParameters">NameValueCollection</param>
+        /// <returns>query string</returns>
+        private string ToQueryString(NameValueCollection urlParameters) {
+            StringBuilder sb = new StringBuilder("?");
+
+            bool first = true;
+            foreach (string key in urlParameters.AllKeys) {
+                foreach (string value in urlParameters.GetValues(key)) {
+                    if (!first) {
+                        sb.Append("&");
+                    }
+                    sb.AppendFormat("{0}={1}", Uri.EscapeDataString(key), Uri.EscapeDataString(value));
+                    first = false;
+                }
+            }
+
+            return sb.ToString();
+>>>>>>> 86f6a7c52ef4253b42d45733ad82507d16ada37f
         }
 
         /// <summary>getResponse
@@ -960,6 +1028,9 @@ namespace rosette_api {
                 string wholeURI = _uri;
                 if (wholeURI.StartsWith("/")) {
                     wholeURI = wholeURI.Substring(1);
+                }
+                if (_urlParameters.Count > 0) {
+                    wholeURI = wholeURI + ToQueryString(_urlParameters);
                 }
 
                 if (jsonRequest != null)

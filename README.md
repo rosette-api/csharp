@@ -12,6 +12,15 @@ In Visual Studio: search for the [rosette_api package](https://www.nuget.org/pac
 
 Using Nuget Command Line: `nuget install rosette_api`.
 
+If the version you are using is not [the latest from nuget](https://www.nuget.org/packages/rosette_api/),
+please check for its [**compatibilty with api.rosette.com**](https://developer.rosette.com/features-and-functions?csharp).
+If you have an on-premise version of Rosette API server, please contact support for
+binding compatibility with your installation.
+
+To check your installed version:
+
+`nuget list rosette_api`
+
 Docker
 ------
 A Docker image for running the examples against the compiled source library is available on Docker Hub.
