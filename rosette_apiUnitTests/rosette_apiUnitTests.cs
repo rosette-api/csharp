@@ -365,9 +365,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void CustomUrlParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.SetUrlParameter("output", "rosette");
 
             Assert.AreEqual(expected["output"], _rosetteApi.GetUrlParameters()["output"]);
@@ -375,9 +375,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void ClearUrlParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.SetUrlParameter("output", "rosette");
 
             _rosetteApi.ClearUrlParameters();
@@ -387,9 +387,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void RemoveURLParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.RemoveUrlParameter("output");
 
             Assert.IsEmpty(_rosetteApi.GetUrlParameters());

@@ -32,7 +32,7 @@ namespace rosette_api {
     /// <para>
     /// Primary class for interfacing with the Rosette API
     /// @copyright 2014-2017 Basis Technology Corporation.
-    /// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+    /// Licensed under the Apache License, Version 2.0 (the "License"); you may not use file except in compliance
     /// with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
     /// Unless required by applicable law or agreed to in writing, software distributed under the License is
     /// distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -62,6 +62,11 @@ namespace rosette_api {
         /// Internal container for URL parameters
         /// </summary>
         private NameValueCollection _urlParameters;
+
+        /// <summary>
+        /// Http client to be used for life of API object
+        /// </summary>
+        private HttpClient _client = null;
 
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
@@ -271,7 +276,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>CategoriesResponse containing the results of the request.
@@ -319,7 +324,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>EntitiesResponse containing the results of the request.
@@ -424,7 +429,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
@@ -615,7 +620,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
@@ -679,7 +684,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
@@ -731,7 +736,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>
@@ -803,7 +808,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>SentenceTaggingResponse containing the results of the request
@@ -851,7 +856,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>SentimentResponse containing the results of the request.
@@ -899,7 +904,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>TokenizationResponse containing the results of the request.
@@ -1052,7 +1057,7 @@ namespace rosette_api {
             if (responseMsg.IsSuccessStatusCode)
             {
                 T response = (T)Activator.CreateInstance(typeof(T), new object[] { responseMsg });
-                this.SetCallConcurrency(response);
+                SetCallConcurrency(response);
                 return response;
             }
             else
@@ -1069,12 +1074,14 @@ namespace rosette_api {
         {
             if (response.Headers.ContainsKey(CONCURRENCY_HEADER))
             {
-                int callConcurrency = System.Net.ServicePointManager.DefaultConnectionLimit;
+                int callConcurrency = ServicePointManager.DefaultConnectionLimit;
                 bool success = Int32.TryParse(response.Headers[CONCURRENCY_HEADER], out callConcurrency);
-                if (success && callConcurrency != System.Net.ServicePointManager.DefaultConnectionLimit && callConcurrency > 1)
+                // DefaultConnectionLimit is 2
+                if (success && callConcurrency != ServicePointManager.DefaultConnectionLimit && callConcurrency >= 1)
                 {
-                    System.Net.ServicePointManager.DefaultConnectionLimit = callConcurrency;
-                    this.Concurrency = callConcurrency;
+                    ServicePointManager.DefaultConnectionLimit = callConcurrency;
+                    Concurrency = callConcurrency;
+                    _client = null; // force reset of http client in order to apply the new concurrency
                 }
             }
         }
@@ -1097,7 +1104,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
-        /// <param name="contentType">(string, optional): not used at this time</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
@@ -1131,45 +1138,44 @@ namespace rosette_api {
         /// </summary>
         /// <returns>HttpClient client to use to access the Rosette server.</returns>
         private HttpClient SetupClient() {
-            HttpClient client;
             if (!URIstring.EndsWith("/")) {
                 URIstring = URIstring + "/";
             }
 
-            if (Client == null) {
-                client =
+            if (Client == null && _client == null) {
+                _client =
                     new HttpClient(
                         new HttpClientHandler {
-                            AutomaticDecompression = DecompressionMethods.GZip
-                                                     | DecompressionMethods.Deflate
+                            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
                         }) {
                         BaseAddress = new Uri(URIstring)
                     };
                 if (Timeout != 0) {
-                    client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+                    _client.Timeout = TimeSpan.FromMilliseconds(Timeout);
                 }
             }
             else {
-                client = Client;
-                if (client.BaseAddress == null) {
-                    client.BaseAddress = new Uri(URIstring);
+                _client = Client;
+                if (_client.BaseAddress == null) {
+                    _client.BaseAddress = new Uri(URIstring);
                 }
-                if (client.Timeout == TimeSpan.Zero) {
-                    client.Timeout = new TimeSpan(0, 0, Timeout);
+                if (_client.Timeout == TimeSpan.Zero) {
+                    _client.Timeout = TimeSpan.FromMilliseconds(Timeout);
                 }
             }
+
             try {
-                client.DefaultRequestHeaders.Clear();
+                _client.DefaultRequestHeaders.Clear();
             }
             catch {
                 // exception can be ignored
             }
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             if (UserKey != null) {
-                client.DefaultRequestHeaders.Add("X-RosetteAPI-Key", UserKey);
+                _client.DefaultRequestHeaders.Add("X-RosetteAPI-Key", UserKey);
             }
             if (Debug) {
-                client.DefaultRequestHeaders.Add("X-RosetteAPI-Devel", "true");
+                _client.DefaultRequestHeaders.Add("X-RosetteAPI-Devel", "true");
             }
 
             Regex pattern = new Regex("^X-RosetteAPI-");
@@ -1177,20 +1183,20 @@ namespace rosette_api {
                 foreach(KeyValuePair<string, string> entry in _customHeaders) {
                     Match match = pattern.Match(entry.Key);
                     if(match.Success) {
-                        client.DefaultRequestHeaders.Add(entry.Key, entry.Value);
+                        _client.DefaultRequestHeaders.Add(entry.Key, entry.Value);
                     } else {
                         throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\"");
                     }
 
                 }
             }
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
-            client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
-            client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding", "csharp");
-            client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding-Version", Version);
+            _client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
+            _client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            _client.DefaultRequestHeaders.Add("User-Agent", "RosetteAPICsharp/" + Version);
+            _client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding", "csharp");
+            _client.DefaultRequestHeaders.Add("X-RosetteAPI-Binding-Version", Version);
 
-            return client;
+            return _client;
         }
 
         /// <summary>Decompress
