@@ -9,11 +9,12 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
 namespace rosette_apiUnitTests {
-
+    
     [TestFixture]
     public class RosetteResponseTests {
         private string _testHeaderKey;

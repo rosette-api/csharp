@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace rosette_api {
@@ -87,11 +86,6 @@ namespace rosette_api {
         /// The number of current concurrent connections
         /// </summary>
         private int _concurrentConnections = 1;
-
-        /// <summary>
-        /// The maximum number of concurrent connections allowed by the Rosette API plan
-        /// </summary>
-        private int _maxConcurrentConnections = 1;
 
         /// <summary>C# API class
         /// <para>Rosette Python Client Binding API; representation of a Rosette server.
@@ -201,7 +195,7 @@ namespace rosette_api {
             set {
                 _debug = value;
                 if (_debug) {
-                    addRequestHeader("X-RosetteAPI-Devel", "true");
+                    AddRequestHeader("X-RosetteAPI-Devel", "true");
                 }
                 else {
                     if (Client.DefaultRequestHeaders.Contains("X-RosetteAPI-Devel")) {
@@ -282,7 +276,7 @@ namespace rosette_api {
                 return;
             }
             _customHeaders[key] = value;
-            addRequestHeader(key, value);
+            AddRequestHeader(key, value);
         }
 
         /// <summary>
@@ -1138,8 +1132,7 @@ namespace rosette_api {
         {
             if (response.Headers.ContainsKey(CONCURRENCY_HEADER))
             {
-                int allowedConnections;
-                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out allowedConnections)) {
+                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out int allowedConnections)) {
                     Concurrency = allowedConnections;
                 }
             }
@@ -1213,10 +1206,10 @@ namespace rosette_api {
             Debug = _debug;
 
             // Standard headers, which are required for Rosette API
-            addRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
-            addRequestHeader("User-Agent", "RosetteAPICsharp/" + Version);
-            addRequestHeader("X-RosetteAPI-Binding", "csharp");
-            addRequestHeader("X-RosetteAPI-Binding-Version", Version);
+            AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
+            AddRequestHeader("User-Agent", "RosetteAPICsharp/" + Version);
+            AddRequestHeader("X-RosetteAPI-Binding", "csharp");
+            AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 
             var acceptHeader = new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json");
             if (!Client.DefaultRequestHeaders.Accept.Contains(acceptHeader)) {
@@ -1233,7 +1226,7 @@ namespace rosette_api {
             // Custom headers provided by the user
             if (_customHeaders.Count > 0) {
                 foreach(KeyValuePair<string, string> entry in _customHeaders) {
-                    addRequestHeader(entry.Key, entry.Value);
+                    AddRequestHeader(entry.Key, entry.Value);
                 }
             }
 
@@ -1244,7 +1237,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="name">Name of header</param>
         /// <param name="value">Value of header</param>
-        private void addRequestHeader(string name, string value) {
+        private void AddRequestHeader(string name, string value) {
             if (!Client.DefaultRequestHeaders.Contains(name))
                 Client.DefaultRequestHeaders.Add(name, value);
         }
