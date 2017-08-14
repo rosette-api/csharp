@@ -1206,7 +1206,9 @@ namespace rosette_api {
                         });
             }
 
-            Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
+            if (Client.BaseAddress == null) {
+                Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
+            }
             Timeout = _timeout;
             Debug = _debug;
 
