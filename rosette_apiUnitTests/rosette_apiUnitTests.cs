@@ -15,33 +15,6 @@ using System.Threading.Tasks;
 
 namespace rosette_apiUnitTests {
     [TestFixture]
-    public class ConcurrencyTest {
-        [Test]
-        public async Task TestConcurrency() {
-            var tasks = new List<Task>();
-
-            for (int task=0; task<5; task++) {
-                tasks.Add(Task.Factory.StartNew( () => runLookup(task) ));
-            }
-            await Task.WhenAll(tasks);
-        }
-        private async Task runLookup(int taskId) {
-            CAPI api = new CAPI("7c3e0f9f51334a0793dde4be37cb22ce");
-            string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
-            for (int i = 0; i < 100; i++) {
-                System.Diagnostics.Debug.WriteLine("Task ID: {0} call {1}", taskId, i);
-                try {
-                    var result = api.Entity(contentUri: contentUri);
-                    System.Diagnostics.Debug.WriteLine(result);
-                } 
-                catch (Exception ex) {
-                    System.Diagnostics.Debug.WriteLine(ex);
-                }
-            }
-        }
-    }
-
-    [TestFixture]
     public class RosetteResponseTests {
         private string _testHeaderKey;
         private string _testHeaderValue;
