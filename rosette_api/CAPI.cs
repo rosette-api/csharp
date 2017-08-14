@@ -219,9 +219,15 @@ namespace rosette_api {
         public int Timeout {
             get { return _timeout; }
             set {
-                _timeout = value;
-                if (_timeout != 0 || Client.Timeout != TimeSpan.FromMilliseconds(_timeout)) {
-                    Client.Timeout = TimeSpan.FromMilliseconds(_timeout);
+                try {
+                    if (value != 0 && Client.Timeout != TimeSpan.FromMilliseconds(value)) {
+                        Client.Timeout = TimeSpan.FromMilliseconds(value);
+                    }
+                    _timeout = value;
+
+                }
+                catch (Exception ex) {
+                    throw new RosetteException("Invalid timeout, " + ex.Message);
                 }
             }
         }

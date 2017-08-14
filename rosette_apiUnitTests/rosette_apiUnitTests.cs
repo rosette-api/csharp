@@ -348,10 +348,8 @@ namespace rosette_apiUnitTests {
         public void CheckInvalidCustomHeader() {
             KeyValuePair<string, string> expected = new KeyValuePair<string, string>("Test", "testValue");
 
-            _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
-
             try {
-                _rosetteApi.Info();
+                _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
             }
             catch (RosetteException ex) {
                 Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\"");
