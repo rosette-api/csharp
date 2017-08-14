@@ -158,7 +158,7 @@ namespace rosette_api {
         public int MillisecondsBetweenRetries { get; set; }
 
         /// <summary>Client
-        /// Returns the http client instance.  For externally provided http clients, this will return the same 
+        /// Returns the http client instance.  For externally provided http clients, this will return the same
         /// client with some added headers that are required by the Rosette API.  For the default internal client
         /// it will return the current instance, which is maintained at the class level.
         /// </summary>
@@ -168,7 +168,7 @@ namespace rosette_api {
 
         /// <summary>Concurrency
         /// Returns the number of concurrent connections allowed by the current Rosette API plan.
-        /// For externally provided http clients, it is up to the user to update the connection limit within their own software.  
+        /// For externally provided http clients, it is up to the user to update the connection limit within their own software.
         /// For the default internal http client, the concurrent connections will adjust to the maximum allowed.
         /// </summary>
         public int Concurrency
@@ -1132,7 +1132,8 @@ namespace rosette_api {
         {
             if (response.Headers.ContainsKey(CONCURRENCY_HEADER))
             {
-                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out int allowedConnections)) {
+                int allowedConnections;
+                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out allowedConnections)) {
                     Concurrency = allowedConnections;
                 }
             }
