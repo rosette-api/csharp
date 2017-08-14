@@ -12,7 +12,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace rosette_apiUnitTests {
     [TestFixture]
