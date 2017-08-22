@@ -39,62 +39,74 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
 
 #### Example of using a common CAPI object for each thread:
 ```
-    public class ConcurrencyTest {
-        [Test]
-        public async Task TestConcurrency() {
-            var tasks = new List<Task>();
+    static void Main(string[] args) {
+        TestConcurrency().GetAwaiter().GetResult();
+    }
 
-            CAPI api = new CAPI("rosette api key");
-            foreach (int task in Enumerable.Range(0, 5)) {
-                tasks.Add(Task.Factory.StartNew( () => runLookup(task, api) ));
-            }
-            await Task.WhenAll(tasks);
+    private static async Task TestConcurrency() {
+        int threads = 5;
+        var tasks = new List<Task>();
+        CAPI api = new CAPI("rosette api key");
+        foreach (int task in Enumerable.Range(0, threads)) {
+            Console.WriteLine("Starting task {0}", task);
+            tasks.Add(Task.Factory.StartNew( () => runLookup(task, api) ));
         }
-        private async Task runLookup(int taskId, CAPI api) {
-            string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
-            for (int i = 0; i < 100; i++) {
-                System.Diagnostics.Debug.WriteLine("Task ID: {0} call {1}", taskId, i);
-                try {
-                    var result = api.Entity(contentUri: contentUri);
-                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
-                }
-                catch (Exception ex) {
-                    System.Diagnostics.Debug.WriteLine(ex);
-                }
+        await Task.WhenAll(tasks);
+        Console.WriteLine("Test complete");
+    }
+
+    private static Task runLookup(int taskId, CAPI api) {
+        int calls = 5;
+        string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
+        for (int i = 0; i < calls; i++) {
+            Console.WriteLine("Task ID: {0} call {1}", taskId, i);
+            try {
+                var result = api.Entity(contentUri: contentUri);
+                Console.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
             }
         }
+        return Task.CompletedTask;
     }
 ```
 
 #### Example of retrieving a client object and using it in each thread:
 ```
-    public class ConcurrencyTest {
-        [Test]
-        public async Task TestConcurrency() {
-            var tasks = new List<Task>();
+    static void Main(string[] args) {
+        ConcurrencyTest().GetAwaiter().GetResult();
+    }
 
-            CAPI api = new CAPI("rosette api key");
-            HttpClient client = api.Client;
-            foreach (int task in Enumerable.Range(0, 5)) {
-                tasks.Add(Task.Factory.StartNew( () => runLookup(task, client) ));
-            }
-            await Task.WhenAll(tasks);
-        }
-        private async Task runLookup(int taskId, HttpClient client) {
-            string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
-            for (int i = 0; i < 100; i++) {
-                System.Diagnostics.Debug.WriteLine("Task ID: {0} call {1}", taskId, i);
-                try {
-                    CAPI api = new CAPI("rosette api key", client: client);
+    private static async Task TestConcurrency() {
+        int threads = 5;
+        var tasks = new List<Task>();
 
-                    var result = api.Entity(contentUri: contentUri);
-                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
-                }
-                catch (Exception ex) {
-                    System.Diagnostics.Debug.WriteLine(ex);
-                }
+        CAPI api = new CAPI("rosette api key");
+        HttpClient client = api.Client;
+        foreach (int task in Enumerable.Range(0, threads)) {
+            Console.WriteLine("Starting task {0}", task);
+            tasks.Add(Task.Factory.StartNew( () => runLookup(task, client) ));
+        }
+        await Task.WhenAll(tasks);
+    }
+
+    private static Task runLookup(int taskId, HttpClient client) {
+        int calls = 5;
+        string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
+        for (int i = 0; i < calls; i++) {
+            Console.WriteLine("Task ID: {0} call {1}", taskId, i);
+            try {
+                CAPI api = new CAPI("rosette api key", client: client);
+
+                var result = api.Entity(contentUri: contentUri);
+                Console.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
             }
         }
+        return Task.CompletedTask;
     }
 ```
 
