@@ -46,7 +46,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
 
             CAPI api = new CAPI("rosette api key");
             foreach (int task in Enumerable.Range(0, 5)) {
-                tasks.Add(Task.Factory.StartNew( () => runLookup(task, client) ));
+                tasks.Add(Task.Factory.StartNew( () => runLookup(task, api) ));
             }
             await Task.WhenAll(tasks);
         }
@@ -56,7 +56,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
                 System.Diagnostics.Debug.WriteLine("Task ID: {0} call {1}", taskId, i);
                 try {
                     var result = api.Entity(contentUri: contentUri);
-                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
+                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
                 }
                 catch (Exception ex) {
                     System.Diagnostics.Debug.WriteLine(ex);
@@ -88,7 +88,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
                     CAPI api = new CAPI("rosette api key", client: client);
 
                     var result = api.Entity(contentUri: contentUri);
-                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
+                    System.Diagnostics.Debug.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
                 }
                 catch (Exception ex) {
                     System.Diagnostics.Debug.WriteLine(ex);
@@ -98,7 +98,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
     }
 ```
 
-## API DocumentationV
+## API Documentation
 See [documentation](http://rosette-api.github.io/csharp)
 
 ## Release Notes
