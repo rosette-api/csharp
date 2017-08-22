@@ -89,6 +89,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
             tasks.Add(Task.Factory.StartNew( () => runLookup(task, client) ));
         }
         await Task.WhenAll(tasks);
+        Console.WriteLine("Test complete");
     }
 
     private static Task runLookup(int taskId, HttpClient client) {
