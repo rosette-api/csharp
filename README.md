@@ -62,7 +62,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
             Console.WriteLine("Task ID: {0} call {1}", taskId, i);
             try {
                 var result = api.Entity(contentUri: contentUri);
-                Console.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
+                Console.WriteLine("Concurrency: {0}, Result: {1}", api.Concurrency, result);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -100,7 +100,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
                 CAPI api = new CAPI("rosette api key", client: client);
 
                 var result = api.Entity(contentUri: contentUri);
-                Console.WriteLine("Concurrency: {0},Result: {1}", api.Concurrency, result);
+                Console.WriteLine("Concurrency: {0}, Result: {1}", api.Concurrency, result);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -114,7 +114,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
 See [documentation](http://rosette-api.github.io/csharp)
 
 ## Release Notes
-Visit the [wik](|https://github.com/rosette-api/csharp/wiki/Release-Notes)
+Visit the [wiki](https://github.com/rosette-api/csharp/wiki/Release-Notes)
 
 ## Additional Information
 Visit [Rosette API site](https://developer.rosette.com)
