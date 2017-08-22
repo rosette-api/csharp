@@ -75,7 +75,7 @@ For multithreaded operations, do not instantiate a new CAPI object for each thre
 #### Example of retrieving a client object and using it in each thread:
 ```
     static void Main(string[] args) {
-        ConcurrencyTest().GetAwaiter().GetResult();
+        TestConcurrency().GetAwaiter().GetResult();
     }
 
     private static async Task TestConcurrency() {
