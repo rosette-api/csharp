@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
@@ -347,10 +348,8 @@ namespace rosette_apiUnitTests {
         public void CheckInvalidCustomHeader() {
             KeyValuePair<string, string> expected = new KeyValuePair<string, string>("Test", "testValue");
 
-            _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
-
             try {
-                _rosetteApi.Info();
+                _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
             }
             catch (RosetteException ex) {
                 Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\"");
@@ -364,9 +363,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void CustomUrlParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.SetUrlParameter("output", "rosette");
 
             Assert.AreEqual(expected["output"], _rosetteApi.GetUrlParameters()["output"]);
@@ -374,9 +373,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void ClearUrlParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.SetUrlParameter("output", "rosette");
 
             _rosetteApi.ClearUrlParameters();
@@ -386,9 +385,9 @@ namespace rosette_apiUnitTests {
 
         [Test]
         public void RemoveURLParametersTest() {
-            NameValueCollection expected = new NameValueCollection();
-            expected.Add("output", "rosette");
-
+            NameValueCollection expected = new NameValueCollection {
+                { "output", "rosette" }
+            };
             _rosetteApi.RemoveUrlParameter("output");
 
             Assert.IsEmpty(_rosetteApi.GetUrlParameters());

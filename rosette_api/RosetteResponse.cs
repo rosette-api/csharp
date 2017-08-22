@@ -99,12 +99,11 @@ namespace rosette_api {
                 if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
                     byteArray = Decompress(byteArray);
                 }
-                using (MemoryStream stream = new MemoryStream(byteArray))
-                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8)) {
+                using (StreamReader reader = new StreamReader(new MemoryStream(byteArray), Encoding.UTF8)) {
                     ContentAsJson = reader.ReadToEnd();
                 }
 
-                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
+                    this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
 # pragma warning disable 618
                 this.Content = ContentDictionary;
 # pragma warning restore 618
@@ -175,7 +174,7 @@ namespace rosette_api {
             }
         }
 
-        private string headersAsString() {
+        private string HeadersAsString() {
             StringBuilder itemString = new StringBuilder();
             foreach (var item in Headers)
                 itemString.AppendFormat("-- {0}:{1} -- ", item.Key, item.Value);
