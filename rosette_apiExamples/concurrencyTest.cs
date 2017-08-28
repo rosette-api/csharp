@@ -11,12 +11,12 @@ public class ConcurrencyTest {
         private static int calls = 5;
 
         static void Main(string[] args) {
-            //To use the C# API, you must provide an API key
+            // To use the C# API, you must provide an API key
             string apikey = "Your API key";
             string alturl = string.Empty;
 
-            //You may set the API key via command line argument:
-            //entities yourapikeyhere
+            // You may set the API key via command line argument:
+            // concurrencyTest yourapikeyhere
             if (args.Length != 0) {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
@@ -36,8 +36,8 @@ public class ConcurrencyTest {
         }
         private static Task runLookup(int taskId, CAPI api) {
             string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
-            for (int i = 0; i < calls; i++) {
-                Console.WriteLine("Task ID: {0} call {1}", taskId, i);
+            foreach (int call in Enumerable.Range(0, calls)) {
+                Console.WriteLine("Task ID: {0} call {1}", taskId, call);
                 try {
                     var result = api.Entity(contentUri: contentUri);
                     Console.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
