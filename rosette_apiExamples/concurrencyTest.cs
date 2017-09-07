@@ -35,11 +35,13 @@ public class ConcurrencyTest {
             Console.WriteLine("Test complete");
         }
         private static Task runLookup(int taskId, CAPI api) {
-            string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
+            string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
+
+            //string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
             foreach (int call in Enumerable.Range(0, calls)) {
                 Console.WriteLine("Task ID: {0} call {1}", taskId, call);
                 try {
-                    var result = api.Entity(contentUri: contentUri);
+                    var result = api.Entity(content: entities_text_data);
                     Console.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
                 }
                 catch (Exception ex) {
