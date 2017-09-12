@@ -1036,7 +1036,7 @@ namespace rosette_api {
         /// The response contains a list of concepts and key phrases.
         /// </returns>
         public TopicsResponse Topics(Dictionary<object, object> dict) {
-            _uri = "tokens";
+            _uri = "topics";
             return GetResponse<TopicsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
@@ -1050,7 +1050,7 @@ namespace rosette_api {
         /// The response contains a list of concepts and key phrases.
         /// </returns>
         public TopicsResponse Topics(RosetteFile file) {
-            _uri = "tokens";
+            _uri = "topics";
             return Process<TopicsResponse>(file);
         }
 

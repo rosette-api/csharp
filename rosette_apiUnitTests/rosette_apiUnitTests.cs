@@ -9,7 +9,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
@@ -1477,6 +1476,56 @@ namespace rosette_apiUnitTests {
                 { "entityType", "entityType"}
             };
             var response = _rosetteApi.NameTranslation(sampleDict);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        //------------------------- Topics ----------------------------------------
+        [Test]
+        public void TopicsTestFull() {
+            Init();
+            List<Concept> concepts = new List<Concept>() {
+                new Concept("Unfinished Tales", null, "Q309019"),
+                new Concept("Nicholas Hoult", null, "Q298347")
+            };
+            List<KeyPhrase> keyPhrases = new List<KeyPhrase>() {
+                new KeyPhrase("Scorpius Malfoy", null),
+                new KeyPhrase("Nicholas Hoult", null)
+            };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object> {
+                { "concepts", concepts },
+                { "keyphrases", keyPhrases }
+            };
+            TopicsResponse expected = new TopicsResponse(concepts, keyPhrases, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "topics").Respond(mockedMessage);
+            string testContent = @"Lily Collins is in talks to join Nicholas Hoult in Chernin Entertainment and Fox Searchlights J.R.R. Tolkien biopic Tolkien. Anthony Boyle, known for playing Scorpius Malfoy in the British play Harry Potter and the Cursed Child, also has signed on for the film centered on the famed author. In Tolkien, Hoult will play the author of the Hobbit and Lord of the Rings book series that were later adapted into two Hollywood trilogies from Peter Jackson. Dome Karukoski is directing the project.";
+            TopicsResponse response = _rosetteApi.Topics(content: testContent);
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void Topics_Dict_Test() {
+            _mockHttp.When(_testUrl + "topics")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Topics(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void Topics_File_Test() {
+            _mockHttp.When(_testUrl + "topics")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.Topics(f);
 # pragma warning disable 618
             Assert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618

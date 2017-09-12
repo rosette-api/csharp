@@ -15,7 +15,7 @@ namespace rosette_api {
         private const string keyPhrasesKey = "keyphrases";
         private const string phraseKey = "phrase";
         private const string salienceKey = "salience";
-        private const string conceptIdKey = "conceptID";
+        private const string conceptIdKey = "conceptId";
         /// <summary>
         /// Gets the list of Concepts
         /// </summary>
