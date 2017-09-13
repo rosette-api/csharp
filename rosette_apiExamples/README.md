@@ -44,5 +44,6 @@ Each example, when run, prints its output to the console.
 | sentences.cs                     | Gets the sentences from a piece of text               |
 | sentiment.cs                     | Gets the sentiment of a local file                    |
 | tokens.cs                        | Gets the tokens (words) from a piece of text          |
+| topics.cs | Gets the key phrases and concepts from a piece of text |
 | transliteration.cs | Transliterates a name |
 
