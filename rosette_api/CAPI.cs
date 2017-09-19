@@ -177,7 +177,7 @@ namespace rosette_api {
             private set
             {
                 _concurrentConnections = value;
-                if (_concurrentConnections != ServicePointManager.DefaultConnectionLimit) {
+                if (_httpClient != null && _concurrentConnections != ServicePointManager.DefaultConnectionLimit) {
                     ServicePointManager.DefaultConnectionLimit = _concurrentConnections;
                     _httpClient = null;
                     SetupClient();
@@ -1006,6 +1006,52 @@ namespace rosette_api {
         public TokenizationResponse Tokens(RosetteFile file) {
             _uri = "tokens";
             return Process<TokenizationResponse>(file);
+        }
+
+        /// <summary>Topics
+        /// <para>
+        /// (POST)Topics Endpoint: Returns the concepts and key phrases for a document
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>TopicsResponse containing the results of the request.
+        /// The response contains a list of concepts and key phrases.
+        /// </returns>
+        public TopicsResponse Topics(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
+            _uri = "topics";
+            return Process<TopicsResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>Topics
+        /// <para>
+        /// (POST)Topics Endpoint: Returns the concepts and key phrases for a document
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>TopicsResponse containing the results of the request.
+        /// The response contains a list of concepts and key phrases.
+        /// </returns>
+        public TopicsResponse Topics(Dictionary<object, object> dict) {
+            _uri = "topics";
+            return GetResponse<TopicsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+        /// <summary>Topics
+        /// <para>
+        /// (POST)Topics Endpoint: Returns the concepts and key phrases for a document
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>TopicsResponse containing the results of the request.
+        /// The response contains a list of concepts and key phrases.
+        /// </returns>
+        public TopicsResponse Topics(RosetteFile file) {
+            _uri = "topics";
+            return Process<TopicsResponse>(file);
         }
 
         /// <summary>NameTranslation

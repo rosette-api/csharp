@@ -53,9 +53,11 @@
   <ItemGroup>
     <Compile Include="CAPI.cs" />
     <Compile Include="CategoriesResponse.cs" />
+    <Compile Include="Concept.cs" />
     <Compile Include="EntitiesResponse.cs" />
     <Compile Include="EntityID.cs" />
     <Compile Include="InfoResponse.cs" />
+    <Compile Include="KeyPhrase.cs" />
     <Compile Include="LanguageIdentificationResponse.cs" />
     <Compile Include="MorphologyResponse.cs" />
     <Compile Include="Name.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="SyntaxDependenciesResponse.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />
     <Compile Include="TokenizationResponse.cs" />
+    <Compile Include="TopicsResponse.cs" />
     <Compile Include="TranslateNamesResponse.cs" />
     <Compile Include="TransliterationResponse.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
