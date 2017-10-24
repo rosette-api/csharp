@@ -21,7 +21,6 @@ namespace rosette_api {
         /// <summary>
         /// IDictionary of response content
         /// </summary>
-        [Obsolete("The structure of this property is subject to change.  Please use the data structures provided in the Response classes that inherit from the RosetteResponse class instead.")]
         public IDictionary<string, object> Content { get; private set; }
         /// <summary>
         /// IDictionary of response content
@@ -64,7 +63,7 @@ namespace rosette_api {
 #pragma warning disable 618
             this.Content = ContentDictionary;
 #pragma warning restore 618
-            this.Headers = headers != null ? headers : new Dictionary<string, string>();
+            this.Headers = headers ?? new Dictionary<string, string>();
             this.ResponseHeaders = new ResponseHeaders(this.Headers);
             if (contentAsJson != null)
             {
@@ -98,26 +97,19 @@ namespace rosette_api {
                 this.ResponseHeaders = new ResponseHeaders(this.Headers);
                 byte[] byteArray = responseMsg.Content.ReadAsByteArrayAsync().Result;
                 if(byteArray[0] == '\x1f' && byteArray[1] == '\x8b' && byteArray[2] == '\x08') {
-                    byteArray = decompress(byteArray);
+                    byteArray = Decompress(byteArray);
                 }
-                MemoryStream stream = new MemoryStream(byteArray);
-                try {
-                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8)) {
-                        ContentAsJson = reader.ReadToEnd();
-                    }
+                using (StreamReader reader = new StreamReader(new MemoryStream(byteArray), Encoding.UTF8)) {
+                    ContentAsJson = reader.ReadToEnd();
                 }
-                finally {
-                    if (stream != null) {
-                        stream.Dispose();
-                    }
-                }
-                this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
+
+                    this.ContentDictionary = Serializer.Deserialize<Dictionary<string, object>>(new JsonTextReader(new StringReader(this.ContentAsJson)));
 # pragma warning disable 618
                 this.Content = ContentDictionary;
 # pragma warning restore 618
             }
             else {
-                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, contentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
+                throw new RosetteException(string.Format("{0}: {1}", responseMsg.ReasonPhrase, ContentToString(responseMsg.Content)), (int)responseMsg.StatusCode);
             }
         }
 
@@ -152,11 +144,27 @@ namespace rosette_api {
         }
 
         /// <summary>
+        /// Provides a method for recursively printing the Content dictionary to the console.
+        /// </summary>
+        public void PrintContent(IDictionary<string, object> content = null) {
+            if (content == null) {
+                content = Content;
+            }
+
+            foreach (var pair in content) {
+                if (content[pair.Key].GetType().GetInterfaces().Any(x => x.Name == "IDictionary")) {
+                    PrintContent((IDictionary<string, object>)(content[pair.Key]));
+                }
+                Console.WriteLine("{0}: {1}", pair.Key, pair.Value.ToString());
+            }
+        }
+
+        /// <summary>
         /// Reads the httpContent value into a string
         /// </summary>
         /// <param name="httpContent"></param>
         /// <returns></returns>
-        internal static string contentToString(HttpContent httpContent) {
+        internal static string ContentToString(HttpContent httpContent) {
             if (httpContent != null) {
                 var readAsStringAsync = httpContent.ReadAsStringAsync();
                 return readAsStringAsync.Result;
@@ -166,7 +174,7 @@ namespace rosette_api {
             }
         }
 
-        private string headersAsString() {
+        private string HeadersAsString() {
             StringBuilder itemString = new StringBuilder();
             foreach (var item in Headers)
                 itemString.AppendFormat("-- {0}:{1} -- ", item.Key, item.Value);
@@ -182,7 +190,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="gzip">(byte[]): Data in byte form to decompress</param>
         /// <returns>(byte[]) Decompressed data</returns>
-        private byte[]decompress(byte[] gzip) {
+        private byte[]Decompress(byte[] gzip) {
             // Create a GZIP stream with decompression mode.
             // ... Then create a buffer and write into while reading from the GZIP stream.
             using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress)) {

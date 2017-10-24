@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class entities
+    class topics
     {
         /// <summary>
-        /// Example code to call Rosette API to get entities from a piece of text.
+        /// Example code to call Rosette API to get concepts and key phrases in a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //entities yourapikeyhere
+            //tokens yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -30,21 +30,14 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI EntitiesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
+                CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string topics_data = @"Lily Collins is in talks to join Nicholas Hoult in Chernin Entertainment and Fox Searchlight's J.R.R. Tolkien biopic Tolkien. Anthony Boyle, known for playing Scorpius Malfoy in the British play Harry Potter and the Cursed Child, also has signed on for the film centered on the famed author. In Tolkien, Hoult will play the author of the Hobbit and Lord of the Rings book series that were later adapted into two Hollywood trilogies from Peter Jackson. Dome Karukoski is directing the project.";
                 //The results of the API call will come back in the form of a Dictionary
-                EntitiesResponse response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
+                TopicsResponse response = api.Topics(content: topics_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
                 Console.WriteLine(response.ToString());
-
-                // Entities with full ADM
-                EntitiesCAPI.SetUrlParameter("output", "rosette");
-                response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
-                // response.Content contains the IDictionary results of the full ADM.
-                // PrintContent() is a provided method to print the Dictionary to the console
-                response.PrintContent();
             }
             catch (Exception e)
             {

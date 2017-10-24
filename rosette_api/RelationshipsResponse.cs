@@ -311,9 +311,10 @@ namespace rosette_api
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            JsonSerializer relationshipSerializer = new JsonSerializer();
-            relationshipSerializer.NullValueHandling = NullValueHandling.Ignore;
-            relationshipSerializer.ContractResolver = new RelationshipContractResolver(value as RosetteRelationship);
+            JsonSerializer relationshipSerializer = new JsonSerializer() {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new RelationshipContractResolver(value as RosetteRelationship)
+            };
             JsonObjectContract contract = (JsonObjectContract)relationshipSerializer.ContractResolver.ResolveContract(value.GetType());
 
             writer.WriteStartObject();
@@ -373,12 +374,13 @@ namespace rosette_api
 
         private JsonProperty CreateNewCustomProperty(int order, string name, Type valueType, object value)
         {
-            JsonProperty argProp = new JsonProperty();
-            argProp.Order = order;
-            argProp.PropertyName = name;
-            argProp.PropertyType = valueType;
-            argProp.HasMemberAttribute = true;
-            argProp.ValueProvider = new StaticValueProvider(value);
+            JsonProperty argProp = new JsonProperty() {
+                Order = order,
+                PropertyName = name,
+                PropertyType = valueType,
+                HasMemberAttribute = true,
+                ValueProvider = new StaticValueProvider(value)
+            };
             argProp.Ignored = argProp.ValueProvider.GetValue("Not needed") == null;
             return argProp;
         }
@@ -502,9 +504,10 @@ namespace rosette_api
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            JsonSerializer argumentSerializer = new JsonSerializer();
-            argumentSerializer.NullValueHandling = NullValueHandling.Ignore;
-            argumentSerializer.ContractResolver = new ArgumentContractResolver(value as Argument);
+            JsonSerializer argumentSerializer = new JsonSerializer() {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new ArgumentContractResolver(value as Argument)
+            };
             JsonObjectContract contract = (JsonObjectContract)argumentSerializer.ContractResolver.ResolveContract(value.GetType());
 
             writer.WriteStartObject();

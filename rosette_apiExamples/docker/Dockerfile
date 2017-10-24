@@ -8,6 +8,8 @@ RUN nuget install rosette_api && cp rosette_api.*/lib/net45/rosette_api.dll rose
 ENV ALT_URL ""
 COPY compile-and-run.sh compile-and-run.sh
 
+RUN cat /etc/ssl/certs/* > ca-bundle.crt && cert-sync ca-bundle.crt && rm ca-bundle.crt
+
 VOLUME ["/source"]
 
 CMD ./compile-and-run.sh $API_KEY $FILENAME $ALT_URL
