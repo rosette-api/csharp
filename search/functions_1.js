@@ -6,6 +6,7 @@ var searchData=
   ['clearcustomheaders',['ClearCustomHeaders',['../classrosette__api_1_1CAPI.html#a0ccd841456fd820a7b4d16ddc54803b6',1,'rosette_api::CAPI']]],
   ['clearoptions',['ClearOptions',['../classrosette__api_1_1CAPI.html#ac87e515df5328db479250a57970fe162',1,'rosette_api::CAPI']]],
   ['clearurlparameters',['ClearUrlParameters',['../classrosette__api_1_1CAPI.html#ae49e59573a977316688b5694703d2f7b',1,'rosette_api::CAPI']]],
+  ['concept',['Concept',['../classrosette__api_1_1Concept.html#a75b19f544a528a69ae9cea7be7e52975',1,'rosette_api::Concept']]],
   ['contenttostring',['ContentToString',['../classrosette__api_1_1MorphologyResponse.html#ac2e38f1a25a6e0c598aaaf33aeeec5dc',1,'rosette_api.MorphologyResponse.ContentToString()'],['../classrosette__api_1_1RosetteResponse.html#a70de2787c13cc78bb44f5c589c93ae20',1,'rosette_api.RosetteResponse.ContentToString()']]],
   ['createproperties',['CreateProperties',['../classrosette__api_1_1RosetteResponseContractResolver.html#a2e841b181f731781d146c09a644acd79',1,'rosette_api::RosetteResponseContractResolver']]]
 ];

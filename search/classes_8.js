@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['pingresponse',['PingResponse',['../classrosette__api_1_1PingResponse.html',1,'rosette_api']]]
+  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api']]],
+  ['namededuplicationresponse',['NameDeduplicationResponse',['../classrosette__api_1_1NameDeduplicationResponse.html',1,'rosette_api']]],
+  ['namesimilarityresponse',['NameSimilarityResponse',['../classrosette__api_1_1NameSimilarityResponse.html',1,'rosette_api']]]
 ];

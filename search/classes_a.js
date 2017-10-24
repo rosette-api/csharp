@@ -1,7 +1,15 @@
 var searchData=
 [
-  ['sentencetaggingresponse',['SentenceTaggingResponse',['../classrosette__api_1_1SentenceTaggingResponse.html',1,'rosette_api']]],
-  ['sentencewithdependencies',['SentenceWithDependencies',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html',1,'rosette_api::SyntaxDependenciesResponse']]],
-  ['sentimentresponse',['SentimentResponse',['../classrosette__api_1_1SentimentResponse.html',1,'rosette_api']]],
-  ['syntaxdependenciesresponse',['SyntaxDependenciesResponse',['../classrosette__api_1_1SyntaxDependenciesResponse.html',1,'rosette_api']]]
+  ['relationshipsresponse',['RelationshipsResponse',['../classrosette__api_1_1RelationshipsResponse.html',1,'rosette_api']]],
+  ['responseheaders',['ResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html',1,'rosette_api']]],
+  ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api']]],
+  ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api']]],
+  ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api']]],
+  ['rosetteextensions',['RosetteExtensions',['../classrosette__api_1_1RosetteExtensions.html',1,'rosette_api']]],
+  ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html',1,'rosette_api']]],
+  ['rosetterelationship',['RosetteRelationship',['../classrosette__api_1_1RosetteRelationship.html',1,'rosette_api']]],
+  ['rosetteresponse',['RosetteResponse',['../classrosette__api_1_1RosetteResponse.html',1,'rosette_api']]],
+  ['rosetteresponsecontractresolver',['RosetteResponseContractResolver',['../classrosette__api_1_1RosetteResponseContractResolver.html',1,'rosette_api']]],
+  ['rosettesentiment',['RosetteSentiment',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html',1,'rosette_api::SentimentResponse']]],
+  ['rosettesentimententity',['RosetteSentimentEntity',['../classrosette__api_1_1RosetteSentimentEntity.html',1,'rosette_api']]]
 ];

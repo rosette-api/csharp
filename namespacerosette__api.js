@@ -3,9 +3,11 @@ var namespacerosette__api =
     [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
     [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
+    [ "Concept", "classrosette__api_1_1Concept.html", "classrosette__api_1_1Concept" ],
     [ "EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", "classrosette__api_1_1EntitiesResponse" ],
     [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ],
     [ "InfoResponse", "classrosette__api_1_1InfoResponse.html", "classrosette__api_1_1InfoResponse" ],
+    [ "KeyPhrase", "classrosette__api_1_1KeyPhrase.html", "classrosette__api_1_1KeyPhrase" ],
     [ "LanguageDetection", "classrosette__api_1_1LanguageDetection.html", "classrosette__api_1_1LanguageDetection" ],
     [ "LanguageIdentificationResponse", "classrosette__api_1_1LanguageIdentificationResponse.html", "classrosette__api_1_1LanguageIdentificationResponse" ],
     [ "MorphologyItem", "classrosette__api_1_1MorphologyItem.html", "classrosette__api_1_1MorphologyItem" ],
@@ -30,6 +32,7 @@ var namespacerosette__api =
     [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
     [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ],
     [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
+    [ "TopicsResponse", "classrosette__api_1_1TopicsResponse.html", "classrosette__api_1_1TopicsResponse" ],
     [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ],
     [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ]
 ];

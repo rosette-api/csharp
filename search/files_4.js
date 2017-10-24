@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['morphologyresponse_2ecs',['MorphologyResponse.cs',['../MorphologyResponse_8cs.html',1,'']]]
+  ['languageidentificationresponse_2ecs',['LanguageIdentificationResponse.cs',['../LanguageIdentificationResponse_8cs.html',1,'']]]
 ];

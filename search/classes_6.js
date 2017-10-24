@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['morphologyitem',['MorphologyItem',['../classrosette__api_1_1MorphologyItem.html',1,'rosette_api']]],
-  ['morphologyresponse',['MorphologyResponse',['../classrosette__api_1_1MorphologyResponse.html',1,'rosette_api']]]
+  ['languagedetection',['LanguageDetection',['../classrosette__api_1_1LanguageDetection.html',1,'rosette_api']]],
+  ['languageidentificationresponse',['LanguageIdentificationResponse',['../classrosette__api_1_1LanguageIdentificationResponse.html',1,'rosette_api']]]
 ];

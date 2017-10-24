@@ -14,7 +14,7 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Properties", "functions_prop.html", null ]
@@ -29,7 +29,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CAPI_8cs.html",
-"classrosette__api_1_1RosetteEntity.html#a51adbc548bdf98650e7d541d11542860"
+"classrosette__api_1_1RelationshipsResponse.html#a96efd6f7edd9469bc832dcbdb8329625"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

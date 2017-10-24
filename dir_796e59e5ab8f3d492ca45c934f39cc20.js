@@ -5,6 +5,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
       [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
       [ "RosetteCategory", "classrosette__api_1_1RosetteCategory.html", "classrosette__api_1_1RosetteCategory" ]
     ] ],
+    [ "Concept.cs", "Concept_8cs.html", [
+      [ "Concept", "classrosette__api_1_1Concept.html", "classrosette__api_1_1Concept" ]
+    ] ],
     [ "EntitiesResponse.cs", "EntitiesResponse_8cs.html", [
       [ "EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", "classrosette__api_1_1EntitiesResponse" ]
     ] ],
@@ -14,6 +17,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "IEnumerableExpanderContractResolver.cs", "IEnumerableExpanderContractResolver_8cs.html", null ],
     [ "InfoResponse.cs", "InfoResponse_8cs.html", [
       [ "InfoResponse", "classrosette__api_1_1InfoResponse.html", "classrosette__api_1_1InfoResponse" ]
+    ] ],
+    [ "KeyPhrase.cs", "KeyPhrase_8cs.html", [
+      [ "KeyPhrase", "classrosette__api_1_1KeyPhrase.html", "classrosette__api_1_1KeyPhrase" ]
     ] ],
     [ "LanguageIdentificationResponse.cs", "LanguageIdentificationResponse_8cs.html", [
       [ "LanguageIdentificationResponse", "classrosette__api_1_1LanguageIdentificationResponse.html", "classrosette__api_1_1LanguageIdentificationResponse" ],
@@ -80,6 +86,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "TokenizationResponse.cs", "TokenizationResponse_8cs.html", [
       [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ]
+    ] ],
+    [ "TopicsResponse.cs", "TopicsResponse_8cs.html", [
+      [ "TopicsResponse", "classrosette__api_1_1TopicsResponse.html", "classrosette__api_1_1TopicsResponse" ]
     ] ],
     [ "TranslateNamesResponse.cs", "TranslateNamesResponse_8cs.html", [
       [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ]

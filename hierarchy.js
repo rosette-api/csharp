@@ -13,6 +13,10 @@ var hierarchy =
     [ "IDisposable", null, [
       [ "rosette_api.RosetteFile", "classrosette__api_1_1RosetteFile.html", null ]
     ] ],
+    [ "IEquatable", null, [
+      [ "rosette_api.Concept", "classrosette__api_1_1Concept.html", null ],
+      [ "rosette_api.KeyPhrase", "classrosette__api_1_1KeyPhrase.html", null ]
+    ] ],
     [ "rosette_api.LanguageDetection", "classrosette__api_1_1LanguageDetection.html", null ],
     [ "rosette_api.MorphologyItem", "classrosette__api_1_1MorphologyItem.html", null ],
     [ "rosette_api.Name", "classrosette__api_1_1Name.html", null ],
@@ -38,6 +42,7 @@ var hierarchy =
       [ "rosette_api.SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", null ],
       [ "rosette_api.TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", null ],
       [ "rosette_api.TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", null ],
+      [ "rosette_api.TopicsResponse", "classrosette__api_1_1TopicsResponse.html", null ],
       [ "rosette_api.TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", null ],
       [ "rosette_api.TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", null ]
     ] ],
