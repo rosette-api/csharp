@@ -9,7 +9,7 @@ node {
         }
         stage("Test with Docker") {
             echo "${params.ALT_URL}"
-            def useUrl = ("${params.ALT_URL}" == null) ? "${env.BINDING_TEST_URL}" : "${params.ALT_URL}"
+            def useUrl = ("${params.ALT_URL}" == "null") ? "${env.BINDING_TEST_URL}" : "${params.ALT_URL}"
             withEnv(["API_KEY=${env.ROSETTE_API_KEY}", "ALT_URL=${useUrl}"]) {
                 sh "docker run --rm -e API_KEY=${API_KEY} -e ALT_URL=${ALT_URL} -v ${SOURCEDIR}:/source rosetteapi/docker-csharp"
             }
