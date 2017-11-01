@@ -11,8 +11,57 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace rosette_apiUnitTests {
+    /// <summary>
+    /// Provides a concurrency test, non-unit.  Keep commented out for release.
+    /// </summary>
+    [TestFixture]
+    public class ConcurrencyTest {
+        private static int threads = 3;
+        private static int calls = 5;
+        private static int loops = 1;
+
+        //[Test]
+        public void TestConcurrency() {
+            // To use the C# API, you must provide an API key
+            string apikey = Environment.GetEnvironmentVariable("API_KEY");
+            string alturl = string.Empty;
+
+            // Block on the test, otherwise the threads will exit before completion when main exits
+            while (loops-- > 0) {
+                StartTest(apikey, alturl).GetAwaiter().GetResult();
+            }
+        }
+        private static async Task StartTest(string apikey, string alturl) {
+            var tasks = new List<Task>();
+            CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+            foreach (int task in Enumerable.Range(0, threads)) {
+                Console.WriteLine("Starting task {0}", task);
+                tasks.Add(Task.Factory.StartNew(() => runLookup(task, api)));
+            }
+            await Task.WhenAll(tasks);
+            Console.WriteLine("Test complete");
+        }
+        private static Task runLookup(int taskId, CAPI api) {
+            string entities_text_data = @"Bill Murray will appear in new Ghostbusters film: Dr. Peter Venkman was spotted filming a cameo in Boston this… http://dlvr.it/BnsFfS";
+
+            //string contentUri = "http://www.foxsports.com/olympics/story/chad-le-clos-showed-why-you-never-talk-trash-to-michael-phelps-080916";
+            foreach (int call in Enumerable.Range(0, calls)) {
+                Console.WriteLine("Task ID: {0} call {1}", taskId, call);
+                try {
+                    var result = api.Entity(content: entities_text_data);
+                    Console.WriteLine("Concurrency: {0},Rresult: {1}", api.Concurrency, result);
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex);
+                }
+            }
+            return Task.FromResult(0);
+        }
+    }
+
     [TestFixture]
     public class RosetteResponseTests {
         private string _testHeaderKey;
@@ -423,7 +472,7 @@ namespace rosette_apiUnitTests {
             };
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
-            _mockHttp.When(_testUrl + "info").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "info").Respond(req => mockedMessage);
             InfoResponse expected = new InfoResponse(name, version, buildNumber, buildTime, responseHeaders, content);
             InfoResponse response = _rosetteApi.Info();
             Assert.AreEqual(expected, response);
@@ -474,7 +523,7 @@ namespace rosette_apiUnitTests {
             };
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
-            _mockHttp.When(_testUrl + "ping").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "ping").Respond(req => mockedMessage);
             PingResponse expected = new PingResponse(message, time, responseHeaders, content);
             PingResponse response = _rosetteApi.Ping();
             Assert.AreEqual(expected, response);
@@ -556,7 +605,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, string> responseHeaders = serializer.Deserialize<Dictionary<string, string>>(new JsonTextReader(new StringReader(headersAsString)));
             String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + "} ] }";
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "categories").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "categories").Respond(req => mockedMessage);
             CategoriesResponse expected = new CategoriesResponse(categories, responseHeaders, null, mockedContent);
             CategoriesResponse response = _rosetteApi.Categories("Sony Pictures is planning to shoot a good portion of the new \"\"Ghostbusters\"\" in Boston as well.");
             Assert.AreEqual(expected, response);
@@ -602,7 +651,7 @@ namespace rosette_apiUnitTests {
             EntitiesResponse expected = new EntitiesResponse(entities, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "entities").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "entities").Respond(req => mockedMessage);
             EntitiesResponse response = _rosetteApi.Entity("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
             Assert.AreEqual(expected, response);
         }
@@ -689,7 +738,7 @@ namespace rosette_apiUnitTests {
             LanguageIdentificationResponse expected = new LanguageIdentificationResponse(languageDetections, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "language").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "language").Respond(req => mockedMessage);
             LanguageIdentificationResponse response = _rosetteApi.Language("Por favor Señorita, says the man.");
             Assert.AreEqual(expected, response);
         }
@@ -752,7 +801,7 @@ namespace rosette_apiUnitTests {
             MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
             String mockedContent = expected.ContentAsJson;
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "morphology/complete").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "morphology/complete").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.");
             Assert.AreEqual(expected, response);
         }
@@ -778,7 +827,7 @@ namespace rosette_apiUnitTests {
             MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
             String mockedContent = expected.ContentAsJson;
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "morphology/lemmas").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "morphology/lemmas").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.", feature: MorphologyFeature.lemmas);
             Assert.AreEqual(expected, response);
         }
@@ -801,7 +850,7 @@ namespace rosette_apiUnitTests {
             MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
             String mockedContent = expected.ContentAsJson;
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "morphology/compound-components").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "morphology/compound-components").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("Er Rechtsschutzversicherungsgesellschaft.", feature: MorphologyFeature.compoundComponents);
             Assert.AreEqual(expected, response);
         }
@@ -827,7 +876,7 @@ namespace rosette_apiUnitTests {
             MorphologyResponse expected = new MorphologyResponse(morphology, responseHeaders, content, null);
             String mockedContent = expected.ContentAsJson;
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "morphology/han-readings").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "morphology/han-readings").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("北京大学生物系主任.", feature: MorphologyFeature.hanReadings);
             Assert.AreEqual(expected, response);
         }
@@ -880,7 +929,7 @@ namespace rosette_apiUnitTests {
             NameSimilarityResponse expected = new NameSimilarityResponse(score, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "name-similarity").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "name-similarity").Respond(req => mockedMessage);
             NameSimilarityResponse response = _rosetteApi.NameSimilarity(new Name("Влади́мир Влади́мирович Пу́тин", "rus", null, "PERSON"), new Name("Vladmir Putin", "eng", null, "PERSON"));
             Assert.AreEqual(expected, response);
         }
@@ -1003,7 +1052,7 @@ namespace rosette_apiUnitTests {
             RelationshipsResponse expected = new RelationshipsResponse(relationships, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "relationships").Respond(req => mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }
@@ -1029,7 +1078,7 @@ namespace rosette_apiUnitTests {
             RelationshipsResponse expected = new RelationshipsResponse(relationships, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "relationships").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "relationships").Respond(req => mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }
@@ -1098,7 +1147,7 @@ namespace rosette_apiUnitTests {
             TextEmbeddingResponse expected = new TextEmbeddingResponse(vector, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "text-embedding").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "text-embedding").Respond(req => mockedMessage);
             TextEmbeddingResponse response = _rosetteApi.TextEmbedding("The Ghostbusters movie was filmed in Boston.");
             Assert.AreEqual(expected, response);
         }
@@ -1158,7 +1207,7 @@ namespace rosette_apiUnitTests {
             SentenceTaggingResponse expected = new SentenceTaggingResponse(sentences, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "sentences").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "sentences").Respond(req => mockedMessage);
             SentenceTaggingResponse response = _rosetteApi.Sentences("This land is your land. This land is my land\\nFrom California to the New York island;\\nFrom the red wood forest to the Gulf Stream waters\\n\\nThis land was made for you and Me.\\n\\nAs I was walking that ribbon of highway,\\nI saw above me that endless skyway:\\nI saw below me that golden valley:\\nThis land was made for you and me.");
             Assert.AreEqual(expected, response);
         }
@@ -1215,7 +1264,7 @@ namespace rosette_apiUnitTests {
             SentimentResponse expected = new SentimentResponse(docSentiment, entities, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "sentiment").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "sentiment").Respond(req => mockedMessage);
             SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
             Assert.AreEqual(expected, response);
         }
@@ -1315,7 +1364,7 @@ namespace rosette_apiUnitTests {
             SyntaxDependenciesResponse expected = new SyntaxDependenciesResponse(sentences, tokens, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "syntax/dependencies").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "syntax/dependencies").Respond(req => mockedMessage);
             SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies("Sony Pictures is planning.");
             Assert.AreEqual(expected, response);
         }
@@ -1378,7 +1427,7 @@ namespace rosette_apiUnitTests {
             TokenizationResponse expected = new TokenizationResponse(tokens, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "tokens").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "tokens").Respond(req => mockedMessage);
             TokenizationResponse response = _rosetteApi.Tokens("北京大学生物系主任办公室内部会议");
             Assert.AreEqual(expected, response);
         }
@@ -1439,7 +1488,7 @@ namespace rosette_apiUnitTests {
             TranslateNamesResponse expected = new TranslateNamesResponse(translation, targetLanguage: targetLanguage, targetScript:targetScript, targetScheme:targetScheme, confidence: confidence, responseHeaders:responseHeaders, content: content);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "name-translation").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "name-translation").Respond(req => mockedMessage);
             Dictionary<object, object> input = new Dictionary<object, object>() {
                 {"name", "معمر محمد أبو منيار القذاف"},
                 {"targetLanguage", "eng"},
@@ -1502,7 +1551,7 @@ namespace rosette_apiUnitTests {
             TopicsResponse expected = new TopicsResponse(concepts, keyPhrases, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
-            _mockHttp.When(_testUrl + "topics").Respond(mockedMessage);
+            _mockHttp.When(_testUrl + "topics").Respond(req => mockedMessage);
             string testContent = @"Lily Collins is in talks to join Nicholas Hoult in Chernin Entertainment and Fox Searchlights J.R.R. Tolkien biopic Tolkien. Anthony Boyle, known for playing Scorpius Malfoy in the British play Harry Potter and the Cursed Child, also has signed on for the film centered on the famed author. In Tolkien, Hoult will play the author of the Hobbit and Lord of the Rings book series that were later adapted into two Hollywood trilogies from Peter Jackson. Dome Karukoski is directing the project.";
             TopicsResponse response = _rosetteApi.Topics(content: testContent);
             Assert.AreEqual(expected, response);
