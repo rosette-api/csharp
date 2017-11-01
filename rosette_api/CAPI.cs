@@ -42,6 +42,12 @@ namespace rosette_api {
         private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
 
         /// <summary>
+        /// setupLock is used to ensure that the setup operation cannot be run
+        /// by multiple processes
+        /// </summary>
+        private Object setupLock = new Object();
+
+        /// <summary>
         /// Internal string to hold the uri ending for each endpoint.
         /// Set when an endpoint is called.
         /// </summary>
@@ -179,8 +185,7 @@ namespace rosette_api {
                 _concurrentConnections = value;
                 if (_httpClient != null && _concurrentConnections != ServicePointManager.DefaultConnectionLimit) {
                     ServicePointManager.DefaultConnectionLimit = _concurrentConnections;
-                    _httpClient = null;
-                    SetupClient();
+                    SetupClient(true);
                 }
             }
         }
@@ -1234,49 +1239,51 @@ namespace rosette_api {
         /// SetupClient: Internal function to setup the HttpClient
         /// Uses the Client if one has been set. Otherwise create a new one.
         /// </para>
+        /// <param name="forceReset">Forces the http client to be reset</param>
         /// </summary>
-        private void SetupClient() {
+        private void SetupClient(bool forceReset=false) {
 
-            // The only way that Client is null is if the internal httpClient has either been reset or never initialized
-            if (Client == null) {
-                _httpClient =
-                    new HttpClient(
-                        new HttpClientHandler {
-                            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-                        });
-            }
+            lock (setupLock) {
+                // The only way that Client is null is if the internal httpClient has either been reset or never initialized
+                if (Client == null || forceReset) {
+                    _httpClient =
+                        new HttpClient(
+                            new HttpClientHandler {
+                                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                            });
+                }
 
-            if (Client.BaseAddress == null) {
-                Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
-            }
-            Timeout = _timeout;
-            Debug = _debug;
+                if (Client.BaseAddress == null) {
+                    Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
+                }
+                Timeout = _timeout;
+                Debug = _debug;
 
-            // Standard headers, which are required for Rosette API
-            AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
-            AddRequestHeader("User-Agent", "RosetteAPICsharp/" + Version);
-            AddRequestHeader("X-RosetteAPI-Binding", "csharp");
-            AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
+                // Standard headers, which are required for Rosette API
+                AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
+                AddRequestHeader("User-Agent", "RosetteAPICsharp/" + Version);
+                AddRequestHeader("X-RosetteAPI-Binding", "csharp");
+                AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 
-            var acceptHeader = new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json");
-            if (!Client.DefaultRequestHeaders.Accept.Contains(acceptHeader)) {
-                Client.DefaultRequestHeaders.Accept.Add(acceptHeader);
-            }
+                var acceptHeader = new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json");
+                if (!Client.DefaultRequestHeaders.Accept.Contains(acceptHeader)) {
+                    Client.DefaultRequestHeaders.Accept.Add(acceptHeader);
+                }
 
-            foreach (string encodingType in new List<string>() { "gzip", "deflate" }) {
-                var encodingHeader = new System.Net.Http.Headers.StringWithQualityHeaderValue(encodingType);
-                if (!Client.DefaultRequestHeaders.AcceptEncoding.Contains(encodingHeader)) {
-                    Client.DefaultRequestHeaders.AcceptEncoding.Add(encodingHeader);
+                foreach (string encodingType in new List<string>() { "gzip", "deflate" }) {
+                    var encodingHeader = new System.Net.Http.Headers.StringWithQualityHeaderValue(encodingType);
+                    if (!Client.DefaultRequestHeaders.AcceptEncoding.Contains(encodingHeader)) {
+                        Client.DefaultRequestHeaders.AcceptEncoding.Add(encodingHeader);
+                    }
+                }
+
+                // Custom headers provided by the user
+                if (_customHeaders.Count > 0) {
+                    foreach(KeyValuePair<string, string> entry in _customHeaders) {
+                        AddRequestHeader(entry.Key, entry.Value);
+                    }
                 }
             }
-
-            // Custom headers provided by the user
-            if (_customHeaders.Count > 0) {
-                foreach(KeyValuePair<string, string> entry in _customHeaders) {
-                    AddRequestHeader(entry.Key, entry.Value);
-                }
-            }
-
         }
 
         /// <summary>
