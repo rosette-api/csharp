@@ -2,6 +2,7 @@ language: csharp
 
 install:
     - nuget restore rosette_api.sln
+    - msbuild /t:restore
 
 script:
     - msbuild /p:Configuration=Release rosette_api.sln
