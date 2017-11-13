@@ -1,4 +1,9 @@
 language: csharp
+sudo: required
+dotnet: 2.0.2
+
+env:
+    - CLI_VERSION=latest
 
 install:
     - nuget restore rosette_api.sln
