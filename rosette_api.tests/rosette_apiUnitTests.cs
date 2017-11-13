@@ -9,7 +9,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -470,8 +469,8 @@ namespace rosette_apiUnitTests {
                 { "buildNumber", buildNumber },
                 { "buildTime", buildTime }
             };
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, JsonConvert.SerializeObject(content));
             _mockHttp.When(_testUrl + "info").Respond(req => mockedMessage);
             InfoResponse expected = new InfoResponse(name, version, buildNumber, buildTime, responseHeaders, content);
             InfoResponse response = _rosetteApi.Info();
@@ -521,8 +520,8 @@ namespace rosette_apiUnitTests {
                 { "message", message },
                 { "time", time }
             };
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, JsonConvert.SerializeObject(content));
             _mockHttp.When(_testUrl + "ping").Respond(req => mockedMessage);
             PingResponse expected = new PingResponse(message, time, responseHeaders, content);
             PingResponse response = _rosetteApi.Ping();
@@ -644,7 +643,7 @@ namespace rosette_apiUnitTests {
             RosetteEntity e1 = new RosetteEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, null);
             List<RosetteEntity> entities = new List<RosetteEntity>() { e0, e1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "entities", entities }
             };
@@ -731,7 +730,7 @@ namespace rosette_apiUnitTests {
             LanguageDetection lang8 = new LanguageDetection("fra", (decimal)0.023298946617300347);
             List<LanguageDetection> languageDetections = new List<LanguageDetection>() { lang0, lang1, lang2, lang3, lang4, lang5, lang6, lang7, lang8 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "languageDetections", languageDetections }
             };
@@ -790,7 +789,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", new List<string>(), new List<string>());
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) },
                 { "posTags", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.PosTag)) },
@@ -818,7 +817,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m5 = new MorphologyItem(".", null, ".", null, null);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -841,7 +840,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m1 = new MorphologyItem("Rechtsschutzversicherungsgesellschaft", null, null, compoundComponents, null);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -867,7 +866,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -922,7 +921,7 @@ namespace rosette_apiUnitTests {
             Init();
             double score = (double)0.9486632809417912;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "score", score }
             };
@@ -1042,7 +1041,7 @@ namespace rosette_apiUnitTests {
             List<string> locatives = new List<string>() {loc1};
             HashSet<string> modalities = new HashSet<string>() {"assertion", "someOtherModality"};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
                 new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>() {{1, arg1ID}}, null, locatives, null, confidence, modalities)
             };
@@ -1068,7 +1067,7 @@ namespace rosette_apiUnitTests {
             List<string> locatives = new List<string>() { loc1 };
             HashSet<string> modalities = new HashSet<string>() { "assertion", "someOtherModality" };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
                 new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, modalities)
             };
@@ -1140,7 +1139,7 @@ namespace rosette_apiUnitTests {
             Init();
             List<double> vector = new List<double>() {0.02164695, 0.0032850206, 0.0038508752, -0.009704393, -0.0016203842};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "embedding", vector }
             };
@@ -1200,7 +1199,7 @@ namespace rosette_apiUnitTests {
             string s2 = "As I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
             List<string> sentences = new List<string>() { s0, s1, s2 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "sentences", sentences }
             };
@@ -1256,7 +1255,7 @@ namespace rosette_apiUnitTests {
             RosetteSentimentEntity e1 = new RosetteSentimentEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, "pos", (double)0.5338094035254866);
             List<RosetteSentimentEntity> entities = new List<RosetteSentimentEntity>() { e0, e1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "document", docSentiment },
                 { "entities", entities }
@@ -1356,7 +1355,7 @@ namespace rosette_apiUnitTests {
             List<SyntaxDependenciesResponse.SentenceWithDependencies> sentences = new List<SyntaxDependenciesResponse.SentenceWithDependencies>() { sentence };
             List<string> tokens = new List<string>() { "Sony", "Pictures", "is", "planning", "."};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "sentences", sentences },
                 { "tokens", tokens }
@@ -1420,7 +1419,7 @@ namespace rosette_apiUnitTests {
                 "会议"
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", tokens }
             };
@@ -1477,7 +1476,7 @@ namespace rosette_apiUnitTests {
             string targetScheme = "IC";
             double confidence = (double)0.06856099342585828;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "translation", translation },
                 { "targetLanguage", targetLanguage },
@@ -1543,7 +1542,7 @@ namespace rosette_apiUnitTests {
                 new KeyPhrase("Nicholas Hoult", null)
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "concepts", concepts },
                 { "keyphrases", keyPhrases }

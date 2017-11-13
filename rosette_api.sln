@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rosette_api", "rosette_api\rosette_api.csproj", "{F58E73CD-A7F7-4A5E-980D-EEDAAD30C82C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rosette_api", "rosette_api\rosette_api.csproj", "{F58E73CD-A7F7-4A5E-980D-EEDAAD30C82C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rosette_api.tests", "rosette_api.tests\rosette_api.tests.csproj", "{CF12E1B2-D53A-46E1-AEB7-BF499D54C4CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F58E73CD-A7F7-4A5E-980D-EEDAAD30C82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F58E73CD-A7F7-4A5E-980D-EEDAAD30C82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F58E73CD-A7F7-4A5E-980D-EEDAAD30C82C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF12E1B2-D53A-46E1-AEB7-BF499D54C4CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF12E1B2-D53A-46E1-AEB7-BF499D54C4CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF12E1B2-D53A-46E1-AEB7-BF499D54C4CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF12E1B2-D53A-46E1-AEB7-BF499D54C4CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
