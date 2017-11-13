@@ -10,6 +10,7 @@ install:
     - msbuild /t:restore
 
 script:
+    - dotnet restore
     - msbuild /p:Configuration=Release rosette_api.sln
     - dotnet test rosette_api.tests/rosette_api.tests.csproj
 
