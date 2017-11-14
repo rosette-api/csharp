@@ -11,7 +11,7 @@ install:
 
 script:
     - msbuild /p:Configuration=Release rosette_api.sln
-    - mono  ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./rosette_api.tests/bin/release/netcoreapp2.0/rosette_api.tests.dll
+    - mono  ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./rosette_api.tests/bin/Release/netcoreapp2.0/rosette_api.tests.dll
 
 notifications:
   slack:
