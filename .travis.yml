@@ -8,12 +8,11 @@ dotnet: 2.0.0
 
 install:
     - nuget restore rosette_api.sln
-    - nuget install NUnit.ConsoleRunner -OutputDirectory testrunner
     - msbuild /t:restore
 
 script:
     - msbuild /p:Configuration=Release rosette_api.sln
-    - mono  ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./rosette_api.tests/bin/Release/netcoreapp2.0/rosette_api.tests.dll
+    - dotnet test ./rosette_api.tests/rosette_api.tests.csproj
 
 notifications:
   slack:
