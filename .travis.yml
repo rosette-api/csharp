@@ -4,6 +4,8 @@ sudo: required
 env:
     - CLI_VERSION=latest
 
+dotnet: 2.0.0
+
 install:
     - nuget restore rosette_api.sln
     - nuget install NUnit.ConsoleRunner -OutputDirectory testrunner
