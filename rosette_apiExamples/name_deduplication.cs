@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string name_dedupe_data = @"John Smith,Johnathon Smith,Fred Jones";
+                string name_dedupe_data = @"Alice Terry,Alice Thierry,Betty Grable,Betty Gable,Norma Shearer,Norm Shearer,Brigitte Helm,Bridget Helem,Judy Holliday,Julie Halliday";
 
                 List<string> dedup_names = name_dedupe_data.Split(',').ToList<string>();
                 List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();

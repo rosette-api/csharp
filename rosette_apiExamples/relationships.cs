@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI RelationshipsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string relationships_text_data = @"Bill Gates, Microsoft's former CEO, is a philanthropist.";
+                string relationships_text_data = @"FLIR Systems is headquartered in Oregon and produces thermal imaging, night vision, and infrared cameras and sensor systems.  According to the SEC’s order instituting a settled administrative proceeding, FLIR entered into a multi-million dollar contract to provide thermal binoculars to the Saudi government in November 2008.  Timms and Ramahi were the primary sales employees responsible for the contract, and also were involved in negotiations to sell FLIR’s security cameras to the same government officials.  At the time, Timms was the head of FLIR’s Middle East office in Dubai.";
                 //The results of the API call will come back in the form of a Dictionary
                 RelationshipsResponse response = RelationshipsCAPI.Relationships(relationships_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
