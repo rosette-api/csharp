@@ -31,13 +31,13 @@ namespace rosette_apiExamples
             try
             {
                 CAPI LanguageCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string language_data = @"TBD";
+                string language_multilingual_data = @"TBD";
 
                 LanguageCAPI.SetCustomHeaders("X-RosetteAPI-App", "csharp-app");
                 LanguageCAPI.SetOption("multilingual", "true");
 
                 //The results of the API call will come back in the form of a Dictionary
-                LanguageIdentificationResponse response = LanguageCAPI.Language(language_data);
+                LanguageIdentificationResponse response = LanguageCAPI.Language(language_multilingual_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
