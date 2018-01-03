@@ -31,7 +31,7 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string morphology_complete_data = @"The quick brown fox jumped over the lazy dog. Yes he did.";
+                string morphology_complete_data = @"The quick brown fox jumped over the lazy dog. 👍🏾 Yes he did. B)";
                 //The results of the API call will come back in the form of a Dictionary
                 MorphologyResponse response = MorphologyCAPI.Morphology(morphology_complete_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {

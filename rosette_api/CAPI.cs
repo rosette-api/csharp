@@ -146,6 +146,15 @@ namespace rosette_api {
         public static string Version {
             get { return typeof(CAPI).Assembly.GetName().Version.ToString(); }
         }
+        /// <summary>
+        /// UserAgent returns the string that will be used for User-Agent
+        /// </summary>
+        /// <returns>string User-Agent</returns>
+        public string UserAgent {
+            get {
+                return string.Format("RosetteAPICsharp/{0}/{1}", Version, Environment.Version.ToString());
+            }
+        }
         /// <summary>MaxRetry
         /// <para>
         /// Getter, Setter for the MaxRetry
@@ -1261,7 +1270,7 @@ namespace rosette_api {
 
                 // Standard headers, which are required for Rosette API
                 AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
-                AddRequestHeader("User-Agent", "RosetteAPICsharp/" + Version);
+                AddRequestHeader("User-Agent", UserAgent);
                 AddRequestHeader("X-RosetteAPI-Binding", "csharp");
                 AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 
@@ -1293,7 +1302,7 @@ namespace rosette_api {
         /// <param name="value">Value of header</param>
         private void AddRequestHeader(string name, string value) {
             if (!Client.DefaultRequestHeaders.Contains(name))
-                Client.DefaultRequestHeaders.Add(name, value);
+                Client.DefaultRequestHeaders.TryAddWithoutValidation(name, value);
         }
 
         /// <summary>Decompress
