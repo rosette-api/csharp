@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classrosette__api_1_1RelationshipsResponse.html#a7ac96ce8ab822823334ad0b03ddfa64a":[1,0,0,16,0],
 "classrosette__api_1_1RelationshipsResponse.html#a96efd6f7edd9469bc832dcbdb8329625":[1,0,0,16,2],
 "classrosette__api_1_1RelationshipsResponse.html#af248775e88efeb3c0c875733a941a585":[1,0,0,16,1],
 "classrosette__api_1_1ResponseHeaders.html":[1,0,0,17],
@@ -189,16 +190,16 @@ var NAVTREEINDEX1 =
 "classrosette__api_1_1TransliterationResponse.html#afc16286bb3116504da6fe1a7cf777e5b":[1,0,0,34,0],
 "dir_796e59e5ab8f3d492ca45c934f39cc20.html":[2,0,0],
 "files.html":[2,0],
-"functions.html":[1,3,0,0],
 "functions.html":[1,3,0],
+"functions.html":[1,3,0,0],
 "functions_b.html":[1,3,0,1],
 "functions_c.html":[1,3,0,2],
 "functions_d.html":[1,3,0,3],
 "functions_e.html":[1,3,0,4],
 "functions_enum.html":[1,3,3],
 "functions_f.html":[1,3,0,5],
-"functions_func.html":[1,3,1],
 "functions_func.html":[1,3,1,0],
+"functions_func.html":[1,3,1],
 "functions_func_c.html":[1,3,1,1],
 "functions_func_d.html":[1,3,1,2],
 "functions_func_e.html":[1,3,1,3],
@@ -233,8 +234,8 @@ var NAVTREEINDEX1 =
 "index.html":[],
 "namespacemembers.html":[0,1,0],
 "namespacemembers_enum.html":[0,1,1],
-"namespacerosette__api.html":[0,0,0],
 "namespacerosette__api.html":[1,0,0],
+"namespacerosette__api.html":[0,0,0],
 "namespaces.html":[0,0],
 "pages.html":[]
 };

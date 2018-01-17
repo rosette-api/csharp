@@ -62,6 +62,7 @@ var classrosette__api_1_1CAPI =
     [ "MillisecondsBetweenRetries", "classrosette__api_1_1CAPI.html#a1a2bca585295fe686085e128ca742367", null ],
     [ "Timeout", "classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1", null ],
     [ "URIstring", "classrosette__api_1_1CAPI.html#a3c358533f274d3cd22d789d943a57e68", null ],
+    [ "UserAgent", "classrosette__api_1_1CAPI.html#a0ecf7520ab0540d75780a563bcd26c1c", null ],
     [ "UserKey", "classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba", null ],
     [ "Version", "classrosette__api_1_1CAPI.html#a7f479d20d247d108a9c9c22a21c68d6f", null ]
 ];

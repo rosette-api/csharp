@@ -83,6 +83,7 @@ var NAVTREEINDEX0 =
 "classrosette__api_1_1CAPI.html#a0380d98312449dbf9be46cbc1c2ee402":[1,0,0,1,13],
 "classrosette__api_1_1CAPI.html#a0a2736e02338605839d7e49a01d32979":[1,0,0,1,11],
 "classrosette__api_1_1CAPI.html#a0ccd841456fd820a7b4d16ddc54803b6":[1,0,0,1,4],
+"classrosette__api_1_1CAPI.html#a0ecf7520ab0540d75780a563bcd26c1c":[1,0,0,1,62],
 "classrosette__api_1_1CAPI.html#a0f9f8675191ef4e48b1a9989989ad32c":[1,0,0,1,29],
 "classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e":[1,0,0,1,57],
 "classrosette__api_1_1CAPI.html#a1a2bca585295fe686085e128ca742367":[1,0,0,1,59],
@@ -110,10 +111,10 @@ var NAVTREEINDEX0 =
 "classrosette__api_1_1CAPI.html#a74e9f0d663db322cb974733eeb77e0ea":[1,0,0,1,28],
 "classrosette__api_1_1CAPI.html#a796e649a7da8bea4e61197bcd5c06f4a":[1,0,0,1,51],
 "classrosette__api_1_1CAPI.html#a7e89e1341fe98a037ac2e769a9608a68":[1,0,0,1,54],
-"classrosette__api_1_1CAPI.html#a7f479d20d247d108a9c9c22a21c68d6f":[1,0,0,1,63],
+"classrosette__api_1_1CAPI.html#a7f479d20d247d108a9c9c22a21c68d6f":[1,0,0,1,64],
 "classrosette__api_1_1CAPI.html#a7f7711f19aac5f3c8bfaad4f2e44b85e":[1,0,0,1,43],
 "classrosette__api_1_1CAPI.html#a8323af5ebede14a909b167e719029f30":[1,0,0,1,36],
-"classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba":[1,0,0,1,62],
+"classrosette__api_1_1CAPI.html#a841f1b659a19158a503657d71020acba":[1,0,0,1,63],
 "classrosette__api_1_1CAPI.html#a8509e6782ec9f7ccd4cc02f1a4fde2ee":[1,0,0,1,10],
 "classrosette__api_1_1CAPI.html#a87fb633372731686df7123fa02e4b18e":[1,0,0,1,52],
 "classrosette__api_1_1CAPI.html#a883ec42ed6dc045bd5281b82098638ab":[1,0,0,1,15],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classrosette__api_1_1PingResponse.html#ae03caa8fb74979d4fca9ee1ededcd063":[1,0,0,15,4],
 "classrosette__api_1_1RelationshipsResponse.html":[1,0,0,16],
 "classrosette__api_1_1RelationshipsResponse.html#a043ce8b0cff4005883fddcd831ae75ed":[1,0,0,16,4],
-"classrosette__api_1_1RelationshipsResponse.html#a582836a158d20b30ceb8be3271e87ee0":[1,0,0,16,3],
-"classrosette__api_1_1RelationshipsResponse.html#a7ac96ce8ab822823334ad0b03ddfa64a":[1,0,0,16,0]
+"classrosette__api_1_1RelationshipsResponse.html#a582836a158d20b30ceb8be3271e87ee0":[1,0,0,16,3]
 };
