@@ -349,6 +349,15 @@ namespace rosette_apiUnitTests {
             _mockHttp.Clear();
         }
 
+        //------------------------- User-Agent Test ----------------------------------------
+        [Test]
+        public void UserAgentTest() {
+            string uaString = string.Format("RosetteAPICsharp/{0}/{1}", CAPI.Version, Environment.Version.ToString());
+            Assert.AreEqual(uaString, _rosetteApi.UserAgent);
+        }
+
+
+
         //------------------------- Simple Options Tests ----------------------------------------
 
 
