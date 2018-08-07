@@ -26,6 +26,7 @@ namespace rosette_api
 
         private const String categoryKey = "label";
         private const String confidenceKey = "confidence";
+        private const String scoreKey = "score";
         private const String categoriesKey = "categories";
 
         /// <summary>
@@ -41,7 +42,8 @@ namespace rosette_api
             {
                 String label = result.Properties().Where<JProperty>((p) => p.Name == categoryKey).Any() ? result[categoryKey].ToString() : null;
                 Nullable<decimal> confidence = result.Properties().Where<JProperty>((p) => p.Name == confidenceKey).Any() ? result[confidenceKey].ToObject<decimal?>() : null;
-                categories.Add(new RosetteCategory(label, confidence));
+                Nullable<decimal> score = result.Properties().Where<JProperty>((p) => p.Name == scoreKey).Any() ? result[scoreKey].ToObject<decimal?>() : null;
+                categories.Add(new RosetteCategory(label, confidence, score));
             }
             this.Categories = categories;
         }
@@ -102,6 +104,7 @@ namespace rosette_api
     {
         private const string LABEL = "label";
         private const string CONFIDENCE = "confidence";
+        private const string SCORE = "score";
 
         /// <summary>
         /// Gets or sets the category label
@@ -117,14 +120,23 @@ namespace rosette_api
         public Nullable<decimal> Confidence { get; set; }
 
         /// <summary>
+        /// Gets or sets the raw score:
+        /// On a range from -INF to INF, the raw score of the categorization
+        /// </summary>
+        [JsonProperty(PropertyName = SCORE)]
+        public Nullable<decimal> Score { get; set; }
+
+        /// <summary>
         /// Creates a Rosette Category from a category label and confidence
         /// </summary>
         /// <param name="label">The category label</param>
         /// <param name="confidence">The confidence this was the correct category</param>
-        public RosetteCategory(String label, Nullable<decimal> confidence)
+        /// <param name="score">The raw score of this category prediction
+        public RosetteCategory(String label, Nullable<decimal> confidence, Nullable<decimal> score)
         {
             this.Label = label;
             this.Confidence = confidence;
+            this.Score = score;
         }
 
         /// <summary>
@@ -139,7 +151,8 @@ namespace rosette_api
                 RosetteCategory other = obj as RosetteCategory;
                 List<bool> conditions = new List<bool>() {
                     this.Confidence == other.Confidence,
-                    this.Label == other.Label 
+                    this.Label == other.Label,
+                    this.Score == other.Score
                 };
                 return conditions.All(condition => condition);
             }
@@ -157,7 +170,8 @@ namespace rosette_api
         {
             int h0 = this.Label != null ? this.Label.GetHashCode() : 1;
             int h1 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
-            return h0 ^ h1;
+            int h2 = this.Score != null ? this.Score.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2;
         }
 
         /// <summary>
