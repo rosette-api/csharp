@@ -104,7 +104,7 @@ namespace rosette_api
     {
         private const string LABEL = "label";
         private const string CONFIDENCE = "confidence";
-        private const string SCORE = "score"
+        private const string SCORE = "score";
 
         /// <summary>
         /// Gets or sets the category label
