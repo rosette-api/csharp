@@ -119,12 +119,12 @@ namespace rosette_api
         [JsonProperty(PropertyName = CONFIDENCE)]
         public Nullable<decimal> Confidence { get; set; }
 
-		/// <summary>
-		/// Gets or sets the raw score:
-		/// On a range from -INF to INF, the raw score of the categorization
-		/// </summary>
-		[JsonProperty(PropertyName = SCORE)]
-		public Nullable<decimal> Score { get; set; }
+        /// <summary>
+        /// Gets or sets the raw score:
+        /// On a range from -INF to INF, the raw score of the categorization
+        /// </summary>
+        [JsonProperty(PropertyName = SCORE)]
+        public Nullable<decimal> Score { get; set; }
 
         /// <summary>
         /// Creates a Rosette Category from a category label and confidence

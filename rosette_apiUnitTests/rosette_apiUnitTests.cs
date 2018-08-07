@@ -612,7 +612,7 @@ namespace rosette_apiUnitTests {
                 { "categories", categories }
             };
             Dictionary<string, string> responseHeaders = serializer.Deserialize<Dictionary<string, string>>(new JsonTextReader(new StringReader(headersAsString)));
-            String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + "\", \"score\": " + cat0.Score + "} ] }";
+            String mockedContent = "{\"categories\": [ { \"label\": \"" + cat0.Label + "\", \"confidence\": " + cat0.Confidence + ", \"score\": " + cat0.Score + "} ] }";
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "categories").Respond(req => mockedMessage);
             CategoriesResponse expected = new CategoriesResponse(categories, responseHeaders, null, mockedContent);
