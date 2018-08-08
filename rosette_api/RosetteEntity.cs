@@ -121,7 +121,7 @@ namespace rosette_api
         public Nullable<double> Confidence { get; set; }
         
         /// <summary>
-        /// Gets or sets the dbpediaType o fthe extracted entity
+        /// Gets or sets the dbpediaType of the extracted entity
         /// </summary>
         [JsonProperty("dbpediaType", NullValueHandling = NullValueHandling.Ignore)]
         public String DBpediaType { get; set; }
