@@ -23,6 +23,7 @@ namespace rosette_api
         internal const string confidenceKey = "confidence";
         internal const string mentionKey = "mention";
         internal const string normalizedMentionKey = "normalized";
+        internal const string dbpediaTypeKey = "dbpediaType";
         internal const string countKey = "count";
         internal const string typeKey = "type";
         internal const string entityIDKey = "entityId";
@@ -59,6 +60,7 @@ namespace rosette_api
                 string normalizedMention = result.Properties().Where((p) => p.Name == normalizedMentionKey).Any() ? result[normalizedMentionKey].ToString() : null;
                 string entityIDStr = result.Properties().Where((p) => p.Name == entityIDKey).Any() ? result[entityIDKey].ToString() : null;
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
+                string dbpediaType = result.Properties().Where((p) => p.Name == dbpediaTypeKey).Any() ? result[dbpediaTypeKey].ToString() : null;
                 Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
                 string sentiment = null;
                 Nullable<double> confidence = null;
@@ -68,7 +70,7 @@ namespace rosette_api
                     sentiment = entitySentiment.Properties().Where((p) => p.Name == labelKey).Any() ? entitySentiment[labelKey].ToString() : null;
                     confidence = entitySentiment.Properties().Where((p) => p.Name == confidenceKey).Any() ? entitySentiment[confidenceKey].ToObject<double?>() : new double?();
                 }
-                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence));
+                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence, dbpediaType));
             }
             this.EntitySentiments = entitySentiments;
         }
@@ -247,30 +249,14 @@ namespace rosette_api
         /// <param name="count">The number of times the entity appeared in the text</param>
         /// <param name="sentiment">The contextual sentiment of the entity</param>
         /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
-        public RosetteSentimentEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, String sentiment, Nullable<double> confidence) : base(mention, normalizedMention, id, entityType, count, confidence)
+        /// <param name="dbpediaType"></param>
+        public RosetteSentimentEntity(string mention, string normalizedMention, EntityID id, string entityType,
+            int? count, string sentiment, double? confidence, string dbpediaType) : base(mention, normalizedMention, id, entityType, count, confidence, dbpediaType)
         {
             this.Sentiment = new SentimentResponse.RosetteSentiment(sentiment, confidence);
         }
 
-        /// <summary>
-        /// Is this RosetteSentimentEntity the same as the other entity?
-        /// </summary>
-        /// <param name="other">The other entity</param>
-        /// <returns>True if the entities are equal (sentiment is ignored).</returns>
-        public bool EntityEquals(RosetteEntity other)
-        {
-           List<bool> conditions = new List<bool>() {
-               this.Mention == other.Mention &&
-               this.NormalizedMention != null && other.NormalizedMention != null ? this.NormalizedMention.Equals(other.NormalizedMention) : this.NormalizedMention == other.NormalizedMention,
-               this.Mention != null && other.Mention != null ? this.Mention.Equals(other.Mention) : this.Mention == other.Mention,
-               this.ID != null && other.ID != null ? this.ID.Equals(other.ID) : this.ID == other.ID,
-               this.EntityType != null && other.EntityType != null ? this.EntityType.Equals(other.EntityType) : this.EntityType == other.EntityType,
-               this.Count != null && other.Count != null ? this.Count.Equals(other.Count) : this.Count == other.Count,
-               this.Confidence != null && other.Confidence != null ? this.Confidence.Equals(other.Confidence) : this.Confidence == other.Confidence
-           };
-           return conditions.All(condition => condition);
-        }
-
+ 
         /// <summary>
         /// Equals override
         /// </summary>
@@ -283,7 +269,7 @@ namespace rosette_api
                 RosetteSentimentEntity other = obj as RosetteSentimentEntity;
                 List<bool> conditions = new List<bool>() {
                     this.Sentiment != null && other.Sentiment != null ? this.Sentiment.Equals(other.Sentiment) : this.Sentiment == other.Sentiment,
-                    this.EntityEquals(other),
+                    base.Equals(other),
                     this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
@@ -300,14 +286,10 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.Count != null ? this.Count.GetHashCode() : 1;
-            int h1 = this.EntityType != null ? this.EntityType.GetHashCode() : 1;
-            int h2 = this.ID != null ? this.ID.GetHashCode() : 1;
-            int h3 = this.Mention != null ? this.Mention.GetHashCode() : 1;
-            int h4 = this.NormalizedMention != null ? this.NormalizedMention.GetHashCode() : 1;
-            int h5 = this.Sentiment != null ? this.Sentiment.GetHashCode() : 1;
-            int h6 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5 ^ h6;
+            var hashCode = base.GetHashCode();
+            hashCode = (hashCode * 397) ^ (Sentiment != null ? Sentiment.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (Confidence != null ? Confidence.GetHashCode() : 0);
+            return hashCode;
         }
 
         /// <summary>

@@ -119,6 +119,12 @@ namespace rosette_api
         /// </summary>
         [JsonProperty("confidence")]
         public Nullable<double> Confidence { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the dbpediaType of the extracted entity
+        /// </summary>
+        [JsonProperty("dbpediaType", NullValueHandling = NullValueHandling.Ignore)]
+        public String DBpediaType { get; set; }
 
         /// <summary>
         /// Creates an entity
@@ -129,7 +135,9 @@ namespace rosette_api
         /// <param name="entityType">The entity type</param>
         /// <param name="count">The number of times this entity appeared in the input to the API</param>
         /// <param name="confidence">The confidence of this entity appeared in the input to the API</param>
-        public RosetteEntity(String mention, String normalizedMention, EntityID id, String entityType, Nullable<int> count, Nullable<double> confidence)
+        /// <param name="dbpediaType">The DBpedia type of the entity</param>
+        public RosetteEntity(string mention, string normalizedMention, EntityID id, string entityType, int? count,
+            double? confidence, string dbpediaType)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
@@ -137,6 +145,17 @@ namespace rosette_api
             this.Count = count;
             this.EntityType = entityType;
             this.Confidence = confidence;
+            this.DBpediaType = dbpediaType;
+        }
+
+        /// <summary>
+        /// Equals for RosetteEntity
+        /// </summary>
+        /// <param name="other">RosetteEntity</param>
+        /// <returns></returns>
+        protected bool Equals(RosetteEntity other)
+        {
+            return string.Equals(Mention, other.Mention) && string.Equals(NormalizedMention, other.NormalizedMention) && Equals(ID, other.ID) && string.Equals(EntityType, other.EntityType) && Count == other.Count && Confidence.Equals(other.Confidence) && string.Equals(DBpediaType, other.DBpediaType);
         }
 
         /// <summary>
@@ -146,24 +165,10 @@ namespace rosette_api
         /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is RosetteEntity)
-            {
-                RosetteEntity other = obj as RosetteEntity;
-                List<bool> conditions = new List<bool>() {
-                    this.ID != null && other.ID != null ? this.ID.Equals(other.ID) : this.ID == other.ID,
-                    this.Count == other.Count,
-                    this.EntityType == other.EntityType,
-                    this.Mention == other.Mention,
-                    this.NormalizedMention == other.NormalizedMention,
-                    this.Confidence == other.Confidence,
-                    this.GetHashCode() == other.GetHashCode()
-                };
-                return conditions.All(condition => condition);
-            }
-            else
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((RosetteEntity) obj);
         }
 
         /// <summary>
@@ -172,13 +177,17 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.NormalizedMention != null ? this.NormalizedMention.GetHashCode() : 1;
-            int h1 = this.Mention != null ? this.Mention.GetHashCode() : 1;
-            int h2 = this.ID != null ? this.ID.GetHashCode() : 1;
-            int h3 = this.Count != null ? this.Count.GetHashCode() : 1;
-            int h4 = this.EntityType != null ? this.EntityType.GetHashCode() : 1;
-            int h5 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5;
+            unchecked
+            {
+                var hashCode = (Mention != null ? Mention.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (NormalizedMention != null ? NormalizedMention.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ID != null ? ID.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (EntityType != null ? EntityType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Count.GetHashCode();
+                hashCode = (hashCode * 397) ^ Confidence.GetHashCode();
+                hashCode = (hashCode * 397) ^ (DBpediaType != null ? DBpediaType.GetHashCode() : 0);
+                return hashCode;
+            }
         }
 
         /// <summary>
