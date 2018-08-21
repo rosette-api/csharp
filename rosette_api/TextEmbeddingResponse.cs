@@ -23,7 +23,21 @@ namespace rosette_api
         [JsonProperty(embeddingKey)]
         public IEnumerable<double> TextEmbedding { get; set; }
 
-        private const String embeddingKey = "embedding";
+        /// <summary>
+        /// Lists the tokens in the document
+        /// </summary>
+        [JsonProperty(tokenKey)]
+        public IEnumerable<string> tokens { get; set; }
+
+        /// <summary>
+        /// Lists the token embeddings
+        /// </summary>
+        [JsonProperty(tokenEmbeddingsKey)]
+        public IEnumerable<List<double>> tokenEmbeddings { get; set; }
+
+        private const String embeddingKey = "documentEmbedding";
+        private const String tokenKey = "tokens";
+        private const String tokenEmbeddingsKey = "tokenEmbeddings";
 
         /// <summary>
         /// Creates a TextEmbeddingResponse from the API's raw output
@@ -38,7 +52,13 @@ namespace rosette_api
             {
                 textEmbedding.Add(result.ToObject<double>());
             }
+            JArray tokensArr = this.ContentDictionary.ContainsKey(tokenKey) ? this.ContentDictionary[tokenKey] as JArray : null;
+            List<string> tokens = tokensArr != null ? new List<string>(tokensArr.Select((jToken) => jToken?.ToString())) : null;
+            JArray tokenEmbeddingsArr = this.ContentDictionary.ContainsKey(tokenEmbeddingsKey) ? this.ContentDictionary[tokenEmbeddingsKey] as JArray : null;
+            List<List<double>> tokenEmbeddings = tokenEmbeddingsArr != null ? new List<List<double>>(tokenEmbeddingsArr.Select<JToken, List<double>>((jToken) => jToken?.ToObject<List<double>>())) : null;
             this.TextEmbedding = textEmbedding;
+            this.tokens = tokens;
+            this.tokenEmbeddings = tokenEmbeddings;
         }
 
         /// <summary>
@@ -48,10 +68,13 @@ namespace rosette_api
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public TextEmbeddingResponse(IEnumerable<double> textEmbedding, Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
+        public TextEmbeddingResponse(IEnumerable<double> textEmbedding, IEnumerable<string> tokens, IEnumerable<List<double>> tokenEmbeddings, 
+            Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
             this.TextEmbedding = textEmbedding;
+            this.tokens = tokens; 
+            this.tokenEmbeddings = tokenEmbeddings;
         }
 
         /// <summary>
@@ -66,6 +89,8 @@ namespace rosette_api
                 TextEmbeddingResponse other = obj as TextEmbeddingResponse;
                 List<bool> conditions = new List<bool>() {
                     this.TextEmbedding != null && other.TextEmbedding != null ? this.TextEmbedding.SequenceEqual(other.TextEmbedding) : this.TextEmbedding == other.TextEmbedding,
+                    this.tokens != null && other.tokens != null ? this.tokens.SequenceEqual(other.tokens) : this.tokens == other.tokens,
+                    this.tokenEmbeddings != null && other.tokenEmbeddings != null ? this.tokenEmbeddings.Any(a => other.tokenEmbeddings.Any(b => a.SequenceEqual(b))) : this.tokenEmbeddings == other.tokenEmbeddings,
                     this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
@@ -82,9 +107,11 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.TextEmbedding != null ? this.TextEmbedding.Aggregate<double, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
-            int h1 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
-            return h0 ^ h1;
+            int h0 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
+            int h1 = this.TextEmbedding != null ? this.TextEmbedding.Aggregate<double, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            int h2 = this.tokens != null ? this.tokens.GetHashCode() : 1;
+            int h3 = this.tokenEmbeddings != null ? this.tokenEmbeddings.Aggregate<List<double>, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
+            return h0 ^ h1 ^ h2 ^ h3;
         }
     }
 }
