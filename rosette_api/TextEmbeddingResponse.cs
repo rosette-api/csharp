@@ -65,6 +65,8 @@ namespace rosette_api
         /// Constructs a TextEmbedding Response from a text embedding, a collection of response headers, and content in a dictionary or content as JSON
         /// </summary>
         /// <param name="textEmbedding">The averaged text vector (text embedding)</param>
+        /// <param name="tokens">The tokens from the document</param>
+        /// <param name="tokenEmbeddings">The embeddings for each token</param>
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
