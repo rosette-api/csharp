@@ -1,6 +1,7 @@
 var classrosette__api_1_1RosetteEntity =
 [
-    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a656dd12067ae65986b5036d4726aa25a", null ],
+    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a365af2e40e92a7d4d24a6d89ca07535d", null ],
+    [ "Equals", "classrosette__api_1_1RosetteEntity.html#a8f625abb8ec491e1615394e90ed23a81", null ],
     [ "Equals", "classrosette__api_1_1RosetteEntity.html#adbef3d4a3d4741eea5ee547c7dfbf254", null ],
     [ "GetHashCode", "classrosette__api_1_1RosetteEntity.html#a51adbc548bdf98650e7d541d11542860", null ],
     [ "ToString", "classrosette__api_1_1RosetteEntity.html#a3940854adebe873d38bfa9a3a2d6e152", null ],
@@ -23,6 +24,7 @@ var classrosette__api_1_1RosetteEntity =
     [ "URL", "classrosette__api_1_1RosetteEntity.html#abc1634e8052330c908294146e3c28fe2", null ],
     [ "Confidence", "classrosette__api_1_1RosetteEntity.html#a819e020ade891a1d4f91fdf32bf16fac", null ],
     [ "Count", "classrosette__api_1_1RosetteEntity.html#a4f1b338e4995ff9e026acf4c1186d8fb", null ],
+    [ "DBpediaType", "classrosette__api_1_1RosetteEntity.html#a3a984721b56d4e4e54d42ffed4e6fc1c", null ],
     [ "EntityID", "classrosette__api_1_1RosetteEntity.html#adcc6a9ef5e2b0c50419ba2da057b7b13", null ],
     [ "EntityType", "classrosette__api_1_1RosetteEntity.html#ad67ec389c0b5b8c93c1a926c42edaa5f", null ],
     [ "ID", "classrosette__api_1_1RosetteEntity.html#aef65f084ac19da80508466e85acfa946", null ],

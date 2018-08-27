@@ -1,6 +1,7 @@
 var searchData=
 [
   ['salience',['Salience',['../classrosette__api_1_1Concept.html#aacda24a69f88fe5bfe700aba53e44846',1,'rosette_api.Concept.Salience()'],['../classrosette__api_1_1KeyPhrase.html#a2cb67e11ea7ccc5d71438aef3fcfceb7',1,'rosette_api.KeyPhrase.Salience()']]],
+  ['score',['Score',['../classrosette__api_1_1RosetteCategory.html#ae4aee96a183f027fd66f2c2b7160264d',1,'rosette_api::RosetteCategory']]],
   ['script',['script',['../classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd',1,'rosette_api::Name']]],
   ['sentences',['Sentences',['../classrosette__api_1_1SentenceTaggingResponse.html#ae5a7a448ae626b54ddff2172286806d8',1,'rosette_api.SentenceTaggingResponse.Sentences()'],['../classrosette__api_1_1SyntaxDependenciesResponse.html#a3a3c56112017b2345df8507ebd7410b8',1,'rosette_api.SyntaxDependenciesResponse.Sentences()']]],
   ['sentiment',['Sentiment',['../classrosette__api_1_1RosetteSentimentEntity.html#aedfed5df631beca144366e0880067159',1,'rosette_api::RosetteSentimentEntity']]],
