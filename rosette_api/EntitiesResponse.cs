@@ -30,6 +30,7 @@ namespace rosette_api
         private const String entityIDKey = "entityId";
         private const String countKey = "count";
         private const String confidenceKey = "confidence";
+        private const String dbpediaTypeKey = "dbpediaType";
 
         /// <summary>
         /// Creates a CategoriesResponse from the API's raw output
@@ -48,7 +49,8 @@ namespace rosette_api
                 String normalized = result.Properties().Where((p) => String.Equals(p.Name, normalizedKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[normalizedKey].ToString() : null;
                 Nullable<int> count = result.Properties().Where((p) => String.Equals(p.Name, countKey)).Any() ? result[countKey].ToObject<int?>() : null;
                 Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
-                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence));
+                String dbpediaType = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[dbpediaTypeKey].ToString() : null;
+                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType));
             }
             this.Entities = entities;
         }
