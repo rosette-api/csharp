@@ -131,7 +131,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="label">The category label</param>
         /// <param name="confidence">The confidence this was the correct category</param>
-        /// <param name="score">The raw score of this category prediction
+        /// <param name="score">The raw score of this category prediction</param>
         public RosetteCategory(String label, Nullable<decimal> confidence, Nullable<decimal> score)
         {
             this.Label = label;

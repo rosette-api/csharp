@@ -33,7 +33,7 @@ namespace rosette_api
         private const String dbpediaTypeKey = "dbpediaType";
 
         /// <summary>
-        /// Creates a CategoriesResponse from the API's raw output
+        /// Creates an EntitiesResponse from the API's raw output
         /// </summary>
         /// <param name="apiResult">The API's raw output</param>
         public EntitiesResponse(HttpResponseMessage apiResult) : base(apiResult)
