@@ -119,9 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8370ecacee26af7f3a2e2413652e89d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#af8370ecacee26af7f3a2e2413652e89d">TextEmbeddingResponse</a> (HttpResponseMessage apiResult)</td></tr>
 <tr class="memdesc:af8370ecacee26af7f3a2e2413652e89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called ...">TextEmbeddingResponse</a> from the API's raw output  <a href="#af8370ecacee26af7f3a2e2413652e89d">More...</a><br /></td></tr>
 <tr class="separator:af8370ecacee26af7f3a2e2413652e89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22862a978655307cd810acfd17c0d70d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#a22862a978655307cd810acfd17c0d70d">TextEmbeddingResponse</a> (IEnumerable&lt; double &gt; textEmbedding, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)</td></tr>
-<tr class="memdesc:a22862a978655307cd810acfd17c0d70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a TextEmbedding Response from a text embedding, a collection of response headers, and content in a dictionary or content as JSON  <a href="#a22862a978655307cd810acfd17c0d70d">More...</a><br /></td></tr>
-<tr class="separator:a22862a978655307cd810acfd17c0d70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99edf32ce0f47262310b94fd56bc1afd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#a99edf32ce0f47262310b94fd56bc1afd">TextEmbeddingResponse</a> (IEnumerable&lt; double &gt; textEmbedding, IEnumerable&lt; string &gt; <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#a62a82037e33a961fb0e1ef1efb69f409">tokens</a>, IEnumerable&lt; List&lt; double &gt;&gt; <a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#aadd3f0a6797232329bf2f3ba3f494b50">tokenEmbeddings</a>, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)</td></tr>
+<tr class="memdesc:a99edf32ce0f47262310b94fd56bc1afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a TextEmbedding Response from a text embedding, a collection of response headers, and content in a dictionary or content as JSON  <a href="#a99edf32ce0f47262310b94fd56bc1afd">More...</a><br /></td></tr>
+<tr class="separator:a99edf32ce0f47262310b94fd56bc1afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a157fb9cc3320fee2a2ecc2d2cac239c7"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#a157fb9cc3320fee2a2ecc2d2cac239c7">Equals</a> (object obj)</td></tr>
 <tr class="memdesc:a157fb9cc3320fee2a2ecc2d2cac239c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equals override  <a href="#a157fb9cc3320fee2a2ecc2d2cac239c7">More...</a><br /></td></tr>
 <tr class="separator:a157fb9cc3320fee2a2ecc2d2cac239c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +150,12 @@ Properties</h2></td></tr>
 <tr class="memitem:ad8eadd4ed7142b752895f16f11d5c356"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#ad8eadd4ed7142b752895f16f11d5c356">TextEmbedding</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:ad8eadd4ed7142b752895f16f11d5c356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the averaged text vector  <a href="#ad8eadd4ed7142b752895f16f11d5c356">More...</a><br /></td></tr>
 <tr class="separator:ad8eadd4ed7142b752895f16f11d5c356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62a82037e33a961fb0e1ef1efb69f409"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#a62a82037e33a961fb0e1ef1efb69f409">tokens</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a62a82037e33a961fb0e1ef1efb69f409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists the tokens in the document  <a href="#a62a82037e33a961fb0e1ef1efb69f409">More...</a><br /></td></tr>
+<tr class="separator:a62a82037e33a961fb0e1ef1efb69f409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd3f0a6797232329bf2f3ba3f494b50"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; List&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1TextEmbeddingResponse.html#aadd3f0a6797232329bf2f3ba3f494b50">tokenEmbeddings</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aadd3f0a6797232329bf2f3ba3f494b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists the token embeddings  <a href="#aadd3f0a6797232329bf2f3ba3f494b50">More...</a><br /></td></tr>
+<tr class="separator:aadd3f0a6797232329bf2f3ba3f494b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_classrosette__api_1_1RosetteResponse"><td colspan="2" onclick="javascript:toggleInherit('properties_classrosette__api_1_1RosetteResponse')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="classrosette__api_1_1RosetteResponse.html">rosette_api.RosetteResponse</a></td></tr>
 <tr class="memitem:a64ffdee409bf6890c97b19f60f8e2137 inherit properties_classrosette__api_1_1RosetteResponse"><td class="memItemLeft" align="right" valign="top">IDictionary&lt; string, object &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrosette__api_1_1RosetteResponse.html#a64ffdee409bf6890c97b19f60f8e2137">Content</a><code> [get]</code></td></tr>
 <tr class="memdesc:a64ffdee409bf6890c97b19f60f8e2137 inherit properties_classrosette__api_1_1RosetteResponse"><td class="mdescLeft">&#160;</td><td class="mdescRight">IDictionary of response content  <a href="classrosette__api_1_1RosetteResponse.html#a64ffdee409bf6890c97b19f60f8e2137">More...</a><br /></td></tr>
@@ -193,12 +199,12 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00032">32</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00046">46</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
 
 </div>
 </div>
-<a id="a22862a978655307cd810acfd17c0d70d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22862a978655307cd810acfd17c0d70d">&#9670;&nbsp;</a></span>TextEmbeddingResponse() <span class="overload">[2/2]</span></h2>
+<a id="a99edf32ce0f47262310b94fd56bc1afd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99edf32ce0f47262310b94fd56bc1afd">&#9670;&nbsp;</a></span>TextEmbeddingResponse() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,6 +214,18 @@ Properties</h2></td></tr>
           <td>(</td>
           <td class="paramtype">IEnumerable&lt; double &gt;&#160;</td>
           <td class="paramname"><em>textEmbedding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IEnumerable&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>tokens</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IEnumerable&lt; List&lt; double &gt;&gt;&#160;</td>
+          <td class="paramname"><em>tokenEmbeddings</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -239,6 +257,8 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">textEmbedding</td><td>The averaged text vector (text embedding)</td></tr>
+    <tr><td class="paramname">tokens</td><td>The tokens from the document</td></tr>
+    <tr><td class="paramname">tokenEmbeddings</td><td>The embeddings for each token</td></tr>
     <tr><td class="paramname">responseHeaders</td><td>The response headers from the API</td></tr>
     <tr><td class="paramname">content</td><td>The content of the response (i.e. the textEmbedding list)</td></tr>
     <tr><td class="paramname">contentAsJson</td><td>The content as a JSON string</td></tr>
@@ -246,7 +266,7 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00051">51</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00073">73</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -276,7 +296,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if equal</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00062">62</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00087">87</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -298,7 +318,7 @@ Properties</h2></td></tr>
 <p>Hashcode override </p>
 <dl class="section return"><dt>Returns</dt><dd>The hashcode</dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00083">83</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00110">110</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
 
 </div>
 </div>
@@ -326,6 +346,58 @@ Properties</h2></td></tr>
 <p>Gets the averaged text vector </p>
 
 <p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00024">24</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+
+</div>
+</div>
+<a id="aadd3f0a6797232329bf2f3ba3f494b50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd3f0a6797232329bf2f3ba3f494b50">&#9670;&nbsp;</a></span>tokenEmbeddings</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerable&lt;List&lt;double&gt; &gt; rosette_api.TextEmbeddingResponse.tokenEmbeddings</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lists the token embeddings </p>
+
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00036">36</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
+
+</div>
+</div>
+<a id="a62a82037e33a961fb0e1ef1efb69f409"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62a82037e33a961fb0e1ef1efb69f409">&#9670;&nbsp;</a></span>tokens</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerable&lt;string&gt; rosette_api.TextEmbeddingResponse.tokens</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lists the tokens in the document </p>
+
+<p class="definition">Definition at line <a class="el" href="TextEmbeddingResponse_8cs_source.html#l00030">30</a> of file <a class="el" href="TextEmbeddingResponse_8cs_source.html">TextEmbeddingResponse.cs</a>.</p>
 
 </div>
 </div>

@@ -9,6 +9,7 @@ var searchData=
   ['time',['Time',['../classrosette__api_1_1PingResponse.html#a6ac53b513b6ba07354b781712e1d09af',1,'rosette_api::PingResponse']]],
   ['timeout',['Timeout',['../classrosette__api_1_1CAPI.html#a3e204eb9849f713e523e744e2ca5a1f1',1,'rosette_api::CAPI']]],
   ['token',['Token',['../classrosette__api_1_1MorphologyItem.html#a8990d09f037896d40bdecc32df6c7b18',1,'rosette_api::MorphologyItem']]],
-  ['tokens',['Tokens',['../classrosette__api_1_1SyntaxDependenciesResponse.html#a47c3f7372076bbce98ada315553f6bff',1,'rosette_api.SyntaxDependenciesResponse.Tokens()'],['../classrosette__api_1_1TokenizationResponse.html#a5318cd768fdfb5924990af5b8ede08e4',1,'rosette_api.TokenizationResponse.Tokens()']]],
+  ['tokenembeddings',['tokenEmbeddings',['../classrosette__api_1_1TextEmbeddingResponse.html#aadd3f0a6797232329bf2f3ba3f494b50',1,'rosette_api::TextEmbeddingResponse']]],
+  ['tokens',['Tokens',['../classrosette__api_1_1SyntaxDependenciesResponse.html#a47c3f7372076bbce98ada315553f6bff',1,'rosette_api.SyntaxDependenciesResponse.Tokens()'],['../classrosette__api_1_1TokenizationResponse.html#a5318cd768fdfb5924990af5b8ede08e4',1,'rosette_api.TokenizationResponse.Tokens()'],['../classrosette__api_1_1TextEmbeddingResponse.html#a62a82037e33a961fb0e1ef1efb69f409',1,'rosette_api.TextEmbeddingResponse.tokens()']]],
   ['translation',['Translation',['../classrosette__api_1_1TranslateNamesResponse.html#a61c88699af4185510319821ccfd0be2f',1,'rosette_api::TranslateNamesResponse']]]
 ];
