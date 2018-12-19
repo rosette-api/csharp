@@ -32,7 +32,7 @@ namespace rosette_api
         public RelatedTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.RelatedTerms = this.ContentDictionary.ContainsKey(RelatedTermsKey) ? this.ContentDictionary[RelatedTermsKey] as Dictionary : new Dictionary<string, List<RelatedTerm>>();
+            this.RelatedTerms = this.ContentDictionary.ContainsKey(RelatedTermsKey) ? this.ContentDictionary[RelatedTermsKey] as Dictionary<string, List<RelatedTerm> : new Dictionary<string, List<RelatedTerm>>();
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace rosette_api
                     List<RelatedTerm> value = null;
                     if (d2.TryGetValue(pair.Key, out value))
                     {
-                        if (!pair.Value.SequenceEquals(value))
+                        if (!pair.Value.SequenceEqual(value))
                         {
                             equal = false;
                             break;
@@ -121,7 +121,7 @@ namespace rosette_api
         {
             List<string> keys = dict.Keys.ToList();
             keys.Sort();
-            return keys.Aggregate<List<string>, int>(1, (seed, item) => seed ^ dict[item].Aggregate<RelatedTerm, int>(1, (seed2, item2) => seed2 ^ item2.GetHashCode()));
+            return keys.Aggregate<(1, ((seed, item) => seed ^ dict[item].Aggregate(1, (seed2, item2) => seed2 ^ item2.GetHashCode())));
         }
     }
 
