@@ -121,7 +121,7 @@ namespace rosette_api
         {
             List<string> keys = dict.Keys.ToList();
             keys.Sort();
-            return keys.Aggregate<(1, ((seed, item) => seed ^ dict[item].Aggregate(1, (seed2, item2) => seed2 ^ item2.GetHashCode())));
+            return keys.Aggregate(1, ((seed, item) => seed ^ dict[item].Aggregate(1, (seed2, item2) => seed2 ^ item2.GetHashCode())));
         }
     }
 
