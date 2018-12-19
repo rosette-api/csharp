@@ -21,7 +21,7 @@ namespace rosette_api
         /// <summary>
         /// Gets the mapping of languages to related terms
         /// </summary>
-        [JsonProperty(relatedTermsKey)]
+        [JsonProperty(RelatedTermsKey)]
         public Dictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
 
         private const String RelatedTermsKey = "relatedTerms";
@@ -42,7 +42,7 @@ namespace rosette_api
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public TextEmbeddingResponse(Dictionary<string, List<RelatedTerm>> relatedTerms,
+        public RelatedTermsResponse(Dictionary<string, List<RelatedTerm>> relatedTerms,
             Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
@@ -152,7 +152,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="term">The term</param>
         /// <param name="similarity">The similarity to the input term</param>
-        public RosetteCategory(String term, Nullable<decimal> similarity)
+        public RelatedTerm(String term, Nullable<decimal> similarity)
         {
             this.Term = term;
             this.Similarity = similarity;
