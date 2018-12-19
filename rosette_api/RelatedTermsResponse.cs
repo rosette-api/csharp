@@ -94,9 +94,10 @@ namespace rosette_api
                 equal = true;
                 foreach (var pair in d1)
                 {
-                    if (d1.TryGetValue(pair.Key, out value))
+                    List<RelatedTerm> value = null;
+                    if (d2.TryGetValue(pair.Key, out value))
                     {
-                        if (!value.SequenceEquals(pair.Value))
+                        if (!pair.Value.SequenceEquals(value))
                         {
                             equal = false;
                             break;
@@ -118,8 +119,9 @@ namespace rosette_api
         /// <returns>the hash code</returns>
         private int DictionaryHashCode(Dictionary<string, List<RelatedTerm>> dict)
         {
-            List<string> keys = dict.Keys.ToList().Sort();
-            return keys.Aggregate<List<RelatedTerm>, int>(1, (seed, item) => seed ^ dict[item].Aggregate<RelatedTerm, int>(1, (seed2, item2) => seed2 ^ item2.GetHashCode()));
+            List<string> keys = dict.Keys.ToList();
+            keys.Sort();
+            return keys.Aggregate<List<string>, int>(1, (seed, item) => seed ^ dict[item].Aggregate<RelatedTerm, int>(1, (seed2, item2) => seed2 ^ item2.GetHashCode()));
         }
     }
 
@@ -169,8 +171,8 @@ namespace rosette_api
             {
                 RelatedTerm other = obj as RelatedTerm;
                 List<bool> conditions = new List<bool>() {
-                    this.Term = other.Term,
-                    this.Similarity = other.Similarity
+                    this.Term == other.Term,
+                    this.Similarity == other.Similarity
                 };
                 return conditions.All(condition => condition);
             }
