@@ -119,7 +119,7 @@ namespace rosette_api
         private int DictionaryHashCode(Dictionary<string, List<RelatedTerm>> dict)
         {
             List<string> keys = dict.Keys.ToList().Sort();
-            return keys.Aggregate<List<RelatedTerm>, int>(1, (seed, item) => seed ^ dict[item].Aggregate<RelatedTerm, int>(1, (seed2, item2) => seed2 ^ item2.GetHashCode()))
+            return keys.Aggregate<List<RelatedTerm>, int>(1, (seed, item) => seed ^ dict[item].Aggregate<RelatedTerm, int>(1, (seed2, item2) => seed2 ^ item2.GetHashCode()));
         }
     }
 
@@ -188,7 +188,7 @@ namespace rosette_api
         {
             int h0 = this.Term != null ? this.Term.GetHashCode() : 1;
             int h1 = this.Similarity != null ? this.Similarity.GetHashCode() : 1;
-            return h0 ^ h1
+            return h0 ^ h1;
         }
     }
 }
