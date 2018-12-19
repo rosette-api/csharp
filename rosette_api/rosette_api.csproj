@@ -67,6 +67,7 @@
     <Compile Include="NameSimilarityResponse.cs" />
     <Compile Include="PingResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelatedTermsResponse.cs" />
     <Compile Include="RelationshipsResponse.cs" />
     <Compile Include="ResponseHeaders.cs" />
     <Compile Include="RosetteEntity.cs" />
