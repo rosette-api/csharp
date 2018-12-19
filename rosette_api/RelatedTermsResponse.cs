@@ -126,7 +126,7 @@ namespace rosette_api
     }
 
     /// <summary>
-    /// Class for representing an identified category and its properties
+    /// Class for representing a related term and its properties
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RelatedTerm
