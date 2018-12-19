@@ -22,7 +22,7 @@ namespace rosette_api
         /// Gets the mapping of languages to related terms
         /// </summary>
         [JsonProperty(relatedTermsKey)]
-        public Dictionary<string, List<RelatedTerm>> LanguageRelatedTermsMap { get; set; }
+        public Dictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
 
         private const String RelatedTermsKey = "relatedTerms";
         /// <summary>
@@ -32,21 +32,21 @@ namespace rosette_api
         public RelatedTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.LanguageRelatedTermsMap = this.ContentDictionary.ContainsKey(RelatedTermsKey) ? this.ContentDictionary[RelatedTermsKey] as Dictionary : new Dictionary<string, List<RelatedTerm>>();
+            this.RelatedTerms = this.ContentDictionary.ContainsKey(RelatedTermsKey) ? this.ContentDictionary[RelatedTermsKey] as Dictionary : new Dictionary<string, List<RelatedTerm>>();
         }
 
         /// <summary>
         /// Constructs a RelatedTerms Response from a mapping of languages to related terms, a collection of response headers, and content in a dictionary or content as JSON
         /// </summary>
-        /// <param name="languageRelatedTermsMap">The mapping of languages to related terms</param>
+        /// <param name="relatedTerms">The mapping of languages to related terms</param>
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public TextEmbeddingResponse(Dictionary<string, List<RelatedTerm>> languageRelatedTermsMap,
+        public TextEmbeddingResponse(Dictionary<string, List<RelatedTerm>> relatedTerms,
             Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
-            this.LanguageRelatedTermsMap = languageRelatedTermsMap;
+            this.RelatedTerms = relatedTerms;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace rosette_api
             {
                 RelatedTermsResponse other = obj as RelatedTermsResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.LanguageRelatedTermsMap != null && other.LanguageRelatedTermsMap != null ? this.DictionaryEqual(this.LanguageRelatedTermsMap, other.LanguageRelatedTermsMap) : this.LanguageRelatedTermsMap == other.LanguageRelatedTermsMap;
+                    this.RelatedTerms != null && other.RelatedTerms != null ? this.DictionaryEqual(this.RelatedTerms, other.RelatedTerms) : this.RelatedTerms == other.RelatedTerms,
                     this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
@@ -78,7 +78,7 @@ namespace rosette_api
         public override int GetHashCode()
         {
             int h0 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
-            int h1 = this.LanguageRelatedTermsMap != null ? this.DictionaryHashCode(this.LanguageRelatedTermsMap) : 1;
+            int h1 = this.RelatedTerms != null ? this.DictionaryHashCode(this.RelatedTerms) : 1;
             return h0 ^ h1;
         }
 
