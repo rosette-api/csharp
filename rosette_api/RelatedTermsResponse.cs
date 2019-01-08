@@ -192,5 +192,13 @@ namespace rosette_api
             int h1 = this.Similarity != null ? this.Similarity.GetHashCode() : 1;
             return h0 ^ h1;
         }
+
+        /// <summary>
+        /// ToString override
+        /// </summary>
+        /// <returns>This RelatedTerm in JSON form</returns>
+        public override string ToString() {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
