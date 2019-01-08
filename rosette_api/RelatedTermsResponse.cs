@@ -86,7 +86,7 @@ namespace rosette_api
         /// compares two dictionaries for equality
         /// </summary>
         /// <returns>if the two dictionaries are equal</returns>
-        private bool DictionaryEqual(Dictionary<string, List<RelatedTerm>> d1, Dictionary<string, List<RelatedTerm>> d2)
+        private bool DictionaryEqual(IDictionary<string, List<RelatedTerm>> d1, IDictionary<string, List<RelatedTerm>> d2)
         {
             bool equal = false;
             if (d1.Count == d2.Count)
@@ -117,7 +117,7 @@ namespace rosette_api
         /// get the hash code of a dictionary
         /// </summary>
         /// <returns>the hash code</returns>
-        private int DictionaryHashCode(Dictionary<string, List<RelatedTerm>> dict)
+        private int DictionaryHashCode(IDictionary<string, List<RelatedTerm>> dict)
         {
             List<string> keys = dict.Keys.ToList();
             keys.Sort();
