@@ -31,9 +31,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string data = "dog";
+                string data = "spy";
                 //The results of the API call will come back in the form of a Dictionary
-                EmbeddingCAPI.setOptions("resultLanguages", new string[]{"spa", "deu", "jpn"};
+                EmbeddingCAPI.SetOptions("resultLanguages", new List<String>() {"spa", "deu", "jpn"};
                 RelatedTermsResponse response = EmbeddingCAPI.RelatedTerms(data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
