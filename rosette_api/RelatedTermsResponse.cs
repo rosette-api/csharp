@@ -22,7 +22,7 @@ namespace rosette_api
         /// Gets the mapping of languages to related terms
         /// </summary>
         [JsonProperty(RelatedTermsKey)]
-        public Dictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
+        public IDictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
 
         private const String RelatedTermsKey = "relatedTerms";
         /// <summary>
@@ -40,9 +40,9 @@ namespace rosette_api
         /// </summary>
         /// <param name="relatedTerms">The mapping of languages to related terms</param>
         /// <param name="responseHeaders">The response headers from the API</param>
-        /// <param name="content">The content of the response (i.e. the textEmbedding list)</param>
+        /// <param name="content">The content of the response (i.e. the language to terms mapping)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public RelatedTermsResponse(Dictionary<string, List<RelatedTerm>> relatedTerms,
+        public RelatedTermsResponse(IDictionary<string, List<RelatedTerm>> relatedTerms,
             Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
