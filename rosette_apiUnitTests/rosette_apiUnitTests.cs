@@ -1206,7 +1206,7 @@ namespace rosette_apiUnitTests {
         public void RelatedTermsTestFull()
         {
             Init();
-            Dictionary<string, List<RelatedTerm>> terms = new Dictionary<string, List<RelatedTerm>>() {
+            IDictionary<string, List<RelatedTerm>> terms = new Dictionary<string, List<RelatedTerm>>() {
                 {"eng", new List<RelatedTerm>() {new RelatedTerm("spy", 1.0m)}}
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"server\": \"openresty\", \"strict-transport-security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"content-length\": \"72\", \"connection\": \"Close\" }";
