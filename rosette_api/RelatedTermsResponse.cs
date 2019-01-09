@@ -21,10 +21,10 @@ namespace rosette_api
         /// <summary>
         /// Gets the mapping of languages to related terms
         /// </summary>
-        [JsonProperty(RelatedTermsKey)]
+        [JsonProperty(relatedTermsKey)]
         public IDictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
 
-        private const String RelatedTermsKey = "relatedTerms";
+        private const String relatedTermsKey = "relatedTerms";
         /// <summary>
         /// Creates a RelatedTermsResponse from the API's raw output
         /// </summary>
@@ -32,7 +32,7 @@ namespace rosette_api
         public RelatedTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.RelatedTerms = this.ContentDictionary.ContainsKey(RelatedTermsKey) ? new Dictionary<string, List<RelatedTerm>>(this.ContentDictionary[RelatedTermsKey]) : new Dictionary<string, List<RelatedTerm>>();
+            this.RelatedTerms = this.ContentDictionary.ContainsKey(relatedTermsKey) ? this.ContentDictionary[relatedTermsKey].ToDictionary(e => e.Key, e => e.Value) : new Dictionary<string, List<RelatedTerm>>();
         }
 
         /// <summary>
