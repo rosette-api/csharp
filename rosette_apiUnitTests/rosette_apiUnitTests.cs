@@ -1373,45 +1373,6 @@ namespace rosette_apiUnitTests {
 # pragma warning restore 618
         }
 
-        //------------------------- Text Embedding ------------------------------------
-
-        [Test]
-        public void Embedding_Content_Test()
-        {
-            _mockHttp.When(_testUrl + "text-embedding")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.TextEmbedding("content");
-#pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-#pragma warning restore 618
-        }
-
-        [Test]
-        public void Embedding_Dict_Test()
-        {
-            _mockHttp.When(_testUrl + "text-embedding")
-                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
-
-            var response = _rosetteApi.TextEmbedding(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
-#pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-#pragma warning restore 618
-        }
-
-        [Test]
-        public void Embedding_File_Test()
-        {
-            _mockHttp.When(_testUrl + "text-embedding")
-                .Respond("application/json", "{'response': 'OK'}");
-
-            RosetteFile f = new RosetteFile(_tmpFile);
-            var response = _rosetteApi.TextEmbedding(f);
-#pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
-#pragma warning restore 618
-        }
-
         //------------------------- Syntax Dependencies ------------------------------------
         public void SyntaxDependenciesTestFull()
         {
