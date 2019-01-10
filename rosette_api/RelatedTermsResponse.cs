@@ -32,7 +32,7 @@ namespace rosette_api
         public RelatedTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.RelatedTerms = this.ContentDictionary.ContainsKey(relatedTermsKey) ? this.ContentDictionary[relatedTermsKey].ToDictionary(e => e.Key, e => e.Value) : new Dictionary<string, List<RelatedTerm>>();
+            this.RelatedTerms = this.ContentDictionary.ContainsKey(relatedTermsKey) ? this.ContentDictionary[relatedTermsKey] as Dictionary<string, List<RelatedTerm>> : new Dictionary<string, List<RelatedTerm>>();
         }
 
         /// <summary>

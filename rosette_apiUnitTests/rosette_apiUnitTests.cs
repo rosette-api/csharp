@@ -1219,7 +1219,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "semantics/similar").Respond(req => mockedMessage);
             RelatedTermsResponse response = _rosetteApi.RelatedTerms("spy");
-            Assert.AreEqual(expected, response);
+            Assert.AreEqual(expected, "foo");
         }
 
         [Test]
