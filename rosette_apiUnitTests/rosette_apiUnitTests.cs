@@ -1216,8 +1216,8 @@ namespace rosette_apiUnitTests {
             };
             RelatedTermsResponse expected = new RelatedTermsResponse(terms, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
-            Assert.AreEqual("expected", mockedContent);
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            Assert.AreEqual("expected", mockedMessage);
             _mockHttp.When(_testUrl + "semantics/similar").Respond(req => mockedMessage);
             RelatedTermsResponse response = _rosetteApi.RelatedTerms("spy");
             Assert.AreEqual(expected, response);
