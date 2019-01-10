@@ -711,7 +711,7 @@ namespace rosette_api {
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
-            _uri = "text-embedding";
+            _uri = "semantics/vector";
             return Process<TextEmbeddingResponse>(content, language, contentType, contentUri, genre);
         }
 
@@ -731,7 +731,7 @@ namespace rosette_api {
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(Dictionary<object, object> dict)
         {
-            _uri = "text-embedding";
+            _uri = "semantics/vector";
             return GetResponse<TextEmbeddingResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
 
@@ -751,8 +751,54 @@ namespace rosette_api {
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(RosetteFile file)
         {
-            _uri = "text-embedding";
+            _uri = "semantics/vector";
             return Process<TextEmbeddingResponse>(file);
+        }
+
+        /// <summary>Related terms
+        /// <para>
+        /// (POST)Related Terms Endpoint: Returns the terms related to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>RelatedTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to related terms.
+        /// </returns>
+        public RelatedTermsResponse RelatedTerms(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
+            _uri = "semantics/similar";
+            return Process<RelatedTermsResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>Related terms
+        /// <para>
+        /// (POST)Related Terms Endpoint: Returns the terms related to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>RelatedTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to related terms.
+        /// </returns>
+        public RelatedTermsResponse RelatedTerms(Dictionary<object, object> dict) {
+            _uri = "semantics/similar";
+            return GetResponse<RelatedTermsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+        /// <summary>Related terms
+        /// <para>
+        /// (POST)Related Terms Endpoint: Returns the terms related to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>RelatedTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to related terms.
+        /// </returns>
+        public RelatedTermsResponse RelatedTerms(RosetteFile file) {
+            _uri = "semantics/similar";
+            return Process<RelatedTermsResponse>(file);
         }
 
         /// <summary>SyntaxDependencies
