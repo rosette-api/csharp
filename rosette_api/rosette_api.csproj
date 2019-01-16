@@ -78,7 +78,7 @@
     <Compile Include="SemanticVectorsResponse.cs" />
     <Compile Include="SentenceTaggingResponse.cs" />
     <Compile Include="SentimentResponse.cs" />
-    <Compile Include="SimilarTermResponse.cs" />
+    <Compile Include="SimilarTermsResponse.cs" />
     <Compile Include="StaticValueProvider.cs" />
     <Compile Include="SyntaxDependenciesResponse.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />
