@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class related_terms
+    class similar_terms
     {
         /// <summary>
-        /// Example code to call Rosette API to get an input's related terms.
+        /// Example code to call Rosette API to get an input's similar terms.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //related-terms yourapikeyhere
+            //similar-terms yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -34,7 +34,7 @@ namespace rosette_apiExamples
                 string data = "spy";
                 //The results of the API call will come back in the form of a Dictionary
                 EmbeddingCAPI.SetOptions("resultLanguages", new List<String>() {"spa", "deu", "jpn"};
-                RelatedTermsResponse response = EmbeddingCAPI.RelatedTerms(data);
+                SimilarTermsResponse response = EmbeddingCAPI.SimilarTerms(data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));

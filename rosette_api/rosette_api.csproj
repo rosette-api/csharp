@@ -67,7 +67,6 @@
     <Compile Include="NameSimilarityResponse.cs" />
     <Compile Include="PingResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelatedTermsResponse.cs" />
     <Compile Include="RelationshipsResponse.cs" />
     <Compile Include="ResponseHeaders.cs" />
     <Compile Include="RosetteEntity.cs" />
@@ -76,8 +75,10 @@
     <Compile Include="RosetteFile.cs" />
     <Compile Include="RosetteResponse.cs" />
     <Compile Include="RosetteResponseContractResolver.cs" />
+    <Compile Include="SemanticVectorsResponse.cs" />
     <Compile Include="SentenceTaggingResponse.cs" />
     <Compile Include="SentimentResponse.cs" />
+    <Compile Include="SimilarTermResponse.cs" />
     <Compile Include="StaticValueProvider.cs" />
     <Compile Include="SyntaxDependenciesResponse.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />

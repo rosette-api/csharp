@@ -13,40 +13,40 @@ using Newtonsoft.Json.Serialization;
 namespace rosette_api
 {
     /// <summary>
-    /// Class for representing responses from the API when the RelatedTerms endpoint has been called
+    /// Class for representing responses from the API when the SimilarTerms endpoint has been called
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
-    public class RelatedTermsResponse : RosetteResponse
+    public class SimilarTermsResponse : RosetteResponse
     {
         /// <summary>
-        /// Gets the mapping of languages to related terms
+        /// Gets the mapping of languages to similar terms
         /// </summary>
-        [JsonProperty(relatedTermsKey)]
-        public IDictionary<string, List<RelatedTerm>> RelatedTerms { get; set; }
+        [JsonProperty(similarTermsKey)]
+        public IDictionary<string, List<SimilarTerm>> SimilarTerms { get; set; }
 
-        private const String relatedTermsKey = "relatedTerms";
+        private const String similarTermsKey = "similarTerms";
         /// <summary>
-        /// Creates a RelatedTermsResponse from the API's raw output
+        /// Creates a SimilarTermsResponse from the API's raw output
         /// </summary>
         /// <param name="apiResult">The API's output</param>
-        public RelatedTermsResponse(HttpResponseMessage apiResult)
+        public SimilarTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.RelatedTerms = this.ContentDictionary.ContainsKey(relatedTermsKey) ? this.ContentDictionary[relatedTermsKey] as Dictionary<string, List<RelatedTerm>> : new Dictionary<string, List<RelatedTerm>>();
+            this.SimilarTerms = this.ContentDictionary.ContainsKey(similarTermsKey) ? this.ContentDictionary[similarTermsKey] as Dictionary<string, List<SimilarTerm>> : new Dictionary<string, List<SimilarTerm>>();
         }
 
         /// <summary>
-        /// Constructs a RelatedTerms Response from a mapping of languages to related terms, a collection of response headers, and content in a dictionary or content as JSON
+        /// Constructs a SimilarTerms Response from a mapping of languages to similar terms, a collection of response headers, and content in a dictionary or content as JSON
         /// </summary>
-        /// <param name="relatedTerms">The mapping of languages to related terms</param>
+        /// <param name="similarTerms">The mapping of languages to similar terms</param>
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the language to terms mapping)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
-        public RelatedTermsResponse(IDictionary<string, List<RelatedTerm>> relatedTerms,
+        public SimilarTermsResponse(IDictionary<string, List<SimilarTerm>> similarTerms,
             Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
-            this.RelatedTerms = relatedTerms;
+            this.SimilarTerms = similarTerms;
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace rosette_api
         /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is RelatedTermsResponse)
+            if (obj is SimilarTermsResponse)
             {
-                RelatedTermsResponse other = obj as RelatedTermsResponse;
+                SimilarTermsResponse other = obj as SimilarTermsResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.RelatedTerms != null && other.RelatedTerms != null ? this.DictionaryEqual(this.RelatedTerms, other.RelatedTerms) : this.RelatedTerms == other.RelatedTerms,
+                    this.SimilarTerms != null && other.SimilarTerms != null ? this.DictionaryEqual(this.SimilarTerms, other.SimilarTerms) : this.SimilarTerms == other.SimilarTerms,
                     this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
@@ -78,7 +78,7 @@ namespace rosette_api
         public override int GetHashCode()
         {
             int h0 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
-            int h1 = this.RelatedTerms != null ? this.DictionaryHashCode(this.RelatedTerms) : 1;
+            int h1 = this.SimilarTerms != null ? this.DictionaryHashCode(this.SimilarTerms) : 1;
             return h0 ^ h1;
         }
 
@@ -86,7 +86,7 @@ namespace rosette_api
         /// compares two dictionaries for equality
         /// </summary>
         /// <returns>if the two dictionaries are equal</returns>
-        private bool DictionaryEqual(IDictionary<string, List<RelatedTerm>> d1, IDictionary<string, List<RelatedTerm>> d2)
+        private bool DictionaryEqual(IDictionary<string, List<SimilarTerm>> d1, IDictionary<string, List<SimilarTerm>> d2)
         {
             bool equal = false;
             if (d1.Count == d2.Count)
@@ -94,7 +94,7 @@ namespace rosette_api
                 equal = true;
                 foreach (var pair in d1)
                 {
-                    List<RelatedTerm> value = null;
+                    List<SimilarTerm> value = null;
                     if (d2.TryGetValue(pair.Key, out value))
                     {
                         if (!pair.Value.SequenceEqual(value))
@@ -117,7 +117,7 @@ namespace rosette_api
         /// get the hash code of a dictionary
         /// </summary>
         /// <returns>the hash code</returns>
-        private int DictionaryHashCode(IDictionary<string, List<RelatedTerm>> dict)
+        private int DictionaryHashCode(IDictionary<string, List<SimilarTerm>> dict)
         {
             List<string> keys = dict.Keys.ToList();
             keys.Sort();
@@ -126,10 +126,10 @@ namespace rosette_api
     }
 
     /// <summary>
-    /// Class for representing a related term and its properties
+    /// Class for representing a similar term and its properties
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
-    public class RelatedTerm
+    public class SimilarTerm
     {
 
         private const string TERM = "term";
@@ -150,11 +150,11 @@ namespace rosette_api
 
 
         /// <summary>
-        /// Creates a RelatedTerm from the term and similarity
+        /// Creates a SimilarTerm from the term and similarity
         /// </summary>
         /// <param name="term">The term</param>
         /// <param name="similarity">The similarity to the input term</param>
-        public RelatedTerm(String term, Nullable<decimal> similarity)
+        public SimilarTerm(String term, Nullable<decimal> similarity)
         {
             this.Term = term;
             this.Similarity = similarity;
@@ -167,9 +167,9 @@ namespace rosette_api
         /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is RelatedTerm)
+            if (obj is SimilarTerm)
             {
-                RelatedTerm other = obj as RelatedTerm;
+                SimilarTerm other = obj as SimilarTerm;
                 List<bool> conditions = new List<bool>() {
                     this.Term == other.Term,
                     this.Similarity == other.Similarity
@@ -196,7 +196,7 @@ namespace rosette_api
         /// <summary>
         /// ToString override
         /// </summary>
-        /// <returns>This RelatedTerm in JSON form</returns>
+        /// <returns>This SimilarTerm in JSON form</returns>
         public override string ToString() {
             return JsonConvert.SerializeObject(this);
         }
