@@ -43,7 +43,7 @@ namespace rosette_api
         /// <param name="content">The content of the response (i.e. the language to terms mapping)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
         public SimilarTermsResponse(IDictionary<string, List<SimilarTerm>> similarTerms,
-            Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
+            Dictionary<string, string> responseHeaders, Dictionary<string, object> content, String contentAsJson)
             : base(responseHeaders, content, contentAsJson)
         {
             this.SimilarTerms = similarTerms;
