@@ -32,7 +32,15 @@ namespace rosette_api
         public SimilarTermsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            this.SimilarTerms = this.ContentDictionary.ContainsKey(similarTermsKey) ? this.ContentDictionary[similarTermsKey] as Dictionary<string, List<SimilarTerm>> : new Dictionary<string, List<SimilarTerm>>();
+            if (this.ContentDictionary.ContainsKey(similarTermsKey))
+            {
+                JObject termsJObj = this.ContentDictionary[similarTermsKey] as JObject;
+                this.SimilarTerms = termsJObj.ToObject<Dictionary<string, List<SimilarTerm>>>();
+            }
+            else
+            {
+                this.SimilarTerms = new Dictionary<string, List<SimilarTerm>>();
+            }
         }
 
         /// <summary>
@@ -43,7 +51,7 @@ namespace rosette_api
         /// <param name="content">The content of the response (i.e. the language to terms mapping)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
         public SimilarTermsResponse(IDictionary<string, List<SimilarTerm>> similarTerms,
-            Dictionary<string, string> responseHeaders, Dictionary<string, object> content, String contentAsJson)
+            Dictionary<string, string> responseHeaders, Dictionary<string, object> content = null, String contentAsJson = null)
             : base(responseHeaders, content, contentAsJson)
         {
             this.SimilarTerms = similarTerms;
