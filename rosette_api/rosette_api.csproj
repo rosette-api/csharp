@@ -75,8 +75,10 @@
     <Compile Include="RosetteFile.cs" />
     <Compile Include="RosetteResponse.cs" />
     <Compile Include="RosetteResponseContractResolver.cs" />
+    <Compile Include="SemanticVectorsResponse.cs" />
     <Compile Include="SentenceTaggingResponse.cs" />
     <Compile Include="SentimentResponse.cs" />
+    <Compile Include="SimilarTermsResponse.cs" />
     <Compile Include="StaticValueProvider.cs" />
     <Compile Include="SyntaxDependenciesResponse.cs" />
     <Compile Include="TextEmbeddingResponse.cs" />
