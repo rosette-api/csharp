@@ -31,9 +31,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string embedding_data = @"Cambridge, Massachusetts";
+                string semantic_vectors_data = @"Cambridge, Massachusetts";
                 //The results of the API call will come back in the form of a Dictionary
-                SemanticVectorsResponse response = EmbeddingCAPI.SemanticVectors(embedding_data);
+                SemanticVectorsResponse response = EmbeddingCAPI.SemanticVectors(semantic_vectors_data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
