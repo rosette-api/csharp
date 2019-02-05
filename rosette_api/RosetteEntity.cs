@@ -11,7 +11,7 @@ namespace rosette_api
     /// A class for representing an identified entity and its properties
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
-    public class RosetteEntity
+    public class RosetteEntity : IEquatable<RosetteEntity>
     {
         /// <summary>
         /// The Location entity type
@@ -119,12 +119,30 @@ namespace rosette_api
         /// </summary>
         [JsonProperty("confidence")]
         public Nullable<double> Confidence { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the dbpediaType of the extracted entity
         /// </summary>
         [JsonProperty("dbpediaType", NullValueHandling = NullValueHandling.Ignore)]
         public String DBpediaType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the offsets of the extracted entity
+        /// </summary>
+        [JsonProperty("mentionOffsets")]
+        public List<MentionOffset> MentionOffsets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the linking confidence of the extracted entity
+        /// </summary>
+        [JsonProperty("linkingConfidence", NullValueHandling = NullValueHandling.Ignore)]
+        public Nullable<double> LinkingConfidence { get; set; }
+
+        /// <summary>
+        /// Gets or sets the salience of the extracted entity
+        /// </summary>
+        [JsonProperty("salience", NullValueHandling = NullValueHandling.Ignore)]
+        public Nullable<double> Salience { get; set; }
 
         /// <summary>
         /// Creates an entity
@@ -136,8 +154,12 @@ namespace rosette_api
         /// <param name="count">The number of times this entity appeared in the input to the API</param>
         /// <param name="confidence">The confidence of this entity appeared in the input to the API</param>
         /// <param name="dbpediaType">The DBpedia type of the entity</param>
+        /// <param name="mentionOffsets">The mention offsets of the entity</param>
+        /// <param name="linkingConfidence">The linking confidence of the entity</param>
+        /// <param name="salience">The salience of the entity</param>
         public RosetteEntity(string mention, string normalizedMention, EntityID id, string entityType, int? count,
-            double? confidence, string dbpediaType)
+            double? confidence, string dbpediaType, List<MentionOffset> mentionOffsets, double? linkingConfidence,
+            double? salience)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
@@ -146,6 +168,9 @@ namespace rosette_api
             this.EntityType = entityType;
             this.Confidence = confidence;
             this.DBpediaType = dbpediaType;
+            this.MentionOffsets = mentionOffsets;
+            this.LinkingConfidence = linkingConfidence;
+            this.Salience = salience;
         }
 
         /// <summary>
@@ -153,9 +178,18 @@ namespace rosette_api
         /// </summary>
         /// <param name="other">RosetteEntity</param>
         /// <returns></returns>
-        protected bool Equals(RosetteEntity other)
+        public bool Equals(RosetteEntity other)
         {
-            return string.Equals(Mention, other.Mention) && string.Equals(NormalizedMention, other.NormalizedMention) && Equals(ID, other.ID) && string.Equals(EntityType, other.EntityType) && Count == other.Count && Confidence.Equals(other.Confidence) && string.Equals(DBpediaType, other.DBpediaType);
+            return string.Equals(Mention, other.Mention)
+                && string.Equals(NormalizedMention, other.NormalizedMention)
+                && Equals(ID, other.ID)
+                && string.Equals(EntityType, other.EntityType)
+                && Count == other.Count
+                && Confidence.Equals(other.Confidence)
+                && string.Equals(DBpediaType, other.DBpediaType)
+                && MentionOffsets.SequenceEqual(other.MentionOffsets)
+                && LinkingConfidence.Equals(other.LinkingConfidence)
+                && Salience.Equals(other.Salience);
         }
 
         /// <summary>
@@ -168,7 +202,7 @@ namespace rosette_api
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((RosetteEntity) obj);
+            return Equals(obj as RosetteEntity);
         }
 
         /// <summary>
@@ -186,6 +220,9 @@ namespace rosette_api
                 hashCode = (hashCode * 397) ^ Count.GetHashCode();
                 hashCode = (hashCode * 397) ^ Confidence.GetHashCode();
                 hashCode = (hashCode * 397) ^ (DBpediaType != null ? DBpediaType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (MentionOffsets != null ? MentionOffsets.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (LinkingConfidence != null ? LinkingConfidence.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Salience != null ? Salience.GetHashCode() : 0);
                 return hashCode;
             }
         }

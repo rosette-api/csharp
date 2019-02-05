@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string similar_terms_data = "spy";
                 //The results of the API call will come back in the form of a Dictionary
-                EmbeddingCAPI.SetOptions("resultLanguages", new List<String>() {"spa", "deu", "jpn"};
+                EmbeddingCAPI.SetOption("resultLanguages", new List<String>() {"spa", "deu", "jpn"});
                 SimilarTermsResponse response = EmbeddingCAPI.SimilarTerms(similar_terms_data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
