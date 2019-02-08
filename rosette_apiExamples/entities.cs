@@ -33,15 +33,16 @@ namespace rosette_apiExamples
                 CAPI EntitiesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string entities_text_data = @"The Securities and Exchange Commission today announced the leadership of the agency’s trial unit.  Bridget Fitzpatrick has been named Chief Litigation Counsel of the SEC and David Gottesman will continue to serve as the agency’s Deputy Chief Litigation Counsel. Since December 2016, Ms. Fitzpatrick and Mr. Gottesman have served as Co-Acting Chief Litigation Counsel.  In that role, they were jointly responsible for supervising the trial unit at the agency’s Washington D.C. headquarters as well as coordinating with litigators in the SEC’s 11 regional offices around the country.";
                 //The results of the API call will come back in the form of a Dictionary
-                EntitiesResponse response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
+                EntitiesResponse response = EntitiesCAPI.Entity(entities_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ToString());
+                // PrintContent() is a provided method to print the Dictionary to the console
+                response.PrintContent();
 
                 // Entities with full ADM
                 EntitiesCAPI.SetUrlParameter("output", "rosette");
-                response = EntitiesCAPI.Entity(entities_text_data, null, null, null, "social-media");
+                response = EntitiesCAPI.Entity(entities_text_data);
                 // response.Content contains the IDictionary results of the full ADM.
                 // PrintContent() is a provided method to print the Dictionary to the console
                 response.PrintContent();

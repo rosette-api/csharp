@@ -31,6 +31,9 @@ namespace rosette_api
         private const String countKey = "count";
         private const String confidenceKey = "confidence";
         private const String dbpediaTypeKey = "dbpediaType";
+        private const String mentionOffsetsKey = "mentionOffsets";
+        private const String linkingConfidenceKey = "linkingConfidence";
+        private const String salienceKey = "salience";
 
         /// <summary>
         /// Creates an EntitiesResponse from the API's raw output
@@ -50,7 +53,11 @@ namespace rosette_api
                 Nullable<int> count = result.Properties().Where((p) => String.Equals(p.Name, countKey)).Any() ? result[countKey].ToObject<int?>() : null;
                 Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
                 String dbpediaType = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[dbpediaTypeKey].ToString() : null;
-                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType));
+                JArray mentionOffsetsArr = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[mentionOffsetsKey] as JArray : null;
+                List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
+                Nullable<double> linkingConfidence = result.Properties().Where((p) => String.Equals(p.Name, linkingConfidenceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
+                Nullable<double> salience = result.Properties().Where((p) => String.Equals(p.Name, salienceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[salienceKey].ToObject<double?>() : null;
+                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience));
             }
             this.Entities = entities;
         }
@@ -79,9 +86,8 @@ namespace rosette_api
             {
                 EntitiesResponse other = obj as EntitiesResponse;
                 List<bool> conditions = new List<bool>() {
-                    this.Entities != null && other.Entities != null ? this.Entities.SequenceEqual(other.Entities) : this.Entities == other.Entities,
+                    this.Entities != null && other.Entities != null ? this.Entities.SequenceEqual(other.Entities) : ReferenceEquals(this.Entities, other.Entities),
                     this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
-                    this.GetHashCode() == other.GetHashCode()
                 };
                 return conditions.All(condition => condition);
             }

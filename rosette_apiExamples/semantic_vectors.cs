@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class text_embedding
+    class semantic_vectors
     {
         /// <summary>
-        /// Example code to call Rosette API to get a document's text-embedding.
+        /// Example code to call Rosette API to get an input's text-vector.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //text-embedding yourapikeyhere
+            //semantic-vectors yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -31,9 +31,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string embedding_data = @"Cambridge, Massachusetts";
+                string semantic_vectors_data = @"Cambridge, Massachusetts";
                 //The results of the API call will come back in the form of a Dictionary
-                TextEmbeddingResponse response = EmbeddingCAPI.TextEmbedding(embedding_data);
+                SemanticVectorsResponse response = EmbeddingCAPI.SemanticVectors(semantic_vectors_data);
                 foreach (KeyValuePair<string, string> h in response.Headers)
                 {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));

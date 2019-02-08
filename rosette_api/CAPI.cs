@@ -755,6 +755,116 @@ namespace rosette_api {
             return Process<TextEmbeddingResponse>(file);
         }
 
+        /// <summary>SemanticVectors
+        /// <para>
+        /// (POST)SemanticVectors Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>
+        /// A SemanticVectorsResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public SemanticVectorsResponse SemanticVectors(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
+            _uri = "semantics/vector";
+            return Process<SemanticVectorsResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>SemanticVectors
+        /// <para>
+        /// (POST)SemanticVectors Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>
+        /// A SemanticVectorsResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public SemanticVectorsResponse SemanticVectors(Dictionary<object, object> dict)
+        {
+            _uri = "semantics/vector";
+            return GetResponse<SemanticVectorsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+        /// <summary>SemanticVectors
+        /// <para>
+        /// (POST)SemanticVectors Endpoint: Returns an averaged text vector of the input text.
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>
+        /// A SemanticVectorsResponse:
+        /// Contains a single vector of floating point numbers for your input, known as a text embedding.
+        /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
+        /// The text embedding represents the relationships between words in your document in the semantic space.
+        /// The semantic space is a multilingual network that maps the input based on the words and their context.
+        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// </returns>
+        public SemanticVectorsResponse SemanticVectors(RosetteFile file)
+        {
+            _uri = "semantics/vector";
+            return Process<SemanticVectorsResponse>(file);
+        }
+
+        /// <summary>Similar terms
+        /// <para>
+        /// (POST)Similar Terms Endpoint: Returns the terms similar to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>SimilarTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to similar terms.
+        /// </returns>
+        public SimilarTermsResponse SimilarTerms(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
+            _uri = "semantics/similar";
+            return Process<SimilarTermsResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>Similar terms
+        /// <para>
+        /// (POST)Similar Terms Endpoint: Returns the terms similar to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>SimilarTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to similar terms.
+        /// </returns>
+        public SimilarTermsResponse SimilarTerms(Dictionary<object, object> dict) {
+            _uri = "semantics/similar";
+            return GetResponse<SimilarTermsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+        /// <summary>Similar terms
+        /// <para>
+        /// (POST)Similar Terms Endpoint: Returns the terms similar to an input term
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>SimilarTermsResponse containing the results of the request.
+        /// The response contains a mapping of language to similar terms.
+        /// </returns>
+        public SimilarTermsResponse SimilarTerms(RosetteFile file) {
+            _uri = "semantics/similar";
+            return Process<SimilarTermsResponse>(file);
+        }
+
         /// <summary>SyntaxDependencies
         /// <para>
         /// (POST)SyntaxDependencies Endpoint: Return the syntactic dependencies of the input text.
