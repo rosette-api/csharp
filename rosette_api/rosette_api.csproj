@@ -61,6 +61,7 @@
     <Compile Include="InfoResponse.cs" />
     <Compile Include="KeyPhrase.cs" />
     <Compile Include="LanguageIdentificationResponse.cs" />
+    <Compile Include="MentionOffset.cs" />
     <Compile Include="MorphologyResponse.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="NameDeduplicationResponse.cs" />
