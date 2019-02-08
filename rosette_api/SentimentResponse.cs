@@ -28,14 +28,14 @@ namespace rosette_api
         internal const string typeKey = "type";
         internal const string entityIDKey = "entityId";
         internal const string sentimentKey = "sentiment";
-		internal const String mentionOffsetsKey = "mentionOffsets";
-		internal const String linkingConfidenceKey = "linkingConfidence";
-		internal const String salienceKey = "salience";
+        internal const String mentionOffsetsKey = "mentionOffsets";
+        internal const String linkingConfidenceKey = "linkingConfidence";
+        internal const String salienceKey = "salience";
 
-		/// <summary>
-		/// Gets or sets the document-level sentiment identified by the Rosette API
-		/// </summary>
-		[JsonProperty(docKey)]
+        /// <summary>
+        /// Gets or sets the document-level sentiment identified by the Rosette API
+        /// </summary>
+        [JsonProperty(docKey)]
         public RosetteSentiment DocSentiment { get; set; }
         /// <summary>
         /// Gets or sets the entities identified by the Rosette API with sentiment
@@ -65,11 +65,11 @@ namespace rosette_api
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 string dbpediaType = result.Properties().Where((p) => p.Name == dbpediaTypeKey).Any() ? result[dbpediaTypeKey].ToString() : null;
                 Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
-				Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
-				JArray mentionOffsetsArr = result.Properties().Where((p) => p.Name == mentionOffsetsKey).Any() ? result[mentionOffsetsKey] as JArray : null;
-				List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
-				Nullable<double> linkingConfidence = result.Properties().Where((p) => p.Name == linkingConfidenceKey).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
-				Nullable<double> salience = result.Properties().Where((p) => p.Name == salienceKey).Any() ? result[salienceKey].ToObject<double?>() : null;
+                Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
+                JArray mentionOffsetsArr = result.Properties().Where((p) => p.Name == mentionOffsetsKey).Any() ? result[mentionOffsetsKey] as JArray : null;
+                List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
+                Nullable<double> linkingConfidence = result.Properties().Where((p) => p.Name == linkingConfidenceKey).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
+                Nullable<double> salience = result.Properties().Where((p) => p.Name == salienceKey).Any() ? result[salienceKey].ToObject<double?>() : null;
                 RosetteSentiment sentiment = null;
                 if (result.Properties().Where((p) => p.Name == sentimentKey).Any()) {
                     sentiment = result[sentimentKey].ToObject<RosetteSentiment>();
@@ -94,26 +94,26 @@ namespace rosette_api
             this.EntitySentiments = entitySentiments;
         }
 
-		/// <summary>
-		/// Equals override
-		/// </summary>
-		/// <param name="other">The other to compare against</param>
-		/// <returns>True if equal</returns>
-		public bool Equals(SentimentResponse other)
-		{
-			List<bool> conditions = new List<bool>() {
-   			    this.DocSentiment != null && other.DocSentiment != null ? this.DocSentiment.Equals(other.DocSentiment) : this.DocSentiment == other.DocSentiment,
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="other">The other to compare against</param>
+        /// <returns>True if equal</returns>
+        public bool Equals(SentimentResponse other)
+        {
+            List<bool> conditions = new List<bool>() {
+                this.DocSentiment != null && other.DocSentiment != null ? this.DocSentiment.Equals(other.DocSentiment) : this.DocSentiment == other.DocSentiment,
                 this.EntitySentiments != null && other.EntitySentiments != null ? this.EntitySentiments.SequenceEqual(other.EntitySentiments) : this.EntitySentiments == other.EntitySentiments,
                 this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
-			};
-			return conditions.All(condition => condition);
-		}
+            };
+            return conditions.All(condition => condition);
+        }
 
         /// <summary>
-		/// Equals override
-		/// </summary>
-		/// <param name="obj">The object to compare against</param>
-		/// <returns>True if equal</returns>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
             if (obj is SentimentResponse)
@@ -195,37 +195,37 @@ namespace rosette_api
                 this.Confidence = confidence;
             }
 
-			/// <summary>
-			/// A constructor for creating RosetteSentiments
-			/// </summary>
-			/// <param name="sentimentLabel">The sentiment label: "pos", "neu", or "neg"</param>
-			/// <param name="confidence">An indicator of confidence in the label being correct.  A range from 0-1.</param>
-			public RosetteSentiment(SentimentLabel sentimentLabel, Nullable<double> confidence)
-			{
+            /// <summary>
+            /// A constructor for creating RosetteSentiments
+            /// </summary>
+            /// <param name="sentimentLabel">The sentiment label: "pos", "neu", or "neg"</param>
+            /// <param name="confidence">An indicator of confidence in the label being correct.  A range from 0-1.</param>
+            public RosetteSentiment(SentimentLabel sentimentLabel, Nullable<double> confidence)
+            {
                 this.Label = sentimentLabel;
-				this.Confidence = confidence;
-			}
-			/// <summary>
-			/// Equals override
-			/// </summary>
-			/// <param name="other">The object to compare against</param>
-			/// <returns>True if equal</returns>
-			
+                this.Confidence = confidence;
+            }
+            /// <summary>
+            /// Equals override
+            /// </summary>
+            /// <param name="other">The object to compare against</param>
+            /// <returns>True if equal</returns>
+
             public bool Equals(RosetteSentiment other)
-			{
-				List<bool> conditions = new List<bool>() {
-					this.Confidence == other.Confidence,
-					this.Label.Equals(other.Label),
-				};
-				return conditions.All(condition => condition);
-			}
+            {
+                List<bool> conditions = new List<bool>() {
+                    this.Confidence == other.Confidence,
+                    this.Label.Equals(other.Label),
+                };
+                return conditions.All(condition => condition);
+            }
 
             /// <summary>
-			/// Equals override
-			/// </summary>
-			/// <param name="obj">The object to compare against</param>
-			/// <returns>True if equal</returns>
-			public override bool Equals(object obj)
+            /// Equals override
+            /// </summary>
+            /// <param name="obj">The object to compare against</param>
+            /// <returns>True if equal</returns>
+            public override bool Equals(object obj)
             {
                 if (obj is RosetteSentiment)
                 {
@@ -271,21 +271,21 @@ namespace rosette_api
         [JsonProperty(SentimentResponse.sentimentKey)]
         public SentimentResponse.RosetteSentiment Sentiment { get; set; }
 
-		/// <summary>
-		/// Creates an entity that has a sentiment associated with it
-		/// </summary>
-		/// <param name="mention">The mention of the entity</param>
-		/// <param name="normalizedMention">The normalized mention of the entity</param>
-		/// <param name="id">The contextual ID of the entity to compare it against other entities</param>
-		/// <param name="entityType">The entity type</param>
-		/// <param name="count">The number of times the entity appeared in the text</param>
-		/// <param name="sentiment">The contextual sentiment of the entity</param>
-		/// <param name="confidence">The confidence that the sentiment was correctly identified</param>
+        /// <summary>
+        /// Creates an entity that has a sentiment associated with it
+        /// </summary>
+        /// <param name="mention">The mention of the entity</param>
+        /// <param name="normalizedMention">The normalized mention of the entity</param>
+        /// <param name="id">The contextual ID of the entity to compare it against other entities</param>
+        /// <param name="entityType">The entity type</param>
+        /// <param name="count">The number of times the entity appeared in the text</param>
+        /// <param name="sentiment">The contextual sentiment of the entity</param>
+        /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
         /// <param name="dbpediaType">The DBpedia type of the entity</param>
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
-		public RosetteSentimentEntity(string mention,
+        public RosetteSentimentEntity(string mention,
                                       string normalizedMention,
                                       EntityID id,
                                       string entityType,
@@ -311,29 +311,29 @@ namespace rosette_api
             this.Sentiment = new SentimentResponse.RosetteSentiment(sentiment.Label, sentiment.Confidence);
         }
 
-		/// <summary>
-		/// Equals override
-		/// </summary>
-		/// <param name="other">The other to compare against</param>
-		/// <returns>True if equal</returns>
-		public bool Equals(RosetteSentimentEntity other)
-		{
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="other">The other to compare against</param>
+        /// <returns>True if equal</returns>
+        public bool Equals(RosetteSentimentEntity other)
+        {
             if (other == null) {
                 return false;
             }
-			List<bool> conditions = new List<bool>() {
-			    this.Sentiment != null ? this.Sentiment.Equals(other.Sentiment) : other.Sentiment == null,
-			    base.Equals(other)
-			};
-			return conditions.All(condition => condition);
-		}
+            List<bool> conditions = new List<bool>() {
+                this.Sentiment != null ? this.Sentiment.Equals(other.Sentiment) : other.Sentiment == null,
+                base.Equals(other)
+            };
+            return conditions.All(condition => condition);
+        }
 
-		/// <summary>
-		/// Equals override
-		/// </summary>
-		/// <param name="obj">The object to compare against</param>
-		/// <returns>True if equal</returns>
-		public override bool Equals(object obj)
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare against</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
         {
             if (obj is RosetteSentimentEntity)
             {

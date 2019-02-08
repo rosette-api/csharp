@@ -8,12 +8,12 @@ namespace rosette_api {
     [JsonObject(MemberSerialization.OptOut)]
     public class MentionOffset : IEquatable<MentionOffset> {
 
-		/// <summary>
-		/// ctor of MentionOffset
-		/// </summary>
-		/// <param name="startOffset">offset of the start of text</param>
-		/// <param name="endOffset">offset of the end of text</param>
-		public MentionOffset(int startOffset, int endOffset) {
+        /// <summary>
+        /// ctor of MentionOffset
+        /// </summary>
+        /// <param name="startOffset">offset of the start of text</param>
+        /// <param name="endOffset">offset of the end of text</param>
+        public MentionOffset(int startOffset, int endOffset) {
             StartOffset = startOffset;
             EndOffset = endOffset;
         }
@@ -36,9 +36,9 @@ namespace rosette_api {
         /// <param name="other">Offset to compare for equality</param>
         /// <returns>bool</returns>
         public bool Equals(MentionOffset other) {
-			if (other == null) {
-			    return false;
-			}
+            if (other == null) {
+                return false;
+            }
             return StartOffset.Equals(other.StartOffset) && EndOffset.Equals(other.EndOffset);
         }
 
