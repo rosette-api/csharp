@@ -1,3 +1,4 @@
 <map id="rosette_api.TokenizationResponse" name="rosette_api.TokenizationResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="31,5,243,215"/>
+<area shape="rect" id="node1" title="A class to represent responses from the Tokenization endpoint of the Rosette API" alt="" coords="5,248,268,384"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="31,5,243,200"/>
 </map>

@@ -1,3 +1,4 @@
 <map id="rosette_api.NameDeduplicationResponse" name="rosette_api.NameDeduplicationResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="55,5,267,215"/>
+<area shape="rect" id="node1" title="A class to represent the results from the Name Deduplication endpoint of the Rosette API" alt="" coords="5,248,317,384"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="55,5,267,200"/>
 </map>

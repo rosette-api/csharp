@@ -1,4 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties " alt="" coords="5,13,277,39"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteSentimentEntity.html" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API ..." alt="" coords="325,5,628,47"/>
+<area shape="rect" id="node1" href="$classrosette__api_1_1ResponseHeaders.html" title="A class to represent the response headers returned by the Rosette API" alt="" coords="5,5,297,32"/>
 </map>

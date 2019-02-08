@@ -1,6 +1,7 @@
 var searchData=
 [
   ['matchedname',['MatchedName',['../classrosette__api_1_1CAPI.html#a6e6ce59d33be9de3b2c526eb0e27a32c',1,'rosette_api::CAPI']]],
+  ['mentionoffset',['MentionOffset',['../classrosette__api_1_1MentionOffset.html#af6c7ea8bce5ac9b5c36a312a31a09ba7',1,'rosette_api::MentionOffset']]],
   ['morphology',['Morphology',['../classrosette__api_1_1CAPI.html#ab7f7802b4a909555f8646ebf2bea3f8c',1,'rosette_api.CAPI.Morphology(string content=null, string language=null, string contentType=null, string contentUri=null, MorphologyFeature feature=MorphologyFeature.complete, string genre=null)'],['../classrosette__api_1_1CAPI.html#aded89f3b87c04ac2d6c45e886e03212c',1,'rosette_api.CAPI.Morphology(Dictionary&lt; object, object &gt; dict, MorphologyFeature feature=MorphologyFeature.complete)'],['../classrosette__api_1_1CAPI.html#adea6fca5b308874ab22660143565c395',1,'rosette_api.CAPI.Morphology(RosetteFile file, MorphologyFeature feature=MorphologyFeature.complete)']]],
   ['morphologyendpoint',['MorphologyEndpoint',['../classrosette__api_1_1RosetteExtensions.html#a67380b6a3cab3c6cf677146d71d2f21c',1,'rosette_api::RosetteExtensions']]],
   ['morphologyitem',['MorphologyItem',['../classrosette__api_1_1MorphologyItem.html#a3d2b7303600c06227cedd6e335362f90',1,'rosette_api::MorphologyItem']]],

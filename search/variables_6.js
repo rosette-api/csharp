@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nationality',['NATIONALITY',['../classrosette__api_1_1RosetteEntity.html#ae0e600210fa979a88950b6fad6df0f59',1,'rosette_api::RosetteEntity']]]
+  ['money',['MONEY',['../classrosette__api_1_1RosetteEntity.html#a72de587c3a2885cea1b963cde09698f1',1,'rosette_api::RosetteEntity']]]
 ];

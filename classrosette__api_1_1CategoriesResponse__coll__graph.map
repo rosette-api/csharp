@@ -1,3 +1,4 @@
 <map id="rosette_api.CategoriesResponse" name="rosette_api.CategoriesResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="61,5,273,215"/>
+<area shape="rect" id="node1" title="Class for representing responses from the API when the Categories endpoint has been called" alt="" coords="5,248,328,369"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="61,5,273,200"/>
 </map>

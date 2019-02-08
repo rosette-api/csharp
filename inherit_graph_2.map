@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classrosette__api_1_1Concept.html" title="Concepts found in a document " alt="" coords="186,5,398,32"/>
-<area shape="rect" id="node3" href="$classrosette__api_1_1KeyPhrase.html" title="Key phrases found in document " alt="" coords="176,56,408,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,64,157,91"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1ArgumentConverter.html" title=" " alt="" coords="205,5,517,32"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1RelationshipConverter.html" title=" " alt="" coords="230,57,493,98"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1ResponseHeadersConverter.html" title=" " alt="" coords="215,122,507,163"/>
 </map>

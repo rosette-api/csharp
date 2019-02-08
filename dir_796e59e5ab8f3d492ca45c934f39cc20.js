@@ -14,7 +14,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "EntityID.cs", "EntityID_8cs.html", [
       [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ]
     ] ],
-    [ "IEnumerableExpanderContractResolver.cs", "IEnumerableExpanderContractResolver_8cs.html", null ],
+    [ "IEnumerableExpanderContractResolver.cs", "IEnumerableExpanderContractResolver_8cs.html", [
+      [ "IEnumerableExpanderContractResolver", "classrosette__api_1_1IEnumerableExpanderContractResolver.html", "classrosette__api_1_1IEnumerableExpanderContractResolver" ]
+    ] ],
     [ "InfoResponse.cs", "InfoResponse_8cs.html", [
       [ "InfoResponse", "classrosette__api_1_1InfoResponse.html", "classrosette__api_1_1InfoResponse" ]
     ] ],
@@ -24,6 +26,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "LanguageIdentificationResponse.cs", "LanguageIdentificationResponse_8cs.html", [
       [ "LanguageIdentificationResponse", "classrosette__api_1_1LanguageIdentificationResponse.html", "classrosette__api_1_1LanguageIdentificationResponse" ],
       [ "LanguageDetection", "classrosette__api_1_1LanguageDetection.html", "classrosette__api_1_1LanguageDetection" ]
+    ] ],
+    [ "MentionOffset.cs", "MentionOffset_8cs.html", [
+      [ "MentionOffset", "classrosette__api_1_1MentionOffset.html", "classrosette__api_1_1MentionOffset" ]
     ] ],
     [ "MorphologyResponse.cs", "MorphologyResponse_8cs.html", [
       [ "MorphologyResponse", "classrosette__api_1_1MorphologyResponse.html", "classrosette__api_1_1MorphologyResponse" ],
@@ -44,10 +49,15 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "RelationshipsResponse.cs", "RelationshipsResponse_8cs.html", [
       [ "RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", "classrosette__api_1_1RelationshipsResponse" ],
       [ "RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", "classrosette__api_1_1RosetteRelationship" ],
-      [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ]
+      [ "RelationshipConverter", "classrosette__api_1_1RelationshipConverter.html", "classrosette__api_1_1RelationshipConverter" ],
+      [ "RelationshipContractResolver", "classrosette__api_1_1RelationshipContractResolver.html", "classrosette__api_1_1RelationshipContractResolver" ],
+      [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
+      [ "ArgumentConverter", "classrosette__api_1_1ArgumentConverter.html", "classrosette__api_1_1ArgumentConverter" ],
+      [ "ArgumentContractResolver", "classrosette__api_1_1ArgumentContractResolver.html", "classrosette__api_1_1ArgumentContractResolver" ]
     ] ],
     [ "ResponseHeaders.cs", "ResponseHeaders_8cs.html", [
-      [ "ResponseHeaders", "classrosette__api_1_1ResponseHeaders.html", "classrosette__api_1_1ResponseHeaders" ]
+      [ "ResponseHeaders", "classrosette__api_1_1ResponseHeaders.html", "classrosette__api_1_1ResponseHeaders" ],
+      [ "ResponseHeadersConverter", "classrosette__api_1_1ResponseHeadersConverter.html", "classrosette__api_1_1ResponseHeadersConverter" ]
     ] ],
     [ "RosetteEntity.cs", "RosetteEntity_8cs.html", [
       [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html", "classrosette__api_1_1RosetteEntity" ]
@@ -67,6 +77,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "RosetteResponseContractResolver.cs", "RosetteResponseContractResolver_8cs.html", [
       [ "RosetteResponseContractResolver", "classrosette__api_1_1RosetteResponseContractResolver.html", "classrosette__api_1_1RosetteResponseContractResolver" ]
     ] ],
+    [ "SemanticVectorsResponse.cs", "SemanticVectorsResponse_8cs.html", [
+      [ "SemanticVectorsResponse", "classrosette__api_1_1SemanticVectorsResponse.html", "classrosette__api_1_1SemanticVectorsResponse" ]
+    ] ],
     [ "SentenceTaggingResponse.cs", "SentenceTaggingResponse_8cs.html", [
       [ "SentenceTaggingResponse", "classrosette__api_1_1SentenceTaggingResponse.html", "classrosette__api_1_1SentenceTaggingResponse" ]
     ] ],
@@ -75,7 +88,13 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
       [ "RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment" ],
       [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", "classrosette__api_1_1RosetteSentimentEntity" ]
     ] ],
-    [ "StaticValueProvider.cs", "StaticValueProvider_8cs.html", null ],
+    [ "SimilarTermsResponse.cs", "SimilarTermsResponse_8cs.html", [
+      [ "SimilarTermsResponse", "classrosette__api_1_1SimilarTermsResponse.html", "classrosette__api_1_1SimilarTermsResponse" ],
+      [ "SimilarTerm", "classrosette__api_1_1SimilarTerm.html", "classrosette__api_1_1SimilarTerm" ]
+    ] ],
+    [ "StaticValueProvider.cs", "StaticValueProvider_8cs.html", [
+      [ "StaticValueProvider", "classrosette__api_1_1StaticValueProvider.html", "classrosette__api_1_1StaticValueProvider" ]
+    ] ],
     [ "SyntaxDependenciesResponse.cs", "SyntaxDependenciesResponse_8cs.html", [
       [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
       [ "SentenceWithDependencies", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies" ],

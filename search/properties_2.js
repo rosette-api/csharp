@@ -1,7 +1,7 @@
 var searchData=
 [
   ['categories',['Categories',['../classrosette__api_1_1CategoriesResponse.html#a631cb221d828571764775aae8f84692c',1,'rosette_api::CategoriesResponse']]],
-  ['client',['Client',['../classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5',1,'rosette_api::CAPI']]],
+  ['client',['Client',['../classrosette__api_1_1CAPI.html#a06781a5eebd845e316c3f75d8303613d',1,'rosette_api::CAPI']]],
   ['code',['Code',['../classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082',1,'rosette_api::RosetteException']]],
   ['compoundcomponents',['CompoundComponents',['../classrosette__api_1_1MorphologyItem.html#ae1a9ec5385e1cab7ef2381a3ddeac266',1,'rosette_api::MorphologyItem']]],
   ['conceptid',['ConceptId',['../classrosette__api_1_1Concept.html#a5551c90eb752c128490916f9835d58fc',1,'rosette_api::Concept']]],

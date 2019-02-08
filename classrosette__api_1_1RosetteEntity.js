@@ -1,6 +1,6 @@
 var classrosette__api_1_1RosetteEntity =
 [
-    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a365af2e40e92a7d4d24a6d89ca07535d", null ],
+    [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html#a13e543ad532e5d59bdb38c8d8abd565f", null ],
     [ "Equals", "classrosette__api_1_1RosetteEntity.html#a8f625abb8ec491e1615394e90ed23a81", null ],
     [ "Equals", "classrosette__api_1_1RosetteEntity.html#adbef3d4a3d4741eea5ee547c7dfbf254", null ],
     [ "GetHashCode", "classrosette__api_1_1RosetteEntity.html#a51adbc548bdf98650e7d541d11542860", null ],
@@ -28,6 +28,9 @@ var classrosette__api_1_1RosetteEntity =
     [ "EntityID", "classrosette__api_1_1RosetteEntity.html#adcc6a9ef5e2b0c50419ba2da057b7b13", null ],
     [ "EntityType", "classrosette__api_1_1RosetteEntity.html#ad67ec389c0b5b8c93c1a926c42edaa5f", null ],
     [ "ID", "classrosette__api_1_1RosetteEntity.html#aef65f084ac19da80508466e85acfa946", null ],
+    [ "LinkingConfidence", "classrosette__api_1_1RosetteEntity.html#a488dd1a9a591c05278ce8f47065a5e0c", null ],
     [ "Mention", "classrosette__api_1_1RosetteEntity.html#a3461fa4996e6d9b6b83feacaa91437a8", null ],
-    [ "NormalizedMention", "classrosette__api_1_1RosetteEntity.html#af6936e336ad3025cda66c5eaec5d2f0b", null ]
+    [ "MentionOffsets", "classrosette__api_1_1RosetteEntity.html#aa01f46926aea23b1d79b96b28560afe7", null ],
+    [ "NormalizedMention", "classrosette__api_1_1RosetteEntity.html#af6936e336ad3025cda66c5eaec5d2f0b", null ],
+    [ "Salience", "classrosette__api_1_1RosetteEntity.html#abcabb8c27104b36a5d78b91f483801cf", null ]
 ];

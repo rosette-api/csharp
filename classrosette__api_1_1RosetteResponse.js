@@ -7,7 +7,7 @@ var classrosette__api_1_1RosetteResponse =
     [ "ToString", "classrosette__api_1_1RosetteResponse.html#a4c44bf0b9e2f11edfa9a57a9988b8faf", null ],
     [ "Content", "classrosette__api_1_1RosetteResponse.html#a64ffdee409bf6890c97b19f60f8e2137", null ],
     [ "ContentAsJson", "classrosette__api_1_1RosetteResponse.html#a4681aeed29ba5a49ae454eb7a3a2ab24", null ],
-    [ "ContentDictionary", "classrosette__api_1_1RosetteResponse.html#a0b62a72a823f373a3026843ee7cba083", null ],
+    [ "ContentDictionary", "classrosette__api_1_1RosetteResponse.html#ae7b6179915b9675a430819d2adb0b2e4", null ],
     [ "Headers", "classrosette__api_1_1RosetteResponse.html#aa10c23210d4c3abe7d77974ca99a715d", null ],
     [ "ResponseHeaders", "classrosette__api_1_1RosetteResponse.html#a2fc5e5b85c6968b652f4953bc9dde349", null ]
 ];

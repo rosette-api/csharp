@@ -1,2 +1,3 @@
 <map id="rosette_api.LanguageDetection" name="rosette_api.LanguageDetection">
+<area shape="rect" id="node1" title="A struct to represent a detected language and the likelihood it was the correct language to detect" alt="" coords="5,5,317,141"/>
 </map>

@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classrosette__api_1_1CAPI.html" title="C# Rosette API. " alt="" coords="5,5,188,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,78,257,105"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1ArgumentContractResolver.html" title=" " alt="" coords="305,5,608,47"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1RelationshipContractResolver.html" title=" " alt="" coords="325,71,588,112"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1RosetteResponseContractResolver.html" title="Custom resolver for JSON serialization" alt="" coords="311,136,603,177"/>
 </map>
