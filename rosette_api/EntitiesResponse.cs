@@ -34,6 +34,7 @@ namespace rosette_api
         private const String mentionOffsetsKey = "mentionOffsets";
         private const String linkingConfidenceKey = "linkingConfidence";
         private const String salienceKey = "salience";
+        private const String permIdKey = "permId";
 
         /// <summary>
         /// Creates an EntitiesResponse from the API's raw output
@@ -57,7 +58,8 @@ namespace rosette_api
                 List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
                 Nullable<double> linkingConfidence = result.Properties().Where((p) => String.Equals(p.Name, linkingConfidenceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
                 Nullable<double> salience = result.Properties().Where((p) => String.Equals(p.Name, salienceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[salienceKey].ToObject<double?>() : null;
-                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience));
+                String permId = result.Properties().Where((p) => String.Equals(p.Name, permIdKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[permIdKey].ToString() : null;
+                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience, permId));
             }
             this.Entities = entities;
         }

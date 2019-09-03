@@ -145,6 +145,12 @@ namespace rosette_api
         public Nullable<double> Salience { get; set; }
 
         /// <summary>
+        /// Gets or sets the permId of the extracted entity
+        /// </summary>
+        [JsonProperty("permId", NullValueHandling = NullValueHandling.Ignore)]
+        public String PermID { get; set; }
+
+        /// <summary>
         /// Creates an entity
         /// </summary>
         /// <param name="mention">The mention of the entity</param>
@@ -157,9 +163,10 @@ namespace rosette_api
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
+        /// <param name="permId">The Thomson Reuters Permanent Identifier of the entity</param>
         public RosetteEntity(string mention, string normalizedMention, EntityID id, string entityType, int? count,
             double? confidence, string dbpediaType, List<MentionOffset> mentionOffsets, double? linkingConfidence,
-            double? salience)
+            double? salience, string permId)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
@@ -171,6 +178,7 @@ namespace rosette_api
             this.MentionOffsets = mentionOffsets;
             this.LinkingConfidence = linkingConfidence;
             this.Salience = salience;
+            this.PermID = permId;
         }
 
         /// <summary>
@@ -189,7 +197,8 @@ namespace rosette_api
                 && string.Equals(DBpediaType, other.DBpediaType)
                 && MentionOffsets.SequenceEqual(other.MentionOffsets)
                 && LinkingConfidence.Equals(other.LinkingConfidence)
-                && Salience.Equals(other.Salience);
+                && Salience.Equals(other.Salience)
+                && PermID.Equals(other.PermID);
         }
 
         /// <summary>
@@ -223,6 +232,7 @@ namespace rosette_api
                 hashCode = (hashCode * 397) ^ (MentionOffsets != null ? MentionOffsets.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (LinkingConfidence != null ? LinkingConfidence.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Salience != null ? Salience.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (PermID != null ? PermID.GetHashCode() : 0);
                 return hashCode;
             }
         }

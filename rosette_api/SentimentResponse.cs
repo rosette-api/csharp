@@ -31,6 +31,7 @@ namespace rosette_api
         internal const String mentionOffsetsKey = "mentionOffsets";
         internal const String linkingConfidenceKey = "linkingConfidence";
         internal const String salienceKey = "salience";
+        internal const String permIdKey = "permId";
 
         /// <summary>
         /// Gets or sets the document-level sentiment identified by the Rosette API
@@ -70,11 +71,12 @@ namespace rosette_api
                 List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
                 Nullable<double> linkingConfidence = result.Properties().Where((p) => p.Name == linkingConfidenceKey).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
                 Nullable<double> salience = result.Properties().Where((p) => p.Name == salienceKey).Any() ? result[salienceKey].ToObject<double?>() : null;
+                String permId = result.Properties().Where((p) => p.Name == permIdKey).Any() ? result[permIdKey].ToString() : null;
                 RosetteSentiment sentiment = null;
                 if (result.Properties().Where((p) => p.Name == sentimentKey).Any()) {
                     sentiment = result[sentimentKey].ToObject<RosetteSentiment>();
                 }
-                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience));
+                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience, permId));
             }
             this.EntitySentiments = entitySentiments;
         }
@@ -285,6 +287,7 @@ namespace rosette_api
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
+        /// <param name="permId">The Thomson Reuters Permanent Identifier of the entity</param>
         public RosetteSentimentEntity(string mention,
                                       string normalizedMention,
                                       EntityID id,
@@ -295,7 +298,8 @@ namespace rosette_api
                                       string dbpediaType,
                                       List<MentionOffset> mentionOffsets,
                                       double? linkingConfidence,
-                                      double? salience
+                                      double? salience,
+                                      String permId
                                      ) : base(mention,
                                               normalizedMention,
                                               id,
@@ -305,7 +309,8 @@ namespace rosette_api
                                               dbpediaType,
                                               mentionOffsets,
                                               linkingConfidence,
-                                              salience
+                                              salience,
+                                              permId
                                              )
         {
             this.Sentiment = new SentimentResponse.RosetteSentiment(sentiment.Label, sentiment.Confidence);
