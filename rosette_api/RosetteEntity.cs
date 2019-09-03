@@ -198,7 +198,7 @@ namespace rosette_api
                 && MentionOffsets.SequenceEqual(other.MentionOffsets)
                 && LinkingConfidence.Equals(other.LinkingConfidence)
                 && Salience.Equals(other.Salience)
-                && PermID.Equals(other.PermID);
+                && string.Equals(PermID, other.PermID);
         }
 
         /// <summary>

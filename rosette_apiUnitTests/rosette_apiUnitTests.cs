@@ -473,7 +473,6 @@ namespace rosette_apiUnitTests {
             string buildNumber = null;
             string buildTime = null;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "name", name },
                 { "version", version },
