@@ -190,6 +190,20 @@ namespace rosette_api
         }
 
         /// <summary>
+        /// Compartor for Lists of Strings.  SequenceEqual throws an exception
+        /// if either argument is null.
+        /// </summary>
+        /// <param name="list1">List<String></param>
+        /// <param name="list2">List<String></param>
+        /// <returns>True if equal or both null</returns>
+        private bool StringListsAreEqual(List<String> list1, List<String> list2)
+        {
+            if(list1 == null && list2 == null) { return true; }
+            if(list1 == null || list2 == null) { return false; } // only one is null
+            return list1.SequenceEqual(list2);
+        }
+
+        /// <summary>
         /// Equals for RosetteEntity
         /// </summary>
         /// <param name="other">RosetteEntity</param>
@@ -203,7 +217,7 @@ namespace rosette_api
                 && Count == other.Count
                 && Confidence.Equals(other.Confidence)
                 && string.Equals(DBpediaType, other.DBpediaType)
-                && ((DBpediaTypes == null && other.DBpediaTypes == null) || DBpediaTypes.SequenceEqual(other.DBpediaTypes))
+                && StringListsAreEqual(DBpediaTypes, other.DBpediaTypes)
                 && MentionOffsets.SequenceEqual(other.MentionOffsets)
                 && LinkingConfidence.Equals(other.LinkingConfidence)
                 && Salience.Equals(other.Salience)
