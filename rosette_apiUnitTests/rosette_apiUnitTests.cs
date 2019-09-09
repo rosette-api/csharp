@@ -667,11 +667,12 @@ namespace rosette_apiUnitTests {
         }
 
         [Test]
-        public void EntityTestExtendedProperties()
-        {
+        public void EntityTestExtendedProperties() {
+            // Entities response, based on Cloud defaults, with linkEntities,
+            // includeDBpediaType, includeDBpediaTypes and includePermID set to true.
+
             Init();
-            // Entities response, based on a Cloud call,
-            // with linkEntities, includeDBpediaType, includeDBpediaTypes and includePermID set to true.
+
             String e_type = "ORGANIZATION";
             String e_mention = "Toyota";
             String e_normalized = "Toyota";
@@ -685,20 +686,24 @@ namespace rosette_apiUnitTests {
             List<String> e_dbpediaTypes = new List<String>() {"Agent/Organisation"};
             String e_permId = "4295876746";
 
-            RosetteEntity e = new RosetteEntity(e_mention, e_normalized, e_entityID, e_type, e_count, e_confidence, e_dbpediaType, e_dbpediaTypes, e_mentionOffsets, e_linkingConfidence, e_salience, e_permId);
-
+            RosetteEntity e = new RosetteEntity(e_mention, e_normalized, e_entityID, e_type, e_count, e_confidence,
+                e_dbpediaType, e_dbpediaTypes, e_mentionOffsets, e_linkingConfidence, e_salience, e_permId);
             List<RosetteEntity> entities = new List<RosetteEntity>() { e };
+            Dictionary<string, object> content = new Dictionary<string, object> { { "entities", entities } };
+
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            Dictionary<string, object> content = new Dictionary<string, object> {
-                { "entities", entities }
-            };
+
             EntitiesResponse expected = new EntitiesResponse(entities, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "entities").Respond(req => mockedMessage);
             EntitiesResponse response = _rosetteApi.Entity("Toyota");
+
             Assert.AreEqual(expected, response);
+            Assert.AreEqual(expected.Entities[0].PermID, response.Entities[0].PermID);
+            Assert.AreEqual(expected.Entities[0].DBpediaType, response.Entities[0].DBpediaType);
+            Assert.AreEqual(expected.Entities[0].DBpediaTypes, response.Entities[0].DBpediaTypes);
         }
 
         [Test]
