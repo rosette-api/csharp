@@ -127,6 +127,12 @@ namespace rosette_api
         public String DBpediaType { get; set; }
 
         /// <summary>
+        /// Gets or sets the dbpediaTypes of the extracted entity
+        /// </summary>
+        [JsonProperty("dbpediaTypes", NullValueHandling = NullValueHandling.Ignore)]
+        public List<String> DBpediaTypes { get; set; }
+
+        /// <summary>
         /// Gets or sets the offsets of the extracted entity
         /// </summary>
         [JsonProperty("mentionOffsets")]
@@ -160,13 +166,14 @@ namespace rosette_api
         /// <param name="count">The number of times this entity appeared in the input to the API</param>
         /// <param name="confidence">The confidence of this entity appeared in the input to the API</param>
         /// <param name="dbpediaType">The DBpedia type of the entity</param>
+        /// <param name="dbpediaTypes">A list of DBpedia types of the entitiy</param>
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
         /// <param name="permId">The Thomson Reuters Permanent Identifier of the entity</param>
         public RosetteEntity(string mention, string normalizedMention, EntityID id, string entityType, int? count,
-            double? confidence, string dbpediaType, List<MentionOffset> mentionOffsets, double? linkingConfidence,
-            double? salience, string permId)
+            double? confidence, string dbpediaType, List<String> dbpediaTypes, List<MentionOffset> mentionOffsets,
+            double? linkingConfidence, double? salience, string permId)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
@@ -175,6 +182,7 @@ namespace rosette_api
             this.EntityType = entityType;
             this.Confidence = confidence;
             this.DBpediaType = dbpediaType;
+            this.DBpediaTypes = dbpediaTypes;
             this.MentionOffsets = mentionOffsets;
             this.LinkingConfidence = linkingConfidence;
             this.Salience = salience;
@@ -195,6 +203,7 @@ namespace rosette_api
                 && Count == other.Count
                 && Confidence.Equals(other.Confidence)
                 && string.Equals(DBpediaType, other.DBpediaType)
+                && ((DBpediaTypes == null && other.DBpediaTypes == null) || DBpediaTypes.SequenceEqual(other.DBpediaTypes))
                 && MentionOffsets.SequenceEqual(other.MentionOffsets)
                 && LinkingConfidence.Equals(other.LinkingConfidence)
                 && Salience.Equals(other.Salience)
@@ -229,6 +238,7 @@ namespace rosette_api
                 hashCode = (hashCode * 397) ^ Count.GetHashCode();
                 hashCode = (hashCode * 397) ^ Confidence.GetHashCode();
                 hashCode = (hashCode * 397) ^ (DBpediaType != null ? DBpediaType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (DBpediaTypes != null ? DBpediaTypes.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (MentionOffsets != null ? MentionOffsets.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (LinkingConfidence != null ? LinkingConfidence.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Salience != null ? Salience.GetHashCode() : 0);

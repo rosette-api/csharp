@@ -24,6 +24,7 @@ namespace rosette_api
         internal const string mentionKey = "mention";
         internal const string normalizedMentionKey = "normalized";
         internal const string dbpediaTypeKey = "dbpediaType";
+        internal const string dbpediaTypesKey = "dbpediaTypes";
         internal const string countKey = "count";
         internal const string typeKey = "type";
         internal const string entityIDKey = "entityId";
@@ -65,6 +66,7 @@ namespace rosette_api
                 string entityIDStr = result.Properties().Where((p) => p.Name == entityIDKey).Any() ? result[entityIDKey].ToString() : null;
                 EntityID entityID = entityIDStr != null ? new EntityID(entityIDStr) : null;
                 string dbpediaType = result.Properties().Where((p) => p.Name == dbpediaTypeKey).Any() ? result[dbpediaTypeKey].ToString() : null;
+                List<String> dbpediaTypes = result.Properties().Where((permIdKey) => permIdKey.Name == dbpediaTypesKey).Any() ? result[dbpediaTypesKey].ToObject<List<String>>() : null;
                 Nullable<int> count = result.Properties().Where((p) => p.Name == countKey).Any() ? result[countKey].ToObject<int?>() : null;
                 Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
                 JArray mentionOffsetsArr = result.Properties().Where((p) => p.Name == mentionOffsetsKey).Any() ? result[mentionOffsetsKey] as JArray : null;
@@ -76,7 +78,7 @@ namespace rosette_api
                 if (result.Properties().Where((p) => p.Name == sentimentKey).Any()) {
                     sentiment = result[sentimentKey].ToObject<RosetteSentiment>();
                 }
-                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience, permId));
+                entitySentiments.Add(new RosetteSentimentEntity(mention, normalizedMention, entityID, type, count, sentiment, confidence, dbpediaType, dbpediaTypes, mentionOffsets, linkingConfidence, salience, permId));
             }
             this.EntitySentiments = entitySentiments;
         }
@@ -284,6 +286,7 @@ namespace rosette_api
         /// <param name="sentiment">The contextual sentiment of the entity</param>
         /// <param name="confidence">The confidence that the sentiment was correctly identified</param>
         /// <param name="dbpediaType">The DBpedia type of the entity</param>
+        /// <param name="dbpediaTypes">A list of DBpedia types of the entitiy</param>
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
@@ -296,6 +299,7 @@ namespace rosette_api
                                       SentimentResponse.RosetteSentiment sentiment,
                                       double? confidence,
                                       string dbpediaType,
+                                      List<String> dbpediaTypes,
                                       List<MentionOffset> mentionOffsets,
                                       double? linkingConfidence,
                                       double? salience,
@@ -307,6 +311,7 @@ namespace rosette_api
                                               count,
                                               confidence,
                                               dbpediaType,
+                                              dbpediaTypes,
                                               mentionOffsets,
                                               linkingConfidence,
                                               salience,
