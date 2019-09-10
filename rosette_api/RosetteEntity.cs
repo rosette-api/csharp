@@ -191,7 +191,7 @@ namespace rosette_api
         }
 
         /// <summary>
-        /// Compartor for Lists of Strings.  SequenceEqual throws an exception
+        /// Method to compare Lists of Strings.  SequenceEqual throws an exception
         /// if either argument is null.
         /// </summary>
         /// <param name="list1">List<String></param>
