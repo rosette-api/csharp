@@ -123,6 +123,7 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the dbpediaType of the extracted entity
         /// </summary>
+        [Obsolete("Use dbPediaTypes instead.")]
         [JsonProperty("dbpediaType", NullValueHandling = NullValueHandling.Ignore)]
         public String DBpediaType { get; set; }
 
