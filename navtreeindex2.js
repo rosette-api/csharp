@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classrosette__api_1_1TranslateNamesResponse.html#a6ad8992cb57fa6d17b0076aac8bda051":[1,0,0,44,6],
+"classrosette__api_1_1TranslateNamesResponse.html#a7d516474f77a873d695ef8d58cd9f165":[1,0,0,44,9],
 "classrosette__api_1_1TranslateNamesResponse.html#a95bc4d85151cdd61eb4b8191dbd9955f":[1,0,0,44,11],
 "classrosette__api_1_1TranslateNamesResponse.html#aa96d7217cd50e1b410c290f0b3369551":[1,0,0,44,8],
 "classrosette__api_1_1TranslateNamesResponse.html#ab82aff0d192f10b3e975103884521f84":[1,0,0,44,4],
@@ -16,8 +18,8 @@ var NAVTREEINDEX2 =
 "classrosette__api_1_1TransliterationResponse.html#afc16286bb3116504da6fe1a7cf777e5b":[1,0,0,45,0],
 "dir_796e59e5ab8f3d492ca45c934f39cc20.html":[2,0,0],
 "files.html":[2,0],
-"functions.html":[1,3,0,0],
 "functions.html":[1,3,0],
+"functions.html":[1,3,0,0],
 "functions_b.html":[1,3,0,1],
 "functions_c.html":[1,3,0,2],
 "functions_d.html":[1,3,0,3],

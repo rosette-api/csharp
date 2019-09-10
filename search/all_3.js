@@ -2,6 +2,7 @@ var searchData=
 [
   ['date',['DATE',['../classrosette__api_1_1RosetteEntity.html#a9edf7d96c2c269e96f0dcd7ba4cda131',1,'rosette_api.RosetteEntity.DATE()'],['../classrosette__api_1_1ResponseHeaders.html#ab4141f55e9ccad896d92c36941e211c1',1,'rosette_api.ResponseHeaders.Date()']]],
   ['dbpediatype',['DBpediaType',['../classrosette__api_1_1RosetteEntity.html#a3a984721b56d4e4e54d42ffed4e6fc1c',1,'rosette_api::RosetteEntity']]],
+  ['dbpediatypes',['DBpediaTypes',['../classrosette__api_1_1RosetteEntity.html#ae7a05f32ffbfbfb6987b4c7699db9f2b',1,'rosette_api::RosetteEntity']]],
   ['debug',['Debug',['../classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e',1,'rosette_api::CAPI']]],
   ['dependencies',['Dependencies',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html#ac06c35522e6e790b406d4db82dd5c61e',1,'rosette_api::SyntaxDependenciesResponse::SentenceWithDependencies']]],
   ['dependency',['Dependency',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html',1,'rosette_api.SyntaxDependenciesResponse.Dependency'],['../classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html#a64c5d2226d425a7455a939090d5dafb6',1,'rosette_api.SyntaxDependenciesResponse.Dependency.Dependency()']]],

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['partsofspeech',['partsOfSpeech',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38ac83822705e71bb7338fc28bfc7997a94',1,'rosette_api']]],
+  ['permid',['PermID',['../classrosette__api_1_1RosetteEntity.html#a06a159d1642bb0329142eed4a52a5b76',1,'rosette_api::RosetteEntity']]],
   ['person',['PERSON',['../classrosette__api_1_1RosetteEntity.html#afad0517403fa8f3a56d18eec22ec53e9',1,'rosette_api::RosetteEntity']]],
   ['personal_5fid_5fnum',['PERSONAL_ID_NUM',['../classrosette__api_1_1RosetteEntity.html#a73d9e551f27931d514bc9421a38b0c83',1,'rosette_api::RosetteEntity']]],
   ['phone_5fnumber',['PHONE_NUMBER',['../classrosette__api_1_1RosetteEntity.html#a0e0b762352c9d8ca2d08b4c5a9268924',1,'rosette_api::RosetteEntity']]],

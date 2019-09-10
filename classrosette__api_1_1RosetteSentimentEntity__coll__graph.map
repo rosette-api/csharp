@@ -1,6 +1,6 @@
 <map id="rosette_api.RosetteSentimentEntity" name="rosette_api.RosetteSentimentEntity">
-<area shape="rect" id="node1" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API" alt="" coords="140,623,443,773"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties" alt="" coords="45,131,257,575"/>
+<area shape="rect" id="node1" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API" alt="" coords="140,652,443,803"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties" alt="" coords="45,131,257,604"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,5,297,83"/>
-<area shape="rect" id="node4" title=" " alt="" coords="281,307,584,399"/>
+<area shape="rect" id="node4" title=" " alt="" coords="281,321,584,413"/>
 </map>

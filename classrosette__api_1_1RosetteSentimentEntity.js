@@ -1,6 +1,6 @@
 var classrosette__api_1_1RosetteSentimentEntity =
 [
-    [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html#a08c7893aef8456d65ee7d967438e0e77", null ],
+    [ "RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html#ac4ec7509f5fe11aec54704f930630091", null ],
     [ "Equals", "classrosette__api_1_1RosetteSentimentEntity.html#a60aed14dbc1a6decf89a4a5709876909", null ],
     [ "Equals", "classrosette__api_1_1RosetteSentimentEntity.html#a951750567516b1150cc5bf8625f7aecb", null ],
     [ "GetHashCode", "classrosette__api_1_1RosetteSentimentEntity.html#a6b92f367d9e138e85d4968d522ed4612", null ],

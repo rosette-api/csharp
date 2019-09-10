@@ -16,7 +16,7 @@ var searchData=
   ['results',['Results',['../classrosette__api_1_1NameDeduplicationResponse.html#a4b1f98b092de1373ea153b960794a5e3',1,'rosette_api::NameDeduplicationResponse']]],
   ['rosette_5fapi',['rosette_api',['../namespacerosette__api.html',1,'']]],
   ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api.RosetteCategory'],['../classrosette__api_1_1RosetteCategory.html#a834affcd796a68beeba354d0e3f73781',1,'rosette_api.RosetteCategory.RosetteCategory()']]],
-  ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api.RosetteEntity'],['../classrosette__api_1_1RosetteEntity.html#a13e543ad532e5d59bdb38c8d8abd565f',1,'rosette_api.RosetteEntity.RosetteEntity()']]],
+  ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api.RosetteEntity'],['../classrosette__api_1_1RosetteEntity.html#a5b9d09811b655d491d78499ddd4765bb',1,'rosette_api.RosetteEntity.RosetteEntity()']]],
   ['rosetteentity_2ecs',['RosetteEntity.cs',['../RosetteEntity_8cs.html',1,'']]],
   ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api.RosetteException'],['../classrosette__api_1_1RosetteException.html#a065c5e007dad0541bdfa7cab0400b6b0',1,'rosette_api.RosetteException.RosetteException()']]],
   ['rosetteexception_2ecs',['RosetteException.cs',['../RosetteException_8cs.html',1,'']]],
@@ -30,5 +30,5 @@ var searchData=
   ['rosetteresponsecontractresolver',['RosetteResponseContractResolver',['../classrosette__api_1_1RosetteResponseContractResolver.html',1,'rosette_api']]],
   ['rosetteresponsecontractresolver_2ecs',['RosetteResponseContractResolver.cs',['../RosetteResponseContractResolver_8cs.html',1,'']]],
   ['rosettesentiment',['RosetteSentiment',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html',1,'rosette_api.SentimentResponse.RosetteSentiment'],['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#a1aaec4812d20c0c0419461f1a58f9874',1,'rosette_api.SentimentResponse.RosetteSentiment.RosetteSentiment(String sentiment, Nullable&lt; double &gt; confidence)'],['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad6aa8c2b979f8a44822c323ae981bdf8',1,'rosette_api.SentimentResponse.RosetteSentiment.RosetteSentiment(SentimentLabel sentimentLabel, Nullable&lt; double &gt; confidence)']]],
-  ['rosettesentimententity',['RosetteSentimentEntity',['../classrosette__api_1_1RosetteSentimentEntity.html',1,'rosette_api.RosetteSentimentEntity'],['../classrosette__api_1_1RosetteSentimentEntity.html#a08c7893aef8456d65ee7d967438e0e77',1,'rosette_api.RosetteSentimentEntity.RosetteSentimentEntity()']]]
+  ['rosettesentimententity',['RosetteSentimentEntity',['../classrosette__api_1_1RosetteSentimentEntity.html',1,'rosette_api.RosetteSentimentEntity'],['../classrosette__api_1_1RosetteSentimentEntity.html#ac4ec7509f5fe11aec54704f930630091',1,'rosette_api.RosetteSentimentEntity.RosetteSentimentEntity()']]]
 ];
