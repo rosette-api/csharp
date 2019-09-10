@@ -123,8 +123,15 @@ namespace rosette_api
         /// <summary>
         /// Gets or sets the dbpediaType of the extracted entity
         /// </summary>
+        [Obsolete("Use dbPediaTypes instead.")]
         [JsonProperty("dbpediaType", NullValueHandling = NullValueHandling.Ignore)]
         public String DBpediaType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dbpediaTypes of the extracted entity
+        /// </summary>
+        [JsonProperty("dbpediaTypes", NullValueHandling = NullValueHandling.Ignore)]
+        public List<String> DBpediaTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the offsets of the extracted entity
@@ -145,6 +152,12 @@ namespace rosette_api
         public Nullable<double> Salience { get; set; }
 
         /// <summary>
+        /// Gets or sets the permId of the extracted entity
+        /// </summary>
+        [JsonProperty("permId", NullValueHandling = NullValueHandling.Ignore)]
+        public String PermID { get; set; }
+
+        /// <summary>
         /// Creates an entity
         /// </summary>
         /// <param name="mention">The mention of the entity</param>
@@ -154,12 +167,14 @@ namespace rosette_api
         /// <param name="count">The number of times this entity appeared in the input to the API</param>
         /// <param name="confidence">The confidence of this entity appeared in the input to the API</param>
         /// <param name="dbpediaType">The DBpedia type of the entity</param>
+        /// <param name="dbpediaTypes">A list of DBpedia types of the entitiy</param>
         /// <param name="mentionOffsets">The mention offsets of the entity</param>
         /// <param name="linkingConfidence">The linking confidence of the entity</param>
         /// <param name="salience">The salience of the entity</param>
+        /// <param name="permId">The Thomson Reuters Permanent Identifier of the entity</param>
         public RosetteEntity(string mention, string normalizedMention, EntityID id, string entityType, int? count,
-            double? confidence, string dbpediaType, List<MentionOffset> mentionOffsets, double? linkingConfidence,
-            double? salience)
+            double? confidence, string dbpediaType, List<String> dbpediaTypes, List<MentionOffset> mentionOffsets,
+            double? linkingConfidence, double? salience, string permId)
         {
             this.Mention = mention;
             this.NormalizedMention = normalizedMention;
@@ -168,9 +183,25 @@ namespace rosette_api
             this.EntityType = entityType;
             this.Confidence = confidence;
             this.DBpediaType = dbpediaType;
+            this.DBpediaTypes = dbpediaTypes;
             this.MentionOffsets = mentionOffsets;
             this.LinkingConfidence = linkingConfidence;
             this.Salience = salience;
+            this.PermID = permId;
+        }
+
+        /// <summary>
+        /// Method to compare Lists of Strings.  SequenceEqual throws an exception
+        /// if either argument is null.
+        /// </summary>
+        /// <param name="list1">List<String></param>
+        /// <param name="list2">List<String></param>
+        /// <returns>True if equal or both null</returns>
+        private bool StringListsAreEqual(List<String> list1, List<String> list2)
+        {
+            if(list1 == null && list2 == null) { return true; }
+            if(list1 == null || list2 == null) { return false; } // only one is null
+            return list1.SequenceEqual(list2);
         }
 
         /// <summary>
@@ -187,9 +218,11 @@ namespace rosette_api
                 && Count == other.Count
                 && Confidence.Equals(other.Confidence)
                 && string.Equals(DBpediaType, other.DBpediaType)
+                && StringListsAreEqual(DBpediaTypes, other.DBpediaTypes)
                 && MentionOffsets.SequenceEqual(other.MentionOffsets)
                 && LinkingConfidence.Equals(other.LinkingConfidence)
-                && Salience.Equals(other.Salience);
+                && Salience.Equals(other.Salience)
+                && string.Equals(PermID, other.PermID);
         }
 
         /// <summary>
@@ -220,9 +253,11 @@ namespace rosette_api
                 hashCode = (hashCode * 397) ^ Count.GetHashCode();
                 hashCode = (hashCode * 397) ^ Confidence.GetHashCode();
                 hashCode = (hashCode * 397) ^ (DBpediaType != null ? DBpediaType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (DBpediaTypes != null ? DBpediaTypes.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (MentionOffsets != null ? MentionOffsets.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (LinkingConfidence != null ? LinkingConfidence.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Salience != null ? Salience.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (PermID != null ? PermID.GetHashCode() : 0);
                 return hashCode;
             }
         }
