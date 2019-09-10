@@ -1,22 +1,24 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>rosette_api</id>
     <version>1.14.0</version>
+    <description>.Net (C#) Binding for Rosette API</description>
     <authors>basistech</authors>
-    <owners>basistech</owners>
+    <owners>Basis Technology Corp.</owners>
+    <copyright>Copyright 2014-2019 Basis Technology Corp.</copyright>
+    <projectUrl>https://www.rosette.com/</projectUrl>
+    <repository type="git" url="https://github.com/rosette-api/csharp" />
+    <releaseNotes>https://github.com/rosette-api/csharp/wiki/Release-Notes</releaseNotes>
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.Net (C#) Binding for Rosette API</description>
-    <releaseNotes>.Net (C#) Binding updated for Rosette API</releaseNotes>
-    <copyright>Copyright 2017</copyright>
-    <tags>RosetteAPI</tags>
+    <tags>RosetteAPI nlp natural language procesing text analytics morphology entity extraction linking sentiment word vectors name similarity translation word vectors</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.2" />
     </dependencies>
-	<frameworkAssemblies>
-		<frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
-	</frameworkAssemblies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net45" />
+    </frameworkAssemblies>
   </metadata>
   <files>
       <file src="./bin/Release/rosette_api.dll" target="lib/net45"/>
