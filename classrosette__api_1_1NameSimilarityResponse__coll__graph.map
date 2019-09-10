@@ -1,4 +1,3 @@
 <map id="rosette_api.NameSimilarityResponse" name="rosette_api.NameSimilarityResponse">
-<area shape="rect" id="node1" title="A class to represnt the results from the Name Similarity endpoint of the Rosette API" alt="" coords="5,248,288,384"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="41,5,253,200"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="31,5,187,215"/>
 </map>

@@ -6,6 +6,5 @@ var searchData=
   ['sentimentresponse',['SentimentResponse',['../classrosette__api_1_1SentimentResponse.html',1,'rosette_api']]],
   ['similarterm',['SimilarTerm',['../classrosette__api_1_1SimilarTerm.html',1,'rosette_api']]],
   ['similartermsresponse',['SimilarTermsResponse',['../classrosette__api_1_1SimilarTermsResponse.html',1,'rosette_api']]],
-  ['staticvalueprovider',['StaticValueProvider',['../classrosette__api_1_1StaticValueProvider.html',1,'rosette_api']]],
   ['syntaxdependenciesresponse',['SyntaxDependenciesResponse',['../classrosette__api_1_1SyntaxDependenciesResponse.html',1,'rosette_api']]]
 ];

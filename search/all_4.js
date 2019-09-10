@@ -2,7 +2,7 @@ var searchData=
 [
   ['email',['EMAIL',['../classrosette__api_1_1RosetteEntity.html#a2dd897bead0b93e7f88a2d3e55d88d85',1,'rosette_api::RosetteEntity']]],
   ['endoffset',['EndOffset',['../classrosette__api_1_1MentionOffset.html#a476bba58d1a4be2755557fdb1fcc7509',1,'rosette_api::MentionOffset']]],
-  ['endtokenindex',['EndTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html#abdf87437804ce6d7e6075fe5b6253b77',1,'rosette_api::SyntaxDependenciesResponse::SentenceWithDependencies']]],
+  ['endtokenindex',['EndTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html#a86516b95e5079cc0f6485f6c22a107fc',1,'rosette_api::SyntaxDependenciesResponse::SentenceWithDependencies']]],
   ['entities',['Entities',['../classrosette__api_1_1EntitiesResponse.html#a4b57be3fd7b3b72a8bfe88d55b665a36',1,'rosette_api::EntitiesResponse']]],
   ['entitiesresponse',['EntitiesResponse',['../classrosette__api_1_1EntitiesResponse.html',1,'rosette_api.EntitiesResponse'],['../classrosette__api_1_1EntitiesResponse.html#a0a5f3b46474055003f2b5cec331bcce2',1,'rosette_api.EntitiesResponse.EntitiesResponse(HttpResponseMessage apiResult)'],['../classrosette__api_1_1EntitiesResponse.html#a39fd84617564fcf51640f981b3f20262',1,'rosette_api.EntitiesResponse.EntitiesResponse(List&lt; RosetteEntity &gt; entities, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content, string contentAsJson)']]],
   ['entitiesresponse_2ecs',['EntitiesResponse.cs',['../EntitiesResponse_8cs.html',1,'']]],

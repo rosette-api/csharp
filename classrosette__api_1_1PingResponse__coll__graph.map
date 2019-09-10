@@ -1,4 +1,3 @@
 <map id="rosette_api.PingResponse" name="rosette_api.PingResponse">
-<area shape="rect" id="node1" title="A class to represent Rosette API responses when Ping() is called" alt="" coords="5,248,268,399"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="31,5,243,200"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="21,5,177,215"/>
 </map>

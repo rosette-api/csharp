@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['canconvert',['CanConvert',['../classrosette__api_1_1RelationshipConverter.html#a6dc3a6daf80e3dd6a1c9512e5b310b7e',1,'rosette_api.RelationshipConverter.CanConvert()'],['../classrosette__api_1_1ArgumentConverter.html#aed58b876f0a681c30f1190efc6945a42',1,'rosette_api.ArgumentConverter.CanConvert()'],['../classrosette__api_1_1ResponseHeadersConverter.html#aed47ea33d370bd84b0a58cdf6921d65a',1,'rosette_api.ResponseHeadersConverter.CanConvert()']]],
   ['capi',['CAPI',['../classrosette__api_1_1CAPI.html',1,'rosette_api.CAPI'],['../classrosette__api_1_1CAPI.html#a37f291cc373c9f5aa2fb73771fc209cc',1,'rosette_api.CAPI.CAPI()']]],
   ['capi_2ecs',['CAPI.cs',['../CAPI_8cs.html',1,'']]],
   ['categories',['Categories',['../classrosette__api_1_1CategoriesResponse.html#a631cb221d828571764775aae8f84692c',1,'rosette_api.CategoriesResponse.Categories()'],['../classrosette__api_1_1CAPI.html#aaf8f36f90de8d55a9e78b3a55d3d8649',1,'rosette_api.CAPI.Categories(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#acf24515566ee148da12c02d438670c07',1,'rosette_api.CAPI.Categories(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a361e724301ee791cb9d89cb6c0ce33f9',1,'rosette_api.CAPI.Categories(RosetteFile file)']]],
@@ -9,7 +8,7 @@ var searchData=
   ['clearcustomheaders',['ClearCustomHeaders',['../classrosette__api_1_1CAPI.html#a0ccd841456fd820a7b4d16ddc54803b6',1,'rosette_api::CAPI']]],
   ['clearoptions',['ClearOptions',['../classrosette__api_1_1CAPI.html#ac87e515df5328db479250a57970fe162',1,'rosette_api::CAPI']]],
   ['clearurlparameters',['ClearUrlParameters',['../classrosette__api_1_1CAPI.html#ae49e59573a977316688b5694703d2f7b',1,'rosette_api::CAPI']]],
-  ['client',['Client',['../classrosette__api_1_1CAPI.html#a06781a5eebd845e316c3f75d8303613d',1,'rosette_api::CAPI']]],
+  ['client',['Client',['../classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5',1,'rosette_api::CAPI']]],
   ['code',['Code',['../classrosette__api_1_1RosetteException.html#a2c6de2baf841c9b0453058968345b082',1,'rosette_api::RosetteException']]],
   ['complete',['complete',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38ad9a22d7a8178d5b42a8750123cbfe5b1',1,'rosette_api']]],
   ['compoundcomponents',['CompoundComponents',['../classrosette__api_1_1MorphologyItem.html#ae1a9ec5385e1cab7ef2381a3ddeac266',1,'rosette_api.MorphologyItem.CompoundComponents()'],['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38a4920624d77133939fe65d67348193434',1,'rosette_api.compoundComponents()']]],
@@ -24,6 +23,6 @@ var searchData=
   ['contenttostring',['ContentToString',['../classrosette__api_1_1MorphologyResponse.html#ac2e38f1a25a6e0c598aaaf33aeeec5dc',1,'rosette_api.MorphologyResponse.ContentToString()'],['../classrosette__api_1_1RosetteResponse.html#a70de2787c13cc78bb44f5c589c93ae20',1,'rosette_api.RosetteResponse.ContentToString()']]],
   ['contenttype',['ContentType',['../classrosette__api_1_1RosetteFile.html#a38721560170c76f6827352516a549f38',1,'rosette_api::RosetteFile']]],
   ['count',['Count',['../classrosette__api_1_1RosetteEntity.html#a4f1b338e4995ff9e026acf4c1186d8fb',1,'rosette_api::RosetteEntity']]],
-  ['createproperties',['CreateProperties',['../classrosette__api_1_1IEnumerableExpanderContractResolver.html#a553d7e749f5503cd5f7c6f0e151e1d61',1,'rosette_api.IEnumerableExpanderContractResolver.CreateProperties()'],['../classrosette__api_1_1RelationshipContractResolver.html#ac4f88324626c85a970a851c0621e2089',1,'rosette_api.RelationshipContractResolver.CreateProperties()'],['../classrosette__api_1_1ArgumentContractResolver.html#ac361aa4221676dae9eee8f37f74e93e5',1,'rosette_api.ArgumentContractResolver.CreateProperties()'],['../classrosette__api_1_1RosetteResponseContractResolver.html#a2e841b181f731781d146c09a644acd79',1,'rosette_api.RosetteResponseContractResolver.CreateProperties()']]],
+  ['createproperties',['CreateProperties',['../classrosette__api_1_1RosetteResponseContractResolver.html#a2e841b181f731781d146c09a644acd79',1,'rosette_api::RosetteResponseContractResolver']]],
   ['credit_5fcard_5fnum',['CREDIT_CARD_NUM',['../classrosette__api_1_1RosetteEntity.html#a98b2b0ef2d686534694f980d2a1efd5f',1,'rosette_api::RosetteEntity']]]
 ];

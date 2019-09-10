@@ -1,29 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="90,157,213,184"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1Concept.html" title="Concepts found in a document" alt="" coords="421,5,633,32"/>
-<area shape="rect" id="node3" href="$classrosette__api_1_1KeyPhrase.html" title="Key phrases found in document" alt="" coords="411,56,643,83"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1MentionOffset.html" title="Offsets of a piece of text in the document" alt="" coords="391,107,663,133"/>
-<area shape="rect" id="node5" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties" alt="" coords="391,157,663,184"/>
-<area shape="rect" id="node6" href="$classrosette__api_1_1RosetteSentimentEntity.html" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API" alt="" coords="756,175,1059,217"/>
-<area shape="rect" id="node7" href="$classrosette__api_1_1SentimentResponse.html" title="A class for representing responses from the sentiment analysis endpoint of the Rosette API" alt="" coords="371,325,683,352"/>
-<area shape="rect" id="node8" href="$classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html" title="A class for representing sentiments" alt="" coords="365,259,688,301"/>
-<area shape="rect" id="node9" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="5,836,297,863"/>
-<area shape="rect" id="node10" href="$classrosette__api_1_1CategoriesResponse.html" title="Class for representing responses from the API when the Categories endpoint has been called" alt="" coords="365,376,688,403"/>
-<area shape="rect" id="node11" href="$classrosette__api_1_1EntitiesResponse.html" title="A class for representing responses from the API when the Entities endpoint has been called" alt="" coords="375,427,678,453"/>
-<area shape="rect" id="node12" href="$classrosette__api_1_1InfoResponse.html" title="A class to represent Rosette API responses when Info() is called" alt="" coords="395,477,658,504"/>
-<area shape="rect" id="node13" href="$classrosette__api_1_1LanguageIdentificationResponse.html" title="A class to represent responses from the Language Identification endpoint of the Rosette API" alt="" coords="345,529,708,570"/>
-<area shape="rect" id="node14" href="$classrosette__api_1_1MorphologyResponse.html" title="A class for representing responses from the Morphology endpoint of the API" alt="" coords="365,595,688,621"/>
-<area shape="rect" id="node15" href="$classrosette__api_1_1NameDeduplicationResponse.html" title="A class to represent the results from the Name Deduplication endpoint of the Rosette API" alt="" coords="371,646,683,687"/>
-<area shape="rect" id="node16" href="$classrosette__api_1_1NameSimilarityResponse.html" title="A class to represnt the results from the Name Similarity endpoint of the Rosette API" alt="" coords="385,711,668,753"/>
-<area shape="rect" id="node17" href="$classrosette__api_1_1PingResponse.html" title="A class to represent Rosette API responses when Ping() is called" alt="" coords="395,777,658,804"/>
-<area shape="rect" id="node18" href="$classrosette__api_1_1RelationshipsResponse.html" title="A class to represent responses from the Relationships endpoint of the Rosette API" alt="" coords="391,829,663,870"/>
-<area shape="rect" id="node19" href="$classrosette__api_1_1SemanticVectorsResponse.html" title="Class for representing responses from the API when the SemanticVectors endpoint has been called" alt="" coords="381,894,673,935"/>
-<area shape="rect" id="node20" href="$classrosette__api_1_1SentenceTaggingResponse.html" title="A class to represent responses from the Sentence Tagging endpoint of the Rosette API" alt="" coords="381,959,673,1001"/>
-<area shape="rect" id="node21" href="$classrosette__api_1_1SimilarTermsResponse.html" title="Class for representing responses from the API when the SimilarTerms endpoint has been called" alt="" coords="395,1025,658,1066"/>
-<area shape="rect" id="node22" href="$classrosette__api_1_1SyntaxDependenciesResponse.html" title="A class for representing responses from the syntax/dependencies endpoint of the Rosette API" alt="" coords="365,1090,688,1131"/>
-<area shape="rect" id="node23" href="$classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called" alt="" coords="391,1155,663,1197"/>
-<area shape="rect" id="node24" href="$classrosette__api_1_1TokenizationResponse.html" title="A class to represent responses from the Tokenization endpoint of the Rosette API" alt="" coords="395,1221,658,1262"/>
-<area shape="rect" id="node25" href="$classrosette__api_1_1TopicsResponse.html" title="A class to represent responses from the Tokenization endpoint of the Rosette API" alt="" coords="385,1287,668,1313"/>
-<area shape="rect" id="node26" href="$classrosette__api_1_1TranslateNamesResponse.html" title="A class to represent responses from the TranslatedNames endpoint of the RosetteAPI" alt="" coords="385,1338,668,1379"/>
-<area shape="rect" id="node27" href="$classrosette__api_1_1TransliterationResponse.html" title="A class to represnt the results from the Name Deduplication endpoint of the Rosette API" alt="" coords="381,1403,673,1445"/>
+<area shape="rect" id="node1" href="$classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html" title="A class to represent a dependency returned by the Syntax Dependencies endpoint of the Rosette API ..." alt="" coords="5,5,239,47"/>
 </map>

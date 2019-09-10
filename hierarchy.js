@@ -3,17 +3,12 @@ var hierarchy =
     [ "rosette_api.Argument", "classrosette__api_1_1Argument.html", null ],
     [ "rosette_api.CAPI", "classrosette__api_1_1CAPI.html", null ],
     [ "DefaultContractResolver", null, [
-      [ "rosette_api.ArgumentContractResolver", "classrosette__api_1_1ArgumentContractResolver.html", null ],
-      [ "rosette_api.RelationshipContractResolver", "classrosette__api_1_1RelationshipContractResolver.html", null ],
       [ "rosette_api.RosetteResponseContractResolver", "classrosette__api_1_1RosetteResponseContractResolver.html", null ]
     ] ],
     [ "rosette_api.SyntaxDependenciesResponse.Dependency", "classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html", null ],
     [ "rosette_api.EntityID", "classrosette__api_1_1EntityID.html", null ],
     [ "Exception", null, [
       [ "rosette_api.RosetteException", "classrosette__api_1_1RosetteException.html", null ]
-    ] ],
-    [ "IContractResolver", null, [
-      [ "rosette_api.IEnumerableExpanderContractResolver< T >", "classrosette__api_1_1IEnumerableExpanderContractResolver.html", null ]
     ] ],
     [ "IDisposable", null, [
       [ "rosette_api.RosetteFile", "classrosette__api_1_1RosetteFile.html", null ]
@@ -28,14 +23,6 @@ var hierarchy =
       [ "rosette_api.RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", null ],
       [ "rosette_api.SentimentResponse", "classrosette__api_1_1SentimentResponse.html", null ],
       [ "rosette_api.SentimentResponse.RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", null ]
-    ] ],
-    [ "IValueProvider", null, [
-      [ "rosette_api.StaticValueProvider", "classrosette__api_1_1StaticValueProvider.html", null ]
-    ] ],
-    [ "JsonConverter", null, [
-      [ "rosette_api.ArgumentConverter", "classrosette__api_1_1ArgumentConverter.html", null ],
-      [ "rosette_api.RelationshipConverter", "classrosette__api_1_1RelationshipConverter.html", null ],
-      [ "rosette_api.ResponseHeadersConverter", "classrosette__api_1_1ResponseHeadersConverter.html", null ]
     ] ],
     [ "rosette_api.LanguageDetection", "classrosette__api_1_1LanguageDetection.html", null ],
     [ "rosette_api.MorphologyItem", "classrosette__api_1_1MorphologyItem.html", null ],

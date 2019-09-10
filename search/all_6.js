@@ -7,7 +7,6 @@ var searchData=
   ['getobjectdata',['GetObjectData',['../classrosette__api_1_1RosetteException.html#ad016e3de070391e44cee36adf9633259',1,'rosette_api::RosetteException']]],
   ['getoption',['GetOption',['../classrosette__api_1_1CAPI.html#a0a2736e02338605839d7e49a01d32979',1,'rosette_api::CAPI']]],
   ['geturlparameters',['GetUrlParameters',['../classrosette__api_1_1CAPI.html#ac27118e591ec46a027890af65ee18441',1,'rosette_api::CAPI']]],
-  ['getvalue',['GetValue',['../classrosette__api_1_1StaticValueProvider.html#a23761d2dee53cb02827baa1658d4f43b',1,'rosette_api::StaticValueProvider']]],
   ['getwikipedaurl',['GetWikipedaURL',['../classrosette__api_1_1EntityID.html#a2951d336b8b0d1ee500678caf13e1d72',1,'rosette_api::EntityID']]],
-  ['governortokenindex',['GovernorTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html#a1b8d111e210b0c0e95dc278e13445400',1,'rosette_api::SyntaxDependenciesResponse::Dependency']]]
+  ['governortokenindex',['GovernorTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html#abede49939e0873dc9210c33b137eb59a',1,'rosette_api::SyntaxDependenciesResponse::Dependency']]]
 ];

@@ -1,4 +1,3 @@
 <map id="rosette_api.RelationshipsResponse" name="rosette_api.RelationshipsResponse">
-<area shape="rect" id="node1" title="A class to represent responses from the Relationships endpoint of the Rosette API" alt="" coords="5,248,277,384"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="35,5,247,200"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="23,5,179,215"/>
 </map>

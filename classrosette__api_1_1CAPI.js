@@ -61,7 +61,7 @@ var classrosette__api_1_1CAPI =
     [ "Topics", "classrosette__api_1_1CAPI.html#a87fb633372731686df7123fa02e4b18e", null ],
     [ "Transliteration", "classrosette__api_1_1CAPI.html#a67cfa94c1fe2f9800ff92a144fe64715", null ],
     [ "Transliteration", "classrosette__api_1_1CAPI.html#a7e89e1341fe98a037ac2e769a9608a68", null ],
-    [ "Client", "classrosette__api_1_1CAPI.html#a06781a5eebd845e316c3f75d8303613d", null ],
+    [ "Client", "classrosette__api_1_1CAPI.html#adb40d6828661d95567d124a2a57852d5", null ],
     [ "Concurrency", "classrosette__api_1_1CAPI.html#a4cc0650fd265c559eee26c627e189baa", null ],
     [ "Debug", "classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e", null ],
     [ "MaxRetry", "classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d", null ],

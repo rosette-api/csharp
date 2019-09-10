@@ -1,5 +1,3 @@
 <map id="rosette_api.SentimentResponse" name="rosette_api.SentimentResponse">
-<area shape="rect" id="node1" title="A class for representing responses from the sentiment analysis endpoint of the Rosette API" alt="" coords="103,248,415,399"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI" alt="" coords="5,5,217,200"/>
-<area shape="rect" id="node3" title=" " alt="" coords="241,64,573,141"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from RosetteAPI " alt="" coords="5,5,161,215"/>
 </map>
