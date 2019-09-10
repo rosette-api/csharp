@@ -31,9 +31,11 @@ namespace rosette_api
         private const String countKey = "count";
         private const String confidenceKey = "confidence";
         private const String dbpediaTypeKey = "dbpediaType";
+        private const String dbpediaTypesKey = "dbpediaTypes";
         private const String mentionOffsetsKey = "mentionOffsets";
         private const String linkingConfidenceKey = "linkingConfidence";
         private const String salienceKey = "salience";
+        private const String permIdKey = "permId";
 
         /// <summary>
         /// Creates an EntitiesResponse from the API's raw output
@@ -53,11 +55,13 @@ namespace rosette_api
                 Nullable<int> count = result.Properties().Where((p) => String.Equals(p.Name, countKey)).Any() ? result[countKey].ToObject<int?>() : null;
                 Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
                 String dbpediaType = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[dbpediaTypeKey].ToString() : null;
-                JArray mentionOffsetsArr = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypeKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[mentionOffsetsKey] as JArray : null;
+                List<String> dbpediaTypes = result.Properties().Where((p) => String.Equals(p.Name, dbpediaTypesKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[dbpediaTypesKey].ToObject<List<String>>() : null;
+                JArray mentionOffsetsArr = result.Properties().Where((p) => String.Equals(p.Name, mentionOffsetsKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[mentionOffsetsKey] as JArray : null;
                 List<MentionOffset> mentionOffsets = mentionOffsetsArr != null ? mentionOffsetsArr.ToObject<List<MentionOffset>>() : null;
                 Nullable<double> linkingConfidence = result.Properties().Where((p) => String.Equals(p.Name, linkingConfidenceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[linkingConfidenceKey].ToObject<double?>() : null;
                 Nullable<double> salience = result.Properties().Where((p) => String.Equals(p.Name, salienceKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[salienceKey].ToObject<double?>() : null;
-                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType, mentionOffsets, linkingConfidence, salience));
+                String permId = result.Properties().Where((p) => String.Equals(p.Name, permIdKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[permIdKey].ToString() : null;
+                entities.Add(new RosetteEntity(mention, normalized, entityID, type, count, confidence, dbpediaType, dbpediaTypes, mentionOffsets, linkingConfidence, salience, permId));
             }
             this.Entities = entities;
         }
