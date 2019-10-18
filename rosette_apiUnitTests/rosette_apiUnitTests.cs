@@ -587,6 +587,47 @@ namespace rosette_apiUnitTests {
             Assert.Fail("Exception not thrown");
         }
 
+        //------------------------- Address Similarity ----------------------------------------
+        [Test]
+        public void AddressSimilarityTestFull()
+        {
+            Init();
+            double score = (double)0.9486632809417912;
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object> {
+                { "score", score }
+            };
+            AddressSimilarityResponse expected = new AddressSimilarityResponse(score, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "address-similarity").Respond(req => mockedMessage);
+            AddressSimilarityResponse response = _rosetteApi.AddressSimilarity(new Address(city:"Cambridge"), new Address(city:"cambridge"));
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void AddressSimilarity_Content_Test() {
+            _mockHttp.When(_testUrl + "address-similarity").Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+            Address name1 = new Address("Address One");
+            Address name2 = new Address("Address Two");
+            var response = _rosetteApi.AddressSimilarity(name1, name2);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void AddressSimilarity_Dict_Test() {
+            _mockHttp.When(_testUrl + "address-similarity")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.AddressSimilarity(new Dictionary<object, object>() { { "address1", "Address One" }, { "address2", "Address Two" } });
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
         //------------------------- Categories ----------------------------------------
 
         [Test]
