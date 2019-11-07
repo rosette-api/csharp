@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,7 @@ namespace rosette_apiExamples
             //To use the C# API, you must provide an API key
             string apikey = "Your API key";
             string alturl = string.Empty;
-            
+
             //You may set the API key via command line argument:
             //categories yourapikeyhere
             if (args.Length != 0)
