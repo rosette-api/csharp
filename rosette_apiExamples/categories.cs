@@ -31,14 +31,14 @@ namespace rosette_apiExamples
             try
             {
                 CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string categories_text_data = @"Sony Pictures is planning to shoot a good portion of the new ""Ghostbusters"" in Boston as well.";
+                string categories_text_data = @"If you are a fan of the British television series Downton Abbey and you are planning to be in New York anytime before April 2nd, there is a perfect stop for you while in town.";
                 //The results of the API call will come back in the form of a Dictionary
                 CategoriesResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
                 Console.WriteLine(response.ContentAsJson);
 
                 //Rosette API also supports Dictionary inputs
                 //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
-                string categories_url_data = @"https://onlocationvacations.com/2015/03/05/the-new-ghostbusters-movie-begins-filming-in-boston-in-june/";
+                string categories_url_data = @"https://onlocationvacations.com/2018/02/06/downton-abbey-exhibition-extended-april-2-nyc/";
                 response = CategoriesCAPI.Categories(new Dictionary<object, object>()
                 {
                     {"contentUri", categories_url_data}
