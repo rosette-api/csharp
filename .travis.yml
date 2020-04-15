@@ -1,12 +1,9 @@
 language: csharp
-mono: none
-dotnet: 2.1.502
 
 install:
     - nuget restore rosette_api.sln
 
 script:
-    - dotnet restore
     - xbuild /p:Configuration=Release rosette_api.sln
     - mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
 
