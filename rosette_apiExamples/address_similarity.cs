@@ -32,7 +32,7 @@ namespace rosette_apiExamples
             {
                 CAPI cAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 //The results of the API call will come back in the form of a Dictionary
-                AddressSimilarityResponse response = cAPI.AddressSimilarity(new Address(houseNumber:"1600", road:"Pennsylvania Ave N.W.", city:"Washington", state:"DC", postCode: "20500"), new Address(houseNumber:"160", road:"Pennsylvana Avenue", city:"Washington", state:"D.C.", postCode: "20500"));
+                AddressSimilarityResponse response = cAPI.AddressSimilarity(new FieldedAddress(houseNumber:"1600", road:"Pennsylvania Ave N.W.", city:"Washington", state:"DC", postCode: "20500"), new UnfieldedAddress(address:"160 Pennsylvana Avenue, Washington, D.C., 20500"));
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

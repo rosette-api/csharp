@@ -1,8 +1,9 @@
-﻿namespace rosette_api
+
+namespace rosette_api
 {
-    public class Address: IAddress
+    public class FieldedAddress: IAddress
     {
-        public Address(string house = null, string houseNumber = null, string road = null, string unit = null, string level = null, string staircase = null, string entrance = null, string suburb = null, string cityDistrict = null, string city = null, string island = null, string stateDistrict = null, string state = null, string countryRegion = null, string country = null, string worldRegion = null, string postCode = null, string poBox = null)
+        public FieldedAddress(string house = null, string houseNumber = null, string road = null, string unit = null, string level = null, string staircase = null, string entrance = null, string suburb = null, string cityDistrict = null, string city = null, string island = null, string stateDistrict = null, string state = null, string countryRegion = null, string country = null, string worldRegion = null, string postCode = null, string poBox = null)
         {
             this.house = house;
             this.houseNumber = houseNumber;
