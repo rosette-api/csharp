@@ -352,11 +352,11 @@ namespace rosette_api {
         /// (POST)AddressSimilarity Endpoint: Returns the result of matching 2 addresses.
         /// </para>
         /// </summary>
-        /// <param name="a1">Address: First address to be matched</param>
-        /// <param name="a2">Address: Second address to be matched</param>
+        /// <param name="a1">IAddress: First address to be matched</param>
+        /// <param name="a2">IAddress: Second address to be matched</param>
         /// <returns>AddressSimilarityResponse containing the results of the request.
         /// </returns>
-        public AddressSimilarityResponse AddressSimilarity(Address a1, Address a2)
+        public AddressSimilarityResponse AddressSimilarity(IAddress a1, IAddress a2)
         {
             _uri = "address-similarity";
 
