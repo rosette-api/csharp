@@ -1,11 +1,15 @@
 var namespacerosette__api =
 [
+    [ "Address", "classrosette__api_1_1Address.html", "classrosette__api_1_1Address" ],
+    [ "AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", "classrosette__api_1_1AddressSimilarityResponse" ],
     [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
     [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
     [ "Concept", "classrosette__api_1_1Concept.html", "classrosette__api_1_1Concept" ],
     [ "EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", "classrosette__api_1_1EntitiesResponse" ],
     [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ],
+    [ "FieldedAddress", "classrosette__api_1_1FieldedAddress.html", "classrosette__api_1_1FieldedAddress" ],
+    [ "IAddress", "interfacerosette__api_1_1IAddress.html", "interfacerosette__api_1_1IAddress" ],
     [ "InfoResponse", "classrosette__api_1_1InfoResponse.html", "classrosette__api_1_1InfoResponse" ],
     [ "KeyPhrase", "classrosette__api_1_1KeyPhrase.html", "classrosette__api_1_1KeyPhrase" ],
     [ "LanguageDetection", "classrosette__api_1_1LanguageDetection.html", "classrosette__api_1_1LanguageDetection" ],
@@ -38,5 +42,6 @@ var namespacerosette__api =
     [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
     [ "TopicsResponse", "classrosette__api_1_1TopicsResponse.html", "classrosette__api_1_1TopicsResponse" ],
     [ "TranslateNamesResponse", "classrosette__api_1_1TranslateNamesResponse.html", "classrosette__api_1_1TranslateNamesResponse" ],
-    [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ]
+    [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ],
+    [ "UnfieldedAddress", "classrosette__api_1_1UnfieldedAddress.html", "classrosette__api_1_1UnfieldedAddress" ]
 ];

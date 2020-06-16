@@ -1,5 +1,11 @@
 var dir_796e59e5ab8f3d492ca45c934f39cc20 =
 [
+    [ "Address.cs", "Address_8cs.html", [
+      [ "Address", "classrosette__api_1_1Address.html", "classrosette__api_1_1Address" ]
+    ] ],
+    [ "AddressSimilarityResponse.cs", "AddressSimilarityResponse_8cs.html", [
+      [ "AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", "classrosette__api_1_1AddressSimilarityResponse" ]
+    ] ],
     [ "CAPI.cs", "CAPI_8cs.html", "CAPI_8cs" ],
     [ "CategoriesResponse.cs", "CategoriesResponse_8cs.html", [
       [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
@@ -13,6 +19,12 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "EntityID.cs", "EntityID_8cs.html", [
       [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ]
+    ] ],
+    [ "FieldedAddress.cs", "FieldedAddress_8cs.html", [
+      [ "FieldedAddress", "classrosette__api_1_1FieldedAddress.html", "classrosette__api_1_1FieldedAddress" ]
+    ] ],
+    [ "IAddress.cs", "IAddress_8cs.html", [
+      [ "IAddress", "interfacerosette__api_1_1IAddress.html", "interfacerosette__api_1_1IAddress" ]
     ] ],
     [ "IEnumerableExpanderContractResolver.cs", "IEnumerableExpanderContractResolver_8cs.html", null ],
     [ "InfoResponse.cs", "InfoResponse_8cs.html", [
@@ -105,5 +117,8 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "TransliterationResponse.cs", "TransliterationResponse_8cs.html", [
       [ "TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", "classrosette__api_1_1TransliterationResponse" ]
+    ] ],
+    [ "UnfieldedAddress.cs", "UnfieldedAddress_8cs.html", [
+      [ "UnfieldedAddress", "classrosette__api_1_1UnfieldedAddress.html", "classrosette__api_1_1UnfieldedAddress" ]
     ] ]
 ];

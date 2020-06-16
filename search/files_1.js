@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['entitiesresponse_2ecs',['EntitiesResponse.cs',['../EntitiesResponse_8cs.html',1,'']]],
-  ['entityid_2ecs',['EntityID.cs',['../EntityID_8cs.html',1,'']]]
+  ['capi_2ecs',['CAPI.cs',['../CAPI_8cs.html',1,'']]],
+  ['categoriesresponse_2ecs',['CategoriesResponse.cs',['../CategoriesResponse_8cs.html',1,'']]],
+  ['concept_2ecs',['Concept.cs',['../Concept_8cs.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['date',['DATE',['../classrosette__api_1_1RosetteEntity.html#a9edf7d96c2c269e96f0dcd7ba4cda131',1,'rosette_api.RosetteEntity.DATE()'],['../classrosette__api_1_1ResponseHeaders.html#ab4141f55e9ccad896d92c36941e211c1',1,'rosette_api.ResponseHeaders.Date()']]],
+  ['date',['Date',['../classrosette__api_1_1ResponseHeaders.html#ab4141f55e9ccad896d92c36941e211c1',1,'rosette_api.ResponseHeaders.Date()'],['../classrosette__api_1_1RosetteEntity.html#a9edf7d96c2c269e96f0dcd7ba4cda131',1,'rosette_api.RosetteEntity.DATE()']]],
   ['dbpediatype',['DBpediaType',['../classrosette__api_1_1RosetteEntity.html#a3a984721b56d4e4e54d42ffed4e6fc1c',1,'rosette_api::RosetteEntity']]],
   ['dbpediatypes',['DBpediaTypes',['../classrosette__api_1_1RosetteEntity.html#ae7a05f32ffbfbfb6987b4c7699db9f2b',1,'rosette_api::RosetteEntity']]],
   ['debug',['Debug',['../classrosette__api_1_1CAPI.html#a16e8da8b7074a7d92505c623945f5b6e',1,'rosette_api::CAPI']]],

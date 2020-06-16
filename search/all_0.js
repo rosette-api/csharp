@@ -1,5 +1,10 @@
 var searchData=
 [
+  ['address',['Address',['../classrosette__api_1_1Address.html',1,'rosette_api.Address'],['../classrosette__api_1_1UnfieldedAddress.html#a6fe40690338a867b691a2b506cd02914',1,'rosette_api.UnfieldedAddress.address()'],['../classrosette__api_1_1Address.html#a2ae2ce6a52f75792c75e98f31018464d',1,'rosette_api.Address.Address()']]],
+  ['address_2ecs',['Address.cs',['../Address_8cs.html',1,'']]],
+  ['addresssimilarity',['AddressSimilarity',['../classrosette__api_1_1CAPI.html#aa981436d8544615b920656ece1f8c8d7',1,'rosette_api.CAPI.AddressSimilarity(IAddress a1, IAddress a2)'],['../classrosette__api_1_1CAPI.html#a99298be7bc29e5891ed68a87e23f6662',1,'rosette_api.CAPI.AddressSimilarity(Dictionary&lt; object, object &gt; dict)']]],
+  ['addresssimilarityresponse',['AddressSimilarityResponse',['../classrosette__api_1_1AddressSimilarityResponse.html',1,'rosette_api.AddressSimilarityResponse'],['../classrosette__api_1_1AddressSimilarityResponse.html#aa260d9abcd0fa6960f4352607e22e549',1,'rosette_api.AddressSimilarityResponse.AddressSimilarityResponse(HttpResponseMessage apiResults)'],['../classrosette__api_1_1AddressSimilarityResponse.html#ac2d8c65c7cf8e365bd5a9cff4cb03d7a',1,'rosette_api.AddressSimilarityResponse.AddressSimilarityResponse(double? score, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content, string contentAsJSON)']]],
+  ['addresssimilarityresponse_2ecs',['AddressSimilarityResponse.cs',['../AddressSimilarityResponse_8cs.html',1,'']]],
   ['adjucts',['Adjucts',['../classrosette__api_1_1RosetteRelationship.html#a9c60350fd7098ab6a00a106c77717b44',1,'rosette_api::RosetteRelationship']]],
   ['allresponseheaders',['AllResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html#a7c32047066de0f0a7576fc28feaebf39',1,'rosette_api::ResponseHeaders']]],
   ['argument',['Argument',['../classrosette__api_1_1Argument.html',1,'rosette_api.Argument'],['../classrosette__api_1_1Argument.html#a0362d584ddfcb29424618ca1fed4ac40',1,'rosette_api.Argument.Argument()']]],

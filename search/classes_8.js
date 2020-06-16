@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api']]],
-  ['namededuplicationresponse',['NameDeduplicationResponse',['../classrosette__api_1_1NameDeduplicationResponse.html',1,'rosette_api']]],
-  ['namesimilarityresponse',['NameSimilarityResponse',['../classrosette__api_1_1NameSimilarityResponse.html',1,'rosette_api']]]
+  ['mentionoffset',['MentionOffset',['../classrosette__api_1_1MentionOffset.html',1,'rosette_api']]],
+  ['morphologyitem',['MorphologyItem',['../classrosette__api_1_1MorphologyItem.html',1,'rosette_api']]],
+  ['morphologyresponse',['MorphologyResponse',['../classrosette__api_1_1MorphologyResponse.html',1,'rosette_api']]]
 ];

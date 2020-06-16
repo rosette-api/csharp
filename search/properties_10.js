@@ -10,6 +10,10 @@ var searchData=
   ['sourcelanguageoforigin',['SourceLanguageOfOrigin',['../classrosette__api_1_1TranslateNamesResponse.html#a6ad8992cb57fa6d17b0076aac8bda051',1,'rosette_api::TranslateNamesResponse']]],
   ['sourcelanguageofuse',['SourceLanguageOfUse',['../classrosette__api_1_1TranslateNamesResponse.html#a4b91b71a939e54923cc93c2c9c651fe0',1,'rosette_api::TranslateNamesResponse']]],
   ['sourcescript',['SourceScript',['../classrosette__api_1_1TranslateNamesResponse.html#aa96d7217cd50e1b410c290f0b3369551',1,'rosette_api::TranslateNamesResponse']]],
+  ['staircase',['staircase',['../classrosette__api_1_1Address.html#a2a76abc06f334eabe85a94aa31996fc2',1,'rosette_api.Address.staircase()'],['../classrosette__api_1_1FieldedAddress.html#ae42f12807dd5ca3107a7787088f98024',1,'rosette_api.FieldedAddress.staircase()']]],
   ['startoffset',['StartOffset',['../classrosette__api_1_1MentionOffset.html#abf67d02a54956738ea7d13df200765a8',1,'rosette_api::MentionOffset']]],
-  ['starttokenindex',['StartTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html#a4212b1099604cae1318944b3cca78ee9',1,'rosette_api::SyntaxDependenciesResponse::SentenceWithDependencies']]]
+  ['starttokenindex',['StartTokenIndex',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html#a4212b1099604cae1318944b3cca78ee9',1,'rosette_api::SyntaxDependenciesResponse::SentenceWithDependencies']]],
+  ['state',['state',['../classrosette__api_1_1Address.html#a66816beec40e14c625e0e618777f7e00',1,'rosette_api.Address.state()'],['../classrosette__api_1_1FieldedAddress.html#afd28d9bdb9f1962eaf20927da35a1cc8',1,'rosette_api.FieldedAddress.state()']]],
+  ['statedistrict',['stateDistrict',['../classrosette__api_1_1Address.html#af87abdb54f0526cd500a619fc676cc5b',1,'rosette_api.Address.stateDistrict()'],['../classrosette__api_1_1FieldedAddress.html#ad93b9a54faf231103692926bd058f3e1',1,'rosette_api.FieldedAddress.stateDistrict()']]],
+  ['suburb',['suburb',['../classrosette__api_1_1Address.html#a59458a8195890acfec17d99e7ca9d777',1,'rosette_api.Address.suburb()'],['../classrosette__api_1_1FieldedAddress.html#afe6c7bfc8fc486db25b47df43851f4a0',1,'rosette_api.FieldedAddress.suburb()']]]
 ];

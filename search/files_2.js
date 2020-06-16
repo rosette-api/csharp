@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ienumerableexpandercontractresolver_2ecs',['IEnumerableExpanderContractResolver.cs',['../IEnumerableExpanderContractResolver_8cs.html',1,'']]],
-  ['inforesponse_2ecs',['InfoResponse.cs',['../InfoResponse_8cs.html',1,'']]]
+  ['entitiesresponse_2ecs',['EntitiesResponse.cs',['../EntitiesResponse_8cs.html',1,'']]],
+  ['entityid_2ecs',['EntityID.cs',['../EntityID_8cs.html',1,'']]]
 ];

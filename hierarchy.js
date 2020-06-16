@@ -10,6 +10,11 @@ var hierarchy =
     [ "Exception", null, [
       [ "rosette_api.RosetteException", "classrosette__api_1_1RosetteException.html", null ]
     ] ],
+    [ "rosette_api.IAddress", "interfacerosette__api_1_1IAddress.html", [
+      [ "rosette_api.Address", "classrosette__api_1_1Address.html", null ],
+      [ "rosette_api.FieldedAddress", "classrosette__api_1_1FieldedAddress.html", null ],
+      [ "rosette_api.UnfieldedAddress", "classrosette__api_1_1UnfieldedAddress.html", null ]
+    ] ],
     [ "IDisposable", null, [
       [ "rosette_api.RosetteFile", "classrosette__api_1_1RosetteFile.html", null ]
     ] ],
@@ -32,6 +37,7 @@ var hierarchy =
     [ "rosette_api.RosetteExtensions", "classrosette__api_1_1RosetteExtensions.html", null ],
     [ "rosette_api.RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", null ],
     [ "rosette_api.RosetteResponse", "classrosette__api_1_1RosetteResponse.html", [
+      [ "rosette_api.AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", null ],
       [ "rosette_api.CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", null ],
       [ "rosette_api.EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", null ],
       [ "rosette_api.InfoResponse", "classrosette__api_1_1InfoResponse.html", null ],

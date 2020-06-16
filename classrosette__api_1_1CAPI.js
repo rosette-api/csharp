@@ -1,6 +1,8 @@
 var classrosette__api_1_1CAPI =
 [
     [ "CAPI", "classrosette__api_1_1CAPI.html#a37f291cc373c9f5aa2fb73771fc209cc", null ],
+    [ "AddressSimilarity", "classrosette__api_1_1CAPI.html#aa981436d8544615b920656ece1f8c8d7", null ],
+    [ "AddressSimilarity", "classrosette__api_1_1CAPI.html#a99298be7bc29e5891ed68a87e23f6662", null ],
     [ "Categories", "classrosette__api_1_1CAPI.html#aaf8f36f90de8d55a9e78b3a55d3d8649", null ],
     [ "Categories", "classrosette__api_1_1CAPI.html#acf24515566ee148da12c02d438670c07", null ],
     [ "Categories", "classrosette__api_1_1CAPI.html#a361e724301ee791cb9d89cb6c0ce33f9", null ],

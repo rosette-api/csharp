@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['textembeddingresponse_2ecs',['TextEmbeddingResponse.cs',['../TextEmbeddingResponse_8cs.html',1,'']]],
-  ['tokenizationresponse_2ecs',['TokenizationResponse.cs',['../TokenizationResponse_8cs.html',1,'']]],
-  ['topicsresponse_2ecs',['TopicsResponse.cs',['../TopicsResponse_8cs.html',1,'']]],
-  ['translatenamesresponse_2ecs',['TranslateNamesResponse.cs',['../TranslateNamesResponse_8cs.html',1,'']]],
-  ['transliterationresponse_2ecs',['TransliterationResponse.cs',['../TransliterationResponse_8cs.html',1,'']]]
+  ['relationshipsresponse_2ecs',['RelationshipsResponse.cs',['../RelationshipsResponse_8cs.html',1,'']]],
+  ['responseheaders_2ecs',['ResponseHeaders.cs',['../ResponseHeaders_8cs.html',1,'']]],
+  ['rosetteentity_2ecs',['RosetteEntity.cs',['../RosetteEntity_8cs.html',1,'']]],
+  ['rosetteexception_2ecs',['RosetteException.cs',['../RosetteException_8cs.html',1,'']]],
+  ['rosetteextensions_2ecs',['RosetteExtensions.cs',['../RosetteExtensions_8cs.html',1,'']]],
+  ['rosettefile_2ecs',['RosetteFile.cs',['../RosetteFile_8cs.html',1,'']]],
+  ['rosetteresponse_2ecs',['RosetteResponse.cs',['../RosetteResponse_8cs.html',1,'']]],
+  ['rosetteresponsecontractresolver_2ecs',['RosetteResponseContractResolver.cs',['../RosetteResponseContractResolver_8cs.html',1,'']]]
 ];

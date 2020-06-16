@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mentionoffset_2ecs',['MentionOffset.cs',['../MentionOffset_8cs.html',1,'']]],
-  ['morphologyresponse_2ecs',['MorphologyResponse.cs',['../MorphologyResponse_8cs.html',1,'']]]
+  ['keyphrase_2ecs',['KeyPhrase.cs',['../KeyPhrase_8cs.html',1,'']]]
 ];

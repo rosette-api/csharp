@@ -9,6 +9,7 @@ var searchData=
   ['latitude_5flongitude',['LATITUDE_LONGITUDE',['../classrosette__api_1_1RosetteEntity.html#aafee245ce923c2d6a531771f152309b8',1,'rosette_api::RosetteEntity']]],
   ['lemma',['Lemma',['../classrosette__api_1_1MorphologyItem.html#ac4612889584ea7d77a94e1ec7f5a0a19',1,'rosette_api::MorphologyItem']]],
   ['lemmas',['lemmas',['../namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38a6d1744dfd7b7cc538ff478677b3ae651',1,'rosette_api']]],
+  ['level',['level',['../classrosette__api_1_1Address.html#a4988103ee96ec61a91bddcfd63066d18',1,'rosette_api.Address.level()'],['../classrosette__api_1_1FieldedAddress.html#a972c6e729532cae1bf6b87cd32950aac',1,'rosette_api.FieldedAddress.level()']]],
   ['line',['Line',['../classrosette__api_1_1RosetteException.html#a30a50a43d7edb20f3176ae4f048fa976',1,'rosette_api::RosetteException']]],
   ['linkingconfidence',['LinkingConfidence',['../classrosette__api_1_1RosetteEntity.html#a488dd1a9a591c05278ce8f47065a5e0c',1,'rosette_api::RosetteEntity']]],
   ['location',['LOCATION',['../classrosette__api_1_1RosetteEntity.html#ad15d0dc85c1f251a8dab5e0a17e36412',1,'rosette_api::RosetteEntity']]],

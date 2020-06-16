@@ -9,6 +9,7 @@ var searchData=
   ['responseheaders',['ResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html',1,'rosette_api.ResponseHeaders'],['../classrosette__api_1_1RosetteResponse.html#a2fc5e5b85c6968b652f4953bc9dde349',1,'rosette_api.RosetteResponse.ResponseHeaders()'],['../classrosette__api_1_1ResponseHeaders.html#a1bfcca2b0516bea130265cdd30c8f3a3',1,'rosette_api.ResponseHeaders.ResponseHeaders()']]],
   ['responseheaders_2ecs',['ResponseHeaders.cs',['../ResponseHeaders_8cs.html',1,'']]],
   ['results',['Results',['../classrosette__api_1_1NameDeduplicationResponse.html#a4b1f98b092de1373ea153b960794a5e3',1,'rosette_api::NameDeduplicationResponse']]],
+  ['road',['road',['../classrosette__api_1_1Address.html#ae36eda43cd9dc9e5b0a00579da10a56e',1,'rosette_api.Address.road()'],['../classrosette__api_1_1FieldedAddress.html#a64b4a61f5123aef454d17519098060fb',1,'rosette_api.FieldedAddress.road()']]],
   ['rosette_5fapi',['rosette_api',['../namespacerosette__api.html',1,'']]],
   ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api.RosetteCategory'],['../classrosette__api_1_1RosetteCategory.html#a834affcd796a68beeba354d0e3f73781',1,'rosette_api.RosetteCategory.RosetteCategory()']]],
   ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api.RosetteEntity'],['../classrosette__api_1_1RosetteEntity.html#a5b9d09811b655d491d78499ddd4765bb',1,'rosette_api.RosetteEntity.RosetteEntity()']]],

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['language',['Language',['../classrosette__api_1_1CAPI.html#ae7b04f2b032f37e8b38a16d059f41664',1,'rosette_api.CAPI.Language(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#a883ec42ed6dc045bd5281b82098638ab',1,'rosette_api.CAPI.Language(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a404704c1bff4435163f60c7a9a7534da',1,'rosette_api.CAPI.Language(RosetteFile file)']]],
-  ['languagedetection',['LanguageDetection',['../classrosette__api_1_1LanguageDetection.html#aa4313d74be5c440c974400f32c038f8a',1,'rosette_api::LanguageDetection']]],
-  ['languageidentificationresponse',['LanguageIdentificationResponse',['../classrosette__api_1_1LanguageIdentificationResponse.html#a2fe6f9016104944a0ae672a81185e6cc',1,'rosette_api.LanguageIdentificationResponse.LanguageIdentificationResponse(HttpResponseMessage apiResults)'],['../classrosette__api_1_1LanguageIdentificationResponse.html#a690febbe2798e894dd5a505624c83189',1,'rosette_api.LanguageIdentificationResponse.LanguageIdentificationResponse(List&lt; LanguageDetection &gt; languageDetections, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content=null, string contentAsJosn=null)']]]
+  ['keyphrase',['KeyPhrase',['../classrosette__api_1_1KeyPhrase.html#a51475467c5b189247e6b417f0526b640',1,'rosette_api::KeyPhrase']]]
 ];
