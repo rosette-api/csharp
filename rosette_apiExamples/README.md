@@ -1,7 +1,16 @@
 .Net(C#) Examples
-==================
+=============================
 
-These examples are can be run independently to demonstrate the Rosette API functionality.
+## Endpoint Examples ##
+These examples are scripts that can be run independently to demonstrate the Rosette API functionality.
+
+Each example file demonstrates one of the capabilities of the Rosette Platform. Each example, when run, prints its output to the console.
+
+Here are some methods for running the examples.  Each example will also accept an optional `--url` parameter for
+overriding the default URL.
+
+A note on prerequisites.  Rosette API only supports TLS 1.2 so ensure your toolchain also supports it.
+
 
 ### Docker Mono image
 - install Docker per your OS
@@ -23,27 +32,4 @@ You can now run your desired endpoint file to see it in action.
 
 ### Running the compiled example
 - Run the file using `_endpoint_.exe your_api_key [alternate_url]`
-
-Each example, when run, prints its output to the console.
-
-| File Name                     | What it does                                          |
-| -------------                 |-------------                                        |
-| categories.cs                    | Gets the category of a document at a URL              |
-| entities.cs                      | Gets the entities from a piece of text                |
-| info.cs                          | Gets information about Rosette API                    |
-| language.cs                      | Gets the language of a piece of text                  |
-| morphology_complete.cs               | Gets the complete morphological analysis of a piece of text|
-| morphology_compound-components.cs    | Gets the de-compounded words from a piece of text     |
-| morphology_han-readings.cs           | Gets the Chinese words from a piece of text           |
-| morphology_lemmas.cs                 | Gets the lemmas of words from a piece of text         |
-| morphology_parts-of-speech.cs        | Gets the part-of-speech tags for words in a piece of text |
-| name_deduplication.cs | Deduplicates a list of names |
-| name_similarity.cs                  | Gets the similarity score of two names                |
-| name_translation.cs               | Translates a name from one language to another        |
-| ping.cs                          | Pings the Rosette API to check for reachability       |
-| sentences.cs                     | Gets the sentences from a piece of text               |
-| sentiment.cs                     | Gets the sentiment of a local file                    |
-| tokens.cs                        | Gets the tokens (words) from a piece of text          |
-| topics.cs | Gets the key phrases and concepts from a piece of text |
-| transliteration.cs | Transliterates a name |
 

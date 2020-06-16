@@ -53,11 +53,15 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="AddressSimilarityResponse.cs" />
     <Compile Include="CAPI.cs" />
     <Compile Include="CategoriesResponse.cs" />
     <Compile Include="Concept.cs" />
     <Compile Include="EntitiesResponse.cs" />
     <Compile Include="EntityID.cs" />
+    <Compile Include="FieldedAddress.cs" />
+    <Compile Include="IAddress.cs" />
     <Compile Include="InfoResponse.cs" />
     <Compile Include="KeyPhrase.cs" />
     <Compile Include="LanguageIdentificationResponse.cs" />
@@ -87,6 +91,7 @@
     <Compile Include="TopicsResponse.cs" />
     <Compile Include="TranslateNamesResponse.cs" />
     <Compile Include="TransliterationResponse.cs" />
+    <Compile Include="UnfieldedAddress.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

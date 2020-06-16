@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class translated_name
+    class address_similarity
     {
         /// <summary>
-        /// Example code to call Rosette API to translate a name from language to another.
+        /// Example code to call Rosette API to get match score (similarity) for two addresses.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,18 +22,17 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //translated_name yourapikeyhere
+            //address_similarity yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            }
+            } 
             try
             {
-                CAPI TranslatedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string translated_name_data = @"معمر محمد أبو منيار القذاف";
+                CAPI cAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 //The results of the API call will come back in the form of a Dictionary
-                TranslateNamesResponse response = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", null, null, "PERSON");
+                AddressSimilarityResponse response = cAPI.AddressSimilarity(new FieldedAddress(houseNumber:"1600", road:"Pennsylvania Ave N.W.", city:"Washington", state:"DC", postCode: "20500"), new UnfieldedAddress(address:"160 Pennsylvana Avenue, Washington, D.C., 20500"));
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

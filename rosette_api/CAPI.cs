@@ -347,6 +347,42 @@ namespace rosette_api {
             _urlParameters.Clear();
         }
 
+        /// <summary>AddressSimilarity
+        /// <para>
+        /// (POST)AddressSimilarity Endpoint: Returns the result of matching 2 addresses.
+        /// </para>
+        /// </summary>
+        /// <param name="a1">IAddress: First address to be matched</param>
+        /// <param name="a2">IAddress: Second address to be matched</param>
+        /// <returns>AddressSimilarityResponse containing the results of the request.
+        /// </returns>
+        public AddressSimilarityResponse AddressSimilarity(IAddress a1, IAddress a2)
+        {
+            _uri = "address-similarity";
+
+            Dictionary<object, object> dict = new Dictionary<object, object>(){
+                { "address1", a1},
+                { "address2", a2}
+            };
+
+            return GetResponse<AddressSimilarityResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+        
+        /// <summary>AddressSimilarity
+        /// <para>
+        /// (POST)AddressSimilarity Endpoint: Returns the result of matching 2 addresses.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>AddressSimilarityResponse containing the results of the request.
+        /// </returns>
+        public AddressSimilarityResponse AddressSimilarity(Dictionary<object, object> dict) {
+            _uri = "address-similarity";
+            return GetResponse<AddressSimilarityResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+
+
         /// <summary>Categories
         /// <para>
         /// (POST)Categories Endpoint: Returns an ordered list of categories identified in the input. The categories are Tier 1 contextual categories defined in the QAG Taxonomy.
