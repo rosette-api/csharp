@@ -1,4 +1,9 @@
-[![Build Status](https://travis-ci.org/rosette-api/csharp.svg?branch=master)](https://travis-ci.org/rosette-api/csharp) [![NuGet version](https://badge.fury.io/nu/rosette_api.svg)](https://badge.fury.io/nu/rosette_api)
+<a href="https://www.rosette.com"><img src="https://s3.amazonaws.com/styleguide.basistech.com/logos/rosette-logo.png" width="181" height="47" /></a>
+
+---
+
+[![Build Status](https://travis-ci.org/rosette-api/csharp.svg?branch=master)](https://travis-ci.org/rosette-api/csharp)
+[![NuGet version](https://badge.fury.io/nu/rosette_api.svg)](https://badge.fury.io/nu/rosette_api)
 
 ## Rosette API
 The Rosette Text Analytics Platform uses natural language processing, statistical modeling, and machine learning to
