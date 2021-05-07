@@ -1,35 +1,80 @@
-.Net(C#) Examples
-=============================
-
-## Endpoint Examples ##
+## Endpoint Examples
 These examples are scripts that can be run independently to demonstrate the Rosette API functionality.
 
 Each example file demonstrates one of the capabilities of the Rosette Platform. Each example, when run, prints its output to the console.
 
-Here are some methods for running the examples.  Each example will also accept an optional `--url` parameter for
-overriding the default URL.
+Each example will also accept an optional, alternate url parameter for overriding the default URL.
 
 A note on prerequisites.  Rosette API only supports TLS 1.2 so ensure your toolchain also supports it.
 
+Here are some methods for running the examples.
 
-### Docker Mono image
-- install Docker per your OS
-- cd to the docker directory under the examples
-- `[sudo] docker build -t basistech/mono:1.1 .`
-- cd to the examples directory
-- Run the example as `[sudo] docker run -e FILENAME=_example_.cs -e API_KEY=_your_api_key_ -v "full-path-to-examples-source:/source" basistech/mono:1.1`. This will compile and run the example using a Mono environment.  If you would like to run against an alternate URL, add `-e ALT_URL=_alternate_url_` before the `-v`.
+#### Latest Version on NuGet with Docker
+- Clone the repository.
+  ```
+  git clone git@github.com:rosette-api/csharp.git
+  cd csharp
+  ```
+- Launch a `mono` container.
+  ```
+  docker run -it -v $(pwd):/csharp mono:6
+  ```
+- Install the package from NuGet
+  ```
+  cd /csharp
+  nuget install rosette_api
+  ``` 
+- Copy the runtime binaries to the examples directory.
+  ```
+  cp Newtonsoft.Json.10.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp rosette_api.1.14.4/lib/net45/rosette_api.dll rosette_apiExamples/.
+  ```
+- Compile the example you'd like to execute.  E.g. language.cs
+  ```
+  cd rosette_apiExamples
+  csc language.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll
+  ```
+- Run the compiled example against Rosette Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
+  ```
+  mono language.exe $API_KEY
+  ```
+
+#### Latest Source with Docker
+- Clone the repository.
+  ```
+  git clone git@github.com:rosette-api/csharp.git
+  cd csharp
+  ```
+- Launch a `mono` container.
+  ```
+  docker run -it -v $(pwd):/csharp mono:6
+  ```
+- Build the package from source.
+  ```
+  cd /csharp
+  nuget restore rosette_api.sln
+  xbuild /p:Configuration=Release rosette_api.sln
+  ```
+- _Optional:_ Run the Unit Tests.
+  ```
+  mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
+  ```
+- Copy the runtime binaries to the examples directory.
+  ```
+  cp packages/Newtonsoft.Json.10.0.3/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp rosette_api/bin/Release/rosette_api.dll rosette_apiExamples/.
+  ```
+- Compile the example you'd like to execute.  E.g. language.cs
+  ```
+  cd rosette_apiExamples
+  csc language.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll
+  ```
+- Run the compiled example against Rosette Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
+  ```
+  mono language.exe $API_KEY
+  ```
 
 ### Visual Studio
-- If you are using Visual Studio, you can use the Nuget Package Manager.  Search for rosette_api in the Online Packages and install.
-- If you are using Nuget Command line: `nuget install rosette_api`
+- If you are using Visual Studio, you can use the Nuget Package Manager.  Search for `rosette_api` in the Online Packages and install.
 
 You can now run your desired endpoint file to see it in action.
-
-### Command line
-- `nuget install rosette_api`
-- copy the rosette_api.lib to the same directory as your examples (found in rosette_api.*/)
-- Compile the file using `csc _endpoint_.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll`. This will output an .exe file with the _endpoint_ name.
-
-### Running the compiled example
-- Run the file using `_endpoint_.exe your_api_key [alternate_url]`
-

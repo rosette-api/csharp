@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>rosette_api</id>
-    <version>1.14.4</version>
+    <version>1.14.5</version>
     <description>.Net (C#) Binding for Rosette API</description>
     <authors>basistech</authors>
     <owners>Basis Technology Corp.</owners>
