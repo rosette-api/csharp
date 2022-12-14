@@ -1379,7 +1379,7 @@ namespace rosette_api {
                 }
             }
 
-            if (genre == null) {
+            if (genre != null) {
                 Console.WriteLine("warn: The genre parameter is deprecated and will be removed in a future release.");
             }
 
