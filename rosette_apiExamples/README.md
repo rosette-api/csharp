@@ -56,9 +56,16 @@ Here are some methods for running the examples.
   xbuild /p:Configuration=Release rosette_api.sln
   ```
 - _Optional:_ Run the Unit Tests.
-  ```
-  mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
-  ```
+  - First, fix the certificate store so we can download wikidata.
+    ```
+    sed -i 's/^mozilla\/DST_Root_CA_X3.crt$/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
+    update-ca-certificates
+    cert-sync /etc/ssl/certs/ca-certificates.crt
+    ```
+  - Then run the tests.
+    ```
+    mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
+    ```
 - Copy the runtime binaries to the examples directory.
   ```
   cp packages/Newtonsoft.Json.10.0.3/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
