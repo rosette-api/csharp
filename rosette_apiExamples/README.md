@@ -53,7 +53,7 @@ Here are some methods for running the examples.
   ```
   cd /csharp
   nuget restore rosette_api.sln
-  xbuild /p:Configuration=Release rosette_api.sln
+  msbuild /p:Configuration=Release rosette_api.sln
   ```
 - _Optional:_ Run the Unit Tests.
   - First, fix the certificate store so we can download wikidata.

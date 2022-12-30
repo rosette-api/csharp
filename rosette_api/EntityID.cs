@@ -34,12 +34,12 @@ namespace rosette_api
         /// Creates a link to the Wikipedia article for this EntityID's ID if it is a QID.  If the ID is not a QID, this method returns null.
         /// </summary>
         /// <returns>The valid Wikipedia link or null.</returns>
-        public string GetWikipedaURL()
+        public string GetWikipediaURL()
         {
             string siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
             try
             {
-                string jsonStr =  MakeRequest(siteLink).Result;
+                string jsonStr = MakeRequest(siteLink).Result;
                 int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
                 string title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
                 title = title.Replace(" ", "_");
@@ -51,6 +51,16 @@ namespace rosette_api
                 Console.WriteLine(e.Message);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Creates a link to the Wikipedia article for this EntityID's ID if it is a QID.  If the ID is not a QID, this method returns null.
+        /// </summary>
+        /// <returns>The valid Wikipedia link or null.</returns>
+        [Obsolete("GetWikipedaURL is deprecated, please use GetWikipediaURL instead.")]
+        public string GetWikipedaURL()
+        {
+            return GetWikipediaURL();
         }
 
         private async Task<string> MakeRequest(string requestUrl)
