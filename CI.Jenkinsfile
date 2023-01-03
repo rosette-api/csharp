@@ -21,13 +21,13 @@ node ("docker-light") {
                        mono:6 \
                        bash -c \"apt-get update && \
                              apt-get install unzip default-jre -y && \
-                             sed -i 's,^mozilla/DST_Root_CA_X3.crt$,!mozilla/DST_Root_CA_X3.crt,' /etc/ca-certificates.conf && \
+                             sed -i 's,^mozilla/DST_Root_CA_X3.crt\$,!mozilla/DST_Root_CA_X3.crt,' /etc/ca-certificates.conf && \
                              update-ca-certificates && \
                              cert-sync /etc/ssl/certs/ca-certificates.crt && \
                              mkdir -p /opt/sonar-scanner && \
                              pushd /opt/sonar-scanner && \
                              sonar_version=5.9.2.58699 && \
-                             curl --silent --output sonar-scanner.zip --location https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/${sonar_version}/sonar-scanner-msbuild-${sonar_version}-net46.zip && \
+                             curl --silent --output sonar-scanner.zip --location https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/\${sonar_version}/sonar-scanner-msbuild-\${sonar_version}-net46.zip && \
                              unzip sonar-scanner.zip && \
                              chmod a+x /opt/sonar-scanner/sonar-scanner-*/bin/* && \
                              pushd /source && \
@@ -40,7 +40,7 @@ node ("docker-light") {
                              ///opt/maven-basis/bin/mvn --batch-mode clean install sonar:sonar $mySonarOpts\""
                              //pushd /tmp
                              //dotcover_version=2022.3.1
-                             //curl --silent --location --output dotcover.tar.gz https://download.jetbrains.com/resharper/dotUltimate.${dotcover_version}/JetBrains.dotCover.CommandLineTools.linux-x64.${dotcover_version}.tar.gz
+                             //curl --silent --location --output dotcover.tar.gz https://download.jetbrains.com/resharper/dotUltimate.\${dotcover_version}/JetBrains.dotCover.CommandLineTools.linux-x64.\${dotcover_version}.tar.gz
                              //tar xzf dotcover.tar.gz
             }
         }
