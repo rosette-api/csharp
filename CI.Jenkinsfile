@@ -34,7 +34,7 @@ node ("docker-light") {
                              mono /opt/sonar-scanner/SonarScanner.MSBuild.exe begin /k:\"rosette-api-csharp-binding\" /d:sonar.login=\"${env.SONAR_AUTH_TOKEN}\" /d:sonar.host.url=\"${env.SONAR_HOST_URL}\" && \
                              nuget restore rosette_api.sln && \
                              msbuild /p:Configuration=Release rosette_api.sln /t:Rebuild && \
-                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe end /d:sonar.login="${env.SONAR_AUTH_TOKEN}" && \
+                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe end /d:sonar.login=\"${env.SONAR_AUTH_TOKEN}\" && \
                              mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll\""
                              // TODO:  Finish coverage data gathering for Sonar.
                              ///opt/maven-basis/bin/mvn --batch-mode clean install sonar:sonar $mySonarOpts\""
