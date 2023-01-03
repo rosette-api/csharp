@@ -21,7 +21,7 @@ node ("docker-light") {
                        mono:6 \
                        bash -c \"apt-get update && \
                              apt-get install unzip default-jre -y && \
-                             sed -i 's/^mozilla\/DST_Root_CA_X3.crt$/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf && \
+                             sed -i 's,^mozilla/DST_Root_CA_X3.crt$,!mozilla/DST_Root_CA_X3.crt,' /etc/ca-certificates.conf && \
                              update-ca-certificates && \
                              cert-sync /etc/ssl/certs/ca-certificates.crt && \
                              mkdir -p /opt/sonar-scanner && \
