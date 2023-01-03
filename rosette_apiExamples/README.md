@@ -57,6 +57,7 @@ Here are some methods for running the examples.
   ```
 - _Optional:_ Run the Unit Tests.
   - First, fix the certificate store so we can download wikidata.
+    Per:  https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
     ```
     sed -i 's/^mozilla\/DST_Root_CA_X3.crt$/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
     update-ca-certificates

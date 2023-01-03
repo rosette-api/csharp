@@ -1,9 +1,0 @@
-language: csharp
-install:
-- nuget restore rosette_api.sln
-script:
-- xbuild /p:Configuration=Release rosette_api.sln
-- mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
-notifications:
-  slack:
-    secure: i8q0FGroh4HVOLtMHPvPSupJ9s7LQ7WDbI5VNBBH6C+wpmk3H1kmlAy7ZjlLXtc99QBKDu69gphQksZSzjvmvHUXiwt23faBsVKqOSb+QfdEajSNEEl8Ujkw38osd/tJdwPbABfM/RKKUx9E3NhK9WfsNUWZEDMnIdC4WoR9WvB8WltwKGwCpruQePp3MO8IltIfkajUTsabu5ezodjD1X6qojfD777g8ivLwJP/x9koIGIdfm2d1SKA+ywdgaZOZeAfCSe6ETLCfU6Wa4DHxe3COBwOM5fJ6C/aHPQn3tpbsfLGG5rsb+fNuyeMuhJUZi0/XOX3w4O3rQ502bvG1cSrfotbhldkeQKqIPW1vqpsF82/UFliKpGVAC0Y1h2DQ3YZWHEUqfsqPlZ3QuFrekesic3qUgO8TVTSLyzmhYbc8QHOQs8iXbbm3qoT+yTdkDvILubhXemZC8RXohsjbBPkRAMc8zcyR+gLN8mUrR6/gUzJ7JtMD9hoM+HLS7Vj0+iFJYwLNzrEFMebe54+fDcv/cKRwYQSI+UdABG2Dm31TK94NT6uCvY6rFC3PSU1at+ci23PgF41BzFLDK+9AWgsTgSspPUiyoMtI25BwBd0ryUUhqepKF9WJvX9jsJBopMd9Z60wVuIbUeRnOL4NMalNfu1FpcMH/s0K9c3+3M=
