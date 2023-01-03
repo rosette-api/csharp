@@ -9,10 +9,11 @@ node ("docker-light") {
         }
         stage("Build & Test") {
             withSonarQubeEnv {
-                 if ("${env.CHANGE_BRANCH}" != "null") {
-                     mySonarOpts="$mySonarOpts -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.base=${env.CHANGE_TARGET} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH}"
-                }
-                echo("Sonar Options are: $mySonarOpts")
+                // TODO:  Remove if we branch references work, otherwise, pass these to the exe somehow.
+                //if ("${env.CHANGE_BRANCH}" != "null") {
+                //     mySonarOpts="$mySonarOpts -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.base=${env.CHANGE_TARGET} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH}"
+                //}
+                //echo("Sonar Options are: $mySonarOpts")
                 // https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
                 // Reference for sed command and cert sync steps.
                 sh "docker run --rm \
