@@ -35,9 +35,9 @@ namespace rosette_api
             this.Events = events;
         }
         /// <summary>
-        /// Constructs a Categories Response from a list of RosetteCategories, a collection of response headers, and content in a dictionary or content as JSON
+        /// Constructs a Event Response from a list of RosetteEvents, a collection of response headers, and content in a dictionary or content as JSON
         /// </summary>
-        /// <param name="categories">The list of RosetteCategories</param>
+        /// <param name="events">The list of RosetteEvent/param>
         /// <param name="responseHeaders">The response headers from the API</param>
         /// <param name="content">The content of the response (i.e. the categories list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
