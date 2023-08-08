@@ -476,6 +476,52 @@ namespace rosette_api {
             return Process<EntitiesResponse>(file);
         }
 
+        /// <summary>Event
+        /// <para>
+        /// (POST)Event Endpoint: Returns each event extracted from the input.
+        /// </para>
+        /// </summary>
+        /// <param name="content">(string, optional): Input to process (JSON string or base64 encoding of non-JSON string)</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="contentType">(string, optional): not used at time</param>
+        /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
+        /// <param name="genre">(string, optional): genre to categorize the input data</param>
+        /// <returns>EventsResponse containing the results of the request.
+        /// </returns>
+        public EventsResponse Event(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
+            _uri = "events";
+            return Process<EventsResponse>(content, language, contentType, contentUri, genre);
+        }
+
+        /// <summary>Event
+        /// <para>
+        /// (POST)Event Endpoint: Returns each event extracted from the input.
+        /// </para>
+        /// </summary>
+        /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
+        /// <returns>EventsResponse containing the results of the request.
+        /// </returns>
+        public EventsResponse Event(Dictionary<object, object> dict)
+        {
+            _uri = "events";
+            return GetResponse<EventsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
+        }
+
+        /// <summary>Event
+        /// <para>
+        /// (POST)Event Endpoint: Returns each event extracted from the input.
+        /// </para>
+        /// </summary>
+        /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
+        /// <returns>EntitiesResponse containing the results of the request.
+        /// </returns>
+        public EventsResponse Event(RosetteFile file)
+        {
+            _uri = "events";
+            return Process<EventsResponse>(file);
+        }
+
         /// <summary>Info
         /// <para>
         /// (GET)Info Endpoint: Response is a JSON string with Rosette API information including buildNumber, name, version, and buildTime.
