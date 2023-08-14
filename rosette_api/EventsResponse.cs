@@ -8,17 +8,28 @@ using Newtonsoft.Json.Linq;
 
 namespace rosette_api
 {
+    /// <summary>
+    /// A class for representing responses from the API when the Events (/events) endpoint has been called
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class EventsResponse : RosetteResponse
 	{
-
+        /// <summary>
+        /// Gets or sets the collection of identified events
+        /// </summary>
         [JsonProperty(PropertyName = eventsKey)]
         public List<RosetteEvent> Events { get; set; }
 
         private const String eventTypeKey = "eventType";
         private const String mentionsKey = "mentions";
         private const String confidenceKey = "confidence";
+        private const String workspaceIdKey = "workspaceId";
         private const String eventsKey = "events";
+
+        /// <summary>
+        /// Creates an EntitiesResponse from the API's raw output
+        /// </summary>
+        /// <param name="apiResult">The API's raw output</param>
         public EventsResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
@@ -30,16 +41,18 @@ namespace rosette_api
                 JArray mentionsArr = result.Properties().Where((p) => String.Equals(p.Name, mentionsKey, StringComparison.OrdinalIgnoreCase)).Any() ? result[mentionsKey] as JArray : null;
                 List<EventMention> mentions = mentionsArr != null ? mentionsArr.ToObject<List<EventMention>>() : null;
                 Nullable<double> confidence = result.Properties().Where((p) => String.Equals(p.Name, confidenceKey)).Any() ? result[confidenceKey].ToObject<double?>() : null;
-                events.Add(new RosetteEvent(eventType, mentions, confidence));
+                String workspaceId = result.Properties().Where<JProperty>((p) => p.Name == workspaceIdKey).Any() ? result[workspaceIdKey].ToString() : null;
+                events.Add(new RosetteEvent(eventType, mentions, confidence, workspaceId));
             }
             this.Events = events;
         }
+        
         /// <summary>
-        /// Constructs a Event Response from a list of RosetteEvents, a collection of response headers, and content in a dictionary or content as JSON
+        /// Constructs a Event Response from a list of RosetteEvents, a collection of response headers, and the response content in dictionary/JSON form
         /// </summary>
-        /// <param name="events">The list of RosetteEvent/param>
+        /// <param name="events">The list of events/param>
         /// <param name="responseHeaders">The response headers from the API</param>
-        /// <param name="content">The content of the response (i.e. the categories list)</param>
+        /// <param name="content">The content of the response (i.e. the event list)</param>
         /// <param name="contentAsJson">The content as a JSON string</param>
         public EventsResponse(List<RosetteEvent> events, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, String contentAsJson)
             : base(responseHeaders, content, contentAsJson)
