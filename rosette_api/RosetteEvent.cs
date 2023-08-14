@@ -6,38 +6,50 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace rosette_api
 {
+    /// <summary>
+    /// A class for representing an identified event and its properties
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RosetteEvent : IEquatable<RosetteEvent>
     {
 
         /// <summary>
-        /// Gets or sets the 
+        /// Gets or sets the event type of the extracted event
         /// </summary>
         [JsonProperty("eventType")]
         public String EventType { get; set; }
 
         /// <summary>
-        /// Gets or sets the
+        /// Gets or sets the list of mentions of the extracted event
         /// </summary>
         [JsonProperty("mentions")]
         public List<EventMention> Mentions { get; set; }
 
         /// <summary>
-        /// Gets or sets the confidence of the extracted entity
+        /// Gets or sets the confidence of the extracted event
         /// </summary>
         [JsonProperty("confidence")]
         public Nullable<double> Confidence { get; set; }
 
         /// <summary>
-        /// Creates a Rosette Event from a category label and confidence
+        /// Gets or sets the workspace ID of the extracted event
         /// </summary>
-        /// <param name="confidence">The confidence this was the correct event</param>
-        public RosetteEvent(String eventType, List<EventMention> mentions, Nullable<double> confidence)
+        [JsonProperty("workspaceId")]
+        public String workspaceId { get; set; }
+
+        /// <summary>
+        /// Creates an event
+        /// </summary>
+        /// <param name="eventType">The description of the event type</param>
+        /// <param name="mentions">The list of event mentions</param>
+        /// <param name="id">The confidence this was a correctly labeled event</param>
+        /// <param name="workspaceId">The specific workspace ID that was used for analysis</param>
+        public RosetteEvent(String eventType, List<EventMention> mentions, Nullable<double> confidence, string workspaceId)
         {
             this.EventType = eventType;
             this.Mentions = mentions;
             this.Confidence = confidence;
-
+            this.workspaceId = workspaceId;
         }
 
         /// <summary>
@@ -49,7 +61,8 @@ namespace rosette_api
         {
             return string.Equals(EventType, other.EventType)
                 && Mentions.SequenceEqual(other.Mentions)
-                && Confidence.Equals(other.Confidence);
+                && Confidence.Equals(other.Confidence)
+                && string.Equals(workspaceId, other.workspaceId);
         }
 
         /// <summary>
@@ -76,6 +89,7 @@ namespace rosette_api
                 var hashCode = (EventType != null ? EventType.GetHashCode() : 0);
                 hashCode = (hashCode * 401) ^ (Mentions != null ? Mentions.GetHashCode() : 0);
                 hashCode = (hashCode * 401) ^ (Confidence != null ? Confidence.GetHashCode() : 0);
+                hashCode = (hashCode * 401) ^ (workspaceId != null ? workspaceId.GetHashCode() : 0);
                 return hashCode;
             }
         }
