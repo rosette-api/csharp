@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace rosette_api {
+namespace rosette_api
+{
     /// <summary>
     /// Enum to provide feature options for Morphology
     /// </summary>
-    public enum MorphologyFeature {
+    public enum MorphologyFeature
+    {
         /// <summary>provide complete morphology</summary>
         complete,
         /// <summary>provide lemmas</summary>
@@ -38,7 +40,8 @@ namespace rosette_api {
     /// See the License for the specific language governing permissions and limitations under the License.
     /// </para>
     /// </summary>
-    public class CAPI {
+    public class CAPI
+    {
         private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
 
         /// <summary>
@@ -105,10 +108,12 @@ namespace rosette_api {
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param>
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
-        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null) {
+        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
+        {
             UserKey = user_key;
             URIstring = uristring ?? "https://api.rosette.com/rest/v1/";
-            if (!URIstring.EndsWith("/")) {
+            if (!URIstring.EndsWith("/"))
+            {
                 URIstring = URIstring + "/";
             }
             MaxRetry = (maxRetry == 0) ? 1 : maxRetry;
@@ -143,15 +148,18 @@ namespace rosette_api {
         /// Version: Internal Server Version number.
         /// </para>
         /// </summary>
-        public static string Version {
+        public static string Version
+        {
             get { return typeof(CAPI).Assembly.GetName().Version.ToString(); }
         }
         /// <summary>
         /// UserAgent returns the string that will be used for User-Agent
         /// </summary>
         /// <returns>string User-Agent</returns>
-        public string UserAgent {
-            get {
+        public string UserAgent
+        {
+            get
+            {
                 return string.Format("RosetteAPICsharp/{0}/{1}", Version, Environment.Version.ToString());
             }
         }
@@ -177,8 +185,9 @@ namespace rosette_api {
         /// client with some added headers that are required by the Rosette API.  For the default internal client
         /// it will return the current instance, which is maintained at the class level.
         /// </summary>
-        public HttpClient Client {
-            get { return _externalHttpClient ?? _httpClient;  }
+        public HttpClient Client
+        {
+            get { return _externalHttpClient ?? _httpClient; }
         }
 
         /// <summary>Concurrency
@@ -192,7 +201,8 @@ namespace rosette_api {
             private set
             {
                 _concurrentConnections = value;
-                if (_httpClient != null && _concurrentConnections != ServicePointManager.DefaultConnectionLimit) {
+                if (_httpClient != null && _concurrentConnections != ServicePointManager.DefaultConnectionLimit)
+                {
                     ServicePointManager.DefaultConnectionLimit = _concurrentConnections;
                     SetupClient(true);
                 }
@@ -204,15 +214,20 @@ namespace rosette_api {
         /// Debug turns debugging on/off for the http client
         /// </para>
         /// </summary>
-        public bool Debug {
+        public bool Debug
+        {
             get { return _debug; }
-            set {
+            set
+            {
                 _debug = value;
-                if (_debug) {
+                if (_debug)
+                {
                     AddRequestHeader("X-RosetteAPI-Devel", "true");
                 }
-                else {
-                    if (Client.DefaultRequestHeaders.Contains("X-RosetteAPI-Devel")) {
+                else
+                {
+                    if (Client.DefaultRequestHeaders.Contains("X-RosetteAPI-Devel"))
+                    {
                         Client.DefaultRequestHeaders.Remove("X-RosetteAPI-Devel");
                     }
                 }
@@ -224,17 +239,22 @@ namespace rosette_api {
         /// Timeout is the http client timespan in milliseconds
         /// </para>
         /// </summary>
-        public int Timeout {
+        public int Timeout
+        {
             get { return _timeout; }
-            set {
-                try {
-                    if (value != 0 && Client.Timeout != TimeSpan.FromMilliseconds(value)) {
+            set
+            {
+                try
+                {
+                    if (value != 0 && Client.Timeout != TimeSpan.FromMilliseconds(value))
+                    {
                         Client.Timeout = TimeSpan.FromMilliseconds(value);
                     }
                     _timeout = value;
 
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     throw new RosetteException("Invalid timeout, " + ex.Message);
                 }
             }
@@ -245,8 +265,10 @@ namespace rosette_api {
         /// </summary>
         /// <param name="name">string option name</param>
         /// <param name="value">object value</param>
-        public void SetOption(string name, object value) {
-            if (_options.ContainsKey(name) && value == null) {
+        public void SetOption(string name, object value)
+        {
+            if (_options.ContainsKey(name) && value == null)
+            {
                 _options.Remove(name);
                 return;
             }
@@ -259,11 +281,14 @@ namespace rosette_api {
         /// </summary>
         /// <param name="name">string option name</param>
         /// <returns>object value if exists</returns>
-        public object GetOption(string name) {
-            if (_options.ContainsKey(name)) {
+        public object GetOption(string name)
+        {
+            if (_options.ContainsKey(name))
+            {
                 return _options[name];
             }
-            else {
+            else
+            {
                 return null;
             }
         }
@@ -271,7 +296,8 @@ namespace rosette_api {
         /// <summary>
         /// Clears all of the options
         /// </summary>
-        public void ClearOptions() {
+        public void ClearOptions()
+        {
             _options.Clear();
         }
 
@@ -280,11 +306,14 @@ namespace rosette_api {
         /// </summary>
         /// <param name="key">string custom header key</param>
         /// <param name="value">custom header value</param>
-        public void SetCustomHeaders(string key, string value) {
-            if (!key.StartsWith("X-RosetteAPI-")) {
+        public void SetCustomHeaders(string key, string value)
+        {
+            if (!key.StartsWith("X-RosetteAPI-"))
+            {
                 throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\"");
             }
-            if (_customHeaders.ContainsKey(key) && value == null) {
+            if (_customHeaders.ContainsKey(key) && value == null)
+            {
                 _customHeaders.Remove(key);
                 Client.DefaultRequestHeaders.Remove(key);
                 return;
@@ -297,19 +326,23 @@ namespace rosette_api {
         /// Gets the custom headers
         /// </summary>
         /// <returns>dictionary of custom headers</returns>
-        public Dictionary<string, string> GetCustomHeaders() {
+        public Dictionary<string, string> GetCustomHeaders()
+        {
             return _customHeaders;
         }
 
         /// <summary>
         /// Clears all of the custom headers
         /// </summary>
-        public void ClearCustomHeaders() {
+        public void ClearCustomHeaders()
+        {
             _customHeaders.Clear();
         }
 
-        private Dictionary<object, object> AppendOptions(Dictionary<object, object> dict) {
-            if (_options.Count > 0) {
+        private Dictionary<object, object> AppendOptions(Dictionary<object, object> dict)
+        {
+            if (_options.Count > 0)
+            {
                 dict["options"] = _options;
             }
             return dict;
@@ -320,7 +353,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="key">Parameter name</param>
         /// <param name="value">Parameter value</param>
-        public void SetUrlParameter(string key, string value) {
+        public void SetUrlParameter(string key, string value)
+        {
             _urlParameters.Add(key, value);
         }
 
@@ -328,7 +362,8 @@ namespace rosette_api {
         /// Removes the values for a given Url parameter key
         /// </summary>
         /// <param name="key">Name of parameter</param>
-        public void RemoveUrlParameter(string key) {
+        public void RemoveUrlParameter(string key)
+        {
             _urlParameters.Remove(key);
         }
 
@@ -336,14 +371,16 @@ namespace rosette_api {
         /// Returns the URL Parameters
         /// </summary>
         /// <returns>NameValueCollection</returns>
-        public NameValueCollection GetUrlParameters() {
+        public NameValueCollection GetUrlParameters()
+        {
             return _urlParameters;
         }
 
         /// <summary>
         /// Removes all URL parameters
         /// </summary>
-        public void ClearUrlParameters() {
+        public void ClearUrlParameters()
+        {
             _urlParameters.Clear();
         }
 
@@ -367,7 +404,7 @@ namespace rosette_api {
 
             return GetResponse<AddressSimilarityResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
-        
+
         /// <summary>AddressSimilarity
         /// <para>
         /// (POST)AddressSimilarity Endpoint: Returns the result of matching 2 addresses.
@@ -376,7 +413,8 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>AddressSimilarityResponse containing the results of the request.
         /// </returns>
-        public AddressSimilarityResponse AddressSimilarity(Dictionary<object, object> dict) {
+        public AddressSimilarityResponse AddressSimilarity(Dictionary<object, object> dict)
+        {
             _uri = "address-similarity";
             return GetResponse<AddressSimilarityResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -426,7 +464,8 @@ namespace rosette_api {
         /// <returns>RosetteResponse containing the results of the request.
         /// The response is the contextual categories identified in the input.
         /// </returns>
-        public CategoriesResponse Categories(RosetteFile file) {
+        public CategoriesResponse Categories(RosetteFile file)
+        {
             _uri = "categories";
             return Process<CategoriesResponse>(file);
         }
@@ -471,7 +510,8 @@ namespace rosette_api {
         /// <param name="file">RosetteFile: RosetteFile Object containing the file (and possibly options) to upload</param>
         /// <returns>EntitiesResponse containing the results of the request.
         /// </returns>
-        public EntitiesResponse Entity(RosetteFile file) {
+        public EntitiesResponse Entity(RosetteFile file)
+        {
             _uri = "entities";
             return Process<EntitiesResponse>(file);
         }
@@ -577,7 +617,8 @@ namespace rosette_api {
         /// <returns>LanguageIdentificationResponse containing the results of the request.
         /// The response is an ordered list of detected languages.
         /// </returns>
-        public LanguageIdentificationResponse Language(RosetteFile file) {
+        public LanguageIdentificationResponse Language(RosetteFile file)
+        {
             _uri = "language";
             return Process<LanguageIdentificationResponse>(file);
         }
@@ -631,7 +672,8 @@ namespace rosette_api {
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
         /// </returns>
-        public MorphologyResponse Morphology(RosetteFile file, MorphologyFeature feature = MorphologyFeature.complete) {
+        public MorphologyResponse Morphology(RosetteFile file, MorphologyFeature feature = MorphologyFeature.complete)
+        {
             _uri = "morphology/" + feature.MorphologyEndpoint();
             return Process<MorphologyResponse>(file);
         }
@@ -680,7 +722,8 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>NameSimilarityResponse containing the results of the request.
         /// </returns>
-        public NameSimilarityResponse NameSimilarity(Dictionary<object, object> dict) {
+        public NameSimilarityResponse NameSimilarity(Dictionary<object, object> dict)
+        {
             _uri = "name-similarity";
             return GetResponse<NameSimilarityResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -694,7 +737,7 @@ namespace rosette_api {
         /// <param name="threshold">float: Threshold to be used for cluster sizing. Can be null for default value.</param>
         /// <returns>NameDeduplicationResponse containing the results of the request.
         /// </returns>
-        public NameDeduplicationResponse NameDeduplication(List<Name> names, Nullable<float> threshold=null)
+        public NameDeduplicationResponse NameDeduplication(List<Name> names, Nullable<float> threshold = null)
         {
             _uri = "name-deduplication";
 
@@ -714,7 +757,8 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>NameDeduplicationResponse containing the results of the request.
         /// </returns>
-        public NameDeduplicationResponse NameDeduplication(Dictionary<object, object> dict) {
+        public NameDeduplicationResponse NameDeduplication(Dictionary<object, object> dict)
+        {
             _uri = "name-deduplication";
             return GetResponse<NameDeduplicationResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -749,7 +793,8 @@ namespace rosette_api {
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>TransliterationResponse containing the results of the request.
         /// </returns>
-        public TransliterationResponse Transliteration(Dictionary<object, object> dict) {
+        public TransliterationResponse Transliteration(Dictionary<object, object> dict)
+        {
             _uri = "transliteration";
             return GetResponse<TransliterationResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -768,7 +813,8 @@ namespace rosette_api {
         /// The reponse contains a message and time.
         /// </returns>
 
-        public PingResponse Ping() {
+        public PingResponse Ping()
+        {
             _uri = "ping";
             return GetResponse<PingResponse>();
         }
@@ -914,7 +960,8 @@ namespace rosette_api {
         /// <returns>SimilarTermsResponse containing the results of the request.
         /// The response contains a mapping of language to similar terms.
         /// </returns>
-        public SimilarTermsResponse SimilarTerms(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
+        public SimilarTermsResponse SimilarTerms(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
             _uri = "semantics/similar";
             return Process<SimilarTermsResponse>(content, language, contentType, contentUri, genre);
         }
@@ -928,7 +975,8 @@ namespace rosette_api {
         /// <returns>SimilarTermsResponse containing the results of the request.
         /// The response contains a mapping of language to similar terms.
         /// </returns>
-        public SimilarTermsResponse SimilarTerms(Dictionary<object, object> dict) {
+        public SimilarTermsResponse SimilarTerms(Dictionary<object, object> dict)
+        {
             _uri = "semantics/similar";
             return GetResponse<SimilarTermsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -942,7 +990,8 @@ namespace rosette_api {
         /// <returns>SimilarTermsResponse containing the results of the request.
         /// The response contains a mapping of language to similar terms.
         /// </returns>
-        public SimilarTermsResponse SimilarTerms(RosetteFile file) {
+        public SimilarTermsResponse SimilarTerms(RosetteFile file)
+        {
             _uri = "semantics/similar";
             return Process<SimilarTermsResponse>(file);
         }
@@ -1066,7 +1115,8 @@ namespace rosette_api {
         /// locatives [optional] - usually express the locations the action expressed by the relationship took place
         /// temporals [optional] - usually express the time in which the action expressed by the relationship took place
         /// </returns>
-        public RelationshipsResponse Relationships(RosetteFile file) {
+        public RelationshipsResponse Relationships(RosetteFile file)
+        {
             _uri = "relationships";
             return Process<RelationshipsResponse>(file);
         }
@@ -1114,7 +1164,8 @@ namespace rosette_api {
         /// <returns>SentenceTaggingResponse containing the results of the request.
         /// The response contains a list of sentences.
         /// </returns>
-        public SentenceTaggingResponse Sentences(RosetteFile file) {
+        public SentenceTaggingResponse Sentences(RosetteFile file)
+        {
             _uri = "sentences";
             return Process<SentenceTaggingResponse>(file);
         }
@@ -1162,7 +1213,8 @@ namespace rosette_api {
         /// <returns>SentimentResponse containing the results of the request.
         /// The response contains sentiment analysis results.
         /// </returns>
-        public SentimentResponse Sentiment(RosetteFile file) {
+        public SentimentResponse Sentiment(RosetteFile file)
+        {
             _uri = "sentiment";
             return Process<SentimentResponse>(file);
         }
@@ -1195,7 +1247,8 @@ namespace rosette_api {
         /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
-        public TokenizationResponse Tokens(Dictionary<object, object> dict) {
+        public TokenizationResponse Tokens(Dictionary<object, object> dict)
+        {
             _uri = "tokens";
             return GetResponse<TokenizationResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -1209,7 +1262,8 @@ namespace rosette_api {
         /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
-        public TokenizationResponse Tokens(RosetteFile file) {
+        public TokenizationResponse Tokens(RosetteFile file)
+        {
             _uri = "tokens";
             return Process<TokenizationResponse>(file);
         }
@@ -1227,7 +1281,8 @@ namespace rosette_api {
         /// <returns>TopicsResponse containing the results of the request.
         /// The response contains a list of concepts and key phrases.
         /// </returns>
-        public TopicsResponse Topics(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) {
+        public TopicsResponse Topics(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        {
             _uri = "topics";
             return Process<TopicsResponse>(content, language, contentType, contentUri, genre);
         }
@@ -1241,7 +1296,8 @@ namespace rosette_api {
         /// <returns>TopicsResponse containing the results of the request.
         /// The response contains a list of concepts and key phrases.
         /// </returns>
-        public TopicsResponse Topics(Dictionary<object, object> dict) {
+        public TopicsResponse Topics(Dictionary<object, object> dict)
+        {
             _uri = "topics";
             return GetResponse<TopicsResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -1255,7 +1311,8 @@ namespace rosette_api {
         /// <returns>TopicsResponse containing the results of the request.
         /// The response contains a list of concepts and key phrases.
         /// </returns>
-        public TopicsResponse Topics(RosetteFile file) {
+        public TopicsResponse Topics(RosetteFile file)
+        {
             _uri = "topics";
             return Process<TopicsResponse>(file);
         }
@@ -1276,7 +1333,8 @@ namespace rosette_api {
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>TranslateNamesResponse containing the results of the request.
         /// </returns>
-        public TranslateNamesResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null) {
+        public TranslateNamesResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null)
+        {
             _uri = "name-translation";
 
             Dictionary<object, object> dict = new Dictionary<object, object>(){
@@ -1301,7 +1359,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
         /// <returns>TranslateNamesResponse containing the results of the request. </returns>
-        public TranslateNamesResponse NameTranslation(Dictionary<object, object> dict) {
+        public TranslateNamesResponse NameTranslation(Dictionary<object, object> dict)
+        {
             _uri = "name-translation";
             return GetResponse<TranslateNamesResponse>(JsonConvert.SerializeObject(AppendOptions(dict)));
         }
@@ -1311,13 +1370,17 @@ namespace rosette_api {
         /// </summary>
         /// <param name="urlParameters">NameValueCollection</param>
         /// <returns>query string</returns>
-        private string ToQueryString(NameValueCollection urlParameters) {
+        private string ToQueryString(NameValueCollection urlParameters)
+        {
             StringBuilder sb = new StringBuilder("?");
 
             bool first = true;
-            foreach (string key in urlParameters.AllKeys) {
-                foreach (string value in urlParameters.GetValues(key)) {
-                    if (!first) {
+            foreach (string key in urlParameters.AllKeys)
+            {
+                foreach (string value in urlParameters.GetValues(key))
+                {
+                    if (!first)
+                    {
                         sb.Append("&");
                     }
                     sb.AppendFormat("{0}={1}", Uri.EscapeDataString(key), Uri.EscapeDataString(value));
@@ -1336,27 +1399,33 @@ namespace rosette_api {
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>RosetteResponse derivative</returns>
-        private T GetResponse<T>(string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse {
+        private T GetResponse<T>(string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse
+        {
             HttpResponseMessage responseMsg = null;
             string wholeURI = _uri;
-            if (wholeURI.StartsWith("/")) {
+            if (wholeURI.StartsWith("/"))
+            {
                 wholeURI = wholeURI.Substring(1);
             }
-            if (_urlParameters.Count > 0) {
+            if (_urlParameters.Count > 0)
+            {
                 wholeURI = wholeURI + ToQueryString(_urlParameters);
             }
 
-            if (jsonRequest != null) {
+            if (jsonRequest != null)
+            {
                 HttpContent content = new StringContent(jsonRequest);
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await Client.PostAsync(wholeURI, content));
                 responseMsg = task.Result;
             }
-            else if (multiPart != null) {
+            else if (multiPart != null)
+            {
                 Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await Client.PostAsync(wholeURI, multiPart));
                 responseMsg = task.Result;
             }
-            else {
+            else
+            {
                 Task<HttpResponseMessage> task = Task.Run<HttpResponseMessage>(async () => await Client.GetAsync(wholeURI));
                 responseMsg = task.Result;
             }
@@ -1385,7 +1454,8 @@ namespace rosette_api {
             if (response.Headers.ContainsKey(CONCURRENCY_HEADER))
             {
                 int allowedConnections;
-                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out allowedConnections)) {
+                if (int.TryParse(response.Headers[CONCURRENCY_HEADER], out allowedConnections))
+                {
                     Concurrency = allowedConnections;
                 }
             }
@@ -1398,7 +1468,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="file">RosetteFile: File being uploaded to use as a request to the Rosette server.</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
-        private T Process<T>(RosetteFile file) where T : RosetteResponse {
+        private T Process<T>(RosetteFile file) where T : RosetteResponse
+        {
             return GetResponse<T>(null, file.AsMultipart());
         }
 
@@ -1413,19 +1484,25 @@ namespace rosette_api {
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
-        private T Process<T>(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) where T : RosetteResponse {
-            if (content == null) {
-                if (contentUri == null) {
+        private T Process<T>(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) where T : RosetteResponse
+        {
+            if (content == null)
+            {
+                if (contentUri == null)
+                {
                     throw new RosetteException("Must supply one of Content or ContentUri", -3);
                 }
             }
-            else {
-                if (contentUri != null) {
+            else
+            {
+                if (contentUri != null)
+                {
                     throw new RosetteException("Cannot supply both Content and ContentUri", -3);
                 }
             }
 
-            if (genre != null) {
+            if (genre != null)
+            {
                 Console.WriteLine("warn: The genre parameter is deprecated and will be removed in a future release.");
             }
 
@@ -1446,19 +1523,24 @@ namespace rosette_api {
         /// </para>
         /// <param name="forceReset">Forces the http client to be reset</param>
         /// </summary>
-        private void SetupClient(bool forceReset=false) {
+        private void SetupClient(bool forceReset = false)
+        {
 
-            lock (setupLock) {
+            lock (setupLock)
+            {
                 // The only way that Client is null is if the internal httpClient has either been reset or never initialized
-                if (Client == null || forceReset) {
+                if (Client == null || forceReset)
+                {
                     _httpClient =
                         new HttpClient(
-                            new HttpClientHandler {
+                            new HttpClientHandler
+                            {
                                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
                             });
                 }
 
-                if (Client.BaseAddress == null) {
+                if (Client.BaseAddress == null)
+                {
                     Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
                 }
                 Timeout = _timeout;
@@ -1471,20 +1553,25 @@ namespace rosette_api {
                 AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 
                 var acceptHeader = new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json");
-                if (!Client.DefaultRequestHeaders.Accept.Contains(acceptHeader)) {
+                if (!Client.DefaultRequestHeaders.Accept.Contains(acceptHeader))
+                {
                     Client.DefaultRequestHeaders.Accept.Add(acceptHeader);
                 }
 
-                foreach (string encodingType in new List<string>() { "gzip", "deflate" }) {
+                foreach (string encodingType in new List<string>() { "gzip", "deflate" })
+                {
                     var encodingHeader = new System.Net.Http.Headers.StringWithQualityHeaderValue(encodingType);
-                    if (!Client.DefaultRequestHeaders.AcceptEncoding.Contains(encodingHeader)) {
+                    if (!Client.DefaultRequestHeaders.AcceptEncoding.Contains(encodingHeader))
+                    {
                         Client.DefaultRequestHeaders.AcceptEncoding.Add(encodingHeader);
                     }
                 }
 
                 // Custom headers provided by the user
-                if (_customHeaders.Count > 0) {
-                    foreach(KeyValuePair<string, string> entry in _customHeaders) {
+                if (_customHeaders.Count > 0)
+                {
+                    foreach (KeyValuePair<string, string> entry in _customHeaders)
+                    {
                         AddRequestHeader(entry.Key, entry.Value);
                     }
                 }
@@ -1496,7 +1583,8 @@ namespace rosette_api {
         /// </summary>
         /// <param name="name">Name of header</param>
         /// <param name="value">Value of header</param>
-        private void AddRequestHeader(string name, string value) {
+        private void AddRequestHeader(string name, string value)
+        {
             if (!Client.DefaultRequestHeaders.Contains(name))
                 Client.DefaultRequestHeaders.TryAddWithoutValidation(name, value);
         }
@@ -1508,17 +1596,22 @@ namespace rosette_api {
         /// </summary>
         /// <param name="gzip">(byte[]): Data in byte form to decompress</param>
         /// <returns>(byte[]) Decompressed data</returns>
-        private static byte[] Decompress(byte[] gzip) {
+        private static byte[] Decompress(byte[] gzip)
+        {
             // Create a GZIP stream with decompression mode.
             // ... Then create a buffer and write into while reading from the GZIP stream.
-            using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress)) {
+            using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress))
+            {
                 const int size = 4096;
                 byte[] buffer = new byte[size];
-                using (MemoryStream memory = new MemoryStream()) {
+                using (MemoryStream memory = new MemoryStream())
+                {
                     int count = 0;
-                    do {
+                    do
+                    {
                         count = stream.Read(buffer, 0, size);
-                        if (count > 0) {
+                        if (count > 0)
+                        {
                             memory.Write(buffer, 0, count);
                         }
                     }
