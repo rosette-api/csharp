@@ -218,3 +218,6 @@ test.bat
 # Examples
 rosette_apiExamples/*.exe
 rosette_apiExamples/*.dll
+
+# Sonar
+.sonarqube/

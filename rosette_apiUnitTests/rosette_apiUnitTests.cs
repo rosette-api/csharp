@@ -787,22 +787,22 @@ namespace rosette_apiUnitTests {
             EntityID pass = new EntityID("Q1") {
                 ID = "Q1"
             };
-            Assert.AreEqual("https://en.wikipedia.org/wiki/Universe", pass.GetWikipedaURL());
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Universe", pass.GetWikipediaURL());
         }
 
         [Test]
         public void EntityIDTestLinkValidOnSet() {
             EntityID tidAtFirst = new EntityID("T423");
-            Assert.AreEqual(null, tidAtFirst.GetWikipedaURL());
+            Assert.AreEqual(null, tidAtFirst.GetWikipediaURL());
             tidAtFirst.ID = "Q2";
-            Assert.AreEqual("https://en.wikipedia.org/wiki/Earth", tidAtFirst.GetWikipedaURL());
+            Assert.AreEqual("https://en.wikipedia.org/wiki/Earth", tidAtFirst.GetWikipediaURL());
         }
 
         [Test]
         public void EntityIDLinkNullOnSetToNull()
         {
             EntityID eid = new EntityID(null);
-            Assert.AreEqual(null, eid.GetWikipedaURL());
+            Assert.AreEqual(null, eid.GetWikipediaURL());
         }
 
         //------------------------- Language ----------------------------------------
