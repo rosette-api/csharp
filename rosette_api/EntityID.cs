@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.IO;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace rosette_api
 {
@@ -39,6 +40,7 @@ namespace rosette_api
             string siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 string jsonStr =  MakeRequest(siteLink).Result;
                 int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
                 string title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
