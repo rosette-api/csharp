@@ -58,7 +58,11 @@ namespace rosette_api
         {
             try
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                       | SecurityProtocolType.Tls11
+                       | SecurityProtocolType.Tls12
+                       | SecurityProtocolType.Ssl3;
                 using (HttpClient client = new HttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(requestUrl))
                 using (HttpContent content = response.Content) {
