@@ -40,7 +40,6 @@ namespace rosette_api
             string siteLink = ("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + ID + "&sitefilter=enwiki&props=sitelinks&format=json");
             try
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 string jsonStr =  MakeRequest(siteLink).Result;
                 int lengthOfTitle = jsonStr.IndexOf("\"badges\":") - jsonStr.IndexOf("\"title\":") - 11;
                 string title = jsonStr.Substring(jsonStr.IndexOf("\"title\":") + 9, lengthOfTitle);
@@ -59,6 +58,7 @@ namespace rosette_api
         {
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 using (HttpClient client = new HttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(requestUrl))
                 using (HttpContent content = response.Content) {
