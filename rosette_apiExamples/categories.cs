@@ -38,7 +38,7 @@ namespace rosette_apiExamples
 
                 //Rosette API also supports Dictionary inputs
                 //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
-                string categories_url_data = @"https://www.rosette.com/about/";
+                string categories_url_data = @"https://www.babelstreet.com/rosette/";
                 response = CategoriesCAPI.Categories(new Dictionary<object, object>()
                 {
                     {"contentUri", categories_url_data}
