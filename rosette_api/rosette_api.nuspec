@@ -6,8 +6,8 @@
     <description>.Net (C#) Binding for Rosette API</description>
     <authors>basistech</authors>
     <owners>Basis Technology Corp.</owners>
-    <copyright>Copyright 2014-2019 Basis Technology Corp.</copyright>
-    <projectUrl>https://www.rosette.com/</projectUrl>
+    <copyright>Copyright 2014-2023 Basis Technology Corp.</copyright>
+    <projectUrl>https://www.babelstreet.com/rosette</projectUrl>
     <repository type="git" url="https://github.com/rosette-api/csharp" />
     <releaseNotes>https://github.com/rosette-api/csharp/wiki/Release-Notes</releaseNotes>
     <license type="expression">Apache-2.0</license>
