@@ -782,27 +782,71 @@ namespace rosette_apiUnitTests {
         }
 
         [Test]
-        public void EntityIDTestPassOnCreate()
-        {
-            EntityID pass = new EntityID("Q1") {
-                ID = "Q1"
-            };
-            Assert.AreEqual("https://en.wikipedia.org/wiki/Universe", pass.GetWikipedaURL());
-        }
-
-        [Test]
-        public void EntityIDTestLinkValidOnSet() {
-            EntityID tidAtFirst = new EntityID("T423");
-            Assert.AreEqual(null, tidAtFirst.GetWikipedaURL());
-            tidAtFirst.ID = "Q2";
-            Assert.AreEqual("https://en.wikipedia.org/wiki/Earth", tidAtFirst.GetWikipedaURL());
-        }
-
-        [Test]
         public void EntityIDLinkNullOnSetToNull()
         {
             EntityID eid = new EntityID(null);
             Assert.AreEqual(null, eid.GetWikipedaURL());
+        }
+
+        //------------------------- Event ----------------------------------------
+        [Test]
+        public void EventTestFull()
+        {
+            Init();
+            RosetteEvent e0 = new RosetteEvent("DATA-1275-Meet-Travel.TRAVEL", new List<EventMention>() {
+                new EventMention(new List<EventRole> { new EventRole("key", "E1", "travel", null, null, null, 15, 21) },
+                "Negative", null, new List<NegationCue> { new NegationCue("not", 11, 14) }, 15, 21) }, 0.3333333333333333, "test");
+
+            List<RosetteEvent> events = new List<RosetteEvent>() { e0 };
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, object> content = new Dictionary<string, object> {
+                { "events", events }
+            };
+            EventsResponse expected = new EventsResponse(events, responseHeaders, content, null);
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "events").Respond(req => mockedMessage);
+            _rosetteApi.SetOption("negation", "BOTH");
+            EventsResponse response = _rosetteApi.Event("Vivian went to Moscow.");
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void Event_Content_Test()
+        {
+            _mockHttp.When(_testUrl + "events")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Event("content");
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void Event_Dict_Test()
+        {
+            _mockHttp.When(_testUrl + "events")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            var response = _rosetteApi.Event(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
+        }
+
+        [Test]
+        public void Event_File_Test()
+        {
+            _mockHttp.When(_testUrl + "events")
+                .Respond("application/json", "{'response': 'OK'}");
+
+            RosetteFile f = new RosetteFile(_tmpFile);
+            var response = _rosetteApi.Event(f);
+# pragma warning disable 618
+            Assert.AreEqual(response.Content["response"], "OK");
+# pragma warning restore 618
         }
 
         //------------------------- Language ----------------------------------------

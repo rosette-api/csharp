@@ -211,3 +211,10 @@ TestResults/
 build.txt
 build.bat
 test.bat
+
+# Intellij
+.idea/
+
+# Examples
+rosette_apiExamples/*.exe
+rosette_apiExamples/*.dll

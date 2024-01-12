@@ -26,7 +26,7 @@ Here are some methods for running the examples.
   ``` 
 - Copy the runtime binaries to the examples directory.
   ```
-  cp Newtonsoft.Json.10.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
   cp rosette_api.1.14.4/lib/net45/rosette_api.dll rosette_apiExamples/.
   ```
 - Compile the example you'd like to execute.  E.g. language.cs
@@ -53,15 +53,22 @@ Here are some methods for running the examples.
   ```
   cd /csharp
   nuget restore rosette_api.sln
-  xbuild /p:Configuration=Release rosette_api.sln
+  msbuild /p:Configuration=Release rosette_api.sln
   ```
 - _Optional:_ Run the Unit Tests.
+  - First, fix the certificate store so we can download wikidata.
+    Per:  https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
+    ```
+    sed -i 's/^mozilla\/DST_Root_CA_X3.crt$/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
+    update-ca-certificates
+    cert-sync /etc/ssl/certs/ca-certificates.crt
+    ```
+  - Then run the tests.
+    ```
+    mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
+    ```- Copy the runtime binaries to the examples directory.
   ```
-  mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
-  ```
-- Copy the runtime binaries to the examples directory.
-  ```
-  cp packages/Newtonsoft.Json.10.0.3/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp packages/Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
   cp rosette_api/bin/Release/rosette_api.dll rosette_apiExamples/.
   ```
 - Compile the example you'd like to execute.  E.g. language.cs

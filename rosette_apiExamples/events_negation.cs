@@ -8,10 +8,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class categories
+    class events_negation
     {
         /// <summary>
-        /// Example code to call Rosette API to get a document's (located at given URL) categories.
+        /// Example code to call Rosette API to get events from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -22,7 +22,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //categories yourapikeyhere
+            //events yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -30,27 +30,20 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI CategoriesCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string categories_text_data = @"If you are a fan of the British television series Downton Abbey and you are planning to be in New York anytime before April 2nd, there is a perfect stop for you while in town.";
+                CAPI EventsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string events_text_data = "Bill Gates went to the store.";
                 //The results of the API call will come back in the form of a Dictionary
-                CategoriesResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
-                Console.WriteLine(response.ContentAsJson);
-
-                //Rosette API also supports Dictionary inputs
-                //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
-                response = CategoriesCAPI.Categories(new Dictionary<object, object>()
-                {
-                    {"content", categories_text_data}
-
-                });
+                EventsCAPI.SetOption("negation", "Only positive");
+                EventsResponse response = EventsCAPI.Event(events_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ToString());
+                // PrintContent() is a provided method to print the Dictionary to the console
+                response.PrintContent();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Exception: " + e.Message);
             }
         }
     }
