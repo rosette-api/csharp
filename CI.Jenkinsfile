@@ -9,7 +9,8 @@ node ("docker-light") {
         }
         stage("Build & Test") {
             withSonarQubeEnv {
-                mySonarOpts="/k:\"rosette-api-csharp-binding\" /d:sonar.sources=/source /d:sonar.exclusions=\"**/rosette_apiUnitTests/**,**/packages/**\" /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
+                // /d:sonar.exclusions=\"**/rosette_apiUnitTests/**,**/packages/**\"
+                mySonarOpts="/k:\"rosette-api-csharp-binding\" /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
 
                 if("${env.CHANGE_ID}" != "null"){
                     mySonarOpts = "$mySonarOpts /d:sonar.pullrequest.key=${env.CHANGE_ID}"
