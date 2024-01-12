@@ -9,14 +9,14 @@ node ("docker-light") {
         }
         stage("Build & Test") {
             withSonarQubeEnv {
-                mySonarOpts="-Dsonar.sources=/source -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                mySonarOpts="/d:sonar.sources=/source /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
                 if("${env.CHANGE_ID}" != "null"){
-                    mySonarOpts = "$mySonarOpts -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME}"
+                    mySonarOpts = "$mySonarOpts /d:sonar.pullrequest.key=${env.CHANGE_ID} /d:sonar.pullrequest.branch=${env.BRANCH_NAME}"
                 } else {
-                    mySonarOpts = "$mySonarOpts -Dsonar.branch.name=${env.BRANCH_NAME}"
+                    mySonarOpts = "$mySonarOpts /d:sonar.branch.name=${env.BRANCH_NAME}"
                 } 
                 if ("${env.CHANGE_BRANCH}" != "null") {
-                    mySonarOpts="$mySonarOpts -Dsonar.pullrequest.base=${env.CHANGE_TARGET} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH}"
+                    mySonarOpts="$mySonarOpts /d:sonar.pullrequest.base=${env.CHANGE_TARGET} /d:sonar.pullrequest.branch=${env.CHANGE_BRANCH}"
                 }
                 // TODO:  Remove if we branch references work, otherwise, pass these to the exe somehow.
                 //if ("${env.CHANGE_BRANCH}" != "null") {
@@ -54,7 +54,7 @@ node ("docker-light") {
                              pushd /source && \
                              echo && \
                              echo [INFO] Running Sonar Scanner Begin && \
-                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe begin /k:\"rosette-api-csharp-binding\" /d:sonar.login=\"${env.SONAR_AUTH_TOKEN}\" /d:sonar.host.url=\"${env.SONAR_HOST_URL}\" && \
+                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe begin /k:\"rosette-api-csharp-binding\" ${mySonarOpts} && \
                              echo && \
                              echo [INFO] Restoring the solution. && \
                              nuget restore rosette_api.sln && \
