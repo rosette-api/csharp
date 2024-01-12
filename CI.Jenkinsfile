@@ -9,7 +9,6 @@ node ("docker-light") {
         }
         stage("Build & Test") {
             withSonarQubeEnv {
-                // /d:sonar.exclusions=\"**/rosette_apiUnitTests/**,**/packages/**\"
                 mySonarOpts="/k:\"rosette-api-csharp-binding\" /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
 
                 if("${env.CHANGE_ID}" != "null"){
@@ -22,13 +21,6 @@ node ("docker-light") {
                     mySonarOpts="$mySonarOpts /d:sonar.pullrequest.base=${env.CHANGE_TARGET} /d:sonar.pullrequest.branch=${env.CHANGE_BRANCH}"
                 }
 
-                // TODO:  Remove if we branch references work, otherwise, pass these to the exe somehow.
-                //if ("${env.CHANGE_BRANCH}" != "null") {
-                //     mySonarOpts="$mySonarOpts -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.base=${env.CHANGE_TARGET} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH}"
-                //}
-
-                // https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
-                // Reference for sed command and cert sync steps.
                 sh "docker run --rm \
                        --pull always \
                        --volume ${sourceDir}:/source \
@@ -41,6 +33,7 @@ node ("docker-light") {
                              apt-get -qq install unzip default-jre-headless -y > /dev/null && \
                              echo && \
                              echo [INFO] Updating CA Certs file to address expired Lets Encrypt certificate. && \
+                             echo [INFO] https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates && \
                              sed -i 's,^mozilla/DST_Root_CA_X3.crt\$,!mozilla/DST_Root_CA_X3.crt,' /etc/ca-certificates.conf && \
                              echo && \
                              echo [INFO] Running update-ca-certificates && \
@@ -71,6 +64,7 @@ node ("docker-light") {
                              echo && \
                              echo [INFO] Running unit tests && \
                              mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll\""
+
                              // TODO:  Finish coverage data gathering for Sonar.
                              ///opt/maven-basis/bin/mvn --batch-mode clean install sonar:sonar $mySonarOpts\""
                              //pushd /tmp
