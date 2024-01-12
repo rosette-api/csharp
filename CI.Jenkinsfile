@@ -9,7 +9,7 @@ node ("docker-light") {
         }
         stage("Build & Test") {
             withSonarQubeEnv {
-                mySonarOpts="/d:sonar.sources=/source /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
+                mySonarOpts="/k:\"rosette-api-csharp-binding\" /d:sonar.sources=/source /d:sonar.exclusions=\"**/rosette_apiUnitTests/**,**/packages/**\" /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
 
                 if("${env.CHANGE_ID}" != "null"){
                     mySonarOpts = "$mySonarOpts /d:sonar.pullrequest.key=${env.CHANGE_ID}"
@@ -57,7 +57,7 @@ node ("docker-light") {
                              pushd /source && \
                              echo && \
                              echo [INFO] Running Sonar Scanner Begin && \
-                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe begin /k:\"rosette-api-csharp-binding\" ${mySonarOpts} && \
+                             mono /opt/sonar-scanner/SonarScanner.MSBuild.exe begin ${mySonarOpts} && \
                              echo && \
                              echo [INFO] Restoring the solution. && \
                              nuget restore rosette_api.sln && \
