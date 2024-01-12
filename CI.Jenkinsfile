@@ -36,10 +36,10 @@ node ("docker-light") {
                              echo [INFO] Installing required OS packages. && \
                              apt-get -qq install unzip default-jre-headless -y > /dev/null && \
                              echo && \
-                             echo [INFO] Updating CA Certs file to address expired Lets Encrypt certificate.
+                             echo [INFO] Updating CA Certs file to address expired Lets Encrypt certificate. && \
                              sed -i 's,^mozilla/DST_Root_CA_X3.crt\$,!mozilla/DST_Root_CA_X3.crt,' /etc/ca-certificates.conf && \
                              echo && \
-                             echo [INFO] Running update-ca-certificates %% \
+                             echo [INFO] Running update-ca-certificates && \
                              update-ca-certificates && \
                              echo && \
                              echo [INFO] Running cert-sync && \
