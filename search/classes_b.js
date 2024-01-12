@@ -4,6 +4,7 @@ var searchData=
   ['responseheaders',['ResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html',1,'rosette_api']]],
   ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api']]],
   ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api']]],
+  ['rosetteevent',['RosetteEvent',['../classrosette__api_1_1RosetteEvent.html',1,'rosette_api']]],
   ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api']]],
   ['rosetteextensions',['RosetteExtensions',['../classrosette__api_1_1RosetteExtensions.html',1,'rosette_api']]],
   ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html',1,'rosette_api']]],

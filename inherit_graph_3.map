@@ -1,6 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$interfacerosette__api_1_1IAddress.html" title="rosette_api.IAddress" alt="" coords="5,56,159,83"/>
-<area shape="rect" id="node2" href="$classrosette__api_1_1Address.html" title="rosette_api.Address" alt="" coords="237,5,387,32"/>
-<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddress.html" title="rosette_api.FieldedAddress" alt="" coords="215,56,409,83"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddress.html" title="rosette_api.UnfieldedAddress" alt="" coords="207,107,417,133"/>
+<area shape="rect" id="node1" href="$interfacerosette__api_1_1IAddress.html" title="rosette_api.IAddress" alt="" coords="5,56,160,83"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1Address.html" title="rosette_api.Address" alt="" coords="239,5,390,32"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddress.html" title="rosette_api.FieldedAddress" alt="" coords="216,56,413,83"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddress.html" title="rosette_api.UnfieldedAddress" alt="" coords="208,107,421,133"/>
 </map>

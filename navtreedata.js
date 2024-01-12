@@ -29,8 +29,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AddressSimilarityResponse_8cs.html",
-"classrosette__api_1_1InfoResponse.html#a9a68432541754a45944c175cd6ef0927",
-"classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html#aae32df95ca79fc787e32475e20176a77"
+"classrosette__api_1_1EventRole.html#aa08b0f19afee8bd7e389f8317c955989",
+"classrosette__api_1_1SemanticVectorsResponse.html#aebdda93766bbecd9671baf9bea8e4373"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

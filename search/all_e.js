@@ -10,6 +10,7 @@ var searchData=
   ['pingresponse',['PingResponse',['../classrosette__api_1_1PingResponse.html',1,'rosette_api.PingResponse'],['../classrosette__api_1_1PingResponse.html#a91f6f4de244982771e8ca881a450761a',1,'rosette_api.PingResponse.PingResponse(HttpResponseMessage apiMsg)'],['../classrosette__api_1_1PingResponse.html#a35ecce22a71bf8742a980d751d215b39',1,'rosette_api.PingResponse.PingResponse(String message, long time, Dictionary&lt; string, string &gt; headers, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
   ['pingresponse_2ecs',['PingResponse.cs',['../PingResponse_8cs.html',1,'']]],
   ['pobox',['poBox',['../classrosette__api_1_1Address.html#a66c3438a195511891362921f8686d3bd',1,'rosette_api.Address.poBox()'],['../classrosette__api_1_1FieldedAddress.html#a831f16f64bcfe61c459f34e01f7c4040',1,'rosette_api.FieldedAddress.poBox()']]],
+  ['polarity',['Polarity',['../classrosette__api_1_1EventMention.html#a661e04a4393ccabf46386e0d4cf2ae19',1,'rosette_api::EventMention']]],
   ['pos',['pos',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadea5e0bdcbddccca4d66d74ba8c1cee1a68',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
   ['position',['Position',['../classrosette__api_1_1Argument.html#aba0475a89c95815128883f5578e83fe6',1,'rosette_api::Argument']]],
   ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],

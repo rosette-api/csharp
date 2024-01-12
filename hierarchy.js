@@ -21,10 +21,15 @@ var hierarchy =
     [ "IEquatable", null, [
       [ "rosette_api.Concept", "classrosette__api_1_1Concept.html", null ],
       [ "rosette_api.KeyPhrase", "classrosette__api_1_1KeyPhrase.html", null ],
-      [ "rosette_api.MentionOffset", "classrosette__api_1_1MentionOffset.html", null ],
+      [ "rosette_api.MentionOffset", "classrosette__api_1_1MentionOffset.html", [
+        [ "rosette_api.EventMention", "classrosette__api_1_1EventMention.html", null ],
+        [ "rosette_api.EventRole", "classrosette__api_1_1EventRole.html", null ],
+        [ "rosette_api.NegationCue", "classrosette__api_1_1NegationCue.html", null ]
+      ] ],
       [ "rosette_api.RosetteEntity", "classrosette__api_1_1RosetteEntity.html", [
         [ "rosette_api.RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", null ]
       ] ],
+      [ "rosette_api.RosetteEvent", "classrosette__api_1_1RosetteEvent.html", null ],
       [ "rosette_api.RosetteSentimentEntity", "classrosette__api_1_1RosetteSentimentEntity.html", null ],
       [ "rosette_api.SentimentResponse", "classrosette__api_1_1SentimentResponse.html", null ],
       [ "rosette_api.SentimentResponse.RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", null ]
@@ -40,6 +45,7 @@ var hierarchy =
       [ "rosette_api.AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", null ],
       [ "rosette_api.CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", null ],
       [ "rosette_api.EntitiesResponse", "classrosette__api_1_1EntitiesResponse.html", null ],
+      [ "rosette_api.EventsResponse", "classrosette__api_1_1EventsResponse.html", null ],
       [ "rosette_api.InfoResponse", "classrosette__api_1_1InfoResponse.html", null ],
       [ "rosette_api.LanguageIdentificationResponse", "classrosette__api_1_1LanguageIdentificationResponse.html", null ],
       [ "rosette_api.MorphologyResponse", "classrosette__api_1_1MorphologyResponse.html", null ],

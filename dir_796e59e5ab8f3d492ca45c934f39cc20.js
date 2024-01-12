@@ -20,6 +20,14 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "EntityID.cs", "EntityID_8cs.html", [
       [ "EntityID", "classrosette__api_1_1EntityID.html", "classrosette__api_1_1EntityID" ]
     ] ],
+    [ "EventMention.cs", "EventMention_8cs.html", [
+      [ "EventMention", "classrosette__api_1_1EventMention.html", "classrosette__api_1_1EventMention" ],
+      [ "EventRole", "classrosette__api_1_1EventRole.html", "classrosette__api_1_1EventRole" ],
+      [ "NegationCue", "classrosette__api_1_1NegationCue.html", "classrosette__api_1_1NegationCue" ]
+    ] ],
+    [ "EventsResponse.cs", "EventsResponse_8cs.html", [
+      [ "EventsResponse", "classrosette__api_1_1EventsResponse.html", "classrosette__api_1_1EventsResponse" ]
+    ] ],
     [ "FieldedAddress.cs", "FieldedAddress_8cs.html", [
       [ "FieldedAddress", "classrosette__api_1_1FieldedAddress.html", "classrosette__api_1_1FieldedAddress" ]
     ] ],
@@ -66,6 +74,9 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "RosetteEntity.cs", "RosetteEntity_8cs.html", [
       [ "RosetteEntity", "classrosette__api_1_1RosetteEntity.html", "classrosette__api_1_1RosetteEntity" ]
+    ] ],
+    [ "RosetteEvent.cs", "RosetteEvent_8cs.html", [
+      [ "RosetteEvent", "classrosette__api_1_1RosetteEvent.html", "classrosette__api_1_1RosetteEvent" ]
     ] ],
     [ "RosetteException.cs", "RosetteException_8cs.html", [
       [ "RosetteException", "classrosette__api_1_1RosetteException.html", "classrosette__api_1_1RosetteException" ]
