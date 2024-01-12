@@ -10,19 +10,22 @@ node ("docker-light") {
         stage("Build & Test") {
             withSonarQubeEnv {
                 mySonarOpts="/d:sonar.sources=/source /d:sonar.host.url=${env.SONAR_HOST_URL} /d:sonar.login=${env.SONAR_AUTH_TOKEN}"
+
                 if("${env.CHANGE_ID}" != "null"){
-                    mySonarOpts = "$mySonarOpts /d:sonar.pullrequest.key=${env.CHANGE_ID} /d:sonar.pullrequest.branch=${env.BRANCH_NAME}"
+                    mySonarOpts = "$mySonarOpts /d:sonar.pullrequest.key=${env.CHANGE_ID}"
                 } else {
                     mySonarOpts = "$mySonarOpts /d:sonar.branch.name=${env.BRANCH_NAME}"
                 } 
+
                 if ("${env.CHANGE_BRANCH}" != "null") {
                     mySonarOpts="$mySonarOpts /d:sonar.pullrequest.base=${env.CHANGE_TARGET} /d:sonar.pullrequest.branch=${env.CHANGE_BRANCH}"
                 }
+
                 // TODO:  Remove if we branch references work, otherwise, pass these to the exe somehow.
                 //if ("${env.CHANGE_BRANCH}" != "null") {
                 //     mySonarOpts="$mySonarOpts -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.base=${env.CHANGE_TARGET} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH}"
                 //}
-                //echo("Sonar Options are: $mySonarOpts")
+
                 // https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
                 // Reference for sed command and cert sync steps.
                 sh "docker run --rm \
@@ -49,7 +52,7 @@ node ("docker-light") {
                              mkdir -p /opt/sonar-scanner && \
                              pushd /opt/sonar-scanner && \
                              curl --silent --output sonar-scanner.zip --location https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip && \
-                             unzip sonar-scanner.zip && \
+                             unzip -q sonar-scanner.zip && \
                              chmod a+x /opt/sonar-scanner/sonar-scanner-*/bin/* && \
                              pushd /source && \
                              echo && \
