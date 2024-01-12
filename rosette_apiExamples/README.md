@@ -26,7 +26,7 @@ Here are some methods for running the examples.
   ``` 
 - Copy the runtime binaries to the examples directory.
   ```
-  cp Newtonsoft.Json.10.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
   cp rosette_api.1.14.4/lib/net45/rosette_api.dll rosette_apiExamples/.
   ```
 - Compile the example you'd like to execute.  E.g. language.cs
@@ -61,7 +61,7 @@ Here are some methods for running the examples.
   ```
 - Copy the runtime binaries to the examples directory.
   ```
-  cp packages/Newtonsoft.Json.10.0.3/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
+  cp packages/Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
   cp rosette_api/bin/Release/rosette_api.dll rosette_apiExamples/.
   ```
 - Compile the example you'd like to execute.  E.g. language.cs
