@@ -57,7 +57,10 @@
     <Compile Include="AddressSimilarityResponse.cs" />
     <Compile Include="CAPI.cs" />
     <Compile Include="CategoriesResponse.cs" />
-    <Compile Include="RecordSimilarityObjects.cs" />
+    <Compile Include="RecordSimilarityRequest.cs" />
+    <Compile Include="RecordSimilarityFieldInfo.cs" />
+    <Compile Include="RecordSimilarityField.cs" />
+    <Compile Include="RecordSimilarityConverter.cs" />
     <Compile Include="Concept.cs" />
     <Compile Include="EntitiesResponse.cs" />
     <Compile Include="EntityID.cs" />

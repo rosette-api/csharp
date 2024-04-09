@@ -1,19 +1,9 @@
-using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Collections;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
-
-namespace rosette_api
-{
-    
+namespace rosette_api {
     /// <summary>RecordFieldType enum
     /// <para>
     /// Name: The possible record types that can be used in the Record Similarity endpoint
@@ -26,6 +16,9 @@ namespace rosette_api
         rni_name, rni_date, rni_address
     }
 
+    /// <summary>
+    /// Class for representing record similarity field information
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RecordSimilarityFieldInfo
     {
@@ -42,7 +35,7 @@ namespace rosette_api
         /// Gets or sets the record's field weight
         /// </summary>
         [JsonProperty(PropertyName = WEIGHT)]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
 
         /// <summary>
@@ -82,7 +75,7 @@ namespace rosette_api
         /// <summary>
         /// ToString override.
         /// </summary>
-        /// <returns>This category in JSON form</returns>
+        /// <returns>This record similarity field info in JSON form</returns>
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
