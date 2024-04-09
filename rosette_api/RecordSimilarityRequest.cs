@@ -71,7 +71,9 @@ namespace rosette_api
         }
         
     }
-
+    /// <summary>
+    /// Class for representing record similarity request records lists
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RecordSimilarityRecords
     {
@@ -134,6 +136,9 @@ namespace rosette_api
     }
     
 
+    /// <summary>
+    /// Request object to use with calls to the Record Similarity endpoint
+    /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RecordSimilarityRequest
     {

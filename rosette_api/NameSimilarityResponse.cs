@@ -6,7 +6,7 @@ using System.Net.Http;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represnt the results from the Name Similarity endpoint of the Rosette API
+    /// A class to represent the results from the Name Similarity endpoint of the Rosette API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class NameSimilarityResponse : RosetteResponse

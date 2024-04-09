@@ -6,7 +6,7 @@ using System.Linq;
 namespace rosette_api {
     /// <summary>RecordFieldType enum
     /// <para>
-    /// Name: The possible record types that can be used in the Record Similarity endpoint
+    /// The possible record types that can be used in the Record Similarity endpoint
     /// </para>
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]

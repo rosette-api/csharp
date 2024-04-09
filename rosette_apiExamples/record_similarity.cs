@@ -64,15 +64,17 @@ namespace rosette_apiExamples
                 }
             };
             //RecordSimlarityRequest
-            RecordSimilarityRequest fieldInfo = new RecordSimilarityRequest
+            RecordSimilarityRequest request = new RecordSimilarityRequest
             {
                 Fields = fields,
                 Properties = properties,
                 Records = records
             };
-            // Serialize the object
-            string json = JsonConvert.SerializeObject(fieldInfo, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore});
-            Console.WriteLine(json);
+            //create a CAPI
+            CAPI RecordSimilarityCAPI = new CAPI("your_api_key", "http://172.17.0.1:8181/rest/v1");
+            RecordSimilarityResponse result = RecordSimilarityCAPI.RecordSimilarity(request);
+            //get the content of result
+            result.PrintContent();
         }
     }
 }

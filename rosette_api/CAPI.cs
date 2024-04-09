@@ -678,6 +678,20 @@ namespace rosette_api
             return Process<MorphologyResponse>(file);
         }
 
+        /// <summary>RecordSimilarity
+        /// <para>
+        /// (POST)RecordSimilarity Endpoint: Returns the result of matching 2 lists of records.
+        /// </para>
+        /// </summary>
+        /// <param name="request">RecordSimilarityRequest: RecordSimilarityRequest object to send</param>
+        /// </returns>
+        public RecordSimilarityResponse RecordSimilarity(RecordSimilarityRequest request)
+        {
+            _uri = "record-similarity";
+
+            return GetResponse<RecordSimilarityResponse>(JsonConvert.SerializeObject(request, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        }
+
         /// <summary>NameSimilarity
         /// <para>
         /// (POST)NameSimilarity Endpoint: Returns the result of matching 2 names.
