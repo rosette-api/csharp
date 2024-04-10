@@ -9,7 +9,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class ping
+    class record_similarity
     {
         /// <summary>
         /// Example code to send Rosette API a ping to check its reachability.
@@ -74,7 +74,57 @@ namespace rosette_apiExamples
             CAPI RecordSimilarityCAPI = new CAPI("your_api_key", "http://172.17.0.1:8181/rest/v1");
             RecordSimilarityResponse result = RecordSimilarityCAPI.RecordSimilarity(request);
             //get the content of result
-            result.PrintContent();
+            Console.WriteLine("*****");
+            foreach (KeyValuePair<string, RecordSimilarityFieldInfo> item in result.Fields)
+            {
+                Console.WriteLine($"Key: {item.Key}, Value: {item.Value}");
+            }
+            List<RecordSimilarityResult> recordSimilarityResults = result.Results;
+            foreach (RecordSimilarityResult recordSimilarityResult in recordSimilarityResults)
+            {
+                Console.WriteLine("*****");
+                Console.WriteLine("Score: " + recordSimilarityResult.Score);
+                // print explain info
+                if (recordSimilarityResult.ExplainInfo != null)
+                {
+                    
+                    //print left only fields
+                    Console.WriteLine("Left Only Fields: ");
+                    foreach (string leftFields in recordSimilarityResult.ExplainInfo.LeftOnlyFields)
+                    {
+                        Console.WriteLine(string.Join(", ", leftFields));
+                    }
+
+                    //print right only fields
+                    Console.WriteLine("Right Only Fields: ");
+                    foreach (string rightFields in recordSimilarityResult.ExplainInfo.RightOnlyFields)
+                    {
+                        Console.WriteLine(string.Join(", ", rightFields));
+                    }
+                    //print scorefields
+                    Console.WriteLine("Score Fields: ");
+                    foreach (KeyValuePair<string, RecordSimilarityFieldExplainInfo> item in recordSimilarityResult.ExplainInfo.ScoredFields)
+                    {
+                        RecordSimilarityFieldExplainInfo recordSimilarityFieldExplainInfo = item.Value;
+                        //Log the key and record similarity field explain info's properties
+                        Console.WriteLine($"Key: {item.Key}, Value: | Weight: {recordSimilarityFieldExplainInfo.Weight}, CalculatedWeight: {recordSimilarityFieldExplainInfo.CalculatedWeight}, RawScore: {recordSimilarityFieldExplainInfo.RawScore}, FinalScore: {recordSimilarityFieldExplainInfo.FinalScore}, Details: {recordSimilarityFieldExplainInfo.Details}|");
+                        
+                    }
+
+                }
+                Console.WriteLine("Left Record: ");
+                foreach (KeyValuePair<string, RecordSimilarityField> item in recordSimilarityResult.Left)
+                {
+                    Console.WriteLine($"Key: {item.Key}, ValueType: {item.Value.GetType()}, SerializedValue: {JsonConvert.SerializeObject(item.Value)}");
+                }
+                Console.WriteLine("Right Record: ");
+                foreach (KeyValuePair<string, RecordSimilarityField> item in recordSimilarityResult.Right)
+                {
+                    Console.WriteLine($"Key: {item.Key}, ValueType: {item.Value.GetType()}, SerializedValue: {JsonConvert.SerializeObject(item.Value)}");
+                }
+            }
+            Console.WriteLine("*****");
+            // result.PrintContent();
         }
     }
 }

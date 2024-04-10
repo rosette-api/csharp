@@ -33,6 +33,12 @@ namespace rosette_api {
     public class UnfieldedNameRecord : NameField
     {
 
+        public UnfieldedNameRecord() { }
+        public UnfieldedNameRecord(string text)
+        {
+            this.Text = text;
+        }
+
         /// <summary>
         /// Equals override
         /// </summary>
@@ -116,6 +122,16 @@ namespace rosette_api {
         /// </summary>
         [JsonProperty(PropertyName = ENTITY_TYPE)]
         public string EntityType { get; set; }
+        
+        public FieldedNameRecord() { }
+        public FieldedNameRecord(string text, string language = null, string languageOfOrigin = null, string script = null, string entityType = null)
+        {
+            this.Text = text;
+            this.Language = language;
+            this.LanguageOfOrigin = languageOfOrigin;
+            this.Script = script;
+            this.EntityType = entityType;
+        }
 
         /// <summary>
         /// Equals override
@@ -187,6 +203,12 @@ namespace rosette_api {
     public class UnfieldedDateRecord : DateField
     {
 
+        public UnfieldedDateRecord() { }
+        public UnfieldedDateRecord(string date)
+        {
+            this.Date = date;
+        }
+
         /// <summary>
         /// Equals override
         /// </summary>
@@ -229,6 +251,12 @@ namespace rosette_api {
     [JsonObject(MemberSerialization.OptOut)]
     public class FieldedDateRecord : DateField
     {
+
+        public FieldedDateRecord() { }
+        public FieldedDateRecord(string date)
+        {
+            this.Date = date;
+        }
         /// <summary>
         /// Equals override
         /// </summary>
@@ -291,6 +319,11 @@ namespace rosette_api {
     public class UnfieldedAddressRecord : AddressField
     {
 
+        public UnfieldedAddressRecord() { }
+        public UnfieldedAddressRecord(string address)
+        {
+            this.Address = address;
+        }
         /// <summary>
         /// Equals override
         /// </summary>
@@ -333,6 +366,11 @@ namespace rosette_api {
     [JsonObject(MemberSerialization.OptOut)]
     public class FieldedAddressRecord : AddressField
     {
+        public FieldedAddressRecord() { }
+        public FieldedAddressRecord(string address)
+        {
+            this.Address = address;
+        }
         /// <summary>
         /// Equals override
         /// </summary>

@@ -37,6 +37,14 @@ namespace rosette_api {
         [JsonProperty(PropertyName = WEIGHT)]
         public double? Weight { get; set; }
 
+        public RecordSimilarityFieldInfo() { }
+
+        public RecordSimilarityFieldInfo(RecordFieldType type, double weight)
+        {
+            this.Type = type;
+            this.Weight = weight;
+        }
+
 
         /// <summary>
         /// Equals override
