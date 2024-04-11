@@ -97,6 +97,7 @@
     <Compile Include="TranslateNamesResponse.cs" />
     <Compile Include="TransliterationResponse.cs" />
     <Compile Include="UnfieldedAddress.cs" />
+    <Compile Include="Utilities.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

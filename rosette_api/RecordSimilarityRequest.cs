@@ -29,6 +29,31 @@ namespace rosette_api
         public bool IncludeExplainInfo { get; set; }
 
         /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public RecordSimilarityProperties() { }
+
+        /// <summary>
+        /// Includes explain info constructor. Sets the treshold to 0.0.
+        /// </summary>
+        /// <param name="includeExplainInfo">The include explain info parameter</param>
+        public RecordSimilarityProperties(bool includeExplainInfo) {
+            this.IncludeExplainInfo = includeExplainInfo;
+            this.Threshold = 0.0;
+        }
+
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="threshold">The score threshold</param>
+        /// <param name="includeExplainInfo">The include explain info parameter</param>
+        public RecordSimilarityProperties(double threshold, bool includeExplainInfo)
+        {
+            this.Threshold = threshold;
+            this.IncludeExplainInfo = includeExplainInfo;
+        }
+
+        /// <summary>
         /// Equals override
         /// </summary>
         /// <param name="obj">The object to compare</param>
@@ -92,6 +117,22 @@ namespace rosette_api
         public List<Dictionary<string, RecordSimilarityField>> Right { get; set; }
 
         /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public RecordSimilarityRecords() { }
+
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="left">The left records</param>
+        /// <param name="right">The right records</param>
+        public RecordSimilarityRecords(List<Dictionary<string, RecordSimilarityField>> left, List<Dictionary<string, RecordSimilarityField>> right)
+        {
+            this.Left = left;
+            this.Right = right;
+        }
+
+        /// <summary>
         /// Equals override
         /// </summary>
         /// <param name="obj">The object to compare</param>
@@ -102,9 +143,8 @@ namespace rosette_api
             {
                 RecordSimilarityRecords other = obj as RecordSimilarityRecords;
                 List<bool> conditions = new List<bool>() {
-                    // checking reference equality
-                    this.Left == other.Left,
-                    this.Right == other.Right
+                    this.Left != null && other.Left != null ? this.Left.SequenceEqual(other.Left) : this.Left == other.Left,
+                    this.Right != null && other.Right != null ? this.Right.SequenceEqual(other.Right) : this.Right == other.Right
                 };
                 return conditions.All(condition => condition);
             }
@@ -165,6 +205,24 @@ namespace rosette_api
         public RecordSimilarityRecords Records { get; set; }
 
         /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public RecordSimilarityRequest() { }
+
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="fields">The fields to use in the request</param>
+        /// <param name="properties">The properties to use in the request</param>
+        /// <param name="records">The records to use in the request</param>
+        public RecordSimilarityRequest(Dictionary<string, RecordSimilarityFieldInfo> fields, RecordSimilarityProperties properties, RecordSimilarityRecords records)
+        {
+            this.Fields = fields;
+            this.Properties = properties;
+            this.Records = records;
+        }
+
+        /// <summary>
         /// Equals override
         /// </summary>
         /// <param name="obj">The object to compare</param>
@@ -175,7 +233,7 @@ namespace rosette_api
             {
                 RecordSimilarityRequest other = obj as RecordSimilarityRequest;
                 List<bool> conditions = new List<bool>() {
-                    this.Fields != null && other.Fields != null ? this.Fields.SequenceEqual(other.Fields) : this.Fields == other.Fields,
+                    this.Fields != null && other.Fields != null ? Utilities.DictionaryEquals(this.Fields, other.Fields) : this.Fields == other.Fields,
                     this.Properties != null && other.Properties != null ? this.Properties.Equals(other.Properties) : this.Properties == other.Properties,
                     this.Records != null && other.Records != null ? this.Records.Equals(other.Records) : this.Records == other.Records
                 };

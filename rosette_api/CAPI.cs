@@ -684,6 +684,7 @@ namespace rosette_api
         /// </para>
         /// </summary>
         /// <param name="request">RecordSimilarityRequest: RecordSimilarityRequest object to send</param>
+        /// <returns>RecordSimilarityResponse containing the results of the request.
         /// </returns>
         public RecordSimilarityResponse RecordSimilarity(RecordSimilarityRequest request)
         {

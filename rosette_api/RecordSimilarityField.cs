@@ -33,7 +33,15 @@ namespace rosette_api {
     public class UnfieldedNameRecord : NameField
     {
 
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public UnfieldedNameRecord() { }
+        
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="text">The name as a string</param>
         public UnfieldedNameRecord(string text)
         {
             this.Text = text;
@@ -99,7 +107,7 @@ namespace rosette_api {
         /// <summary>language
         /// <para>
         /// Getter, Setter for the languageOfOrigin
-        /// language: Language: ISO 639-3 code
+        /// languageOfOrigin: Language: ISO 639-3 code
         /// </para>
         /// </summary>
         [JsonProperty(PropertyName = LANGUAGE_OF_ORIGIN)] 
@@ -123,7 +131,19 @@ namespace rosette_api {
         [JsonProperty(PropertyName = ENTITY_TYPE)]
         public string EntityType { get; set; }
         
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public FieldedNameRecord() { }
+
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="text">(string): Text describing the name</param>
+        /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
+        /// <param name="languageOfOrigin">(string, optional): Language the name originates from: ISO 639-3 code (ignored for the /language endpoint)</param>    
+        /// <param name="script">(string, optional): ISO 15924 code for the name's script</param>
+        /// <param name="entityType">(string, optional): Entity type of the name: PERSON, LOCATION, or ORGANIZATION</param>
         public FieldedNameRecord(string text, string language = null, string languageOfOrigin = null, string script = null, string entityType = null)
         {
             this.Text = text;
@@ -203,7 +223,14 @@ namespace rosette_api {
     public class UnfieldedDateRecord : DateField
     {
 
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public UnfieldedDateRecord() { }
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="date">The date in string form</param>
         public UnfieldedDateRecord(string date)
         {
             this.Date = date;
@@ -252,7 +279,15 @@ namespace rosette_api {
     public class FieldedDateRecord : DateField
     {
 
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public FieldedDateRecord() { }
+        
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="date">The date in string format</param>
         public FieldedDateRecord(string date)
         {
             this.Date = date;
@@ -318,8 +353,14 @@ namespace rosette_api {
     [JsonConverter(typeof(UnfieldedRecordSimilarityConverter))]
     public class UnfieldedAddressRecord : AddressField
     {
-
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public UnfieldedAddressRecord() { }
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="address">The adress in string form</param>
         public UnfieldedAddressRecord(string address)
         {
             this.Address = address;
@@ -366,7 +407,14 @@ namespace rosette_api {
     [JsonObject(MemberSerialization.OptOut)]
     public class FieldedAddressRecord : AddressField
     {
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
         public FieldedAddressRecord() { }
+        /// <summary>
+        /// Full constructor
+        /// </summary>
+        /// <param name="address">The adress in string form</param>
         public FieldedAddressRecord(string address)
         {
             this.Address = address;
