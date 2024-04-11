@@ -44,6 +44,7 @@ namespace rosette_api {
         {
             this.Fields = this.ContentDictionary.ContainsKey(FIELDS) ? parseFields(this.ContentDictionary[FIELDS] as JObject) : null;
             this.Results = this.ContentDictionary.ContainsKey(RESULTS) ? parseResults(this.ContentDictionary[RESULTS] as JArray) : null;
+            this.ErrorMessage = this.ContentDictionary.ContainsKey(ERROR_MESSAGE) ? this.ContentDictionary[ERROR_MESSAGE].ToString() : null;
         }
 
         /// <summary>
