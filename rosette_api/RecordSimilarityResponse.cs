@@ -272,13 +272,12 @@ namespace rosette_api {
             } 
             else
             {
-                // TODO Extract string literals (use the ones from the RecordSimilarityField classes)
                 JObject nameRecordObj = nameRecord as JObject;
-                string text = nameRecordObj["text"].Value<string>();
-                string language = nameRecordObj["language"] != null ? nameRecordObj["language"].Value<string>() : null;
-                string languageOfOrigin = nameRecordObj["languageOfOrigin"] != null ? nameRecordObj["languageOfOrigin"].Value<string>() : null;
-                string script = nameRecordObj["script"] != null ? nameRecordObj["script"].Value<string>() : null;
-                string entityType = nameRecordObj["entityType"] != null ? nameRecordObj["entityType"].Value<string>() : null;
+                string text = nameRecordObj[NameField.TEXT].Value<string>();
+                string language = nameRecordObj[FieldedNameRecord.LANGUAGE] != null ? nameRecordObj[FieldedNameRecord.LANGUAGE].Value<string>() : null;
+                string languageOfOrigin = nameRecordObj[FieldedNameRecord.LANGUAGE_OF_ORIGIN] != null ? nameRecordObj[FieldedNameRecord.LANGUAGE_OF_ORIGIN].Value<string>() : null;
+                string script = nameRecordObj[FieldedNameRecord.SCRIPT] != null ? nameRecordObj[FieldedNameRecord.SCRIPT].Value<string>() : null;
+                string entityType = nameRecordObj[FieldedNameRecord.ENTITY_TYPE] != null ? nameRecordObj[FieldedNameRecord.ENTITY_TYPE].Value<string>() : null;
                 return new FieldedNameRecord(text, language, languageOfOrigin, script, entityType);
             }
         }
@@ -296,9 +295,8 @@ namespace rosette_api {
             }
             else
             {
-                // TODO Extract string literals (use the ones from the RecordSimilarityField classes)
                 JObject addressRecordObj = addressRecord as JObject;
-                string address = addressRecordObj["address"].Value<string>();
+                string address = addressRecordObj[AddressField.ADDRESS].Value<string>();
                 return new FieldedAddressRecord(address);
             }
         }
@@ -316,9 +314,8 @@ namespace rosette_api {
             }
             else
             {
-                // TODO Extract string literals (use the ones from the RecordSimilarityField classes)
                 JObject dateRecordObj = dateRecord as JObject;
-                string date = dateRecordObj["date"].Value<string>();
+                string date = dateRecordObj[DateField.DATE].Value<string>();
                 return new FieldedDateRecord(date);
             }
         }

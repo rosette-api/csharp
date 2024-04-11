@@ -17,7 +17,7 @@ namespace rosette_api {
     [JsonObject(MemberSerialization.OptOut)]
     public abstract class NameField : RecordSimilarityField
     {
-        private const string TEXT = "text";
+        public const string TEXT = "text";
 
         /// <summary>
         /// Gets or sets the the name field's text
@@ -90,10 +90,10 @@ namespace rosette_api {
     public class FieldedNameRecord : NameField
     {
 
-        private const string LANGUAGE = "language";
-        private const string LANGUAGE_OF_ORIGIN = "languageOfOrigin";
-        private const string SCRIPT = "script";
-        private const string ENTITY_TYPE = "entityType";
+        public const string LANGUAGE = "language";
+        public const string LANGUAGE_OF_ORIGIN = "languageOfOrigin";
+        public const string SCRIPT = "script";
+        public const string ENTITY_TYPE = "entityType";
 
         /// <summary>language
         /// <para>
@@ -207,7 +207,7 @@ namespace rosette_api {
     /// </summary>
     public abstract class DateField : RecordSimilarityField
     {
-        private const string DATE = "date";
+        public const string DATE = "date";
 
         /// <summary>
         /// Gets or sets the the date field's date
@@ -338,7 +338,7 @@ namespace rosette_api {
     /// </summary>
     public abstract class AddressField : RecordSimilarityField
     {
-        private const string ADDRESS = "address";
+        public const string ADDRESS = "address";
 
         /// <summary>
         /// Gets or sets the the address field's address
