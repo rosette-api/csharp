@@ -66,7 +66,7 @@ node ("docker-light") {
                              mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll && \
                              echo && \
                              echo [INFO] Re-permission files for cleanup. && \
-                             chown -R jenkins:jenkins /source\""
+                             chown -R 9960:9960 /source\""
 
                              // TODO:  Finish coverage data gathering for Sonar.
                              ///opt/maven-basis/bin/mvn --batch-mode clean install sonar:sonar $mySonarOpts\""
