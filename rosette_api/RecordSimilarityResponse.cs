@@ -211,8 +211,8 @@ namespace rosette_api {
             Score = jsonResult[SCORE].ToObject<double>();
             Left = parseRecord(jsonResult[LEFT] as JObject, fields);
             Right = parseRecord(jsonResult[RIGHT] as JObject, fields);
-            ExplainInfo = jsonResult[EXPLAIN_INFO] != null ? new RecordSimilarityExplainInfo(jsonResult[EXPLAIN_INFO] as JObject) : null;
-            Error = jsonResult[ERROR] != null ? jsonResult[ERROR].Value<string>() : null;
+            ExplainInfo = jsonResult[EXPLAIN_INFO] != null && !jsonResult[EXPLAIN_INFO].Type.Equals(JTokenType.Null) ? new RecordSimilarityExplainInfo(jsonResult[EXPLAIN_INFO] as JObject) : null;
+            Error = jsonResult[ERROR] != null && !jsonResult[ERROR].Type.Equals(JTokenType.Null) ? jsonResult[ERROR].Value<string>() : null;
         }
 
         /// <summary>
@@ -408,9 +408,9 @@ namespace rosette_api {
         /// </summary>
         /// <param name="jsonExplainInfo">The explainInfo JObject</param>
         public RecordSimilarityExplainInfo(JObject jsonExplainInfo) {
-            ScoredFields = jsonExplainInfo[SCORED_FIELDS] != null ? parseScoredFields(jsonExplainInfo[SCORED_FIELDS] as JObject): null;
-            LeftOnlyFields = jsonExplainInfo[LEFT_ONLY_FIELDS] != null ? jsonExplainInfo[LEFT_ONLY_FIELDS].ToObject<List<string>>() : null;
-            RightOnlyFields = jsonExplainInfo[RIGHT_ONLY_FIELDS] != null ? jsonExplainInfo[RIGHT_ONLY_FIELDS].ToObject<List<string>>() : null;
+            ScoredFields = jsonExplainInfo[SCORED_FIELDS] != null && jsonExplainInfo[SCORED_FIELDS].Type != JTokenType.Null ? parseScoredFields(jsonExplainInfo[SCORED_FIELDS] as JObject): null;
+            LeftOnlyFields = jsonExplainInfo[LEFT_ONLY_FIELDS] != null  && jsonExplainInfo[LEFT_ONLY_FIELDS].Type != JTokenType.Null ? jsonExplainInfo[LEFT_ONLY_FIELDS].ToObject<List<string>>() : null;
+            RightOnlyFields = jsonExplainInfo[RIGHT_ONLY_FIELDS] != null && jsonExplainInfo[RIGHT_ONLY_FIELDS].Type != JTokenType.Null ? jsonExplainInfo[RIGHT_ONLY_FIELDS].ToObject<List<string>>() : null;  
         }
 
         /// <summary>

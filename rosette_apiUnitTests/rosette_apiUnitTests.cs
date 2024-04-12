@@ -253,6 +253,11 @@ namespace rosette_apiUnitTests {
             Assert.AreEqual("line", ex.Line, "Line does not match");
         }
 
+    }
+
+    [TestFixture]
+    public class Rosette_serializationTests {
+
         [Test]
         public void RecordFieldTypeSerializationTest() {
             RecordFieldType date = RecordFieldType.rni_date;
@@ -298,7 +303,7 @@ namespace rosette_apiUnitTests {
         }
 
         [Test]
-        public void RecodSimilarityResponseDeserializationTest() {
+        public void RecodSimilarityFullResponseDeserializationTest() {
             string jsonResponse = "{\"fields\":{\"primaryName\":{\"type\":\"rni_name\",\"weight\":0.5},\"dob\":{\"type\":\"rni_date\",\"weight\":0.2},\"addr\":{\"type\":\"rni_address\",\"weight\":0.5},\"dob2\":{\"type\":\"rni_date\",\"weight\":0.1}},\"results\":[{\"score\":0.904213806305046,\"left\":{\"dob\":{\"date\":\"1993-04-16\"},\"primaryName\":{\"text\":\"Evan R\"}},\"right\":{\"dob\":{\"date\":\"1993-04-16\"},\"primaryName\":\"Ivan R\"},\"explainInfo\":{\"scoredFields\":{\"dob\":{\"weight\":0.2,\"calculatedWeight\":0.28571428571428575,\"rawScore\":1,\"finalScore\":0.28571428571428575,\"details\":{\"leftInput\":{\"originalString\":\"1993-04-16\",\"day\":16,\"month\":4,\"yearWithoutCentury\":93,\"century\":19,\"modifiedJulianDay\":49093,\"canonicalForm\":\"1993-04-16\",\"empty\":false},\"rightInput\":{\"originalString\":\"1993-04-16\",\"day\":16,\"month\":4,\"yearWithoutCentury\":93,\"century\":19,\"modifiedJulianDay\":49093,\"canonicalForm\":\"1993-04-16\",\"empty\":false},\"scoreTuples\":[{\"scoreInIsolation\":1,\"scoreInContext\":1,\"left\":\"1993-04-16\",\"right\":\"1993-04-16\",\"marked\":true,\"weight\":1,\"component\":\"EXACT_MATCH\"}],\"scoreAdjustments\":[{\"unbiasedScore\":1,\"score\":1,\"parameter\":\"dateFinalBias\"}],\"finalScore\":1,\"scores\":[{\"scoreInIsolation\":1,\"scoreInContext\":1,\"left\":\"1993-04-16\",\"right\":\"1993-04-16\",\"marked\":true,\"weight\":1,\"component\":\"EXACT_MATCH\"}],\"defaultInput\":{\"empty\":true},\"empty\":false}},\"primaryName\":{\"weight\":0.5,\"calculatedWeight\":0.7142857142857143,\"rawScore\":0.8658993288270642,\"finalScore\":0.6184995205907602,\"details\":{\"leftInput\":{\"data\":\"Evan R\",\"normalizedData\":\"evan r\",\"latnData\":\"evan r\",\"script\":\"Latn\",\"languageOfUse\":\"ENGLISH\",\"languageOfOrigin\":\"ENGLISH\",\"tokens\":[{\"token\":\"evan\",\"latnToken\":\"evan\",\"tokenWeight\":0.7213975215425366,\"bin\":3,\"biasedBin\":2.902736521062578,\"tokenType\":\"GIVEN\"},{\"token\":\"r\",\"latnToken\":\"r\",\"tokenWeight\":0.27860247845746355,\"bin\":8,\"biasedBin\":7.5161819937120935,\"tokenType\":\"UNKNOWN\"}],\"entityType\":\"PERSON\",\"empty\":false},\"rightInput\":{\"data\":\"Ivan R\",\"normalizedData\":\"ivan r\",\"latnData\":\"ivan r\",\"script\":\"Latn\",\"languageOfUse\":\"ENGLISH\",\"languageOfOrigin\":\"SPANISH\",\"tokens\":[{\"token\":\"ivan\",\"latnToken\":\"ivan\",\"tokenWeight\":0.7213975215425366,\"bin\":3,\"biasedBin\":2.902736521062578,\"tokenType\":\"UNKNOWN\"},{\"token\":\"r\",\"latnToken\":\"r\",\"tokenWeight\":0.27860247845746355,\"bin\":8,\"biasedBin\":7.5161819937120935,\"tokenType\":\"UNKNOWN\"}],\"entityType\":\"PERSON\",\"empty\":false},\"scoreTuples\":[{\"scoreInIsolation\":0.6599663295739067,\"scoreInContext\":0.6599663295739067,\"left\":\"evan\",\"right\":\"ivan\",\"marked\":true,\"reason\":\"HMM_MATCH\",\"leftMinTokenIndex\":0,\"leftMaxTokenIndex\":0,\"rightMinTokenIndex\":0,\"rightMaxTokenIndex\":0},{\"scoreInIsolation\":1,\"scoreInContext\":1,\"left\":\"r\",\"right\":\"r\",\"marked\":true,\"reason\":\"MATCH\",\"leftMinTokenIndex\":1,\"leftMaxTokenIndex\":1,\"rightMinTokenIndex\":1,\"rightMaxTokenIndex\":1}],\"scoreAdjustments\":[{\"unbiasedScore\":0.7290304644108475,\"score\":0.8658993288270642,\"parameter\":\"finalBias\"}],\"finalScore\":0.8658993288270642,\"defaultInput\":{\"empty\":true},\"empty\":false}}},\"leftOnlyFields\":[],\"rightOnlyFields\":[]}}],\"errorMessage\":\"dummy\"}";
             // create a HttpResponseMessage from this JSON
             HttpResponseMessage message = new HttpResponseMessage {
@@ -346,12 +351,9 @@ namespace rosette_apiUnitTests {
             Assert.AreEqual(1, dob.RawScore, "dob raw score does not match");
             Assert.AreEqual(0.28571428571428575, dob.FinalScore, "dob final score does not match");
             Assert.IsNotNull(dob.Details, "dob details is null");
-
-
         }
 
     }
-
 
     [TestFixture]
     public class Rosette_apiUnitTests : IDisposable {
@@ -1233,7 +1235,117 @@ namespace rosette_apiUnitTests {
         }
 
         //------------------------- Record-Similarity ----------------------------------------
- 
+        private RecordSimilarityRequest CreateTestRecordSimilarityRequest(string name, string dob, string address) {
+                // Creating the request object
+                Dictionary<string, RecordSimilarityFieldInfo> fields = new Dictionary<string, RecordSimilarityFieldInfo>
+                {
+                    { name, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_name, Weight = 0.5 } },
+                    { dob, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_date, Weight = 0.2 } },
+                    { address, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_address, Weight = 0.5 } }
+                };
+
+                RecordSimilarityProperties properties = new RecordSimilarityProperties { Threshold = 0.7, IncludeExplainInfo = false };
+
+                RecordSimilarityRecords records = new RecordSimilarityRecords {
+                    Left = new List<Dictionary<string, RecordSimilarityField>>
+                    {
+                        new Dictionary<string, RecordSimilarityField>
+                        {
+                            { name, new FieldedNameRecord { Text = "Ethan R", Language = "eng", LanguageOfOrigin = "eng", Script = "Latn", EntityType = "PERSON"} },
+                            { dob, new UnfieldedDateRecord { Date = "1993-04-16"} },
+                            { address, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"}}
+                        }
+                    },
+                    Right = new List<Dictionary<string, RecordSimilarityField>>
+                    {
+                        new Dictionary<string, RecordSimilarityField>
+                        {
+                            { name, new UnfieldedNameRecord { Text = "Ivan R"} },
+                            { dob, new FieldedDateRecord { Date = "1993/04/16"} },
+                            { address, new FieldedAddressRecord { Address = "234 Roadlane Ave"} }
+                        }
+                    }
+                };
+
+                RecordSimilarityRequest request = new RecordSimilarityRequest
+                {
+                    Fields = fields,
+                    Properties = properties,
+                    Records = records
+                };
+
+                return request;
+
+        }
+
+        [Test]
+        public void RecordSimilarity_Request_Test() {
+            Init();
+            _mockHttp.When(_testUrl + "record-similarity")
+                .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
+
+            // record field names
+            string name = "name";
+            string dob = "dob";
+            string address = "dobAddress";
+
+            // Creating the request object
+            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address);
+
+            var response = _rosetteApi.RecordSimilarity(request);
+            foreach (var key in response.Content.Keys) {
+                Console.WriteLine(key + ": " + response.Content[key]);
+            }
+            Assert.AreEqual(response.Content["response"], "OK");
+        }
+
+        [Test]
+        public void RecordSimilarity_WithoutExplainInfo_Test() {
+            Init();
+
+            // record field names
+            string name = "name";
+            string dob = "dob";
+            string address = "dobAddress";
+
+            // Creating the request object
+            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address);
+            //creating response headers
+            string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
+            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+
+            Dictionary<string, RecordSimilarityField> left = new Dictionary<string, RecordSimilarityField> {
+                {address, new UnfieldedAddressRecord { Address = "123 Roadlane Ave" } },
+                {dob, new UnfieldedDateRecord { Date = "1993-04-16" } },
+                {name, new FieldedNameRecord { Text = "Ethan R", Language = "eng", LanguageOfOrigin = "eng", Script = "Latn", EntityType = "PERSON" } }
+            };
+
+            Dictionary<string, RecordSimilarityField> right = new Dictionary<string, RecordSimilarityField> {
+                {address, new FieldedAddressRecord { Address = "234 Roadlane Ave" } },
+                {dob, new FieldedDateRecord { Date = "1993/04/16" } },
+                {name, new UnfieldedNameRecord { Text = "Ivan R" } }
+            };
+
+            RecordSimilarityResult result = new RecordSimilarityResult(0.72, left, right, null, null);
+            List<RecordSimilarityResult> results = new List<RecordSimilarityResult> { result };
+
+            Dictionary<string, object> content = new Dictionary<string, object> {
+                { "results", results },
+                { "fields" , request.Fields } 
+            };
+
+            RecordSimilarityResponse expected = 
+                new RecordSimilarityResponse(request.Fields, results, null, responseHeaders, content, null);
+
+            String mockedContent = expected.ContentToString();
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
+            _mockHttp.When(_testUrl + "record-similarity").Respond(req => mockedMessage);
+            RecordSimilarityResponse response = _rosetteApi.RecordSimilarity(request);
+
+            Assert.AreEqual(expected, response);
+        }
+
+
 
 
         //------------------------- Transliteration ----------------------------------------
