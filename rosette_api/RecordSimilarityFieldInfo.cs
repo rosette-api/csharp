@@ -83,7 +83,7 @@ namespace rosette_api {
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.Type != null ? this.Type.GetHashCode() : 1;
+            int h0 = this.Type.GetHashCode();
             int h1 = this.Weight != null ? this.Weight.GetHashCode() : 1;
             return h0 ^ h1;
         }

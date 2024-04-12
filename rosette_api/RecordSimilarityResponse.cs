@@ -100,7 +100,7 @@ namespace rosette_api {
         private List<RecordSimilarityResult> parseResults(JArray resultsJSON)
         {
             List<RecordSimilarityResult> results = new List<RecordSimilarityResult>();
-            foreach (JObject result in resultsJSON)
+            foreach (JToken result in resultsJSON)
             {
                 results.Add(new RecordSimilarityResult(result, this.Fields));
             }
@@ -120,7 +120,8 @@ namespace rosette_api {
                 List<bool> conditions = new List<bool>() {
                     this.Fields != null && other.Fields != null ? Utilities.DictionaryEquals(this.Fields, other.Fields) : this.Fields == other.Fields,
                     this.Results != null && other.Results != null ? this.Results.SequenceEqual(other.Results) : this.Results == other.Results,
-                    this.ErrorMessage == other.ErrorMessage
+                    this.ErrorMessage == other.ErrorMessage,
+                    this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders
                 };
                 return conditions.All(condition => condition);
             }
@@ -140,7 +141,7 @@ namespace rosette_api {
             int h1 = this.Results != null ? this.Results.Aggregate<RecordSimilarityResult, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h2 = this.ErrorMessage != null ? this.ErrorMessage.GetHashCode() : 1;
             int h3 = this.ResponseHeaders != null ? this.ResponseHeaders.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2;
+            return h0 ^ h1 ^ h2 ^ h3;
         }
     }
 
@@ -207,7 +208,7 @@ namespace rosette_api {
         /// </summary>
         /// <param name="jsonResult">The raw Json Object of a result</param>
         /// <param name="fields">The fields of the response</param>
-        public RecordSimilarityResult(JObject jsonResult, Dictionary<string, RecordSimilarityFieldInfo> fields) {
+        public RecordSimilarityResult(JToken jsonResult, Dictionary<string, RecordSimilarityFieldInfo> fields) {
             Score = jsonResult[SCORE].ToObject<double>();
             Left = parseRecord(jsonResult[LEFT] as JObject, fields);
             Right = parseRecord(jsonResult[RIGHT] as JObject, fields);

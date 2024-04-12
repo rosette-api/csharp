@@ -81,8 +81,8 @@ namespace rosette_api
         /// <returns>The hashcode</returns>
         public override int GetHashCode()
         {
-            int h0 = this.Threshold != null ? this.Threshold.GetHashCode() : 1;
-            int h1 = this.IncludeExplainInfo != null ? this.IncludeExplainInfo.GetHashCode() : 1;
+            int h0 = this.Threshold.GetHashCode();
+            int h1 = this.IncludeExplainInfo.GetHashCode();
             return h0 ^ h1;
         }
 
