@@ -4,15 +4,17 @@
     <id>rosette_api</id>
     <version>1.29.0</version>
     <description>.Net (C#) Binding for Rosette API</description>
+<!--     TODO update these once there is a user on Nuget -->
     <authors>basistech</authors>
     <owners>Basis Technology Corp.</owners>
     <copyright>Copyright 2014-2023 Basis Technology Corp.</copyright>
+<!--     End TODO -->
     <projectUrl>https://www.babelstreet.com/rosette</projectUrl>
     <repository type="git" url="https://github.com/rosette-api/csharp" />
     <releaseNotes>https://github.com/rosette-api/csharp/wiki/Release-Notes</releaseNotes>
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <tags>RosetteAPI nlp natural language processing text analytics morphology entity extraction linking sentiment word vectors name similarity translation record</tags>
+    <tags>RosetteAPI address similarity analyze language babel street categories coreference entity extraction entity linking event extraction fuzzy matching language identification lemmatization match identity morphology name deduplication name similarity name translation ner nlp parts of speech record similarity relationships rosette semantic similarity semantic vectors sentiment analysis text analytics text embeddings tokenization</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="13.0.2" />
     </dependencies>

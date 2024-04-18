@@ -1,14 +1,12 @@
-<a href="https://www.babelstreet.com/rosette"><img src="https://s3.amazonaws.com/styleguide.basistech.com/logos/rosette-logo.png" width="181" height="47" /></a>
+<a href="https://www.babelstreet.com/rosette"><img src="https://charts.babelstreet.com/icon.png" width="47" height="60"/></a>
+# Rosette by Babel Street
 
 ---
 
 [![NuGet version](https://badge.fury.io/nu/rosette_api.svg)](https://badge.fury.io/nu/rosette_api)
 
-## Rosette API
-The Rosette Text Analytics Platform uses natural language processing, statistical modeling, and machine learning to
-analyze unstructured and semi-structured text across 364 language-encoding-script combinations, revealing valuable
-information and actionable data. Rosette provides endpoints for extracting entities and relationships, translating and
-comparing the similarity of names, categorizing and adding linguistic tags to text and more.
+Rosette uses natural language processing, statistical modeling, and machine learning to analyze unstructured and semi-structured text across hundreds of language-script combinations, revealing valuable information and actionable data. Rosette provides endpoints for extracting entities and relationships, translating and comparing the similarity of names, categorizing and adding linguistic tags to text and more. Rosette Server is the on-premises installation of Rosette, with access to Rosette's functions as RESTful web service endpoints. This solves cloud security worries and allows customization (models/indexes) as needed for your business.
+
 
 ## Rosette API Access
 - Rosette Cloud [Sign Up](https://developer.rosette.com/signup)
@@ -32,11 +30,10 @@ in the [examples](https://github.com/rosette-api/csharp/tree/develop/rosette_api
 
 #### Documentation & Support
 - [Binding API](https://rosette-api.github.io/csharp/)
-- [Rosette Platform API](https://developer.rosette.com/features-and-functions)
+- [Rosette Platform API](https://docs.babelstreet.com/API/en/index-en.html)
 - [Binding Release Notes](https://github.com/rosette-api/csharp/wiki/Release-Notes)
-- [Rosette Platform Release Notes](https://support.rosette.com/hc/en-us/articles/360018354971-Release-Notes)
-- [Binding/Rosette Platform Compatibility](https://developer.rosette.com/features-and-functions?csharp#)
-- [Support](https://support.rosette.com)
+- [Rosette Platform Release Notes](https://babelstreet.my.site.com/support/s/article/Rosette-Cloud-Release-Notes)
+- [Support](https://babelstreet.my.site.com/support/s/)
 - [Binding License: Apache 2.0](https://github.com/rosette-api/csharp/blob/develop/LICENSE.txt)
 
 ## Concurrency
