@@ -64,6 +64,33 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "PingResponse.cs", "PingResponse_8cs.html", [
       [ "PingResponse", "classrosette__api_1_1PingResponse.html", "classrosette__api_1_1PingResponse" ]
     ] ],
+    [ "RecordSimilarityConverter.cs", "RecordSimilarityConverter_8cs.html", [
+      [ "UnfieldedRecordSimilarityConverter", "classrosette__api_1_1UnfieldedRecordSimilarityConverter.html", "classrosette__api_1_1UnfieldedRecordSimilarityConverter" ]
+    ] ],
+    [ "RecordSimilarityField.cs", "RecordSimilarityField_8cs.html", [
+      [ "RecordSimilarityField", "interfacerosette__api_1_1RecordSimilarityField.html", null ],
+      [ "NameField", "classrosette__api_1_1NameField.html", "classrosette__api_1_1NameField" ],
+      [ "UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", "classrosette__api_1_1UnfieldedNameRecord" ],
+      [ "FieldedNameRecord", "classrosette__api_1_1FieldedNameRecord.html", "classrosette__api_1_1FieldedNameRecord" ],
+      [ "DateField", "classrosette__api_1_1DateField.html", "classrosette__api_1_1DateField" ],
+      [ "UnfieldedDateRecord", "classrosette__api_1_1UnfieldedDateRecord.html", "classrosette__api_1_1UnfieldedDateRecord" ],
+      [ "FieldedDateRecord", "classrosette__api_1_1FieldedDateRecord.html", "classrosette__api_1_1FieldedDateRecord" ],
+      [ "AddressField", "classrosette__api_1_1AddressField.html", "classrosette__api_1_1AddressField" ],
+      [ "UnfieldedAddressRecord", "classrosette__api_1_1UnfieldedAddressRecord.html", "classrosette__api_1_1UnfieldedAddressRecord" ],
+      [ "FieldedAddressRecord", "classrosette__api_1_1FieldedAddressRecord.html", "classrosette__api_1_1FieldedAddressRecord" ]
+    ] ],
+    [ "RecordSimilarityFieldInfo.cs", "RecordSimilarityFieldInfo_8cs.html", "RecordSimilarityFieldInfo_8cs" ],
+    [ "RecordSimilarityRequest.cs", "RecordSimilarityRequest_8cs.html", [
+      [ "RecordSimilarityProperties", "classrosette__api_1_1RecordSimilarityProperties.html", "classrosette__api_1_1RecordSimilarityProperties" ],
+      [ "RecordSimilarityRecords", "classrosette__api_1_1RecordSimilarityRecords.html", "classrosette__api_1_1RecordSimilarityRecords" ],
+      [ "RecordSimilarityRequest", "classrosette__api_1_1RecordSimilarityRequest.html", "classrosette__api_1_1RecordSimilarityRequest" ]
+    ] ],
+    [ "RecordSimilarityResponse.cs", "RecordSimilarityResponse_8cs.html", [
+      [ "RecordSimilarityResponse", "classrosette__api_1_1RecordSimilarityResponse.html", "classrosette__api_1_1RecordSimilarityResponse" ],
+      [ "RecordSimilarityResult", "classrosette__api_1_1RecordSimilarityResult.html", "classrosette__api_1_1RecordSimilarityResult" ],
+      [ "RecordSimilarityExplainInfo", "classrosette__api_1_1RecordSimilarityExplainInfo.html", "classrosette__api_1_1RecordSimilarityExplainInfo" ],
+      [ "RecordSimilarityFieldExplainInfo", "classrosette__api_1_1RecordSimilarityFieldExplainInfo.html", "classrosette__api_1_1RecordSimilarityFieldExplainInfo" ]
+    ] ],
     [ "RelationshipsResponse.cs", "RelationshipsResponse_8cs.html", [
       [ "RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", "classrosette__api_1_1RelationshipsResponse" ],
       [ "RosetteRelationship", "classrosette__api_1_1RosetteRelationship.html", "classrosette__api_1_1RosetteRelationship" ],
@@ -131,5 +158,8 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     ] ],
     [ "UnfieldedAddress.cs", "UnfieldedAddress_8cs.html", [
       [ "UnfieldedAddress", "classrosette__api_1_1UnfieldedAddress.html", "classrosette__api_1_1UnfieldedAddress" ]
+    ] ],
+    [ "Utilities.cs", "Utilities_8cs.html", [
+      [ "Utilities", "classrosette__api_1_1Utilities.html", "classrosette__api_1_1Utilities" ]
     ] ]
 ];

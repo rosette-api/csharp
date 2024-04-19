@@ -1,5 +1,14 @@
 var searchData=
 [
+  ['recordsimilarityexplaininfo',['RecordSimilarityExplainInfo',['../classrosette__api_1_1RecordSimilarityExplainInfo.html',1,'rosette_api']]],
+  ['recordsimilarityfield',['RecordSimilarityField',['../interfacerosette__api_1_1RecordSimilarityField.html',1,'rosette_api']]],
+  ['recordsimilarityfieldexplaininfo',['RecordSimilarityFieldExplainInfo',['../classrosette__api_1_1RecordSimilarityFieldExplainInfo.html',1,'rosette_api']]],
+  ['recordsimilarityfieldinfo',['RecordSimilarityFieldInfo',['../classrosette__api_1_1RecordSimilarityFieldInfo.html',1,'rosette_api']]],
+  ['recordsimilarityproperties',['RecordSimilarityProperties',['../classrosette__api_1_1RecordSimilarityProperties.html',1,'rosette_api']]],
+  ['recordsimilarityrecords',['RecordSimilarityRecords',['../classrosette__api_1_1RecordSimilarityRecords.html',1,'rosette_api']]],
+  ['recordsimilarityrequest',['RecordSimilarityRequest',['../classrosette__api_1_1RecordSimilarityRequest.html',1,'rosette_api']]],
+  ['recordsimilarityresponse',['RecordSimilarityResponse',['../classrosette__api_1_1RecordSimilarityResponse.html',1,'rosette_api']]],
+  ['recordsimilarityresult',['RecordSimilarityResult',['../classrosette__api_1_1RecordSimilarityResult.html',1,'rosette_api']]],
   ['relationshipsresponse',['RelationshipsResponse',['../classrosette__api_1_1RelationshipsResponse.html',1,'rosette_api']]],
   ['responseheaders',['ResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html',1,'rosette_api']]],
   ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api']]],

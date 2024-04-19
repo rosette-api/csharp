@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['calculatedweight',['CalculatedWeight',['../classrosette__api_1_1RecordSimilarityFieldExplainInfo.html#ac508e5411b91b804c3ef330ec2dcf298',1,'rosette_api::RecordSimilarityFieldExplainInfo']]],
+  ['canconvert',['CanConvert',['../classrosette__api_1_1UnfieldedRecordSimilarityConverter.html#a57fb827f1668a448b465dae33394a5d7',1,'rosette_api::UnfieldedRecordSimilarityConverter']]],
+  ['canread',['CanRead',['../classrosette__api_1_1UnfieldedRecordSimilarityConverter.html#aa188dd82ced0dfb1f2b38c990d783450',1,'rosette_api::UnfieldedRecordSimilarityConverter']]],
   ['capi',['CAPI',['../classrosette__api_1_1CAPI.html',1,'rosette_api.CAPI'],['../classrosette__api_1_1CAPI.html#a37f291cc373c9f5aa2fb73771fc209cc',1,'rosette_api.CAPI.CAPI()']]],
   ['capi_2ecs',['CAPI.cs',['../CAPI_8cs.html',1,'']]],
   ['categories',['Categories',['../classrosette__api_1_1CategoriesResponse.html#a631cb221d828571764775aae8f84692c',1,'rosette_api.CategoriesResponse.Categories()'],['../classrosette__api_1_1CAPI.html#aaf8f36f90de8d55a9e78b3a55d3d8649',1,'rosette_api.CAPI.Categories(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#acf24515566ee148da12c02d438670c07',1,'rosette_api.CAPI.Categories(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a361e724301ee791cb9d89cb6c0ce33f9',1,'rosette_api.CAPI.Categories(RosetteFile file)']]],

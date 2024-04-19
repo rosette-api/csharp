@@ -34,9 +34,33 @@ var hierarchy =
       [ "rosette_api.SentimentResponse", "classrosette__api_1_1SentimentResponse.html", null ],
       [ "rosette_api.SentimentResponse.RosetteSentiment", "classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html", null ]
     ] ],
+    [ "JsonConverter", null, [
+      [ "rosette_api.UnfieldedRecordSimilarityConverter", "classrosette__api_1_1UnfieldedRecordSimilarityConverter.html", null ]
+    ] ],
     [ "rosette_api.LanguageDetection", "classrosette__api_1_1LanguageDetection.html", null ],
     [ "rosette_api.MorphologyItem", "classrosette__api_1_1MorphologyItem.html", null ],
     [ "rosette_api.Name", "classrosette__api_1_1Name.html", null ],
+    [ "rosette_api.RecordSimilarityExplainInfo", "classrosette__api_1_1RecordSimilarityExplainInfo.html", null ],
+    [ "rosette_api.RecordSimilarityField", "interfacerosette__api_1_1RecordSimilarityField.html", [
+      [ "rosette_api.AddressField", "classrosette__api_1_1AddressField.html", [
+        [ "rosette_api.FieldedAddressRecord", "classrosette__api_1_1FieldedAddressRecord.html", null ],
+        [ "rosette_api.UnfieldedAddressRecord", "classrosette__api_1_1UnfieldedAddressRecord.html", null ]
+      ] ],
+      [ "rosette_api.DateField", "classrosette__api_1_1DateField.html", [
+        [ "rosette_api.FieldedDateRecord", "classrosette__api_1_1FieldedDateRecord.html", null ],
+        [ "rosette_api.UnfieldedDateRecord", "classrosette__api_1_1UnfieldedDateRecord.html", null ]
+      ] ],
+      [ "rosette_api.NameField", "classrosette__api_1_1NameField.html", [
+        [ "rosette_api.FieldedNameRecord", "classrosette__api_1_1FieldedNameRecord.html", null ],
+        [ "rosette_api.UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", null ]
+      ] ]
+    ] ],
+    [ "rosette_api.RecordSimilarityFieldExplainInfo", "classrosette__api_1_1RecordSimilarityFieldExplainInfo.html", null ],
+    [ "rosette_api.RecordSimilarityFieldInfo", "classrosette__api_1_1RecordSimilarityFieldInfo.html", null ],
+    [ "rosette_api.RecordSimilarityProperties", "classrosette__api_1_1RecordSimilarityProperties.html", null ],
+    [ "rosette_api.RecordSimilarityRecords", "classrosette__api_1_1RecordSimilarityRecords.html", null ],
+    [ "rosette_api.RecordSimilarityRequest", "classrosette__api_1_1RecordSimilarityRequest.html", null ],
+    [ "rosette_api.RecordSimilarityResult", "classrosette__api_1_1RecordSimilarityResult.html", null ],
     [ "rosette_api.ResponseHeaders", "classrosette__api_1_1ResponseHeaders.html", null ],
     [ "rosette_api.RosetteCategory", "classrosette__api_1_1RosetteCategory.html", null ],
     [ "rosette_api.RosetteExtensions", "classrosette__api_1_1RosetteExtensions.html", null ],
@@ -52,6 +76,7 @@ var hierarchy =
       [ "rosette_api.NameDeduplicationResponse", "classrosette__api_1_1NameDeduplicationResponse.html", null ],
       [ "rosette_api.NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", null ],
       [ "rosette_api.PingResponse", "classrosette__api_1_1PingResponse.html", null ],
+      [ "rosette_api.RecordSimilarityResponse", "classrosette__api_1_1RecordSimilarityResponse.html", null ],
       [ "rosette_api.RelationshipsResponse", "classrosette__api_1_1RelationshipsResponse.html", null ],
       [ "rosette_api.SemanticVectorsResponse", "classrosette__api_1_1SemanticVectorsResponse.html", null ],
       [ "rosette_api.SentenceTaggingResponse", "classrosette__api_1_1SentenceTaggingResponse.html", null ],
@@ -65,5 +90,6 @@ var hierarchy =
       [ "rosette_api.TransliterationResponse", "classrosette__api_1_1TransliterationResponse.html", null ]
     ] ],
     [ "rosette_api.SyntaxDependenciesResponse.SentenceWithDependencies", "classrosette__api_1_1SyntaxDependenciesResponse_1_1SentenceWithDependencies.html", null ],
-    [ "rosette_api.SimilarTerm", "classrosette__api_1_1SimilarTerm.html", null ]
+    [ "rosette_api.SimilarTerm", "classrosette__api_1_1SimilarTerm.html", null ],
+    [ "rosette_api.Utilities", "classrosette__api_1_1Utilities.html", null ]
 ];

@@ -1,8 +1,9 @@
 var searchData=
 [
   ['salience',['Salience',['../classrosette__api_1_1Concept.html#aacda24a69f88fe5bfe700aba53e44846',1,'rosette_api.Concept.Salience()'],['../classrosette__api_1_1KeyPhrase.html#a2cb67e11ea7ccc5d71438aef3fcfceb7',1,'rosette_api.KeyPhrase.Salience()'],['../classrosette__api_1_1RosetteEntity.html#abcabb8c27104b36a5d78b91f483801cf',1,'rosette_api.RosetteEntity.Salience()']]],
-  ['score',['Score',['../classrosette__api_1_1RosetteCategory.html#ae4aee96a183f027fd66f2c2b7160264d',1,'rosette_api::RosetteCategory']]],
-  ['script',['script',['../classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd',1,'rosette_api::Name']]],
+  ['score',['Score',['../classrosette__api_1_1RosetteCategory.html#ae4aee96a183f027fd66f2c2b7160264d',1,'rosette_api.RosetteCategory.Score()'],['../classrosette__api_1_1RecordSimilarityResult.html#a583b24d978d94d197d2cc15b546c916b',1,'rosette_api.RecordSimilarityResult.Score()']]],
+  ['scoredfields',['ScoredFields',['../classrosette__api_1_1RecordSimilarityExplainInfo.html#ad4d5daf2a8861202e5aaeb548de1a961',1,'rosette_api::RecordSimilarityExplainInfo']]],
+  ['script',['Script',['../classrosette__api_1_1FieldedNameRecord.html#aa09ff832d1478c2696ef2feb504579f8',1,'rosette_api.FieldedNameRecord.Script()'],['../classrosette__api_1_1Name.html#a5e9aba5fc1f32ad0fcf6e0bf14ce7afd',1,'rosette_api.Name.script()']]],
   ['sentences',['Sentences',['../classrosette__api_1_1SentenceTaggingResponse.html#ae5a7a448ae626b54ddff2172286806d8',1,'rosette_api.SentenceTaggingResponse.Sentences()'],['../classrosette__api_1_1SyntaxDependenciesResponse.html#a3a3c56112017b2345df8507ebd7410b8',1,'rosette_api.SyntaxDependenciesResponse.Sentences()']]],
   ['sentiment',['Sentiment',['../classrosette__api_1_1RosetteSentimentEntity.html#aedfed5df631beca144366e0880067159',1,'rosette_api::RosetteSentimentEntity']]],
   ['similarity',['Similarity',['../classrosette__api_1_1SimilarTerm.html#a80a9ef530ff412e3c9e4a3cfde5028eb',1,'rosette_api::SimilarTerm']]],

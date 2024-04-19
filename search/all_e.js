@@ -17,5 +17,6 @@ var searchData=
   ['postcode',['postCode',['../classrosette__api_1_1Address.html#afde3c879c499e9b152b248353b9a9409',1,'rosette_api.Address.postCode()'],['../classrosette__api_1_1FieldedAddress.html#aa7ae7c698fe3c8d2f1879574c0531898',1,'rosette_api.FieldedAddress.postCode()']]],
   ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]],
   ['printcontent',['PrintContent',['../classrosette__api_1_1RosetteResponse.html#a53f0765bb3ad6f56962a8c5eecc9f2a7',1,'rosette_api::RosetteResponse']]],
-  ['product',['PRODUCT',['../classrosette__api_1_1RosetteEntity.html#aa4d61650e314d8246630fa653dc8435f',1,'rosette_api::RosetteEntity']]]
+  ['product',['PRODUCT',['../classrosette__api_1_1RosetteEntity.html#aa4d61650e314d8246630fa653dc8435f',1,'rosette_api::RosetteEntity']]],
+  ['properties',['Properties',['../classrosette__api_1_1RecordSimilarityRequest.html#afe251bcfeb1ba26ca4e90653ea674748',1,'rosette_api::RecordSimilarityRequest']]]
 ];

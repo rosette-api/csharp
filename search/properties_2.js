@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['calculatedweight',['CalculatedWeight',['../classrosette__api_1_1RecordSimilarityFieldExplainInfo.html#ac508e5411b91b804c3ef330ec2dcf298',1,'rosette_api::RecordSimilarityFieldExplainInfo']]],
+  ['canread',['CanRead',['../classrosette__api_1_1UnfieldedRecordSimilarityConverter.html#aa188dd82ced0dfb1f2b38c990d783450',1,'rosette_api::UnfieldedRecordSimilarityConverter']]],
   ['categories',['Categories',['../classrosette__api_1_1CategoriesResponse.html#a631cb221d828571764775aae8f84692c',1,'rosette_api::CategoriesResponse']]],
   ['city',['city',['../classrosette__api_1_1Address.html#acd9d5344a1969613e841a8c99a1a0ba9',1,'rosette_api.Address.city()'],['../classrosette__api_1_1FieldedAddress.html#a74212580f6bdceb13b978ecf2d9e80fc',1,'rosette_api.FieldedAddress.city()']]],
   ['citydistrict',['cityDistrict',['../classrosette__api_1_1Address.html#a299dc00f6e4343f6ff1dd88521b1fea2',1,'rosette_api.Address.cityDistrict()'],['../classrosette__api_1_1FieldedAddress.html#a397221bf1eb0f3c982da785b83e4a4c2',1,'rosette_api.FieldedAddress.cityDistrict()']]],

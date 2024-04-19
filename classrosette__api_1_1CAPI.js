@@ -33,6 +33,7 @@ var classrosette__api_1_1CAPI =
     [ "NameTranslation", "classrosette__api_1_1CAPI.html#a5b2b750e5df21b92fe77ac9acc70d481", null ],
     [ "NameTranslation", "classrosette__api_1_1CAPI.html#ac5f7ec230324a1dca76b8809cd27c173", null ],
     [ "Ping", "classrosette__api_1_1CAPI.html#ae463ccbd86974beb1b21bc9ec7fdab5e", null ],
+    [ "RecordSimilarity", "classrosette__api_1_1CAPI.html#ac4fed0475dc2ddb408c9849d0f22eb94", null ],
     [ "Relationships", "classrosette__api_1_1CAPI.html#a74e9f0d663db322cb974733eeb77e0ea", null ],
     [ "Relationships", "classrosette__api_1_1CAPI.html#a0f9f8675191ef4e48b1a9989989ad32c", null ],
     [ "Relationships", "classrosette__api_1_1CAPI.html#a5301166c8408313c0c82bdd4c3a6ca9d", null ],
