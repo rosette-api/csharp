@@ -72,6 +72,11 @@
     <Compile Include="NameSimilarityResponse.cs" />
     <Compile Include="PingResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordSimilarityConverter.cs" />
+    <Compile Include="RecordSimilarityField.cs" />
+    <Compile Include="RecordSimilarityFieldInfo.cs" />
+    <Compile Include="RecordSimilarityRequest.cs" />
+    <Compile Include="RecordSimilarityResponse.cs" />
     <Compile Include="RelationshipsResponse.cs" />
     <Compile Include="ResponseHeaders.cs" />
     <Compile Include="RosetteEntity.cs" />
@@ -92,6 +97,7 @@
     <Compile Include="TranslateNamesResponse.cs" />
     <Compile Include="TransliterationResponse.cs" />
     <Compile Include="UnfieldedAddress.cs" />
+    <Compile Include="Utilities.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
