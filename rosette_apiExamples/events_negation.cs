@@ -33,7 +33,7 @@ namespace rosette_apiExamples
                 CAPI EventsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string events_text_data = "Bill Gates went to the store.";
                 //The results of the API call will come back in the form of a Dictionary
-                EventsCAPI.SetOption("negation", "Only positive");
+                EventsCAPI.SetOption("negation", "ONLY_POSITIVE");
                 EventsResponse response = EventsCAPI.Event(events_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));

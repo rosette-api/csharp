@@ -63,7 +63,10 @@ node ("docker-light") {
                              mono /opt/sonar-scanner/SonarScanner.MSBuild.exe end /d:sonar.login=\"${env.SONAR_AUTH_TOKEN}\" && \
                              echo && \
                              echo [INFO] Running unit tests && \
-                             mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll\""
+                             mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll && \
+                             echo && \
+                             echo [INFO] Re-permission files for cleanup. && \
+                             chown -R 9960:9960 /source\""
 
                              // TODO:  Finish coverage data gathering for Sonar.
                              ///opt/maven-basis/bin/mvn --batch-mode clean install sonar:sonar $mySonarOpts\""

@@ -32,7 +32,7 @@ namespace rosette_api
     /// <summary>C# Rosette API.
     /// <para>
     /// Primary class for interfacing with the Rosette API
-    /// @copyright 2014-2017 Basis Technology Corporation.
+    /// @copyright 2014-2024 Basis Technology Corporation.
     /// Licensed under the Apache License, Version 2.0 (the "License"); you may not use file except in compliance
     /// with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
     /// Unless required by applicable law or agreed to in writing, software distributed under the License is
@@ -676,6 +676,21 @@ namespace rosette_api
         {
             _uri = "morphology/" + feature.MorphologyEndpoint();
             return Process<MorphologyResponse>(file);
+        }
+
+        /// <summary>RecordSimilarity
+        /// <para>
+        /// (POST)RecordSimilarity Endpoint: Returns the result of matching 2 lists of records.
+        /// </para>
+        /// </summary>
+        /// <param name="request">RecordSimilarityRequest: RecordSimilarityRequest object to send</param>
+        /// <returns>RecordSimilarityResponse containing the results of the request.
+        /// </returns>
+        public RecordSimilarityResponse RecordSimilarity(RecordSimilarityRequest request)
+        {
+            _uri = "record-similarity";
+
+            return GetResponse<RecordSimilarityResponse>(JsonConvert.SerializeObject(request, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
         /// <summary>NameSimilarity

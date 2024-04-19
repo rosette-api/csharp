@@ -42,6 +42,12 @@ namespace rosette_apiExamples
 
                 // Entities with full ADM
                 EntitiesCAPI.SetUrlParameter("output", "rosette");
+
+                // Within a document, there may be multiple references to a single entity.
+                // indoc-coref server chains together all mentions to an entity.
+                // Uncomment the next line to enable the entity extraction to use the indoc-coref server
+                // EntitiesCAPI.SetOption("useIndocServer", true);
+
                 response = EntitiesCAPI.Entity(entities_text_data);
                 // response.Content contains the IDictionary results of the full ADM.
                 // PrintContent() is a provided method to print the Dictionary to the console
