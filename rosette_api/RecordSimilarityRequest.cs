@@ -14,19 +14,33 @@ namespace rosette_api
     {
         private const string THRESHOLD = "threshold";
         private const string INCLUDE_EXPLAIN_INFO = "includeExplainInfo";
+        private const string PARAMETERS = "parameters";
+        private const string PARAMETER_UNIVERSE = "parameterUniverse";
 
         /// <summary>
-        /// Gets or sets the the record similarity request's score treshold
+        /// Gets or sets the record similarity request's score treshold
         /// </summary>
         [JsonProperty(PropertyName = THRESHOLD)]
         public double Threshold { get; set; } = 0.0;
 
 
         /// <summary>
-        /// Gets or sets the the record similarity request's include explain info parameter
+        /// Gets or sets the record similarity request's include explain info parameter
         /// </summary>
         [JsonProperty(PropertyName = INCLUDE_EXPLAIN_INFO)]
         public bool IncludeExplainInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the record similarity request's parameters
+        /// </summary>
+        [JsonProperty(PropertyName = PARAMETERS)]
+        public Dictionary<string, string> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the record similarity request's parameter universe
+        /// </summary>
+        [JsonProperty(PropertyName = PARAMETER_UNIVERSE)]
+        public string ParameterUniverse { get; set; }
 
         /// <summary>
         /// No-args constructor
@@ -34,12 +48,14 @@ namespace rosette_api
         public RecordSimilarityProperties() { }
 
         /// <summary>
-        /// Includes explain info constructor. Sets the treshold to 0.0.
+        /// Includes explain info constructor. Sets the threshold to 0.0.
         /// </summary>
         /// <param name="includeExplainInfo">The include explain info parameter</param>
         public RecordSimilarityProperties(bool includeExplainInfo) {
             this.IncludeExplainInfo = includeExplainInfo;
             this.Threshold = 0.0;
+            this.Parameters = new Dictionary<string, string>();
+            this.ParameterUniverse = "";
         }
 
         /// <summary>
@@ -47,10 +63,14 @@ namespace rosette_api
         /// </summary>
         /// <param name="threshold">The score threshold</param>
         /// <param name="includeExplainInfo">The include explain info parameter</param>
-        public RecordSimilarityProperties(double threshold, bool includeExplainInfo)
+        /// <param name="parameters">A map of string parameter names to string parameter values</param>
+        /// <param name="parameterUniverse">The parameter universe to use</param>
+        public RecordSimilarityProperties(double threshold, bool includeExplainInfo, Dictionary<string, string> parameters, string parameterUniverse)
         {
             this.Threshold = threshold;
             this.IncludeExplainInfo = includeExplainInfo;
+            this.Parameters = parameters;
+            this.ParameterUniverse = parameterUniverse;
         }
 
         /// <summary>
@@ -65,7 +85,10 @@ namespace rosette_api
                 RecordSimilarityProperties other = obj as RecordSimilarityProperties;
                 List<bool> conditions = new List<bool>() {
                     this.Threshold == other.Threshold,
-                    this.IncludeExplainInfo == other.IncludeExplainInfo
+                    this.IncludeExplainInfo == other.IncludeExplainInfo,
+                    this.Parameters != null && other.Parameters != null ?
+                        Utilities.DictionaryEquals(this.Parameters, other.Parameters) : this.Parameters == other.Parameters,
+                    this.ParameterUniverse == other.ParameterUniverse
                 };
                 return conditions.All(condition => condition);
             }
@@ -83,7 +106,9 @@ namespace rosette_api
         {
             int h0 = this.Threshold.GetHashCode();
             int h1 = this.IncludeExplainInfo.GetHashCode();
-            return h0 ^ h1;
+            int h2 = this.Parameters != null ? this.Parameters.GetHashCode() : 1;
+            int h3 = this.ParameterUniverse != null ? this.ParameterUniverse.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3;
         }
 
         /// <summary>

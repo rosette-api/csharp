@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace rosette_api {
-    /// <summary>RecordFieldType enum
+    /// <summary>RecordFieldType
     /// <para>
     /// The possible record types that can be used in the Record Similarity endpoint
     /// </para>
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RecordFieldType
+    public static class RecordFieldType
     {
-        
-        rni_name, rni_date, rni_address
+        public const string RniName = "rni_name";
+        public const string RniDate = "rni_date";
+        public const string RniAddress = "rni_address";
     }
 
     /// <summary>
@@ -24,18 +24,25 @@ namespace rosette_api {
     {
         private const string TYPE = "type";
         private const string WEIGHT = "weight";
+        private const string SCORE_IF_NULL = "scoreIfNull";
 
         /// <summary>
         /// Gets or sets the record's field type
         /// </summary>
         [JsonProperty(PropertyName = TYPE)]
-        public RecordFieldType Type { get; set; }
+        public string Type { get; set; }
         
         /// <summary>
         /// Gets or sets the record's field weight
         /// </summary>
         [JsonProperty(PropertyName = WEIGHT)]
         public double? Weight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the record's field scoreIfNull
+        /// </summary>
+        [JsonProperty(PropertyName = SCORE_IF_NULL)]
+        public double? ScoreIfNull { get; set; }
 
         /// <summary>
         /// No-args constructor
@@ -47,10 +54,12 @@ namespace rosette_api {
         /// </summary>
         /// <param name="type">The record's field type</param>
         /// <param name="weight">The record's field weight</param>
-        public RecordSimilarityFieldInfo(RecordFieldType type, double? weight)
+        /// <param name="scoreIfNull">The record's field scoreIfNull</param>
+        public RecordSimilarityFieldInfo(string type, double? weight, double? scoreIfNull)
         {
             this.Type = type;
             this.Weight = weight;
+            this.ScoreIfNull = scoreIfNull;
         }
 
 
@@ -66,7 +75,8 @@ namespace rosette_api {
                 RecordSimilarityFieldInfo other = obj as RecordSimilarityFieldInfo;
                 List<bool> conditions = new List<bool>() {
                     this.Type == other.Type,
-                    this.Weight == other.Weight
+                    this.Weight == other.Weight,
+                    this.ScoreIfNull == other.ScoreIfNull
                 };
                 return conditions.All(condition => condition);
             }
@@ -85,7 +95,8 @@ namespace rosette_api {
         {
             int h0 = this.Type.GetHashCode();
             int h1 = this.Weight != null ? this.Weight.GetHashCode() : 1;
-            return h0 ^ h1;
+            int h2 = this.ScoreIfNull != null ? this.ScoreIfNull.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2;
         }
 
         /// <summary>
