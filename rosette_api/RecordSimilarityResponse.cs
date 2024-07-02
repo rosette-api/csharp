@@ -268,7 +268,7 @@ namespace rosette_api {
             int h3 = this.ExplainInfo != null ? this.ExplainInfo.GetHashCode() : 1;
             int h4 = this.Info != null ? this.Info.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
             int h5 = this.Error != null ? this.Error.Aggregate<string, int>(1, (seed, item) => seed ^ item.GetHashCode()) : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5;
         }
     }
 
