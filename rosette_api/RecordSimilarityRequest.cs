@@ -18,7 +18,7 @@ namespace rosette_api
         private const string PARAMETER_UNIVERSE = "parameterUniverse";
 
         /// <summary>
-        /// Gets or sets the record similarity request's score treshold
+        /// Gets or sets the record similarity request's score threshold
         /// </summary>
         [JsonProperty(PropertyName = THRESHOLD)]
         public double? Threshold { get; set; } = 0.0;
