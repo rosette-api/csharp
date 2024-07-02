@@ -21,14 +21,14 @@ namespace rosette_api
         /// Gets or sets the record similarity request's score treshold
         /// </summary>
         [JsonProperty(PropertyName = THRESHOLD)]
-        public double Threshold { get; set; } = 0.0;
+        public double? Threshold { get; set; } = 0.0;
 
 
         /// <summary>
         /// Gets or sets the record similarity request's include explain info parameter
         /// </summary>
         [JsonProperty(PropertyName = INCLUDE_EXPLAIN_INFO)]
-        public bool IncludeExplainInfo { get; set; }
+        public bool? IncludeExplainInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the record similarity request's parameters
