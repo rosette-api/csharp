@@ -695,8 +695,9 @@ namespace rosette_api {
     /// <summary>
     /// Class for representing an unknown field
     /// </summary>
-    [JsonObject(MemberSerialization.OptOut)]
-    public class UnknownField : RecordSimilarityField
+
+    [JsonConverter(typeof(UnfieldedRecordSimilarityConverter))]
+    public class UnknownFieldRecord : RecordSimilarityField
     {
         public const string DATA = "data";
 
@@ -710,7 +711,7 @@ namespace rosette_api {
         /// Constructor
         /// </summary>
         /// <param name="data">The data as a JToken</param>
-        public UnknownField(JToken data)
+        public UnknownFieldRecord(JToken data)
         {
             this.Data = data;
         }
@@ -722,9 +723,9 @@ namespace rosette_api {
         /// <returns>True if equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is UnknownField)
+            if (obj is UnknownFieldRecord)
             {
-                UnknownField other = obj as UnknownField;
+                UnknownFieldRecord other = obj as UnknownFieldRecord;
                 return JToken.DeepEquals(this.Data, other.Data);
             }
             else

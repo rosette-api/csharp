@@ -226,7 +226,7 @@ namespace rosette_api {
             {
                 string fieldName = property.Name;
                 JToken fieldValue = property.Value;
-                recordFields.Add(fieldName, new UnknownField(fieldValue));
+                recordFields.Add(fieldName, new UnknownFieldRecord(fieldValue));
             }
             return recordFields;
         }
