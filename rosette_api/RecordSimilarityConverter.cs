@@ -15,7 +15,12 @@ namespace rosette_api {
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.ToString());
+            if (value is UnknownFieldRecord)
+            {
+                serializer.Serialize(writer, ((UnknownFieldRecord)value).Data);
+            } else {
+                writer.WriteValue(value.ToString());
+            }
         }
 
         public override bool CanRead
