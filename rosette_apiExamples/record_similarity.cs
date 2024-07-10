@@ -39,10 +39,10 @@ namespace rosette_apiExamples
                 // Creating the request object
                 Dictionary<string, RecordSimilarityFieldInfo> fields = new Dictionary<string, RecordSimilarityFieldInfo>
                 {
-                    { primaryNameField, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_name, Weight = 0.5 } },
-                    { dobField, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_date, Weight = 0.2 } },
-                    { dob2Field, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_date, Weight = 0.1 } },
-                    { addrField, new RecordSimilarityFieldInfo { Type = RecordFieldType.rni_address, Weight = 0.5 } }
+                    { primaryNameField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniName, Weight = 0.5 } },
+                    { dobField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniDate, Weight = 0.2 } },
+                    { dob2Field, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniDate, Weight = 0.1 } },
+                    { addrField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniAddress, Weight = 0.5 } }
                 };
 
                 RecordSimilarityProperties properties = new RecordSimilarityProperties { Threshold = 0.7, IncludeExplainInfo = false };
@@ -54,7 +54,7 @@ namespace rosette_apiExamples
                         {
                             { primaryNameField, new FieldedNameRecord { Text = "Ethan R", Language = "eng", LanguageOfOrigin = "eng", Script = "Latn", EntityType = "PERSON"} },
                             { dobField, new UnfieldedDateRecord { Date = dobHyphen} },
-                            { dob2Field, new FieldedDateRecord { Date = "1993/04/16"} },
+                            { dob2Field, new FieldedDateRecord { Date = "04161993", Format = "MMddyyyy"} },
                             { addrField, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"}}
                         },
                         new Dictionary<string, RecordSimilarityField>
@@ -75,7 +75,7 @@ namespace rosette_apiExamples
                             { primaryNameField, new UnfieldedNameRecord { Text = "Ivan R"} },
                             { dobField, new FieldedDateRecord { Date = dobHyphen} },
                             { dob2Field, new FieldedDateRecord { Date = "1993/04/16"} },
-                            { addrField, new FieldedAddressRecord { Address = "123 Roadlane Ave"} }
+                            { addrField, new FieldedAddressRecord { HouseNumber = "123", Road = "Roadlane Ave"} }
                         }
                     }
                 };
