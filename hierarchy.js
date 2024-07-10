@@ -40,6 +40,7 @@ var hierarchy =
     [ "rosette_api.LanguageDetection", "classrosette__api_1_1LanguageDetection.html", null ],
     [ "rosette_api.MorphologyItem", "classrosette__api_1_1MorphologyItem.html", null ],
     [ "rosette_api.Name", "classrosette__api_1_1Name.html", null ],
+    [ "rosette_api.RecordFieldType", "classrosette__api_1_1RecordFieldType.html", null ],
     [ "rosette_api.RecordSimilarityExplainInfo", "classrosette__api_1_1RecordSimilarityExplainInfo.html", null ],
     [ "rosette_api.RecordSimilarityField", "interfacerosette__api_1_1RecordSimilarityField.html", [
       [ "rosette_api.AddressField", "classrosette__api_1_1AddressField.html", [
@@ -53,7 +54,8 @@ var hierarchy =
       [ "rosette_api.NameField", "classrosette__api_1_1NameField.html", [
         [ "rosette_api.FieldedNameRecord", "classrosette__api_1_1FieldedNameRecord.html", null ],
         [ "rosette_api.UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", null ]
-      ] ]
+      ] ],
+      [ "rosette_api.UnknownFieldRecord", "classrosette__api_1_1UnknownFieldRecord.html", null ]
     ] ],
     [ "rosette_api.RecordSimilarityFieldExplainInfo", "classrosette__api_1_1RecordSimilarityFieldExplainInfo.html", null ],
     [ "rosette_api.RecordSimilarityFieldInfo", "classrosette__api_1_1RecordSimilarityFieldInfo.html", null ],

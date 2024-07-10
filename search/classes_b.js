@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['recordfieldtype',['RecordFieldType',['../classrosette__api_1_1RecordFieldType.html',1,'rosette_api']]],
   ['recordsimilarityexplaininfo',['RecordSimilarityExplainInfo',['../classrosette__api_1_1RecordSimilarityExplainInfo.html',1,'rosette_api']]],
   ['recordsimilarityfield',['RecordSimilarityField',['../interfacerosette__api_1_1RecordSimilarityField.html',1,'rosette_api']]],
   ['recordsimilarityfieldexplaininfo',['RecordSimilarityFieldExplainInfo',['../classrosette__api_1_1RecordSimilarityFieldExplainInfo.html',1,'rosette_api']]],

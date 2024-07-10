@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nationality',['NATIONALITY',['../classrosette__api_1_1RosetteEntity.html#ae0e600210fa979a88950b6fad6df0f59',1,'rosette_api::RosetteEntity']]]
+  ['island',['ISLAND',['../classrosette__api_1_1FieldedAddressRecord.html#abfd4225248c6865709875002ba7fceca',1,'rosette_api::FieldedAddressRecord']]]
 ];

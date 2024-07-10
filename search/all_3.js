@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data',['DATA',['../classrosette__api_1_1UnknownFieldRecord.html#afe5f965049206bf2491c1e63255f1e2a',1,'rosette_api.UnknownFieldRecord.DATA()'],['../classrosette__api_1_1UnknownFieldRecord.html#a28a831339ae80134ddcf8ae6ca768b99',1,'rosette_api.UnknownFieldRecord.Data()']]],
   ['dataspan',['DataSpan',['../classrosette__api_1_1EventRole.html#a3befaa5ebc7066a62cb0b7b2d03a2075',1,'rosette_api.EventRole.DataSpan()'],['../classrosette__api_1_1NegationCue.html#ac9ee9fff44b9046d836d9a5112344080',1,'rosette_api.NegationCue.DataSpan()']]],
   ['date',['DATE',['../classrosette__api_1_1DateField.html#ad98dfdb461c57fc5b3f2d1a67a6e01d6',1,'rosette_api.DateField.DATE()'],['../classrosette__api_1_1RosetteEntity.html#a9edf7d96c2c269e96f0dcd7ba4cda131',1,'rosette_api.RosetteEntity.DATE()'],['../classrosette__api_1_1DateField.html#a82f279b9ddaa1adb228ebcbdc935989b',1,'rosette_api.DateField.Date()'],['../classrosette__api_1_1ResponseHeaders.html#ab4141f55e9ccad896d92c36941e211c1',1,'rosette_api.ResponseHeaders.Date()']]],
   ['datefield',['DateField',['../classrosette__api_1_1DateField.html',1,'rosette_api']]],

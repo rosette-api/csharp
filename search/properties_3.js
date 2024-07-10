@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data',['Data',['../classrosette__api_1_1UnknownFieldRecord.html#a28a831339ae80134ddcf8ae6ca768b99',1,'rosette_api::UnknownFieldRecord']]],
   ['dataspan',['DataSpan',['../classrosette__api_1_1EventRole.html#a3befaa5ebc7066a62cb0b7b2d03a2075',1,'rosette_api.EventRole.DataSpan()'],['../classrosette__api_1_1NegationCue.html#ac9ee9fff44b9046d836d9a5112344080',1,'rosette_api.NegationCue.DataSpan()']]],
   ['date',['Date',['../classrosette__api_1_1DateField.html#a82f279b9ddaa1adb228ebcbdc935989b',1,'rosette_api::DateField']]],
   ['dbpediatype',['DBpediaType',['../classrosette__api_1_1RosetteEntity.html#a3a984721b56d4e4e54d42ffed4e6fc1c',1,'rosette_api::RosetteEntity']]],

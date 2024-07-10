@@ -1,7 +1,7 @@
 var namespacerosette__api =
 [
     [ "Address", "classrosette__api_1_1Address.html", "classrosette__api_1_1Address" ],
-    [ "AddressField", "classrosette__api_1_1AddressField.html", "classrosette__api_1_1AddressField" ],
+    [ "AddressField", "classrosette__api_1_1AddressField.html", null ],
     [ "AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", "classrosette__api_1_1AddressSimilarityResponse" ],
     [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
@@ -31,6 +31,7 @@ var namespacerosette__api =
     [ "NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", "classrosette__api_1_1NameSimilarityResponse" ],
     [ "NegationCue", "classrosette__api_1_1NegationCue.html", "classrosette__api_1_1NegationCue" ],
     [ "PingResponse", "classrosette__api_1_1PingResponse.html", "classrosette__api_1_1PingResponse" ],
+    [ "RecordFieldType", "classrosette__api_1_1RecordFieldType.html", "classrosette__api_1_1RecordFieldType" ],
     [ "RecordSimilarityExplainInfo", "classrosette__api_1_1RecordSimilarityExplainInfo.html", "classrosette__api_1_1RecordSimilarityExplainInfo" ],
     [ "RecordSimilarityField", "interfacerosette__api_1_1RecordSimilarityField.html", null ],
     [ "RecordSimilarityFieldExplainInfo", "classrosette__api_1_1RecordSimilarityFieldExplainInfo.html", "classrosette__api_1_1RecordSimilarityFieldExplainInfo" ],
@@ -68,5 +69,6 @@ var namespacerosette__api =
     [ "UnfieldedDateRecord", "classrosette__api_1_1UnfieldedDateRecord.html", "classrosette__api_1_1UnfieldedDateRecord" ],
     [ "UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", "classrosette__api_1_1UnfieldedNameRecord" ],
     [ "UnfieldedRecordSimilarityConverter", "classrosette__api_1_1UnfieldedRecordSimilarityConverter.html", "classrosette__api_1_1UnfieldedRecordSimilarityConverter" ],
+    [ "UnknownFieldRecord", "classrosette__api_1_1UnknownFieldRecord.html", "classrosette__api_1_1UnknownFieldRecord" ],
     [ "Utilities", "classrosette__api_1_1Utilities.html", "classrosette__api_1_1Utilities" ]
 ];

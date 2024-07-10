@@ -51,10 +51,6 @@ var NAVTREEINDEX0 =
 "RecordSimilarityConverter_8cs.html":[2,0,0,21],
 "RecordSimilarityConverter_8cs_source.html":[2,0,0,21],
 "RecordSimilarityFieldInfo_8cs.html":[2,0,0,23],
-"RecordSimilarityFieldInfo_8cs.html#a4e96749e1b5175b0a3465fa2922a569e":[2,0,0,23,1],
-"RecordSimilarityFieldInfo_8cs.html#a4e96749e1b5175b0a3465fa2922a569ea61ad431fd2c3a83f8814ecca5e785d00":[2,0,0,23,1,1],
-"RecordSimilarityFieldInfo_8cs.html#a4e96749e1b5175b0a3465fa2922a569ea82a64d30b98cc4ace4bc83c24bd32884":[2,0,0,23,1,2],
-"RecordSimilarityFieldInfo_8cs.html#a4e96749e1b5175b0a3465fa2922a569eaf116d8e73c202f190ad9fa96164aa096":[2,0,0,23,1,0],
 "RecordSimilarityFieldInfo_8cs_source.html":[2,0,0,23],
 "RecordSimilarityField_8cs.html":[2,0,0,22],
 "RecordSimilarityField_8cs_source.html":[2,0,0,22],
@@ -130,8 +126,6 @@ var NAVTREEINDEX0 =
 "classrosette__api_1_1Address.html#af87abdb54f0526cd500a619fc676cc5b":[1,0,0,0,16],
 "classrosette__api_1_1Address.html#afde3c879c499e9b152b248353b9a9409":[1,0,0,0,12],
 "classrosette__api_1_1AddressField.html":[1,0,0,1],
-"classrosette__api_1_1AddressField.html#a66b608afaeb60a25440f7e11ed888f14":[1,0,0,1,0],
-"classrosette__api_1_1AddressField.html#ac06dc0aa14524278c4a70c26224a2336":[1,0,0,1,1],
 "classrosette__api_1_1AddressSimilarityResponse.html":[1,0,0,2],
 "classrosette__api_1_1AddressSimilarityResponse.html#a16aa1240e9c885696d05c2a789eae4ac":[1,0,0,2,2],
 "classrosette__api_1_1AddressSimilarityResponse.html#aa260d9abcd0fa6960f4352607e22e549":[1,0,0,2,0],
@@ -249,5 +243,11 @@ var NAVTREEINDEX0 =
 "classrosette__api_1_1EntitiesResponse.html#a82dccff21ced03fe003b7221d8d694ea":[1,0,0,8,3],
 "classrosette__api_1_1EntitiesResponse.html#a857841df1b2c951c835383c2797cd445":[1,0,0,8,2],
 "classrosette__api_1_1EntityID.html":[1,0,0,9],
-"classrosette__api_1_1EntityID.html#a2951d336b8b0d1ee500678caf13e1d72":[1,0,0,9,3]
+"classrosette__api_1_1EntityID.html#a2951d336b8b0d1ee500678caf13e1d72":[1,0,0,9,3],
+"classrosette__api_1_1EntityID.html#a58c6170d95638072b74b013854e3014c":[1,0,0,9,5],
+"classrosette__api_1_1EntityID.html#a90c4fe6f6fe039bc687d30cff5f7a84e":[1,0,0,9,1],
+"classrosette__api_1_1EntityID.html#aca40823d53ff3601256ca82157867cd8":[1,0,0,9,4],
+"classrosette__api_1_1EntityID.html#adb5d06f25b11f057fe8fdd682df4a462":[1,0,0,9,0],
+"classrosette__api_1_1EntityID.html#aff1275096dffc7c6bec66a7748b01056":[1,0,0,9,2],
+"classrosette__api_1_1EventMention.html":[1,0,0,10]
 };
