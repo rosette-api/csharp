@@ -1175,7 +1175,7 @@ namespace rosette_apiUnitTests {
             String mockedContent = expected.ContentToString();
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "name-similarity").Respond(req => mockedMessage);
-            NameSimilarityResponse response = _rosetteApi.NameSimilarity(new Name("Влади́мир Влади́мирович Пу́тин", "rus", null, "PERSON"), new Name("Vladmir Putin", "eng", null, "PERSON"));
+            NameSimilarityResponse response = _rosetteApi.NameSimilarity(new Name("Влади́мир Влади́мирович Пу́тин", "rus", null, "PERSON", Gender.Male), new Name("Vladmir Putin", "eng", null, "PERSON"));
             Assert.AreEqual(expected, response);
         }
 
