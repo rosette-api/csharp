@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Rosette API Unit Tests")]
 [assembly: AssemblyDescription("Provides testing for the Rosette API C# Binding")]
+!!!
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Basis Technology")]
 [assembly: AssemblyProduct("Rosette API")]

@@ -4,7 +4,7 @@
     <id>rosette_api</id>
     <version>1.30.0</version>
     <description>.Net (C#) Binding for Rosette API</description>
-<!--     TODO update these once there is a user on Nuget -->
+<!--     TODO update these once there is a user on Nuget -->!!!
     <authors>basistech</authors>
     <owners>Rosette by Babel Street</owners>
     <copyright>Copyright 2014-2023 Basis Technology Corp.</copyright>

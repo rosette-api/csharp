@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Rosette API C# Binding")]
 [assembly: AssemblyDescription("Provides a C# interface to the Rosette API web service")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Basis Technology")]
+[assembly: AssemblyCompany("Babel Street")]
 [assembly: AssemblyProduct("CSharp Binding")]
-[assembly: AssemblyCopyright("Copyright © Basis Technology 2017")]
+[assembly: AssemblyCopyright("Copyright © Basis Technology 2017")] ???
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

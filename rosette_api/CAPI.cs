@@ -108,10 +108,10 @@ namespace rosette_api
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param>
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
-        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
+        public CAPI(string user_key, string uristring = "https://analytics.babelstreet.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
         {
             UserKey = user_key;
-            URIstring = uristring ?? "https://api.rosette.com/rest/v1/";
+            URIstring = uristring ?? "https://analytics.babelstreet.com/rest/v1/";
             if (!URIstring.EndsWith("/"))
             {
                 URIstring = URIstring + "/";
@@ -1562,7 +1562,7 @@ namespace rosette_api
                 Debug = _debug;
 
                 // Standard headers, which are required for Rosette API
-                AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
+                AddRequestHeader("X-BabelStreetAPI-Key", UserKey ?? "not-provided");
                 AddRequestHeader("User-Agent", UserAgent);
                 AddRequestHeader("X-RosetteAPI-Binding", "csharp");
                 AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
