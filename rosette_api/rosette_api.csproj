@@ -61,6 +61,7 @@
     <Compile Include="EntitiesResponse.cs" />
     <Compile Include="EntityID.cs" />
     <Compile Include="FieldedAddress.cs" />
+    <Compile Include="Gender.cs" />
     <Compile Include="IAddress.cs" />
     <Compile Include="InfoResponse.cs" />
     <Compile Include="KeyPhrase.cs" />
