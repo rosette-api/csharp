@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class events
     {
         /// <summary>
-        /// Example code to call Rosette API to get events from a piece of text.
+        /// Example code to call Analytics API to get events from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

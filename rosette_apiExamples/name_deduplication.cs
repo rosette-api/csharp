@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class name_deduplication
     {
         /// <summary>
-        /// Example code to call Rosette API to deduplication a list of names.
+        /// Example code to call Analytics API to deduplication a list of names.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
