@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rosette API C# Binding")]
-[assembly: AssemblyDescription("Provides a C# interface to the Rosette API web service")]
+[assembly: AssemblyTitle("Babel Street Analytics API C# Binding")]
+[assembly: AssemblyDescription("Provides a C# interface to the Babel Street Analytics API web service")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Babel Street")]
 [assembly: AssemblyProduct("CSharp Binding")]

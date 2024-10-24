@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
+<!--     TODO update these once there is a user on Nuget -->
     <id>rosette_api</id>
     <version>1.30.0</version>
     <description>.Net (C#) Binding for Rosette API</description>
-<!--     TODO update these once there is a user on Nuget -->!!!
     <authors>basistech</authors>
     <owners>Rosette by Babel Street</owners>
     <copyright>Copyright 2014-2023 Basis Technology Corp.</copyright>
@@ -23,6 +23,7 @@
     </frameworkAssemblies>
   </metadata>
   <files>
+<!--     TODO update these once there is a user on Nuget ?? -->
       <file src="./bin/Release/rosette_api.dll" target="lib/net45"/>
   </files>
 </package>
