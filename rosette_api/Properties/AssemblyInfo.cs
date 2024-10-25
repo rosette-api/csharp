@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Babel Street")]
 [assembly: AssemblyProduct("CSharp Binding")]
-[assembly: AssemblyCopyright("Copyright © Basis Technology 2017")] ???
+[assembly: AssemblyCopyright("Copyright © Basis Technology 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
