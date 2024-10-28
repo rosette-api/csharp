@@ -7,7 +7,7 @@
 <!--     TODO update these once there is a user on Nuget -->
     <authors>basistech</authors>
     <owners>Rosette by Babel Street</owners>
-    <copyright>Copyright 2014-2023 Basis Technology Corp.</copyright>
+    <copyright>Copyright 2014-2024 Basis Technology Corp.</copyright>
 <!--     End TODO -->
     <projectUrl>https://www.babelstreet.com/rosette</projectUrl>
     <repository type="git" url="https://github.com/rosette-api/csharp" />
