@@ -165,7 +165,7 @@ namespace rosette_apiUnitTests {
 
         private MockHttpMessageHandler _mockHttp;
         private CAPI _rosetteApi;
-        private string _testUrl = @"https://api.rosette.com/rest/v1/";
+        private string _testUrl = @"https://analytics.babelstreet.com/rest/v1/";
 
         [OneTimeSetUp]
         public void Init() {
@@ -428,7 +428,7 @@ namespace rosette_apiUnitTests {
 
         private MockHttpMessageHandler _mockHttp;
         private CAPI _rosetteApi;
-        private string _testUrl = @"https://api.rosette.com/rest/v1/";
+        private string _testUrl = @"https://analytics.babelstreet.com/rest/v1/";
         private string _tmpFile = null;
 
         [OneTimeSetUp]
