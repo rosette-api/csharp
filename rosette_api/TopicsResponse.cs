@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace rosette_api {
     /// <summary>
-    /// A class to represent responses from the Tokenization endpoint of the Rosette API
+    /// A class to represent responses from the Topics endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class TopicsResponse : RosetteResponse {

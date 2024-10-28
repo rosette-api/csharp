@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace rosette_api {
     /// <summary>
-    /// Extension classes specific to the Rosette binding
+    /// Extension classes specific to the Analytics binding
     /// </summary>
     public static class RosetteExtensions {
         /// <summary>

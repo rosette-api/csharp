@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace rosette_api {
     /// <summary>
-    /// A class to represent the results from the Name Deduplication endpoint of the Rosette API
+    /// A class to represent the results from the Name Deduplication endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class NameDeduplicationResponse : RosetteResponse {
