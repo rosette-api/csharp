@@ -462,7 +462,7 @@ namespace rosette_apiUnitTests {
         //------------------------- User-Agent Test ----------------------------------------
         [Test]
         public void UserAgentTest() {
-            string uaString = string.Format("RosetteAPICsharp/{0}/{1}", CAPI.Version, Environment.Version.ToString());
+            string uaString = string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", CAPI.Version, Environment.Version.ToString());
             Assert.AreEqual(uaString, _rosetteApi.UserAgent);
         }
 
@@ -494,8 +494,17 @@ namespace rosette_apiUnitTests {
 
 
         [Test]
-        public void CustomHeadersTest() {
+        public void CustomHeadersTestRosette() {
             KeyValuePair<string, string> expected = new KeyValuePair<string, string>("X-RosetteAPI-Test", "testValue");
+
+            _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
+
+            Assert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
+        }
+
+        [Test]
+        public void CustomHeadersTestBabelStreet() {
+            KeyValuePair<string, string> expected = new KeyValuePair<string, string>("X-BabelStreetAPI-Test", "testValue");
 
             _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
 
@@ -519,7 +528,7 @@ namespace rosette_apiUnitTests {
                 _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
             }
             catch (RosetteException ex) {
-                Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\"");
+                Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\" or \"X-BabelStreetAPI-\"");
                 return;
             }
         }

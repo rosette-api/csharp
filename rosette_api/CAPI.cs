@@ -42,7 +42,8 @@ namespace rosette_api
     /// </summary>
     public class CAPI
     {
-        private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
+        private const string LEGACY_CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
+        private const string CONCURRENCY_HEADER = "X-BabelStreetAPI-Concurrency";
 
         /// <summary>
         /// setupLock is used to ensure that the setup operation cannot be run
@@ -160,7 +161,7 @@ namespace rosette_api
         {
             get
             {
-                return string.Format("RosetteAPICsharp/{0}/{1}", Version, Environment.Version.ToString());
+                return string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", Version, Environment.Version.ToString());
             }
         }
         /// <summary>MaxRetry
@@ -308,9 +309,9 @@ namespace rosette_api
         /// <param name="value">custom header value</param>
         public void SetCustomHeaders(string key, string value)
         {
-            if (!key.StartsWith("X-RosetteAPI-"))
+            if (!key.StartsWith("X-RosetteAPI-") && !key.StartsWith("X-BabelStreetAPI-"))
             {
-                throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\"");
+                throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\" or \"X-BabelStreetAPI-\"");
             }
             if (_customHeaders.ContainsKey(key) && value == null)
             {
@@ -1474,6 +1475,14 @@ namespace rosette_api
                     Concurrency = allowedConnections;
                 }
             }
+            else if (response.Headers.ContainsKey(LEGACY_CONCURRENCY_HEADER))
+            {
+                int allowedConnections;
+                if (int.TryParse(response.Headers[LEGACY_CONCURRENCY_HEADER], out allowedConnections))
+                {
+                    Concurrency = allowedConnections;
+                }
+            }
         }
 
         /// <summary>Process
@@ -1564,6 +1573,9 @@ namespace rosette_api
                 // Standard headers, which are required for Analytics API
                 AddRequestHeader("X-BabelStreetAPI-Key", UserKey ?? "not-provided");
                 AddRequestHeader("User-Agent", UserAgent);
+                AddRequestHeader("X-BabelStreetAPI-Binding", "csharp");
+                AddRequestHeader("X-BabelStreetAPI-Binding-Version", Version);
+                //todo remove in future release
                 AddRequestHeader("X-RosetteAPI-Binding", "csharp");
                 AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 

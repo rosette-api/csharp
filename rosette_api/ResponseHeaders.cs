@@ -23,7 +23,9 @@ namespace rosette_api
         internal const string serverKey = "server";
         internal const string strictTransportSecurityKey = "strict-transport-security";
         internal const string xRosetteAPIAppIDKey = "x-rosetteapi-app-id";
+        internal const string xBabelStreetAPIAppIDKey = "x-babelstreetapi-app-id";
         internal const string xRosetteAPIConcurrencyKey = "x-rosetteapi-concurrency";
+        internal const string xBabelStreetAPIConcurrencyKey = "x-babelstreetapi-concurrency";
         internal const string xRosetteAPIProcessedLanguageKey = "x-rosetteapi-processedlanguage";
         internal const string xRosetteAPIRequestIDKey = "x-rosetteapi-request-id";
         internal const string contentLengthKey = "content-length";
