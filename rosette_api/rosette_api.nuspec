@@ -14,7 +14,7 @@
     <releaseNotes>https://github.com/rosette-api/csharp/wiki/Release-Notes</releaseNotes>
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <tags>RosetteAPI address similarity analyze language babel street categories coreference entity extraction entity linking event extraction fuzzy matching language identification lemmatization match identity morphology name deduplication name similarity name translation ner nlp parts of speech record similarity relationships rosette semantic similarity semantic vectors sentiment analysis text analytics text embeddings tokenization</tags>
+    <tags>address similarity analyze language babel street categories coreference entity extraction entity linking event extraction fuzzy matching language identification lemmatization match identity morphology name deduplication name similarity name translation ner nlp parts of speech record similarity relationships rosette semantic similarity semantic vectors sentiment analysis text analytics text embeddings tokenization</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="13.0.2" />
     </dependencies>

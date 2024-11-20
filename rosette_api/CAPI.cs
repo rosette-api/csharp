@@ -98,7 +98,7 @@ namespace rosette_api
         private int _concurrentConnections = 1;
 
         /// <summary>C# API class
-        /// <para>Babel Street Analytics Python Client Binding API; representation of an Analytics server.
+        /// <para>Babel Street Analytics Client Binding API; representation of an Analytics server.
         /// Instance methods of the C# API provide communication with specific Analytics server endpoints.
         /// Requires user_key to start and has 3 additional parameters to be specified.
         /// Will run a Version Check against the Analytics Server. If the version check fails, a
