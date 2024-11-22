@@ -23,7 +23,7 @@ do
     csc "${filename}.cs" /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll /r:Newtonsoft.Json.dll
     # if last command is empty then exit
     if [ $? -eq 0 ]; then
-        mono "${filename}.exe"
+        mono "${filename}.exe" $API_KEY $ALT_URL
     fi
   else
     echo "####> File ${filename}.cs not found in rosette_apiExamples directory"  

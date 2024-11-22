@@ -12,7 +12,7 @@ namespace rosette_apiExamples
     class sentiment
     {
         /// <summary>
-        /// Example code to call Rosette API to get a document's sentiment
+        /// Example code to call Analytics API to get a document's sentiment
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -39,7 +39,7 @@ namespace rosette_apiExamples
                 sw.WriteLine(sentiment_file_data);
                 sw.Flush();
                 sw.Close();
-                //Rosette API provides File upload options (shown here)
+                //Analytics API provides File upload options (shown here)
                 //Simply create a new RosetteFile using the path to a file
                 //The results of the API call will come back in the form of a Dictionary
                 SentimentResponse response = SentimentCAPI.Sentiment(new RosetteFile(newFile, @"application/octet-stream", "{\"language\":\"eng\"}"));

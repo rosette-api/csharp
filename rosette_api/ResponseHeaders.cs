@@ -11,7 +11,7 @@ using Newtonsoft.Json.Serialization;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent the response headers returned by the Rosette API
+    /// A class to represent the response headers returned by the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     [JsonConverter(typeof(ResponseHeadersConverter))]
@@ -23,14 +23,16 @@ namespace rosette_api
         internal const string serverKey = "server";
         internal const string strictTransportSecurityKey = "strict-transport-security";
         internal const string xRosetteAPIAppIDKey = "x-rosetteapi-app-id";
+        internal const string xBabelStreetAPIAppIDKey = "x-babelstreetapi-app-id";
         internal const string xRosetteAPIConcurrencyKey = "x-rosetteapi-concurrency";
+        internal const string xBabelStreetAPIConcurrencyKey = "x-babelstreetapi-concurrency";
         internal const string xRosetteAPIProcessedLanguageKey = "x-rosetteapi-processedlanguage";
         internal const string xRosetteAPIRequestIDKey = "x-rosetteapi-request-id";
         internal const string contentLengthKey = "content-length";
         internal const string connectionKey = "connection";
 
         /// <summary>
-        /// The collection of all resposne headers returned by the Rosette API
+        /// The collection of all response headers returned by the Analytics API
         /// </summary>
         [JsonProperty("allResponseHeaders")]
         public IDictionary<string, string> AllResponseHeaders;

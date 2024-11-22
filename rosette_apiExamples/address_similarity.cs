@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class address_similarity
     {
         /// <summary>
-        /// Example code to call Rosette API to get match score (similarity) for two addresses.
+        /// Example code to call Analytics API to get match score (similarity) for two addresses.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

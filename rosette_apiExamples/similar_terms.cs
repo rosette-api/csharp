@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class similar_terms
     {
         /// <summary>
-        /// Example code to call Rosette API to get an input's similar terms.
+        /// Example code to call Analytics API to get an input's similar terms.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

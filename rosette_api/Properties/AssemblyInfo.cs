@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rosette API C# Binding")]
-[assembly: AssemblyDescription("Provides a C# interface to the Rosette API web service")]
+[assembly: AssemblyTitle("Babel Street Analytics API C# Binding")]
+[assembly: AssemblyDescription("Provides a C# interface to the Babel Street Analytics API web service")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Basis Technology")]
+[assembly: AssemblyCompany("Babel Street")]
 [assembly: AssemblyProduct("CSharp Binding")]
 [assembly: AssemblyCopyright("Copyright © Basis Technology 2017")]
 [assembly: AssemblyTrademark("")]
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.30.0.0")]
-[assembly: AssemblyVersion("1.30.0.0")]
-[assembly: AssemblyFileVersion("1.30.0.0")]
+// [assembly: AssemblyVersion("1.31.0.0")]
+[assembly: AssemblyVersion("1.31.0.0")]
+[assembly: AssemblyFileVersion("1.31.0.0")]

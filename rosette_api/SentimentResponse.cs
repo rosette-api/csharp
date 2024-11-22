@@ -12,7 +12,7 @@ using Newtonsoft.Json.Converters;
 namespace rosette_api
 {
     /// <summary>
-    /// A class for representing responses from the sentiment analysis endpoint of the Rosette API
+    /// A class for representing responses from the sentiment analysis endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class SentimentResponse : RosetteResponse, IEquatable<SentimentResponse>
@@ -35,12 +35,12 @@ namespace rosette_api
         internal const String permIdKey = "permId";
 
         /// <summary>
-        /// Gets or sets the document-level sentiment identified by the Rosette API
+        /// Gets or sets the document-level sentiment identified by the Analytics API
         /// </summary>
         [JsonProperty(docKey)]
         public RosetteSentiment DocSentiment { get; set; }
         /// <summary>
-        /// Gets or sets the entities identified by the Rosette API with sentiment
+        /// Gets or sets the entities identified by the Analytics API with sentiment
         /// </summary>
         [JsonProperty(entitiesKey)]
         public List<RosetteSentimentEntity> EntitySentiments { get; set; }
@@ -264,7 +264,7 @@ namespace rosette_api
     }
 
     /// <summary>
-    /// A class to represent an entity returned by the Sentiment Analysis endpoint of the Rosette API
+    /// A class to represent an entity returned by the Sentiment Analysis endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RosetteSentimentEntity : RosetteEntity, IEquatable<RosetteSentimentEntity>

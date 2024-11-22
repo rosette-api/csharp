@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent responses from the Language Identification endpoint of the Rosette API
+    /// A class to represent responses from the Language Identification endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class LanguageIdentificationResponse : RosetteResponse

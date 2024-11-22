@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class entities
     {
         /// <summary>
-        /// Example code to call Rosette API to get syntax dependencies from a piece of text.
+        /// Example code to call Analytics API to get syntax dependencies from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

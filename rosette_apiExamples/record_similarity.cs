@@ -8,7 +8,7 @@ namespace rosette_apiExamples
     class record_similarity
     {
         /// <summary>
-        /// Example code to call Rosette API to get record similarity scores between two list of records
+        /// Example code to call Analytics API to get record similarity scores between two list of records
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

@@ -24,7 +24,7 @@ namespace rosette_api
         private const string responseHeadersKey = "responseHeaders";
 
         /// <summary>
-        /// Gets or sets the output of the Rosette API's morphology endpoint, grouped by tokens in order of appearance
+        /// Gets or sets the output of the Analytics API's morphology endpoint, grouped by tokens in order of appearance
         /// </summary>
         [JsonProperty("items")]
         public List<MorphologyItem> Items { get; set; }
@@ -140,7 +140,7 @@ namespace rosette_api
     }
 
     /// <summary>
-    /// A class for representing responses from the Morphology endpoint of the Rosette API
+    /// A class for representing responses from the Morphology endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class MorphologyItem

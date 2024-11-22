@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class info
     {
         /// <summary>
-        /// Example code to call Rosette API to get information such as version and build.
+        /// Example code to call Analytics API to get information such as version and build.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class transliteration
     {
         /// <summary>
-        /// Example code to call Rosette API to transliterate a name.
+        /// Example code to call Analytics API to transliterate a name.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

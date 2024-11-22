@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class translated_name
     {
         /// <summary>
-        /// Example code to call Rosette API to translate a name from language to another.
+        /// Example code to call Analytics API to translate a name from language to another.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

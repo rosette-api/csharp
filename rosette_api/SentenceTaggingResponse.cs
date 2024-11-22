@@ -11,7 +11,7 @@ using System.Collections;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent responses from the Sentence Tagging endpoint of the Rosette API
+    /// A class to represent responses from the Sentence Tagging endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class SentenceTaggingResponse : RosetteResponse
@@ -19,7 +19,7 @@ namespace rosette_api
         private const string sentencesKey ="sentences";
    
         /// <summary>
-        /// Gets or sets the sentences identified by the Rosette API
+        /// Gets or sets the sentences identified by the Analytics API
         /// </summary>
         [JsonProperty(sentencesKey)]
         public List<String> Sentences { get; set; }

@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class matched_name
     {
         /// <summary>
-        /// Example code to call Rosette API to get match score (similarity) for two names.
+        /// Example code to call Analytics API to get match score (similarity) for two names.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
