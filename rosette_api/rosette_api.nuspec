@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>rosette_api</id>
-    <version>1.30.0</version>
+    <version>1.31.0</version>
     <description>.Net (C#) Binding for Babel Street Analytics API</description>
 <!--     TODO update these once there is a user on Nuget -->
     <authors>basistech</authors>
