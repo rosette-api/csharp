@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class morphology_parts_of_speech
     {
         /// <summary>
-        /// Example code to call Rosette API to get part-of-speech tags for words a piece of text.
+        /// Example code to call Analytics API to get part-of-speech tags for words a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

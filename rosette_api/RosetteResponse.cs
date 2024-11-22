@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace rosette_api {
     /// <summary>
-    /// Encapsulates the response from RosetteAPI
+    /// Encapsulates the response from Analytics API
     /// </summary>  
    [JsonObject(MemberSerialization=MemberSerialization.OptIn)]
     public class RosetteResponse {

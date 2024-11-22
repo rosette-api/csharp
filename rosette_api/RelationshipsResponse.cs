@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent responses from the Relationships endpoint of the Rosette API
+    /// A class to represent responses from the Relationships endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RelationshipsResponse : RosetteResponse
@@ -30,7 +30,7 @@ namespace rosette_api
         internal const string MODALITIES = "modalities";
 
         /// <summary>
-        /// Gets or sets the relationships extracted by the Rosette API
+        /// Gets or sets the relationships extracted by the Analytics API
         /// </summary>
         [JsonProperty(relationshipsKey)]
         public List<RosetteRelationship> Relationships { get; set; }
@@ -65,7 +65,7 @@ namespace rosette_api
         /// Creates a RelationshipsResponse from its components
         /// </summary>
         /// <param name="relationships">The relationships</param>
-        /// <param name="responseHeaders">The response headers returned from the Rosette API</param>
+        /// <param name="responseHeaders">The response headers returned from the Analytics API</param>
         /// <param name="content">The content (the relationships) in dictionary form</param>
         /// <param name="contentAsJson">The content in JSON form</param>
         public RelationshipsResponse(List<RosetteRelationship> relationships, Dictionary<string, string> responseHeaders, Dictionary<string, object> content, string contentAsJson)
@@ -110,7 +110,7 @@ namespace rosette_api
     }
 
     /// <summary>
-    /// A class to represent a relationship as identified by the Rosette API
+    /// A class to represent a relationship as identified by the Analytics API
     /// </summary>
     [JsonConverter(typeof(RelationshipConverter))]
     [JsonObject(MemberSerialization=MemberSerialization.OptIn)]

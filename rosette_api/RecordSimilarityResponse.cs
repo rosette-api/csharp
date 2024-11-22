@@ -9,7 +9,7 @@ using System.Net.Http;
 namespace rosette_api {
 
     /// <summary>
-    /// A class to represent the results from the Record Similarity endpoint of the Rosette API
+    /// A class to represent the results from the Record Similarity endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RecordSimilarityResponse : RosetteResponse {
@@ -128,7 +128,7 @@ namespace rosette_api {
     }
 
     /// <summary>
-    /// A class to represent the results from the Record Similarity endpoint of the Rosette API
+    /// A class to represent the results from the Record Similarity endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class RecordSimilarityResult {

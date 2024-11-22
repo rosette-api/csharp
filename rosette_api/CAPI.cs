@@ -29,9 +29,9 @@ namespace rosette_api
         hanReadings
     };
 
-    /// <summary>C# Rosette API.
+    /// <summary>C# Babel Street Analytics API.
     /// <para>
-    /// Primary class for interfacing with the Rosette API
+    /// Primary class for interfacing with the Analytics API
     /// @copyright 2014-2024 Basis Technology Corporation.
     /// Licensed under the Apache License, Version 2.0 (the "License"); you may not use file except in compliance
     /// with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -42,7 +42,8 @@ namespace rosette_api
     /// </summary>
     public class CAPI
     {
-        private const string CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
+        private const string LEGACY_CONCURRENCY_HEADER = "X-RosetteAPI-Concurrency";
+        private const string CONCURRENCY_HEADER = "X-BabelStreetAPI-Concurrency";
 
         /// <summary>
         /// setupLock is used to ensure that the setup operation cannot be run
@@ -97,21 +98,21 @@ namespace rosette_api
         private int _concurrentConnections = 1;
 
         /// <summary>C# API class
-        /// <para>Rosette Python Client Binding API; representation of a Rosette server.
-        /// Instance methods of the C# API provide communication with specific Rosette server endpoints.
+        /// <para>Babel Street Analytics Client Binding API; representation of an Analytics server.
+        /// Instance methods of the C# API provide communication with specific Analytics server endpoints.
         /// Requires user_key to start and has 3 additional parameters to be specified.
-        /// Will run a Version Check against the Rosette Server. If the version check fails, a
+        /// Will run a Version Check against the Analytics Server. If the version check fails, a
         /// RosetteException will be thrown.
         /// </para>
         /// </summary>
-        /// <param name="user_key">string: API key required by the Rosette server to allow access to endpoints</param>
+        /// <param name="user_key">string: API key required by the Analytics server to allow access to endpoints</param>
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param>
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
-        public CAPI(string user_key, string uristring = "https://api.rosette.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
+        public CAPI(string user_key, string uristring = "https://analytics.babelstreet.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
         {
             UserKey = user_key;
-            URIstring = uristring ?? "https://api.rosette.com/rest/v1/";
+            URIstring = uristring ?? "https://analytics.babelstreet.com/rest/v1/";
             if (!URIstring.EndsWith("/"))
             {
                 URIstring = URIstring + "/";
@@ -129,7 +130,7 @@ namespace rosette_api
         /// <summary>UserKey
         /// <para>
         /// Getter, Setter for the UserKey
-        /// UserKey: API key required by the Rosette Server
+        /// UserKey: API key required by the Analytics Server
         /// Allows users to change their UserKey later (e.g. if instantiated class incorrectly)
         /// </para>
         /// </summary>
@@ -137,7 +138,7 @@ namespace rosette_api
 
         /// <summary>URIstring
         /// <para>
-        /// URIString returns the current URI of the rosette server
+        /// URIString returns the current URI of the Analytics server
         /// </para>
         /// </summary>
         public string URIstring { get; private set; }
@@ -160,7 +161,7 @@ namespace rosette_api
         {
             get
             {
-                return string.Format("RosetteAPICsharp/{0}/{1}", Version, Environment.Version.ToString());
+                return string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", Version, Environment.Version.ToString());
             }
         }
         /// <summary>MaxRetry
@@ -182,7 +183,7 @@ namespace rosette_api
 
         /// <summary>Client
         /// Returns the http client instance.  For externally provided http clients, this will return the same
-        /// client with some added headers that are required by the Rosette API.  For the default internal client
+        /// client with some added headers that are required by the Analytics API.  For the default internal client
         /// it will return the current instance, which is maintained at the class level.
         /// </summary>
         public HttpClient Client
@@ -191,7 +192,7 @@ namespace rosette_api
         }
 
         /// <summary>Concurrency
-        /// Returns the number of concurrent connections allowed by the current Rosette API plan.
+        /// Returns the number of concurrent connections allowed by the current Analytics API plan.
         /// For externally provided http clients, it is up to the user to update the connection limit within their own software.
         /// For the default internal http client, the concurrent connections will adjust to the maximum allowed.
         /// </summary>
@@ -308,9 +309,9 @@ namespace rosette_api
         /// <param name="value">custom header value</param>
         public void SetCustomHeaders(string key, string value)
         {
-            if (!key.StartsWith("X-RosetteAPI-"))
+            if (!key.StartsWith("X-RosetteAPI-") && !key.StartsWith("X-BabelStreetAPI-"))
             {
-                throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\"");
+                throw new RosetteException("Custom header name must begin with \"X-RosetteAPI-\" or \"X-BabelStreetAPI-\"");
             }
             if (_customHeaders.ContainsKey(key) && value == null)
             {
@@ -564,7 +565,7 @@ namespace rosette_api
 
         /// <summary>Info
         /// <para>
-        /// (GET)Info Endpoint: Response is a JSON string with Rosette API information including buildNumber, name, version, and buildTime.
+        /// (GET)Info Endpoint: Response is a JSON string with Analytics API information including buildNumber, name, version, and buildTime.
         /// </para>
         /// </summary>
         /// <returns>InfoResponse containing the results of the info GET.</returns>
@@ -632,7 +633,7 @@ namespace rosette_api
         /// <param name="language">(string, optional): Language: ISO 639-3 code (ignored for the /language endpoint)</param>
         /// <param name="contentType">(string, optional): not used at time</param>
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
-        /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
+        /// <param name="feature">(string, optional): Description of what morphology feature to request from the Analytics server</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>MorphologyResponse containing the results of the request.
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
@@ -650,7 +651,7 @@ namespace rosette_api
         /// </para>
         /// </summary>
         /// <param name="dict">Dictionary&lt;object, object&gt;: Dictionary containing parameters as (key,value) pairs</param>
-        /// <param name="feature">(string, optional): Description of what morphology feature to request from the Rosette server</param>
+        /// <param name="feature">(string, optional): Description of what morphology feature to request from the Analytics server</param>
         /// <returns>MorphologyResponse containing the results of the request.
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
@@ -815,14 +816,14 @@ namespace rosette_api
         }
 
         /// <summary>Ping
-        /// (GET)Ping Endpoint: Pings Rosette API for a response indicting that the service is available
+        /// (GET)Ping Endpoint: Pings Analytics API for a response indicting that the service is available
         /// </summary>
         /// <returns>PingResponse containing the results of the info GET.
         /// The reponse contains a message and time.
         /// </returns>
 
         /// <summary>Ping
-        /// (GET)Ping Endpoint: Pings Rosette API for a response indicting that the service is available
+        /// (GET)Ping Endpoint: Pings Analytics API for a response indicting that the service is available
         /// </summary>
         /// <returns>PingResponse containing the results of the info GET.
         /// The reponse contains a message and time.
@@ -850,7 +851,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
@@ -870,7 +871,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(Dictionary<object, object> dict)
         {
@@ -890,7 +891,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public TextEmbeddingResponse TextEmbedding(RosetteFile file)
         {
@@ -914,7 +915,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public SemanticVectorsResponse SemanticVectors(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
         {
@@ -934,7 +935,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public SemanticVectorsResponse SemanticVectors(Dictionary<object, object> dict)
         {
@@ -954,7 +955,7 @@ namespace rosette_api
         /// Among other uses, a text embedding enables you to calculate the similarity between two documents or two words.
         /// The text embedding represents the relationships between words in your document in the semantic space.
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
-        /// Words with similar meanings have similar contexts, and Rosette maps them close to each other
+        /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
         public SemanticVectorsResponse SemanticVectors(RosetteFile file)
         {
@@ -1408,7 +1409,7 @@ namespace rosette_api
 
         /// <summary>getResponse
         /// <para>
-        /// getResponse: Internal function to get the response from the Rosette API server using the request
+        /// getResponse: Internal function to get the response from the Analytics API server using the request
         /// </para>
         /// </summary>
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
@@ -1474,6 +1475,14 @@ namespace rosette_api
                     Concurrency = allowedConnections;
                 }
             }
+            else if (response.Headers.ContainsKey(LEGACY_CONCURRENCY_HEADER))
+            {
+                int allowedConnections;
+                if (int.TryParse(response.Headers[LEGACY_CONCURRENCY_HEADER], out allowedConnections))
+                {
+                    Concurrency = allowedConnections;
+                }
+            }
         }
 
         /// <summary>Process
@@ -1481,7 +1490,7 @@ namespace rosette_api
         /// Process: Internal function to convert a RosetteFile into a dictionary to use for getResponse
         /// </para>
         /// </summary>
-        /// <param name="file">RosetteFile: File being uploaded to use as a request to the Rosette server.</param>
+        /// <param name="file">RosetteFile: File being uploaded to use as a request to the Analytics server.</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
         private T Process<T>(RosetteFile file) where T : RosetteResponse
         {
@@ -1556,14 +1565,17 @@ namespace rosette_api
 
                 if (Client.BaseAddress == null)
                 {
-                    Client.BaseAddress = new Uri(URIstring); // base address must be the rosette URI regardless of whether the client is external or internal
+                    Client.BaseAddress = new Uri(URIstring); // base address must be the Analytics URI regardless of whether the client is external or internal
                 }
                 Timeout = _timeout;
                 Debug = _debug;
 
-                // Standard headers, which are required for Rosette API
-                AddRequestHeader("X-RosetteAPI-Key", UserKey ?? "not-provided");
+                // Standard headers, which are required for Analytics API
+                AddRequestHeader("X-BabelStreetAPI-Key", UserKey ?? "not-provided");
                 AddRequestHeader("User-Agent", UserAgent);
+                AddRequestHeader("X-BabelStreetAPI-Binding", "csharp");
+                AddRequestHeader("X-BabelStreetAPI-Binding-Version", Version);
+                //todo remove in future release
                 AddRequestHeader("X-RosetteAPI-Binding", "csharp");
                 AddRequestHeader("X-RosetteAPI-Binding-Version", Version);
 

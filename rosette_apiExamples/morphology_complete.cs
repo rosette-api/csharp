@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class morphology_complete
     {
         /// <summary>
-        /// Example code to call Rosette API to get the complete set of morphological analysis results for a piece of text.
+        /// Example code to call Analytics API to get the complete set of morphological analysis results for a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

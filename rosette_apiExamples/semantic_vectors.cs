@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class semantic_vectors
     {
         /// <summary>
-        /// Example code to call Rosette API to get an input's text-vector.
+        /// Example code to call Analytics API to get an input's text-vector.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

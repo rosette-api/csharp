@@ -12,7 +12,7 @@ using Newtonsoft.Json.Converters;
 namespace rosette_api
 {
     /// <summary>
-    /// A class for representing responses from the syntax/dependencies endpoint of the Rosette API
+    /// A class for representing responses from the syntax/dependencies endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class SyntaxDependenciesResponse : RosetteResponse
@@ -27,13 +27,13 @@ namespace rosette_api
         internal const string DEPENDENT_TOKEN_INDEX = "dependentTokenIndex";
 
         /// <summary>
-        /// Gets or sets the syntactic dependencies identified by the Rosette API
+        /// Gets or sets the syntactic dependencies identified by the Analytics API
         /// </summary>
         [JsonProperty(SENTENCES)]
         public List<SentenceWithDependencies> Sentences { get; set; }
 
         /// <summary>
-        /// Gets or sets the tokens identified by the Rosette API
+        /// Gets or sets the tokens identified by the Analytics API
         /// </summary>
         [JsonProperty(TOKENS)]
         public List<string> Tokens { get; set; }
@@ -119,7 +119,7 @@ namespace rosette_api
         }
 
         /// <summary>
-        /// A class to represent a SentenceWithDependencies returned by the Syntax Dependencies endpoint of the Rosette API
+        /// A class to represent a SentenceWithDependencies returned by the Syntax Dependencies endpoint of the Analytics API
         /// </summary>
         [JsonObject(MemberSerialization.OptOut)]
         public class SentenceWithDependencies
@@ -202,7 +202,7 @@ namespace rosette_api
         }
 
         /// <summary>
-        /// A class to represent a dependency returned by the Syntax Dependencies endpoint of the Rosette API
+        /// A class to represent a dependency returned by the Syntax Dependencies endpoint of the Analytics API
         /// </summary>
         [JsonObject(MemberSerialization.OptOut)]
         public class Dependency

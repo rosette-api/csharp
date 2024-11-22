@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent Rosette API responses when Info() is called
+    /// A class to represent Analytics API responses when Info() is called
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class InfoResponse : RosetteResponse

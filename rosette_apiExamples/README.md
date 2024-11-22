@@ -1,11 +1,11 @@
 ## Endpoint Examples
-These examples are scripts that can be run independently to demonstrate the Rosette API functionality.
+These examples are scripts that can be run independently to demonstrate the Babel Street Analytics API functionality.
 
-Each example file demonstrates one of the capabilities of the Rosette Platform. Each example, when run, prints its output to the console.
+Each example file demonstrates one of the capabilities of the Analytics Platform. Each example, when run, prints its output to the console.
 
 Each example will also accept an optional, alternate url parameter for overriding the default URL.
 
-A note on prerequisites.  Rosette API only supports TLS 1.2 so ensure your toolchain also supports it.
+A note on prerequisites.  Analytics API only supports TLS 1.2 so ensure your toolchain also supports it.
 
 Here are some methods for running the examples.
 
@@ -34,7 +34,7 @@ Here are some methods for running the examples.
   cd rosette_apiExamples
   csc language.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll
   ```
-- Run the compiled example against Rosette Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
+- Run the compiled example against Analytics Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
   ```
   mono language.exe $API_KEY
   ```
@@ -76,7 +76,7 @@ Here are some methods for running the examples.
   cd rosette_apiExamples
   csc language.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll
   ```
-- Run the compiled example against Rosette Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
+- Run the compiled example against Analytics Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
   ```
   mono language.exe $API_KEY
   ```

@@ -9,7 +9,7 @@ using System.Net.Http;
 namespace rosette_api
 {
     /// <summary>
-    /// A class to represent responses from the TranslatedNames endpoint of the RosetteAPI
+    /// A class to represent responses from the TranslatedNames endpoint of the Analytics API
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
     public class TranslateNamesResponse : RosetteResponse

@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class language
     {
         /// <summary>
-        /// Example code to call Rosette API to detect possible languages for a piece of text.
+        /// Example code to call Analytics API to detect possible languages for a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -32,8 +32,8 @@ namespace rosette_apiExamples
             {
                 CAPI LanguageCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 string language_data = @"Por favor Señorita, says the man.";
+                LanguageCAPI.SetCustomHeaders("X-BabelStreetAPI-App", "csharp-examples");
                 //The results of the API call will come back in the form of a Dictionary
-                LanguageCAPI.SetCustomHeaders("X-RosetteAPI-App", "csharp-app");
                 LanguageIdentificationResponse response = LanguageCAPI.Language(language_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));

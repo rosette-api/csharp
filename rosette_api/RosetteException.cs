@@ -3,14 +3,14 @@
 namespace rosette_api {
     /// <summary>RosetteException Class
     /// <para>
-    /// RosetteException: Custom exception to describe an exception from the Rosette API.
+    /// RosetteException: Custom exception to describe an exception from the Analytics API.
     /// </para>
     /// </summary>
     [Serializable]
     public class RosetteException : Exception {
         /// <summary>RosetteException
         /// <para>
-        /// RosetteException: Custom exception to describe an exception from the Rosette API.
+        /// RosetteException: Custom exception to describe an exception from the Analytics API.
         /// </para>
         /// </summary>
         /// <param name="message">(string, optional): Message describing exception details</param>

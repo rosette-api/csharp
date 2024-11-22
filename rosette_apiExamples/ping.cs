@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class ping
     {
         /// <summary>
-        /// Example code to send Rosette API a ping to check its reachability.
+        /// Example code to send Analytics API a ping to check its reachability.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>

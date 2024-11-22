@@ -11,7 +11,7 @@ namespace rosette_apiExamples
     class categories
     {
         /// <summary>
-        /// Example code to call Rosette API to get a document's (located at given URL) categories.
+        /// Example code to call Analytics API to get a document's (located at given URL) categories.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -36,7 +36,7 @@ namespace rosette_apiExamples
                 CategoriesResponse response = CategoriesCAPI.Categories(categories_text_data,  null, null, null);
                 Console.WriteLine(response.ContentAsJson);
 
-                //Rosette API also supports Dictionary inputs
+                //Analytics API also supports Dictionary inputs
                 //Simply instantiate a new dictionary object with the fields options as keys and inputs as values
                 response = CategoriesCAPI.Categories(new Dictionary<object, object>()
                 {
