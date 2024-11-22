@@ -8,7 +8,7 @@ var searchData=
   ['polarity',['Polarity',['../classrosette__api_1_1EventMention.html#a661e04a4393ccabf46386e0d4cf2ae19',1,'rosette_api::EventMention']]],
   ['position',['Position',['../classrosette__api_1_1Argument.html#aba0475a89c95815128883f5578e83fe6',1,'rosette_api::Argument']]],
   ['postag',['PosTag',['../classrosette__api_1_1MorphologyItem.html#a014daf92df73728ddc274469c3128482',1,'rosette_api::MorphologyItem']]],
-  ['postcode',['Postcode',['../classrosette__api_1_1FieldedAddressRecord.html#ac78925a1a85d17e4196d5e74f504383c',1,'rosette_api.FieldedAddressRecord.Postcode()'],['../classrosette__api_1_1Address.html#afde3c879c499e9b152b248353b9a9409',1,'rosette_api.Address.postCode()'],['../classrosette__api_1_1FieldedAddress.html#aa7ae7c698fe3c8d2f1879574c0531898',1,'rosette_api.FieldedAddress.postCode()']]],
+  ['postcode',['postCode',['../classrosette__api_1_1Address.html#afde3c879c499e9b152b248353b9a9409',1,'rosette_api.Address.postCode()'],['../classrosette__api_1_1FieldedAddress.html#aa7ae7c698fe3c8d2f1879574c0531898',1,'rosette_api.FieldedAddress.postCode()'],['../classrosette__api_1_1FieldedAddressRecord.html#ac78925a1a85d17e4196d5e74f504383c',1,'rosette_api.FieldedAddressRecord.Postcode()']]],
   ['predicate',['Predicate',['../classrosette__api_1_1RosetteRelationship.html#af05e1e9fcf6bcdd7e7deb134809c7f86',1,'rosette_api::RosetteRelationship']]],
   ['properties',['Properties',['../classrosette__api_1_1RecordSimilarityRequest.html#afe251bcfeb1ba26ca4e90653ea674748',1,'rosette_api::RecordSimilarityRequest']]]
 ];

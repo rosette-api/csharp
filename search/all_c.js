@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api.Name'],['../classrosette__api_1_1EventRole.html#a308cf8bdc2c3e9e1c117d231c2dfc197',1,'rosette_api.EventRole.Name()'],['../classrosette__api_1_1InfoResponse.html#a903460d4a4bb4181b2a26dad31e93e81',1,'rosette_api.InfoResponse.Name()'],['../classrosette__api_1_1Name.html#a3ef4ca325b3c10914173b6f615ccc1f4',1,'rosette_api.Name.Name()']]],
+  ['name',['Name',['../classrosette__api_1_1Name.html',1,'rosette_api.Name'],['../classrosette__api_1_1EventRole.html#a308cf8bdc2c3e9e1c117d231c2dfc197',1,'rosette_api.EventRole.Name()'],['../classrosette__api_1_1InfoResponse.html#a903460d4a4bb4181b2a26dad31e93e81',1,'rosette_api.InfoResponse.Name()'],['../classrosette__api_1_1Name.html#a5f0b4e02fe3c14454f8a5ded63407831',1,'rosette_api.Name.Name()']]],
   ['name_2ecs',['Name.cs',['../Name_8cs.html',1,'']]],
   ['namededuplication',['NameDeduplication',['../classrosette__api_1_1CAPI.html#a20288ce0d004cc0e65ce4b1b03517c13',1,'rosette_api.CAPI.NameDeduplication(List&lt; Name &gt; names, Nullable&lt; float &gt; threshold=null)'],['../classrosette__api_1_1CAPI.html#ae04ce1a2f22606228aed213670319443',1,'rosette_api.CAPI.NameDeduplication(Dictionary&lt; object, object &gt; dict)']]],
   ['namededuplicationresponse',['NameDeduplicationResponse',['../classrosette__api_1_1NameDeduplicationResponse.html',1,'rosette_api.NameDeduplicationResponse'],['../classrosette__api_1_1NameDeduplicationResponse.html#a6df869311a1a7ddda72c00951c9fa06d',1,'rosette_api.NameDeduplicationResponse.NameDeduplicationResponse(HttpResponseMessage apiResults)'],['../classrosette__api_1_1NameDeduplicationResponse.html#ab79c70557e45627fe6ff84a7855de439',1,'rosette_api.NameDeduplicationResponse.NameDeduplicationResponse(Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content, string contentAsJSON)']]],
@@ -15,5 +15,6 @@ var searchData=
   ['negationcue',['NegationCue',['../classrosette__api_1_1NegationCue.html',1,'rosette_api.NegationCue'],['../classrosette__api_1_1NegationCue.html#aff67b2cb70e8ea3eab977e914414ca1c',1,'rosette_api.NegationCue.NegationCue()']]],
   ['negationcues',['NegationCues',['../classrosette__api_1_1EventMention.html#a4d5f320fa3e473102ebe3ed3a9eb2105',1,'rosette_api::EventMention']]],
   ['neu',['neu',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadea83e71d83b2dcea23dcab3b64182494cc',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
+  ['nonbinary',['NonBinary',['../namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58a415037e39f64694f0109a30347414115',1,'rosette_api']]],
   ['normalizedmention',['NormalizedMention',['../classrosette__api_1_1RosetteEntity.html#af6936e336ad3025cda66c5eaec5d2f0b',1,'rosette_api::RosetteEntity']]]
 ];

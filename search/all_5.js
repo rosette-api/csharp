@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['female',['Female',['../namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58ab719ce180ec7bd9641fece2f920f4817',1,'rosette_api']]],
   ['fielded',['fielded',['../classrosette__api_1_1Address.html#aa6e701eb9f869ab207def87ab53152b7',1,'rosette_api.Address.fielded()'],['../classrosette__api_1_1FieldedAddress.html#a3460a24aa4c999ef76d2f24e3d180e71',1,'rosette_api.FieldedAddress.fielded()'],['../interfacerosette__api_1_1IAddress.html#a73ebaa024d12c5e1511995e395362f3a',1,'rosette_api.IAddress.fielded()'],['../classrosette__api_1_1UnfieldedAddress.html#ad1565389f6c41c84968fbd8d9463d596',1,'rosette_api.UnfieldedAddress.fielded()']]],
   ['fieldedaddress',['FieldedAddress',['../classrosette__api_1_1FieldedAddress.html',1,'rosette_api.FieldedAddress'],['../classrosette__api_1_1FieldedAddress.html#a945056efbb528fbae185008a9f41bbf0',1,'rosette_api.FieldedAddress.FieldedAddress()']]],
   ['fieldedaddress_2ecs',['FieldedAddress.cs',['../FieldedAddress_8cs.html',1,'']]],

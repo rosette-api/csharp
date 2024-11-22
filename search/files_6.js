@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['languageidentificationresponse_2ecs',['LanguageIdentificationResponse.cs',['../LanguageIdentificationResponse_8cs.html',1,'']]]
+  ['keyphrase_2ecs',['KeyPhrase.cs',['../KeyPhrase_8cs.html',1,'']]]
 ];

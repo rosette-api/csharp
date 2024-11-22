@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['textembeddingresponse_2ecs',['TextEmbeddingResponse.cs',['../TextEmbeddingResponse_8cs.html',1,'']]],
-  ['tokenizationresponse_2ecs',['TokenizationResponse.cs',['../TokenizationResponse_8cs.html',1,'']]],
-  ['topicsresponse_2ecs',['TopicsResponse.cs',['../TopicsResponse_8cs.html',1,'']]],
-  ['translatenamesresponse_2ecs',['TranslateNamesResponse.cs',['../TranslateNamesResponse_8cs.html',1,'']]],
-  ['transliterationresponse_2ecs',['TransliterationResponse.cs',['../TransliterationResponse_8cs.html',1,'']]]
+  ['semanticvectorsresponse_2ecs',['SemanticVectorsResponse.cs',['../SemanticVectorsResponse_8cs.html',1,'']]],
+  ['sentencetaggingresponse_2ecs',['SentenceTaggingResponse.cs',['../SentenceTaggingResponse_8cs.html',1,'']]],
+  ['sentimentresponse_2ecs',['SentimentResponse.cs',['../SentimentResponse_8cs.html',1,'']]],
+  ['similartermsresponse_2ecs',['SimilarTermsResponse.cs',['../SimilarTermsResponse_8cs.html',1,'']]],
+  ['staticvalueprovider_2ecs',['StaticValueProvider.cs',['../StaticValueProvider_8cs.html',1,'']]],
+  ['syntaxdependenciesresponse_2ecs',['SyntaxDependenciesResponse.cs',['../SyntaxDependenciesResponse_8cs.html',1,'']]]
 ];

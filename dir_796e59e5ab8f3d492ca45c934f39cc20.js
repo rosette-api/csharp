@@ -31,6 +31,7 @@ var dir_796e59e5ab8f3d492ca45c934f39cc20 =
     [ "FieldedAddress.cs", "FieldedAddress_8cs.html", [
       [ "FieldedAddress", "classrosette__api_1_1FieldedAddress.html", "classrosette__api_1_1FieldedAddress" ]
     ] ],
+    [ "Gender.cs", "Gender_8cs.html", "Gender_8cs" ],
     [ "IAddress.cs", "IAddress_8cs.html", [
       [ "IAddress", "interfacerosette__api_1_1IAddress.html", "interfacerosette__api_1_1IAddress" ]
     ] ],

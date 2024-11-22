@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rni_5faddress',['rni_address',['../namespacerosette__api.html#a4e96749e1b5175b0a3465fa2922a569ea82a64d30b98cc4ace4bc83c24bd32884',1,'rosette_api']]],
-  ['rni_5fdate',['rni_date',['../namespacerosette__api.html#a4e96749e1b5175b0a3465fa2922a569ea61ad431fd2c3a83f8814ecca5e785d00',1,'rosette_api']]],
-  ['rni_5fname',['rni_name',['../namespacerosette__api.html#a4e96749e1b5175b0a3465fa2922a569eaf116d8e73c202f190ad9fa96164aa096',1,'rosette_api']]]
+  ['neg',['neg',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadeaf24c2c15b9d03797c6874986a8d19516',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
+  ['neu',['neu',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html#ad3ebf51e3616cd604de7ce345bdeaadea83e71d83b2dcea23dcab3b64182494cc',1,'rosette_api::SentimentResponse::RosetteSentiment']]],
+  ['nonbinary',['NonBinary',['../namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58a415037e39f64694f0109a30347414115',1,'rosette_api']]]
 ];

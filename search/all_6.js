@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['gender',['gender',['../classrosette__api_1_1Name.html#a094426b344943406b256031f1511730e',1,'rosette_api.Name.gender()'],['../namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58',1,'rosette_api.Gender()']]],
+  ['gender_2ecs',['Gender.cs',['../Gender_8cs.html',1,'']]],
   ['getcustomheaders',['GetCustomHeaders',['../classrosette__api_1_1CAPI.html#a8509e6782ec9f7ccd4cc02f1a4fde2ee',1,'rosette_api::CAPI']]],
   ['getfiledata',['getFileData',['../classrosette__api_1_1RosetteFile.html#a27511cf013b4cec685fe38cf8f6aa4d8',1,'rosette_api::RosetteFile']]],
   ['getfiledatastring',['getFileDataString',['../classrosette__api_1_1RosetteFile.html#aa7022b54ae4f9e6f42b66c0f6e0a6ad6',1,'rosette_api::RosetteFile']]],

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['male',['Male',['../namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58a63889cfb9d3cbe05d1bd2be5cc9953fd',1,'rosette_api']]],
   ['matchedname',['MatchedName',['../classrosette__api_1_1CAPI.html#a6e6ce59d33be9de3b2c526eb0e27a32c',1,'rosette_api::CAPI']]],
   ['maxretry',['MaxRetry',['../classrosette__api_1_1CAPI.html#a62b4bd9343e43477f512ada376d4896d',1,'rosette_api::CAPI']]],
   ['mention',['Mention',['../classrosette__api_1_1Argument.html#ad7c04e4ea7012d88903fa1fc708e6295',1,'rosette_api.Argument.Mention()'],['../classrosette__api_1_1RosetteEntity.html#a3461fa4996e6d9b6b83feacaa91437a8',1,'rosette_api.RosetteEntity.Mention()']]],

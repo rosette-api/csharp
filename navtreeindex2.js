@@ -1,5 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"classrosette__api_1_1RecordSimilarityProperties.html#a7dbf4d653b1b8eb5f4d2825ae742b6ea":[1,0,0,36,3],
+"classrosette__api_1_1RecordSimilarityProperties.html#a8d1ff65a9234a6ba3b4cb97d313abe63":[1,0,0,36,9],
+"classrosette__api_1_1RecordSimilarityProperties.html#aa4f9f15eb8599bc33f6431ce10d56dd4":[1,0,0,36,5],
+"classrosette__api_1_1RecordSimilarityProperties.html#af37c0758e4acdb7c1ef4d28ec89e4244":[1,0,0,36,1],
+"classrosette__api_1_1RecordSimilarityRecords.html":[1,0,0,37],
+"classrosette__api_1_1RecordSimilarityRecords.html#a1f6c2a0c421ca9b5fe6cea23bfb6729b":[1,0,0,37,0],
+"classrosette__api_1_1RecordSimilarityRecords.html#a40049017b8a0ee928366d4d3760199ba":[1,0,0,37,1],
 "classrosette__api_1_1RecordSimilarityRecords.html#a85bd60b4ea588434df97675c4e444d21":[1,0,0,37,6],
 "classrosette__api_1_1RecordSimilarityRecords.html#acf10b03bf5564088f287e2e0765677cf":[1,0,0,37,3],
 "classrosette__api_1_1RecordSimilarityRecords.html#ad3ddd213e3fd534afb02de59bcc677f4":[1,0,0,37,2],
@@ -242,12 +249,5 @@ var NAVTREEINDEX2 =
 "classrosette__api_1_1TokenizationResponse.html#a83d478321fba34e2f433bf0f3cc435ad":[1,0,0,60,1],
 "classrosette__api_1_1TokenizationResponse.html#ab38c4ff6d6ccdc0f27fd809ed1bebda7":[1,0,0,60,3],
 "classrosette__api_1_1TopicsResponse.html":[1,0,0,61],
-"classrosette__api_1_1TopicsResponse.html#a25c840718bf1c73e8132f31758d2d834":[1,0,0,61,5],
-"classrosette__api_1_1TopicsResponse.html#a474f14a7c294d59dede8c207f9a925d2":[1,0,0,61,1],
-"classrosette__api_1_1TopicsResponse.html#a92c4e8108f479225a739ef101512996a":[1,0,0,61,0],
-"classrosette__api_1_1TopicsResponse.html#aca49f539c620d37c1ca4eba4ac1211fd":[1,0,0,61,4],
-"classrosette__api_1_1TopicsResponse.html#af36e2b3861cef3996b6cc0de43c0e039":[1,0,0,61,3],
-"classrosette__api_1_1TopicsResponse.html#afb046c51a49108f746f65227164633af":[1,0,0,61,2],
-"classrosette__api_1_1TranslateNamesResponse.html":[1,0,0,62],
-"classrosette__api_1_1TranslateNamesResponse.html#a277809ff4617e6083a7ef15f18d9a4aa":[1,0,0,62,5]
+"classrosette__api_1_1TopicsResponse.html#a25c840718bf1c73e8132f31758d2d834":[1,0,0,61,5]
 };

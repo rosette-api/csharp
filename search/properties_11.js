@@ -5,7 +5,7 @@ var searchData=
   ['targetscript',['TargetScript',['../classrosette__api_1_1TranslateNamesResponse.html#a95bc4d85151cdd61eb4b8191dbd9955f',1,'rosette_api::TranslateNamesResponse']]],
   ['temporals',['Temporals',['../classrosette__api_1_1RosetteRelationship.html#af8015a2d91b7e4805cc7f810f7ba38e8',1,'rosette_api::RosetteRelationship']]],
   ['term',['Term',['../classrosette__api_1_1SimilarTerm.html#a20e453fb1a3ba1eb5cc8f529315e6489',1,'rosette_api::SimilarTerm']]],
-  ['text',['Text',['../classrosette__api_1_1NameField.html#a7e5880bb3d17dd3b0de9cd1f6db1f3c8',1,'rosette_api.NameField.Text()'],['../classrosette__api_1_1Name.html#aea41eeac4d108ba05e5b2857f41752e5',1,'rosette_api.Name.text()']]],
+  ['text',['text',['../classrosette__api_1_1Name.html#aea41eeac4d108ba05e5b2857f41752e5',1,'rosette_api.Name.text()'],['../classrosette__api_1_1NameField.html#a7e5880bb3d17dd3b0de9cd1f6db1f3c8',1,'rosette_api.NameField.Text()']]],
   ['textembedding',['TextEmbedding',['../classrosette__api_1_1SemanticVectorsResponse.html#aebdda93766bbecd9671baf9bea8e4373',1,'rosette_api.SemanticVectorsResponse.TextEmbedding()'],['../classrosette__api_1_1TextEmbeddingResponse.html#ad8eadd4ed7142b752895f16f11d5c356',1,'rosette_api.TextEmbeddingResponse.TextEmbedding()']]],
   ['threshold',['Threshold',['../classrosette__api_1_1RecordSimilarityProperties.html#a8d1ff65a9234a6ba3b4cb97d313abe63',1,'rosette_api::RecordSimilarityProperties']]],
   ['time',['Time',['../classrosette__api_1_1PingResponse.html#a6ac53b513b6ba07354b781712e1d09af',1,'rosette_api::PingResponse']]],
