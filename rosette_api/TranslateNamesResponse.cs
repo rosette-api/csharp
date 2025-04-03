@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http;
 
 namespace rosette_api
@@ -59,6 +60,11 @@ namespace rosette_api
         /// </summary>
         [JsonProperty(confidenceKey, NullValueHandling=NullValueHandling.Ignore)]
         public Nullable<double> Confidence { get; set; }
+        /// <summary>
+        /// Gets or sets the extended information about the translation
+        /// </summary>
+        [JsonProperty(extendedInformationKey, NullValueHandling=NullValueHandling.Ignore)]
+        public Dictionary<string, object> ExtendedInformation { get; set; }
 
         private const string sourceScriptKey = "sourceScript";
         private const string sourceLanguageOfOriginKey = "sourceLanguageOfOrigin";
@@ -69,6 +75,7 @@ namespace rosette_api
         private const string targetSchemeKey = "targetScheme";
         private const string entityTypeKey = "entityType";
         private const string confidenceKey = "confidence";
+        private const string extendedInformationKey = "extendedInformation";
 
         /// <summary>
         /// Creates a TranslateNamesResponse from the given apiResult
@@ -85,6 +92,7 @@ namespace rosette_api
             this.TargetScheme = this.ContentDictionary.ContainsKey(targetSchemeKey) ? this.ContentDictionary[targetSchemeKey] as string : null;
             this.EntityType = this.ContentDictionary.ContainsKey(entityTypeKey) ? this.ContentDictionary[entityTypeKey] as string : null;
             this.Confidence = this.ContentDictionary.ContainsKey(confidenceKey) ? this.ContentDictionary[confidenceKey] as double? : null;
+            this.ExtendedInformation = this.ContentDictionary.ContainsKey(extendedInformationKey) ? (this.ContentDictionary[extendedInformationKey] as JObject).ToObject<Dictionary<string, object>>(): null;
         }
 
         /// <summary>
@@ -103,7 +111,8 @@ namespace rosette_api
         /// <param name="content">The content in Dictionary form</param>
         /// <param name="contentAsJson">The content in JSON form</param>
         public TranslateNamesResponse(string translation, string targetLanguage, string targetScheme = null, string targetScript = null, string entityType = null, string sourceLanguageOfOrigin = null,
-            string sourceLanguageOfUse = null, string sourceScript = null, double? confidence = null, Dictionary<string, string> responseHeaders = null, Dictionary<string, object> content = null, string contentAsJson = null) : base(responseHeaders, content, contentAsJson)
+            string sourceLanguageOfUse = null, string sourceScript = null, double? confidence = null, Dictionary<string, object> extendedInformation = null,
+            Dictionary<string, string> responseHeaders = null, Dictionary<string, object> content = null, string contentAsJson = null) : base(responseHeaders, content, contentAsJson)
          {
             this.SourceLanguageOfOrigin = sourceLanguageOfOrigin;
             this.SourceLanguageOfUse = sourceLanguageOfUse;
@@ -114,6 +123,7 @@ namespace rosette_api
             this.TargetScript = targetScript;
             this.EntityType = entityType;
             this.Confidence = confidence;
+            this.ExtendedInformation = extendedInformation;
         }
 
         /// <summary>
@@ -137,7 +147,8 @@ namespace rosette_api
                     this.TargetScript != null && other.TargetScript != null ? this.TargetScript.Equals(other.TargetScript) : this.TargetScript == other.TargetScript,
                     this.EntityType != null && other.EntityType != null ? this.EntityType.Equals(other.EntityType) : this.EntityType == other.EntityType, 
                     this.Confidence == other.Confidence,
-                    this.GetHashCode() == other.GetHashCode()
+                    this.GetHashCode() == other.GetHashCode(),
+                    this.ExtendedInformation != null && other.ExtendedInformation != null ? Utilities.DictionaryEquals(this.ExtendedInformation, other.ExtendedInformation) : this.ExtendedInformation == other.ExtendedInformation,
                 };
                 return conditions.All(condition => condition);
             }
@@ -163,7 +174,8 @@ namespace rosette_api
             int h7 = this.TargetScript != null ? this.TargetScript.GetHashCode() : 1;
             int h8 = this.Translation != null ? this.Translation.GetHashCode() : 1;
             int h9 = this.Confidence != null ? this.Confidence.GetHashCode() : 1;
-            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5 ^ h6 ^ h7 ^ h8 ^ h9;
+            int h10 = this.ExtendedInformation != null ? this.ExtendedInformation.GetHashCode() : 1;
+            return h0 ^ h1 ^ h2 ^ h3 ^ h4 ^ h5 ^ h6 ^ h7 ^ h8 ^ h9 ^ h10;
         }
     }
 }
