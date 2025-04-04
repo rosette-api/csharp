@@ -19,6 +19,6 @@
 <area shape="rect" id="node19" href="$classrosette__api_1_1TextEmbeddingResponse.html" title="Class for representing responses from the API when the TextEmbedding endpoint has been called ..." alt="" coords="4130,358,4339,523"/>
 <area shape="rect" id="node20" href="$classrosette__api_1_1TokenizationResponse.html" title="A class to represent responses from the Tokenization endpoint of the Analytics API ..." alt="" coords="4363,373,4554,509"/>
 <area shape="rect" id="node21" href="$classrosette__api_1_1TopicsResponse.html" title="A class to represent responses from the Topics endpoint of the Analytics API " alt="" coords="4578,373,4779,509"/>
-<area shape="rect" id="node22" href="$classrosette__api_1_1TranslateNamesResponse.html" title="A class to represent responses from the TranslatedNames endpoint of the Analytics API ..." alt="" coords="4803,314,5018,567"/>
+<area shape="rect" id="node22" href="$classrosette__api_1_1TranslateNamesResponse.html" title="A class to represent responses from the TranslatedNames endpoint of the Analytics API ..." alt="" coords="4803,307,5018,575"/>
 <area shape="rect" id="node23" href="$classrosette__api_1_1TransliterationResponse.html" title="A class to represent the results from the Transliteration endpoint of the Analytics API ..." alt="" coords="5043,373,5245,509"/>
 </map>

@@ -25,5 +25,6 @@ var searchData=
   ['eventsresponse_2ecs',['EventsResponse.cs',['../EventsResponse_8cs.html',1,'']]],
   ['eventtype',['EventType',['../classrosette__api_1_1RosetteEvent.html#a0ccb8d68b1cddf11cfd923bf6a037ef6',1,'rosette_api::RosetteEvent']]],
   ['explaininfo',['ExplainInfo',['../classrosette__api_1_1RecordSimilarityResult.html#ab78a971df03490c6b297ffa707828a2e',1,'rosette_api::RecordSimilarityResult']]],
+  ['extendedinformation',['ExtendedInformation',['../classrosette__api_1_1TranslateNamesResponse.html#a6d62a9f8c4dd66bc4f6ddabdff2679e7',1,'rosette_api::TranslateNamesResponse']]],
   ['extractorname',['ExtractorName',['../classrosette__api_1_1EventRole.html#a2ba8d705ceba6eb8bf02db3c537df81b',1,'rosette_api::EventRole']]]
 ];
