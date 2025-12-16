@@ -693,6 +693,201 @@ namespace rosette_api {
     }
 
     /// <summary>
+    /// Class for representing a string record
+    /// </summary>
+    [JsonConverter(typeof(UnfieldedRecordSimilarityConverter))]
+    public class StringRecord : RecordSimilarityField
+    {
+        public const string DATA = "data";
+
+        /// <summary>
+        /// Gets and sets the string record
+        /// </summary>
+        [JsonProperty(PropertyName = DATA)]
+        public string Text { get; set;}
+
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public StringRecord() { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="data">The string record</param>
+        public StringRecord(string data)
+        {
+            this.Text = data;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is StringRecord)
+            {
+                StringRecord other = obj as StringRecord;
+                return this.Text == other.Text;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hashcode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Text != null ? this.Text.GetHashCode() : 1;
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This string record as a string</returns>
+        public override string ToString()
+        {
+            return this.Text;
+        }
+    }
+
+    /// <summary>
+    /// Class for representing a number record
+    /// </summary>
+    [JsonConverter(typeof(UnfieldedRecordSimilarityConverter))]
+    public class NumberRecord : RecordSimilarityField
+    {
+        public const string DATA = "data";
+
+        /// <summary>
+        /// Gets and sets the number record
+        /// </summary>
+        [JsonProperty(PropertyName = DATA)]
+        public double Number { get; set; }
+
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public NumberRecord() { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="data">The number record</param>
+        public NumberRecord(double data)
+        {
+            this.Number = data;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is NumberRecord)
+            {
+                NumberRecord other = obj as NumberRecord;
+                return this.Number == other.Number;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hashcode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Number.GetHashCode();
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This number record as a string</returns>
+        public override string ToString()
+        {
+            return this.Number.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Class for representing a boolean record
+    /// </summary>
+    [JsonConverter(typeof(UnfieldedRecordSimilarityConverter))]
+    public class BooleanRecord : RecordSimilarityField
+    {
+        public const string DATA = "data";
+
+        /// <summary>
+        /// Gets and sets the boolean record
+        /// </summary>
+        [JsonProperty(PropertyName = DATA)]
+        public bool Boolean { get; set; }
+
+        /// <summary>
+        /// No-args constructor
+        /// </summary>
+        public BooleanRecord() { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="data">The boolean record</param>
+        public BooleanRecord(bool data)
+        {
+            this.Boolean = data;
+        }
+
+        /// <summary>
+        /// Equals override
+        /// </summary>
+        /// <param name="obj">The object to compare</param>
+        /// <returns>True if equal</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is BooleanRecord)
+            {
+                BooleanRecord other = obj as BooleanRecord;
+                return this.Boolean == other.Boolean;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hashcode override
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Boolean.GetHashCode();
+        }
+
+        /// <summary>
+        /// ToString override.
+        /// </summary>
+        /// <returns>This boolean record as a string</returns>
+        public override string ToString()
+        {
+            return this.Boolean.ToString().ToLower();
+        }
+    }
+
+    /// <summary>
     /// Class for representing an unknown field
     /// </summary>
 

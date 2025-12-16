@@ -264,13 +264,22 @@ namespace rosette_apiUnitTests {
             string date = RecordFieldType.RniDate;
             string address = RecordFieldType.RniAddress;
             string name = RecordFieldType.RniName;
+            string str = RecordFieldType.RniString;
+            string number = RecordFieldType.RniNumber;
+            string boolean = RecordFieldType.RniBoolean;
             string dateSerialized = JsonConvert.SerializeObject(date);
             string addressSerialized = JsonConvert.SerializeObject(address);
             string nameSerialized = JsonConvert.SerializeObject(name);
+            string strSerialized = JsonConvert.SerializeObject(str);
+            string numberSerialized = JsonConvert.SerializeObject(number);
+            string booleanSerialized = JsonConvert.SerializeObject(boolean);
 
             Assert.AreEqual( "\"rni_date\"", dateSerialized, "RniDate does not deserialize to 'rni_date'");
             Assert.AreEqual("\"rni_address\"", addressSerialized, "RniAddress does not deserialize to 'rni_address'");
             Assert.AreEqual("\"rni_name\"", nameSerialized, "RniName does not deserialize to 'rni_name'");
+            Assert.AreEqual("\"rni_string\"", strSerialized, "RniString does not deserialize to 'rni_string'");
+            Assert.AreEqual("\"rni_number\"", numberSerialized, "RniNumber does not deserialize to 'rni_number'");
+            Assert.AreEqual("\"rni_boolean\"", booleanSerialized, "RniBoolean does not deserialize to 'rni_boolean'");
         }
 
         [Test]
@@ -308,6 +317,16 @@ namespace rosette_apiUnitTests {
             RecordSimilarityField unknownField = new UnknownFieldRecord(JToken.Parse(jsonString));
             string unknownFieldSerialized = JsonConvert.SerializeObject(unknownField);
             Assert.AreEqual(jsonString, unknownFieldSerialized, "Unknown Field does not serialize correctly");
+
+            RecordSimilarityField stringField = new StringRecord("software engineer");
+            string stringFieldSerialized = JsonConvert.SerializeObject(stringField);
+            Assert.AreEqual("\"software engineer\"", stringFieldSerialized, "String Field does not serialize correctly");
+            RecordSimilarityField numberField = new NumberRecord(47);
+            string numberFieldSerialized = JsonConvert.SerializeObject(numberField);
+            Assert.AreEqual("47.0", numberFieldSerialized, "Number Field does not serialize correctly");
+            RecordSimilarityField booleanField = new BooleanRecord(false);
+            string booleanFieldSerialized = JsonConvert.SerializeObject(booleanField);
+            Assert.AreEqual("false", booleanFieldSerialized, "Boolean Field does not serialize correctly");
         }
 
         [Test]
@@ -1253,13 +1272,16 @@ namespace rosette_apiUnitTests {
         }
 
         //------------------------- Record-Similarity ----------------------------------------
-        private RecordSimilarityRequest CreateTestRecordSimilarityRequest(string name, string dob, string address) {
+        private RecordSimilarityRequest CreateTestRecordSimilarityRequest(string name, string dob, string address, string job, string age, string retired) {
                 // Creating the request object
                 Dictionary<string, RecordSimilarityFieldInfo> fields = new Dictionary<string, RecordSimilarityFieldInfo>
                 {
                     { name, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniName, Weight = 0.5 } },
                     { dob, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniDate, Weight = 0.2 } },
-                    { address, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniAddress, Weight = 0.5 } }
+                    { address, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniAddress, Weight = 0.5 } },
+                    { job, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniString, Weight = 0.2 } },
+                    { age, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniNumber, Weight = 0.4 } },
+                    { retired, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniBoolean, Weight = 0.05 } }
                 };
 
                 RecordSimilarityProperties properties = new RecordSimilarityProperties { Threshold = 0.7, IncludeExplainInfo = false };
@@ -1271,7 +1293,10 @@ namespace rosette_apiUnitTests {
                         {
                             { name, new FieldedNameRecord { Text = "Ethan R", Language = "eng", LanguageOfOrigin = "eng", Script = "Latn", EntityType = "PERSON"} },
                             { dob, new UnfieldedDateRecord { Date = "1993-04-16"} },
-                            { address, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"}}
+                            { address, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"}},
+                            { job, new StringRecord { Text = "software engineer"} },
+                            { age, new NumberRecord { Number = 77 } },
+                            { retired, new BooleanRecord { Boolean = true } }
                         }
                     },
                     Right = new List<Dictionary<string, RecordSimilarityField>>
@@ -1280,7 +1305,9 @@ namespace rosette_apiUnitTests {
                         {
                             { name, new UnfieldedNameRecord { Text = "Ivan R"} },
                             { dob, new FieldedDateRecord { Date = "1993/04/16"} },
-                            { address, new FieldedAddressRecord { HouseNumber = "234", Road = "Roadlane Ave"} }
+                            { address, new FieldedAddressRecord { HouseNumber = "234", Road = "Roadlane Ave"} },
+                            { age, new NumberRecord { Number = 47 } },
+                            { retired, new BooleanRecord { Boolean = false } }
                         }
                     }
                 };
@@ -1306,9 +1333,12 @@ namespace rosette_apiUnitTests {
             string name = "name";
             string dob = "dob";
             string address = "dobAddress";
+            string job = "job";
+            string age = "age";
+            string retired = "retired";
 
             // Creating the request object
-            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address);
+            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address, job, age, retired);
 
             var response = _rosetteApi.RecordSimilarity(request);
             Assert.AreEqual(response.Content["response"], "OK");
@@ -1326,9 +1356,12 @@ namespace rosette_apiUnitTests {
             string name = "name";
             string dob = "dob";
             string address = "dobAddress";
+            string job = "job";
+            string age = "age";
+            string retired = "retired";
 
             // Creating the request object
-            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address);
+            RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address, job, age, retired);
             //creating response headers
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
             Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
