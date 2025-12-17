@@ -34,6 +34,9 @@ namespace rosette_apiExamples
                 string dobField = "dob";
                 string dob2Field = "dob2";
                 string addrField = "addr";
+                string jobField = "jobTitle";
+                string ageField = "age";
+                string retiredField = "isRetired";
                 string dobHyphen = "1993-04-16";
 
                 // Creating the request object
@@ -42,10 +45,13 @@ namespace rosette_apiExamples
                     { primaryNameField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniName, Weight = 0.5 } },
                     { dobField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniDate, Weight = 0.2 } },
                     { dob2Field, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniDate, Weight = 0.1 } },
-                    { addrField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniAddress, Weight = 0.5 } }
+                    { addrField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniAddress, Weight = 0.5 } },
+                    { jobField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniString, Weight = 0.2 } },
+                    { ageField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniNumber, Weight = 0.4 } },
+                    { retiredField, new RecordSimilarityFieldInfo { Type = RecordFieldType.RniBoolean, Weight = 0.05 } }
                 };
 
-                RecordSimilarityProperties properties = new RecordSimilarityProperties { Threshold = 0.7, IncludeExplainInfo = false };
+                RecordSimilarityProperties properties = new RecordSimilarityProperties { Threshold = 0.7, IncludeExplainInfo = true };
 
                 RecordSimilarityRecords records = new RecordSimilarityRecords {
                     Left = new List<Dictionary<string, RecordSimilarityField>>
@@ -55,12 +61,15 @@ namespace rosette_apiExamples
                             { primaryNameField, new FieldedNameRecord { Text = "Ethan R", Language = "eng", LanguageOfOrigin = "eng", Script = "Latn", EntityType = "PERSON"} },
                             { dobField, new UnfieldedDateRecord { Date = dobHyphen} },
                             { dob2Field, new FieldedDateRecord { Date = "04161993", Format = "MMddyyyy"} },
-                            { addrField, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"}}
+                            { addrField, new UnfieldedAddressRecord { Address = "123 Roadlane Ave"} },
+                            { jobField, new StringRecord { Text = "software engineer"} }
                         },
                         new Dictionary<string, RecordSimilarityField>
                         {
                             { primaryNameField, new FieldedNameRecord { Text = "Evan R"} },
-                            { dobField, new FieldedDateRecord { Date = dobHyphen} }
+                            { dobField, new FieldedDateRecord { Date = dobHyphen} },
+                            { ageField, new NumberRecord { Number = 47.344 } },
+                            { retiredField, new BooleanRecord { Boolean = false } }
                         }
                     },
                     Right = new List<Dictionary<string, RecordSimilarityField>>
@@ -68,14 +77,18 @@ namespace rosette_apiExamples
                         new Dictionary<string, RecordSimilarityField>
                         {
                             { primaryNameField, new FieldedNameRecord { Text = "Seth R", Language = "eng"} },
-                            { dobField, new FieldedDateRecord { Date = dobHyphen} }
+                            { dobField, new FieldedDateRecord { Date = dobHyphen} },
+                            { jobField, new StringRecord { Text = "manager"} },
+                            { retiredField, new BooleanRecord { Boolean = true } }
                         },
                         new Dictionary<string, RecordSimilarityField>
                         {
                             { primaryNameField, new UnfieldedNameRecord { Text = "Ivan R"} },
                             { dobField, new FieldedDateRecord { Date = dobHyphen} },
                             { dob2Field, new FieldedDateRecord { Date = "1993/04/16"} },
-                            { addrField, new FieldedAddressRecord { HouseNumber = "123", Road = "Roadlane Ave"} }
+                            { addrField, new FieldedAddressRecord { HouseNumber = "123", Road = "Roadlane Ave"} },
+                            { ageField, new NumberRecord { Number = 72 } },
+                            { retiredField, new BooleanRecord { Boolean = true } }
                         }
                     }
                 };

@@ -18,6 +18,10 @@ namespace rosette_api {
             if (value is UnknownFieldRecord)
             {
                 serializer.Serialize(writer, ((UnknownFieldRecord)value).Data);
+            } else if (value is NumberRecord) {
+                writer.WriteValue(((NumberRecord)value).Number);
+            } else if (value is BooleanRecord) {
+                writer.WriteValue(((BooleanRecord)value).Boolean);
             } else {
                 writer.WriteValue(value.ToString());
             }
