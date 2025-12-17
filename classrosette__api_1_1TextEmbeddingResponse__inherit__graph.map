@@ -1,3 +1,4 @@
 <map id="rosette_api.TextEmbeddingResponse" name="rosette_api.TextEmbeddingResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="31,5,189,215"/>
+<area shape="rect" id="node1" title="Class for representing responses from the API when the TextEmbedding endpoint has been called" alt="" coords="5,263,216,428"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="31,5,191,215"/>
 </map>

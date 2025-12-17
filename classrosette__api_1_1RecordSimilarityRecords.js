@@ -1,7 +1,7 @@
 var classrosette__api_1_1RecordSimilarityRecords =
 [
     [ "RecordSimilarityRecords", "classrosette__api_1_1RecordSimilarityRecords.html#a1f6c2a0c421ca9b5fe6cea23bfb6729b", null ],
-    [ "RecordSimilarityRecords", "classrosette__api_1_1RecordSimilarityRecords.html#a40049017b8a0ee928366d4d3760199ba", null ],
+    [ "RecordSimilarityRecords", "classrosette__api_1_1RecordSimilarityRecords.html#a22abfc45470f0afcec9f9dc2dc17e76c", null ],
     [ "Equals", "classrosette__api_1_1RecordSimilarityRecords.html#ad3ddd213e3fd534afb02de59bcc677f4", null ],
     [ "GetHashCode", "classrosette__api_1_1RecordSimilarityRecords.html#acf10b03bf5564088f287e2e0765677cf", null ],
     [ "ToString", "classrosette__api_1_1RecordSimilarityRecords.html#af1ad3327573eb81e13c6826fe33b7e37", null ],

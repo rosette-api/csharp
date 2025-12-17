@@ -7,5 +7,5 @@ var classrosette__api_1_1Concept =
     [ "ToString", "classrosette__api_1_1Concept.html#abe364277527100fca5a940ccd2a3165c", null ],
     [ "ConceptId", "classrosette__api_1_1Concept.html#a5551c90eb752c128490916f9835d58fc", null ],
     [ "Phrase", "classrosette__api_1_1Concept.html#a13ce3bd894b25675c3f9c11891be4ff1", null ],
-    [ "Salience", "classrosette__api_1_1Concept.html#aacda24a69f88fe5bfe700aba53e44846", null ]
+    [ "Salience", "classrosette__api_1_1Concept.html#a9ba57cf20c3d78dc55003b506dbd516a", null ]
 ];

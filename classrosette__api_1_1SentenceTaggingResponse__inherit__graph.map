@@ -1,3 +1,4 @@
 <map id="rosette_api.SentenceTaggingResponse" name="rosette_api.SentenceTaggingResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="35,5,194,215"/>
+<area shape="rect" id="node1" title="A class to represent responses from the Sentence Tagging endpoint of the Analytics API" alt="" coords="5,263,225,399"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="35,5,195,215"/>
 </map>

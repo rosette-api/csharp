@@ -1,3 +1,4 @@
 <map id="rosette_api.TokenizationResponse" name="rosette_api.TokenizationResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="21,5,180,215"/>
+<area shape="rect" id="node1" title="A class to represent responses from the Tokenization endpoint of the Analytics API" alt="" coords="5,263,196,399"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="21,5,181,215"/>
 </map>

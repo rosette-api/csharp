@@ -1,26 +1,4 @@
 var searchData=
 [
-  ['recordfieldtype',['RecordFieldType',['../classrosette__api_1_1RecordFieldType.html',1,'rosette_api']]],
-  ['recordsimilarityexplaininfo',['RecordSimilarityExplainInfo',['../classrosette__api_1_1RecordSimilarityExplainInfo.html',1,'rosette_api']]],
-  ['recordsimilarityfield',['RecordSimilarityField',['../interfacerosette__api_1_1RecordSimilarityField.html',1,'rosette_api']]],
-  ['recordsimilarityfieldexplaininfo',['RecordSimilarityFieldExplainInfo',['../classrosette__api_1_1RecordSimilarityFieldExplainInfo.html',1,'rosette_api']]],
-  ['recordsimilarityfieldinfo',['RecordSimilarityFieldInfo',['../classrosette__api_1_1RecordSimilarityFieldInfo.html',1,'rosette_api']]],
-  ['recordsimilarityproperties',['RecordSimilarityProperties',['../classrosette__api_1_1RecordSimilarityProperties.html',1,'rosette_api']]],
-  ['recordsimilarityrecords',['RecordSimilarityRecords',['../classrosette__api_1_1RecordSimilarityRecords.html',1,'rosette_api']]],
-  ['recordsimilarityrequest',['RecordSimilarityRequest',['../classrosette__api_1_1RecordSimilarityRequest.html',1,'rosette_api']]],
-  ['recordsimilarityresponse',['RecordSimilarityResponse',['../classrosette__api_1_1RecordSimilarityResponse.html',1,'rosette_api']]],
-  ['recordsimilarityresult',['RecordSimilarityResult',['../classrosette__api_1_1RecordSimilarityResult.html',1,'rosette_api']]],
-  ['relationshipsresponse',['RelationshipsResponse',['../classrosette__api_1_1RelationshipsResponse.html',1,'rosette_api']]],
-  ['responseheaders',['ResponseHeaders',['../classrosette__api_1_1ResponseHeaders.html',1,'rosette_api']]],
-  ['rosettecategory',['RosetteCategory',['../classrosette__api_1_1RosetteCategory.html',1,'rosette_api']]],
-  ['rosetteentity',['RosetteEntity',['../classrosette__api_1_1RosetteEntity.html',1,'rosette_api']]],
-  ['rosetteevent',['RosetteEvent',['../classrosette__api_1_1RosetteEvent.html',1,'rosette_api']]],
-  ['rosetteexception',['RosetteException',['../classrosette__api_1_1RosetteException.html',1,'rosette_api']]],
-  ['rosetteextensions',['RosetteExtensions',['../classrosette__api_1_1RosetteExtensions.html',1,'rosette_api']]],
-  ['rosettefile',['RosetteFile',['../classrosette__api_1_1RosetteFile.html',1,'rosette_api']]],
-  ['rosetterelationship',['RosetteRelationship',['../classrosette__api_1_1RosetteRelationship.html',1,'rosette_api']]],
-  ['rosetteresponse',['RosetteResponse',['../classrosette__api_1_1RosetteResponse.html',1,'rosette_api']]],
-  ['rosetteresponsecontractresolver',['RosetteResponseContractResolver',['../classrosette__api_1_1RosetteResponseContractResolver.html',1,'rosette_api']]],
-  ['rosettesentiment',['RosetteSentiment',['../classrosette__api_1_1SentimentResponse_1_1RosetteSentiment.html',1,'rosette_api::SentimentResponse']]],
-  ['rosettesentimententity',['RosetteSentimentEntity',['../classrosette__api_1_1RosetteSentimentEntity.html',1,'rosette_api']]]
+  ['pingresponse_0',['PingResponse',['../classrosette__api_1_1PingResponse.html',1,'rosette_api']]]
 ];

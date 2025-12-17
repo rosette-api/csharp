@@ -1,5 +1,6 @@
 <map id="rosette_api.AddressField" name="rosette_api.AddressField">
-<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddressRecord.html" title="Class for representing a fielded address " alt="" coords="5,256,203,715"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddressRecord.html" title="Class for representing an unfielded address " alt="" coords="227,403,440,568"/>
-<area shape="rect" id="node2" href="$interfacerosette__api_1_1RecordSimilarityField.html" title="{RecordSimilarityField\n||}" alt="" coords="139,5,298,83"/>
+<area shape="rect" id="node1" title="Abstract parent class for UnfieldedAddress and FieldedAddress" alt="" coords="128,131,311,208"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddressRecord.html" title="Class for representing a fielded address" alt="" coords="5,256,204,715"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddressRecord.html" title="Class for representing an unfielded address" alt="" coords="229,403,442,568"/>
+<area shape="rect" id="node2" href="$interfacerosette__api_1_1RecordSimilarityField.html" title=" " alt="" coords="139,5,300,83"/>
 </map>

@@ -1,12 +1,16 @@
 <map id="rosette_api.RecordSimilarityField" name="rosette_api.RecordSimilarityField">
-<area shape="rect" id="node2" href="$classrosette__api_1_1AddressField.html" title="Abstract parent class for UnfieldedAddress and FieldedAddress " alt="" coords="243,182,424,259"/>
-<area shape="rect" id="node5" href="$classrosette__api_1_1DateField.html" title="Abstract parent class for UnfieldedDate and FieldedDate " alt="" coords="725,175,885,267"/>
-<area shape="rect" id="node8" href="$classrosette__api_1_1NameField.html" title="Abstract parent class for UnfieldedName and FieldedName " alt="" coords="932,175,1100,267"/>
-<area shape="rect" id="node11" href="$classrosette__api_1_1UnknownFieldRecord.html" title="Class for representing an unknown field " alt="" coords="1125,145,1315,296"/>
-<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddressRecord.html" title="Class for representing a fielded address " alt="" coords="5,344,203,803"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddressRecord.html" title="Class for representing an unfielded address " alt="" coords="227,491,440,656"/>
-<area shape="rect" id="node6" href="$classrosette__api_1_1FieldedDateRecord.html" title="Class for representing a fielded date " alt="" coords="465,498,685,649"/>
-<area shape="rect" id="node7" href="$classrosette__api_1_1UnfieldedDateRecord.html" title="Class for representing an unfielded date " alt="" coords="709,498,901,649"/>
-<area shape="rect" id="node9" href="$classrosette__api_1_1FieldedNameRecord.html" title="Class for representing a fielded name " alt="" coords="926,454,1154,693"/>
-<area shape="rect" id="node10" href="$classrosette__api_1_1UnfieldedNameRecord.html" title="Class for representing an unfielded name " alt="" coords="1179,498,1379,649"/>
+<area shape="rect" id="node1" title=" " alt="" coords="896,5,1103,97"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1AddressField.html" title="Abstract parent class for UnfieldedAddress and FieldedAddress" alt="" coords="244,182,427,259"/>
+<area shape="rect" id="node5" href="$classrosette__api_1_1BooleanRecord.html" title="Class for representing a boolean record" alt="" coords="507,145,705,296"/>
+<area shape="rect" id="node6" href="$classrosette__api_1_1DateField.html" title="Abstract parent class for UnfieldedDate and FieldedDate" alt="" coords="729,175,891,267"/>
+<area shape="rect" id="node9" href="$classrosette__api_1_1NameField.html" title="Abstract parent class for UnfieldedName and FieldedName" alt="" coords="915,175,1084,267"/>
+<area shape="rect" id="node12" href="$classrosette__api_1_1NumberRecord.html" title="Class for representing a number record" alt="" coords="1108,145,1304,296"/>
+<area shape="rect" id="node13" href="$classrosette__api_1_1StringRecord.html" title="Class for representing a string record" alt="" coords="1328,145,1511,296"/>
+<area shape="rect" id="node14" href="$classrosette__api_1_1UnknownFieldRecord.html" title="Class for representing an unknown field" alt="" coords="1535,145,1725,296"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddressRecord.html" title="Class for representing a fielded address" alt="" coords="5,344,204,803"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddressRecord.html" title="Class for representing an unfielded address" alt="" coords="229,491,442,656"/>
+<area shape="rect" id="node7" href="$classrosette__api_1_1FieldedDateRecord.html" title="Class for representing a fielded date" alt="" coords="467,498,689,649"/>
+<area shape="rect" id="node8" href="$classrosette__api_1_1UnfieldedDateRecord.html" title="Class for representing an unfielded date" alt="" coords="714,498,906,649"/>
+<area shape="rect" id="node10" href="$classrosette__api_1_1FieldedNameRecord.html" title="Class for representing a fielded name" alt="" coords="931,454,1161,693"/>
+<area shape="rect" id="node11" href="$classrosette__api_1_1UnfieldedNameRecord.html" title="Class for representing an unfielded name" alt="" coords="1186,498,1386,649"/>
 </map>

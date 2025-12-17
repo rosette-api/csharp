@@ -1,5 +1,7 @@
 <map id="rosette_api.MentionOffset" name="rosette_api.MentionOffset">
-<area shape="rect" id="node3" href="$classrosette__api_1_1EventMention.html" title="A class for representing an identified mention of an event " alt="" coords="5,344,193,524"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1EventRole.html" title="A class for representing an event role " alt="" coords="217,329,381,539"/>
-<area shape="rect" id="node5" href="$classrosette__api_1_1NegationCue.html" title="A class for representing a negation cue " alt="" coords="405,366,588,502"/>
+<area shape="rect" id="node1" title="Offsets of a piece of text in the document" alt="" coords="206,131,397,281"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1EventMention.html" title="A class for representing an identified mention of an event" alt="" coords="5,344,195,524"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1EventRole.html" title="A class for representing an event role" alt="" coords="219,329,384,539"/>
+<area shape="rect" id="node5" href="$classrosette__api_1_1NegationCue.html" title="A class for representing a negation cue" alt="" coords="409,366,591,502"/>
+<area shape="rect" id="node2" title=" " alt="" coords="195,5,408,83"/>
 </map>

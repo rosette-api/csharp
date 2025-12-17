@@ -1,7 +1,13 @@
 var searchData=
 [
-  ['dependency',['Dependency',['../classrosette__api_1_1SyntaxDependenciesResponse_1_1Dependency.html#a64c5d2226d425a7455a939090d5dafb6',1,'rosette_api::SyntaxDependenciesResponse::Dependency']]],
-  ['dictionaryequals_3c_20tkey_2c_20tvalue_20_3e',['DictionaryEquals&lt; TKey, TValue &gt;',['../classrosette__api_1_1Utilities.html#af085a985b7081444483f1c3e03504195',1,'rosette_api::Utilities']]],
-  ['dispose',['Dispose',['../classrosette__api_1_1RosetteFile.html#ab36c359c31480dd0426b98bd395b08b1',1,'rosette_api.RosetteFile.Dispose()'],['../classrosette__api_1_1RosetteFile.html#ac09c40e8c222e979de2de0d00d57d351',1,'rosette_api.RosetteFile.Dispose(bool disposing)']]],
-  ['dontignorepropertieswithmemberattributes',['DontIgnorePropertiesWithMemberAttributes',['../classrosette__api_1_1RosetteResponseContractResolver.html#a36c973b46955e011e79d5c94311d3853',1,'rosette_api::RosetteResponseContractResolver']]]
+  ['canconvert_0',['CanConvert',['../classrosette__api_1_1UnfieldedRecordSimilarityConverter.html#a57fb827f1668a448b465dae33394a5d7',1,'rosette_api::UnfieldedRecordSimilarityConverter']]],
+  ['capi_1',['CAPI',['../classrosette__api_1_1CAPI.html#ac91d25ea70e95b9f96a6ad42574fc2a8',1,'rosette_api::CAPI']]],
+  ['categories_2',['Categories',['../classrosette__api_1_1CAPI.html#aaf8f36f90de8d55a9e78b3a55d3d8649',1,'rosette_api.CAPI.Categories(string content=null, string language=null, string contentType=null, string contentUri=null, string genre=null)'],['../classrosette__api_1_1CAPI.html#acf24515566ee148da12c02d438670c07',1,'rosette_api.CAPI.Categories(Dictionary&lt; object, object &gt; dict)'],['../classrosette__api_1_1CAPI.html#a361e724301ee791cb9d89cb6c0ce33f9',1,'rosette_api.CAPI.Categories(RosetteFile file)']]],
+  ['categoriesresponse_3',['CategoriesResponse',['../classrosette__api_1_1CategoriesResponse.html#a973a609ac4d02bd2763ee24baa8aabac',1,'rosette_api.CategoriesResponse.CategoriesResponse(HttpResponseMessage apiResult)'],['../classrosette__api_1_1CategoriesResponse.html#ae89f1d65c61fa1171a6887700c8ff0b5',1,'rosette_api.CategoriesResponse.CategoriesResponse(List&lt; RosetteCategory &gt; categories, Dictionary&lt; string, string &gt; responseHeaders, Dictionary&lt; string, object &gt; content=null, String contentAsJson=null)']]],
+  ['clearcustomheaders_4',['ClearCustomHeaders',['../classrosette__api_1_1CAPI.html#a0ccd841456fd820a7b4d16ddc54803b6',1,'rosette_api::CAPI']]],
+  ['clearoptions_5',['ClearOptions',['../classrosette__api_1_1CAPI.html#ac87e515df5328db479250a57970fe162',1,'rosette_api::CAPI']]],
+  ['clearurlparameters_6',['ClearUrlParameters',['../classrosette__api_1_1CAPI.html#ae49e59573a977316688b5694703d2f7b',1,'rosette_api::CAPI']]],
+  ['concept_7',['Concept',['../classrosette__api_1_1Concept.html#a75b19f544a528a69ae9cea7be7e52975',1,'rosette_api::Concept']]],
+  ['contenttostring_8',['ContentToString',['../classrosette__api_1_1MorphologyResponse.html#ac2e38f1a25a6e0c598aaaf33aeeec5dc',1,'rosette_api.MorphologyResponse.ContentToString()'],['../classrosette__api_1_1RosetteResponse.html#a70de2787c13cc78bb44f5c589c93ae20',1,'rosette_api.RosetteResponse.ContentToString()']]],
+  ['createproperties_9',['CreateProperties',['../classrosette__api_1_1RosetteResponseContractResolver.html#a25fd2ea657d059837962bf3ca4c4f62a',1,'rosette_api::RosetteResponseContractResolver']]]
 ];

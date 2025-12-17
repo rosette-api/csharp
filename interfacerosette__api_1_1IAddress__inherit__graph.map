@@ -1,5 +1,6 @@
 <map id="rosette_api.IAddress" name="rosette_api.IAddress">
-<area shape="rect" id="node2" href="$classrosette__api_1_1Address.html" title="{rosette_api.Address\n|+ house\l+ houseNumber\l+ road\l+ unit\l+ level\l+ staircase\l+ entrance\l+ suburb\l+ cityDistrict\l+ city\land 8 more...\l|+ Address()\l+ fielded()\l}" alt="" coords="5,131,156,369"/>
-<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddress.html" title="{rosette_api.FieldedAddress\n|+ house\l+ houseNumber\l+ road\l+ unit\l+ level\l+ staircase\l+ entrance\l+ suburb\l+ cityDistrict\l+ city\land 8 more...\l|+ FieldedAddress()\l+ fielded()\l}" alt="" coords="181,131,378,369"/>
-<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddress.html" title="{rosette_api.UnfieldedAddress\n|+ address\l|+ UnfieldedAddress()\l+ fielded()\l}" alt="" coords="402,204,615,296"/>
+<area shape="rect" id="node1" title=" " alt="" coords="202,5,357,83"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1Address.html" title=" " alt="" coords="5,131,156,369"/>
+<area shape="rect" id="node3" href="$classrosette__api_1_1FieldedAddress.html" title=" " alt="" coords="180,131,379,369"/>
+<area shape="rect" id="node4" href="$classrosette__api_1_1UnfieldedAddress.html" title=" " alt="" coords="403,204,617,296"/>
 </map>

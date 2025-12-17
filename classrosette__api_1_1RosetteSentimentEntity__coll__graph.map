@@ -1,3 +1,6 @@
 <map id="rosette_api.RosetteSentimentEntity" name="rosette_api.RosetteSentimentEntity">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties " alt="" coords="26,131,193,604"/>
+<area shape="rect" id="node1" title="A class to represent an entity returned by the Sentiment Analysis endpoint of the Analytics API" alt="" coords="111,652,327,803"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteEntity.html" title="A class for representing an identified entity and its properties" alt="" coords="26,131,194,604"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,215,83"/>
+<area shape="rect" id="node4" title=" " alt="" coords="219,321,441,413"/>
 </map>

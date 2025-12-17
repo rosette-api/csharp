@@ -4,6 +4,7 @@ var namespacerosette__api =
     [ "AddressField", "classrosette__api_1_1AddressField.html", null ],
     [ "AddressSimilarityResponse", "classrosette__api_1_1AddressSimilarityResponse.html", "classrosette__api_1_1AddressSimilarityResponse" ],
     [ "Argument", "classrosette__api_1_1Argument.html", "classrosette__api_1_1Argument" ],
+    [ "BooleanRecord", "classrosette__api_1_1BooleanRecord.html", "classrosette__api_1_1BooleanRecord" ],
     [ "CAPI", "classrosette__api_1_1CAPI.html", "classrosette__api_1_1CAPI" ],
     [ "CategoriesResponse", "classrosette__api_1_1CategoriesResponse.html", "classrosette__api_1_1CategoriesResponse" ],
     [ "Concept", "classrosette__api_1_1Concept.html", "classrosette__api_1_1Concept" ],
@@ -30,6 +31,7 @@ var namespacerosette__api =
     [ "NameField", "classrosette__api_1_1NameField.html", "classrosette__api_1_1NameField" ],
     [ "NameSimilarityResponse", "classrosette__api_1_1NameSimilarityResponse.html", "classrosette__api_1_1NameSimilarityResponse" ],
     [ "NegationCue", "classrosette__api_1_1NegationCue.html", "classrosette__api_1_1NegationCue" ],
+    [ "NumberRecord", "classrosette__api_1_1NumberRecord.html", "classrosette__api_1_1NumberRecord" ],
     [ "PingResponse", "classrosette__api_1_1PingResponse.html", "classrosette__api_1_1PingResponse" ],
     [ "RecordFieldType", "classrosette__api_1_1RecordFieldType.html", "classrosette__api_1_1RecordFieldType" ],
     [ "RecordSimilarityExplainInfo", "classrosette__api_1_1RecordSimilarityExplainInfo.html", "classrosette__api_1_1RecordSimilarityExplainInfo" ],
@@ -58,6 +60,7 @@ var namespacerosette__api =
     [ "SentimentResponse", "classrosette__api_1_1SentimentResponse.html", "classrosette__api_1_1SentimentResponse" ],
     [ "SimilarTerm", "classrosette__api_1_1SimilarTerm.html", "classrosette__api_1_1SimilarTerm" ],
     [ "SimilarTermsResponse", "classrosette__api_1_1SimilarTermsResponse.html", "classrosette__api_1_1SimilarTermsResponse" ],
+    [ "StringRecord", "classrosette__api_1_1StringRecord.html", "classrosette__api_1_1StringRecord" ],
     [ "SyntaxDependenciesResponse", "classrosette__api_1_1SyntaxDependenciesResponse.html", "classrosette__api_1_1SyntaxDependenciesResponse" ],
     [ "TextEmbeddingResponse", "classrosette__api_1_1TextEmbeddingResponse.html", "classrosette__api_1_1TextEmbeddingResponse" ],
     [ "TokenizationResponse", "classrosette__api_1_1TokenizationResponse.html", "classrosette__api_1_1TokenizationResponse" ],
@@ -70,5 +73,17 @@ var namespacerosette__api =
     [ "UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", "classrosette__api_1_1UnfieldedNameRecord" ],
     [ "UnfieldedRecordSimilarityConverter", "classrosette__api_1_1UnfieldedRecordSimilarityConverter.html", "classrosette__api_1_1UnfieldedRecordSimilarityConverter" ],
     [ "UnknownFieldRecord", "classrosette__api_1_1UnknownFieldRecord.html", "classrosette__api_1_1UnknownFieldRecord" ],
-    [ "Utilities", "classrosette__api_1_1Utilities.html", "classrosette__api_1_1Utilities" ]
+    [ "Utilities", "classrosette__api_1_1Utilities.html", "classrosette__api_1_1Utilities" ],
+    [ "Gender", "namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58", [
+      [ "Female", "namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58ab719ce180ec7bd9641fece2f920f4817", null ],
+      [ "NonBinary", "namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58a415037e39f64694f0109a30347414115", null ],
+      [ "Male", "namespacerosette__api.html#a44ac591d96aaf60e3967fc3f4e6ccb58a63889cfb9d3cbe05d1bd2be5cc9953fd", null ]
+    ] ],
+    [ "MorphologyFeature", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38", [
+      [ "complete", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38ad9a22d7a8178d5b42a8750123cbfe5b1", null ],
+      [ "lemmas", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38a6d1744dfd7b7cc538ff478677b3ae651", null ],
+      [ "partsOfSpeech", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38ac83822705e71bb7338fc28bfc7997a94", null ],
+      [ "compoundComponents", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38a4920624d77133939fe65d67348193434", null ],
+      [ "hanReadings", "namespacerosette__api.html#a58322ae3b1bcf0f2c067341aae4a5c38abb8922286429d823d335840226cbb022", null ]
+    ] ]
 ];

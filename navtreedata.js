@@ -1,9 +1,33 @@
+/*
+ @licstart  The following is the entire license notice for the JavaScript code in this file.
+
+ The MIT License (MIT)
+
+ Copyright (C) 1997-2020 by Dimitri van Heesch
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ and associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ @licend  The above is the entire license notice for the JavaScript code in this file
+*/
 var NAVTREE =
 [
   [ "rosette_api", "index.html", [
-    [ "Packages", null, [
-      [ "Packages", "namespaces.html", "namespaces" ],
-      [ "Package Functions", "namespacemembers.html", [
+    [ "Packages", "namespaces.html", [
+      [ "Package List", "namespaces.html", "namespaces_dup" ],
+      [ "Package Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
@@ -20,8 +44,8 @@ var NAVTREE =
         [ "Properties", "functions_prop.html", "functions_prop" ]
       ] ]
     ] ],
-    [ "Files", null, [
-      [ "File List", "files.html", "files" ]
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
@@ -29,9 +53,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "AddressSimilarityResponse_8cs.html",
-"classrosette__api_1_1EntityID.html#a58c6170d95638072b74b013854e3014c",
-"classrosette__api_1_1RecordSimilarityProperties.html#a7dbf4d653b1b8eb5f4d2825ae742b6ea",
-"classrosette__api_1_1TopicsResponse.html#a474f14a7c294d59dede8c207f9a925d2"
+"classrosette__api_1_1CAPI.html#a508b2df56e281f43c0ea3c0a3a33f76a",
+"classrosette__api_1_1FieldedAddress.html#aae21c757b625ee17090526bae4701133",
+"classrosette__api_1_1MorphologyResponse.html#ac2e38f1a25a6e0c598aaaf33aeeec5dc",
+"classrosette__api_1_1RecordSimilarityResult.html#ac364548335c0160bc6baaea012a4cd9a",
+"classrosette__api_1_1SemanticVectorsResponse.html#a2f9353e4f3886843ce54b5ff7197e811",
+"classrosette__api_1_1UnfieldedAddressRecord.html#a13c0b61469d58155c81ed73c20665ad2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

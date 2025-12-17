@@ -1,3 +1,5 @@
 <map id="rosette_api.EventMention" name="rosette_api.EventMention">
-<area shape="rect" id="node2" href="$classrosette__api_1_1MentionOffset.html" title="Offsets of a piece of text in the document " alt="" coords="42,131,181,281"/>
+<area shape="rect" id="node1" title="A class for representing an identified mention of an event" alt="" coords="17,329,207,509"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1MentionOffset.html" title="Offsets of a piece of text in the document" alt="" coords="43,131,181,281"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,219,83"/>
 </map>

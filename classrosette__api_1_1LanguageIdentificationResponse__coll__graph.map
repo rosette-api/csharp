@@ -1,3 +1,4 @@
 <map id="rosette_api.LanguageIdentificationResponse" name="rosette_api.LanguageIdentificationResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="55,5,213,215"/>
+<area shape="rect" id="node1" title="A class to represent responses from the Language Identification endpoint of the Analytics API" alt="" coords="5,263,264,428"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="55,5,215,215"/>
 </map>

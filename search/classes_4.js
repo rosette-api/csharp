@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['fieldedaddress',['FieldedAddress',['../classrosette__api_1_1FieldedAddress.html',1,'rosette_api']]],
-  ['fieldedaddressrecord',['FieldedAddressRecord',['../classrosette__api_1_1FieldedAddressRecord.html',1,'rosette_api']]],
-  ['fieldeddaterecord',['FieldedDateRecord',['../classrosette__api_1_1FieldedDateRecord.html',1,'rosette_api']]],
-  ['fieldednamerecord',['FieldedNameRecord',['../classrosette__api_1_1FieldedNameRecord.html',1,'rosette_api']]]
+  ['entitiesresponse_0',['EntitiesResponse',['../classrosette__api_1_1EntitiesResponse.html',1,'rosette_api']]],
+  ['entityid_1',['EntityID',['../classrosette__api_1_1EntityID.html',1,'rosette_api']]],
+  ['eventmention_2',['EventMention',['../classrosette__api_1_1EventMention.html',1,'rosette_api']]],
+  ['eventrole_3',['EventRole',['../classrosette__api_1_1EventRole.html',1,'rosette_api']]],
+  ['eventsresponse_4',['EventsResponse',['../classrosette__api_1_1EventsResponse.html',1,'rosette_api']]]
 ];

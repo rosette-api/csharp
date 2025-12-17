@@ -47,6 +47,7 @@ var hierarchy =
         [ "rosette_api.FieldedAddressRecord", "classrosette__api_1_1FieldedAddressRecord.html", null ],
         [ "rosette_api.UnfieldedAddressRecord", "classrosette__api_1_1UnfieldedAddressRecord.html", null ]
       ] ],
+      [ "rosette_api.BooleanRecord", "classrosette__api_1_1BooleanRecord.html", null ],
       [ "rosette_api.DateField", "classrosette__api_1_1DateField.html", [
         [ "rosette_api.FieldedDateRecord", "classrosette__api_1_1FieldedDateRecord.html", null ],
         [ "rosette_api.UnfieldedDateRecord", "classrosette__api_1_1UnfieldedDateRecord.html", null ]
@@ -55,6 +56,8 @@ var hierarchy =
         [ "rosette_api.FieldedNameRecord", "classrosette__api_1_1FieldedNameRecord.html", null ],
         [ "rosette_api.UnfieldedNameRecord", "classrosette__api_1_1UnfieldedNameRecord.html", null ]
       ] ],
+      [ "rosette_api.NumberRecord", "classrosette__api_1_1NumberRecord.html", null ],
+      [ "rosette_api.StringRecord", "classrosette__api_1_1StringRecord.html", null ],
       [ "rosette_api.UnknownFieldRecord", "classrosette__api_1_1UnknownFieldRecord.html", null ]
     ] ],
     [ "rosette_api.RecordSimilarityFieldExplainInfo", "classrosette__api_1_1RecordSimilarityFieldExplainInfo.html", null ],

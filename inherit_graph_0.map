@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classrosette__api_1_1Argument.html" title="Represents an argument of a relationship " alt="" coords="5,5,168,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,13,188,39"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponseContractResolver.html" title="Custom resolver for JSON serialization" alt="" coords="236,5,448,47"/>
 </map>

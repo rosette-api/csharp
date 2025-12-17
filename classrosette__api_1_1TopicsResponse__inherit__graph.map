@@ -1,3 +1,4 @@
 <map id="rosette_api.TopicsResponse" name="rosette_api.TopicsResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="27,5,185,215"/>
+<area shape="rect" id="node1" title="A class to represent responses from the Topics endpoint of the Analytics API" alt="" coords="5,263,208,399"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="27,5,187,215"/>
 </map>

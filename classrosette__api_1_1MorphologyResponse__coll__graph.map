@@ -1,3 +1,4 @@
 <map id="rosette_api.MorphologyResponse" name="rosette_api.MorphologyResponse">
-<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API " alt="" coords="45,5,203,215"/>
+<area shape="rect" id="node1" title="A class for representing responses from the Morphology endpoint of the API" alt="" coords="5,263,244,413"/>
+<area shape="rect" id="node2" href="$classrosette__api_1_1RosetteResponse.html" title="Encapsulates the response from Analytics API" alt="" coords="45,5,205,215"/>
 </map>
