@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 using rosette_api;
 
 namespace rosette_apiExamples

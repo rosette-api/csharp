@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class language
+    class language_multilingual
     {
         /// <summary>
         /// Example code to call Analytics API to detect possible languages for a piece of text.

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using rosette_api;
+﻿using rosette_api;
 
 namespace rosette_apiExamples
 {

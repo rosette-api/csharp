@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using rosette_api;
+﻿using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class entities
+    class syntax_dependencies
     {
         /// <summary>
         /// Example code to call Analytics API to get syntax dependencies from a piece of text.

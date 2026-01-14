@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="rosette_apiExamples/rosette_apiExamples.csproj" Id="3e1d0a21-a346-49c4-95ac-cafba3734a50" />
+  <Project Path="rosette_apiUnitTests/rosette_apiUnitTests.csproj" />
+  <Project Path="rosette_api/rosette_api.csproj" />
+</Solution>

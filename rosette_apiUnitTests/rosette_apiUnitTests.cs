@@ -1,18 +1,11 @@
-﻿using NUnit.Framework;
-using rosette_api;
-using RichardSzalay.MockHttp;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
+using RichardSzalay.MockHttp;
+using rosette_api;
+using System.Collections.Specialized;
+using System.IO.Compression;
+using System.Net;
 
 namespace rosette_apiUnitTests {
     /// <summary>
@@ -87,7 +80,7 @@ namespace rosette_apiUnitTests {
             };
             message.Headers.Add(_testHeaderKey, _testHeaderValue);
             RosetteResponse rr = new RosetteResponse(message);
-            Assert.AreEqual(_testHeaderValue, rr.Headers[_testHeaderKey], "RosetteResponse: header mismatch");
+            ClassicAssert.AreEqual(_testHeaderValue, rr.Headers[_testHeaderKey], "RosetteResponse: header mismatch");
         }
 
         [Test]
@@ -100,7 +93,7 @@ namespace rosette_apiUnitTests {
             message.Headers.Add(_testHeaderKey, _testHeaderValue);
             RosetteResponse rr = new RosetteResponse(message);
 # pragma warning disable 618
-            Assert.AreEqual(_testItemCount, rr.Content.Count, "RosetteResponse: header mismatch");
+            ClassicAssert.AreEqual(_testItemCount, rr.Content.Count, "RosetteResponse: header mismatch");
 # pragma warning restore 618
         }
 
@@ -113,7 +106,7 @@ namespace rosette_apiUnitTests {
             };
             message.Headers.Add(_testHeaderKey, _testHeaderValue);
             RosetteResponse rr = new RosetteResponse(message);
-            Assert.AreEqual(_testJson, rr.ContentAsJson, "RosetteResponse: json mismatch");
+            ClassicAssert.AreEqual(_testJson, rr.ContentAsJson, "RosetteResponse: json mismatch");
         }
 
         [Test]
@@ -129,7 +122,7 @@ namespace rosette_apiUnitTests {
                 Assert.Fail("Exception should have been thrown");
             }
             catch (RosetteException ex) {
-                Assert.AreEqual(404, ex.Code, "RosetteResponse: Exception mismatch");
+                ClassicAssert.AreEqual(404, ex.Code, "RosetteResponse: Exception mismatch");
             }
         }
     }
@@ -139,7 +132,7 @@ namespace rosette_apiUnitTests {
         [Test]
         public void MorphologyEndpointTest() {
             string expected = "han-readings";
-            Assert.AreEqual(expected, RosetteExtensions.MorphologyEndpoint(MorphologyFeature.hanReadings), "Morphology endpoint mismatch");
+            ClassicAssert.AreEqual(expected, RosetteExtensions.MorphologyEndpoint(MorphologyFeature.hanReadings), "Morphology endpoint mismatch");
         }
     }
 
@@ -194,7 +187,7 @@ namespace rosette_apiUnitTests {
             }
             catch (RosetteException ex) {
                 Console.WriteLine("Error code: " + ex.Code);
-                Assert.AreEqual(ex.Code, 409);
+                ClassicAssert.AreEqual(ex.Code, 409);
                 return;
             }
             catch (Exception) {
@@ -209,10 +202,10 @@ namespace rosette_apiUnitTests {
         [Test]
         public void NameClassTest() {
             Name name = new Name("text", "language", "script", "entityType");
-            Assert.AreEqual("text", name.text, "Name does not match");
-            Assert.AreEqual("language", name.language, "Language does not match");
-            Assert.AreEqual("script", name.script, "Script does not match");
-            Assert.AreEqual("entityType", name.entityType, "EntityType does not match");
+            ClassicAssert.AreEqual("text", name.text, "Name does not match");
+            ClassicAssert.AreEqual("language", name.language, "Language does not match");
+            ClassicAssert.AreEqual("script", name.script, "Script does not match");
+            ClassicAssert.AreEqual("entityType", name.entityType, "EntityType does not match");
         }
 
         [Test]
@@ -224,19 +217,19 @@ namespace rosette_apiUnitTests {
             sw.Close();
 
             RosetteFile f = new RosetteFile(tmpFile, "application/octet-stream", null);
-            Assert.IsNotNull(f.Filename, "Filename is null");
-            Assert.AreEqual(tmpFile, f.Filename, "Filename does not match");
-            Assert.AreEqual("application/octet-stream", f.ContentType, "ContentType does not match");
-            Assert.IsNull(f.Options, "Options does not match");
+            ClassicAssert.IsNotNull(f.Filename, "Filename is null");
+            ClassicAssert.AreEqual(tmpFile, f.Filename, "Filename does not match");
+            ClassicAssert.AreEqual("application/octet-stream", f.ContentType, "ContentType does not match");
+            ClassicAssert.IsNull(f.Options, "Options does not match");
 
             byte[] b = f.getFileData();
-            Assert.IsTrue(b.Count() > 0, "File is empty");
+            ClassicAssert.IsTrue(b.Count() > 0, "File is empty");
 
             string content = f.getFileDataString();
-            Assert.IsTrue(content.Length > 0, "File is empty");
+            ClassicAssert.IsTrue(content.Length > 0, "File is empty");
 
             MultipartContent multiPart = f.AsMultipart();
-            Assert.IsTrue(multiPart.Headers.Count() > 0, "Multipart not populated");
+            ClassicAssert.IsTrue(multiPart.Headers.Count() > 0, "Multipart not populated");
             f.Dispose();
 
             if (File.Exists(tmpFile)) {
@@ -247,11 +240,11 @@ namespace rosette_apiUnitTests {
         [Test]
         public void RosetteExceptionClassTest() {
             RosetteException ex = new RosetteException("message", 1, "requestID", "file", "line");
-            Assert.AreEqual("message", ex.Message, "Message does not match");
-            Assert.AreEqual(1, ex.Code, "Code does not match");
-            Assert.AreEqual("requestID", ex.RequestID, "RequestID does not match");
-            Assert.AreEqual("file", ex.File, "File does not match");
-            Assert.AreEqual("line", ex.Line, "Line does not match");
+            ClassicAssert.AreEqual("message", ex.Message, "Message does not match");
+            ClassicAssert.AreEqual(1, ex.Code, "Code does not match");
+            ClassicAssert.AreEqual("requestID", ex.RequestID, "RequestID does not match");
+            ClassicAssert.AreEqual("file", ex.File, "File does not match");
+            ClassicAssert.AreEqual("line", ex.Line, "Line does not match");
         }
 
     }
@@ -274,12 +267,12 @@ namespace rosette_apiUnitTests {
             string numberSerialized = JsonConvert.SerializeObject(number);
             string booleanSerialized = JsonConvert.SerializeObject(boolean);
 
-            Assert.AreEqual( "\"rni_date\"", dateSerialized, "RniDate does not deserialize to 'rni_date'");
-            Assert.AreEqual("\"rni_address\"", addressSerialized, "RniAddress does not deserialize to 'rni_address'");
-            Assert.AreEqual("\"rni_name\"", nameSerialized, "RniName does not deserialize to 'rni_name'");
-            Assert.AreEqual("\"rni_string\"", strSerialized, "RniString does not deserialize to 'rni_string'");
-            Assert.AreEqual("\"rni_number\"", numberSerialized, "RniNumber does not deserialize to 'rni_number'");
-            Assert.AreEqual("\"rni_boolean\"", booleanSerialized, "RniBoolean does not deserialize to 'rni_boolean'");
+            ClassicAssert.AreEqual( "\"rni_date\"", dateSerialized, "RniDate does not deserialize to 'rni_date'");
+            ClassicAssert.AreEqual("\"rni_address\"", addressSerialized, "RniAddress does not deserialize to 'rni_address'");
+            ClassicAssert.AreEqual("\"rni_name\"", nameSerialized, "RniName does not deserialize to 'rni_name'");
+            ClassicAssert.AreEqual("\"rni_string\"", strSerialized, "RniString does not deserialize to 'rni_string'");
+            ClassicAssert.AreEqual("\"rni_number\"", numberSerialized, "RniNumber does not deserialize to 'rni_number'");
+            ClassicAssert.AreEqual("\"rni_boolean\"", booleanSerialized, "RniBoolean does not deserialize to 'rni_boolean'");
         }
 
         [Test]
@@ -293,9 +286,9 @@ namespace rosette_apiUnitTests {
             RecordSimilarityField dateUnfielded = new UnfieldedDateRecord("1993-04-16");
             string dateUnfieldedSerialized = JsonConvert.SerializeObject(dateUnfielded);
 
-            Assert.AreEqual("\"123 Roadlane Ave\"", addressUnfieldedSerialized, "Unfielded Address does not serialize correctly");
-            Assert.AreEqual("\"Ethan R\"", nameUnfieldedSerialized, "Unfielded Name does not serialize correctly");
-            Assert.AreEqual("\"1993-04-16\"", dateUnfieldedSerialized, "Unfielded Date does not serialize correctly");
+            ClassicAssert.AreEqual("\"123 Roadlane Ave\"", addressUnfieldedSerialized, "Unfielded Address does not serialize correctly");
+            ClassicAssert.AreEqual("\"Ethan R\"", nameUnfieldedSerialized, "Unfielded Name does not serialize correctly");
+            ClassicAssert.AreEqual("\"1993-04-16\"", dateUnfieldedSerialized, "Unfielded Date does not serialize correctly");
 
             FieldedAddressRecord addressFielded = new FieldedAddressRecord();
             addressFielded.HouseNumber = "123";
@@ -309,24 +302,24 @@ namespace rosette_apiUnitTests {
             RecordSimilarityField dateFielded = new FieldedDateRecord("04161993", "MMddyyyy");
             string dateFieldedSerialized = JsonConvert.SerializeObject(dateFielded);
 
-            Assert.AreEqual("{\"houseNumber\":\"123\",\"road\":\"Roadlane Ave\"}", addressFieldedSerialized, "Fielded Address does not serialize correctly");
-            Assert.AreEqual("{\"text\":\"Ethan R\"}", nameFieldedSerialized, "Fielded Name does not serialize correctly");
-            Assert.AreEqual("{\"format\":\"MMddyyyy\",\"date\":\"04161993\"}", dateFieldedSerialized, "Fielded Date does not serialize correctly");
+            ClassicAssert.AreEqual("{\"houseNumber\":\"123\",\"road\":\"Roadlane Ave\"}", addressFieldedSerialized, "Fielded Address does not serialize correctly");
+            ClassicAssert.AreEqual("{\"text\":\"Ethan R\"}", nameFieldedSerialized, "Fielded Name does not serialize correctly");
+            ClassicAssert.AreEqual("{\"format\":\"MMddyyyy\",\"date\":\"04161993\"}", dateFieldedSerialized, "Fielded Date does not serialize correctly");
 
             string jsonString = "{\"key\":\"value\",\"key2\":[\"value2\",\"value3\"]}";
             RecordSimilarityField unknownField = new UnknownFieldRecord(JToken.Parse(jsonString));
             string unknownFieldSerialized = JsonConvert.SerializeObject(unknownField);
-            Assert.AreEqual(jsonString, unknownFieldSerialized, "Unknown Field does not serialize correctly");
+            ClassicAssert.AreEqual(jsonString, unknownFieldSerialized, "Unknown Field does not serialize correctly");
 
             RecordSimilarityField stringField = new StringRecord("software engineer");
             string stringFieldSerialized = JsonConvert.SerializeObject(stringField);
-            Assert.AreEqual("\"software engineer\"", stringFieldSerialized, "String Field does not serialize correctly");
+            ClassicAssert.AreEqual("\"software engineer\"", stringFieldSerialized, "String Field does not serialize correctly");
             RecordSimilarityField numberField = new NumberRecord(47);
             string numberFieldSerialized = JsonConvert.SerializeObject(numberField);
-            Assert.AreEqual("47.0", numberFieldSerialized, "Number Field does not serialize correctly");
+            ClassicAssert.AreEqual("47.0", numberFieldSerialized, "Number Field does not serialize correctly");
             RecordSimilarityField booleanField = new BooleanRecord(false);
             string booleanFieldSerialized = JsonConvert.SerializeObject(booleanField);
-            Assert.AreEqual("false", booleanFieldSerialized, "Boolean Field does not serialize correctly");
+            ClassicAssert.AreEqual("false", booleanFieldSerialized, "Boolean Field does not serialize correctly");
         }
 
         [Test]
@@ -341,44 +334,44 @@ namespace rosette_apiUnitTests {
             RecordSimilarityResponse response = new RecordSimilarityResponse(message);
 
             // Assert info messages
-            Assert.IsNotNull(response.Info, "Info is null");
-            Assert.AreEqual(2, response.Info.Count, "Info count does not match");
-            Assert.AreEqual("Threshold not specified, defaulting to 0.0", response.Info[0], "Info message 0 does not match");
-            Assert.AreEqual("IncludeExplainInfo not specified, defaulting to false", response.Info[1], "Info message 1 does not match");
+            ClassicAssert.IsNotNull(response.Info, "Info is null");
+            ClassicAssert.AreEqual(2, response.Info.Count, "Info count does not match");
+            ClassicAssert.AreEqual("Threshold not specified, defaulting to 0.0", response.Info[0], "Info message 0 does not match");
+            ClassicAssert.AreEqual("IncludeExplainInfo not specified, defaulting to false", response.Info[1], "Info message 1 does not match");
 
             // Assert error message
-            Assert.AreEqual("dummy", response.ErrorMessage, "Error message does not match");
+            ClassicAssert.AreEqual("dummy", response.ErrorMessage, "Error message does not match");
 
             // Assert result
-            Assert.IsNotNull(response.Results, "Results is null");
-            Assert.AreEqual(1, response.Results.Count, "Results count does not match");
+            ClassicAssert.IsNotNull(response.Results, "Results is null");
+            ClassicAssert.AreEqual(1, response.Results.Count, "Results count does not match");
             RecordSimilarityResult result = response.Results[0];
-            Assert.AreEqual(0.904213806305046, result.Score, "Score does not match");
-            Assert.IsNotNull(result.Left, "Left is null");
-            Assert.AreEqual(2, result.Left.Count, "Left count does not match");
-            Assert.IsNotNull(result.Right, "Right is null");
-            Assert.AreEqual(2, result.Right.Count, "Right count does not match");
+            ClassicAssert.AreEqual(0.904213806305046, result.Score, "Score does not match");
+            ClassicAssert.IsNotNull(result.Left, "Left is null");
+            ClassicAssert.AreEqual(2, result.Left.Count, "Left count does not match");
+            ClassicAssert.IsNotNull(result.Right, "Right is null");
+            ClassicAssert.AreEqual(2, result.Right.Count, "Right count does not match");
 
             // Assert explainInfo
             RecordSimilarityExplainInfo explainInfo = result.ExplainInfo;
-            Assert.IsNotNull(result.ExplainInfo, "ExplainInfo is null");
-            Assert.IsNotNull(explainInfo.RightOnlyFields, "RightOnlyFields is null");
-            Assert.AreEqual(0, explainInfo.RightOnlyFields.Count, "RightOnlyFields count does not match");
-            Assert.IsNotNull(explainInfo.LeftOnlyFields, "LeftOnlyFields is null");
-            Assert.AreEqual(0, explainInfo.LeftOnlyFields.Count, "LeftOnlyFields count does not match");
+            ClassicAssert.IsNotNull(result.ExplainInfo, "ExplainInfo is null");
+            ClassicAssert.IsNotNull(explainInfo.RightOnlyFields, "RightOnlyFields is null");
+            ClassicAssert.AreEqual(0, explainInfo.RightOnlyFields.Count, "RightOnlyFields count does not match");
+            ClassicAssert.IsNotNull(explainInfo.LeftOnlyFields, "LeftOnlyFields is null");
+            ClassicAssert.AreEqual(0, explainInfo.LeftOnlyFields.Count, "LeftOnlyFields count does not match");
 
             // Assert scoredFields is not null and has both keys
-            Assert.IsNotNull(explainInfo.ScoredFields, "ScoredFields is null");
-            Assert.IsTrue(explainInfo.ScoredFields.ContainsKey("dob"), "ScoredFields does not contain key 'dob'");
-            Assert.IsTrue(explainInfo.ScoredFields.ContainsKey("primaryName"), "ScoredFields does not contain key 'primaryName'");
+            ClassicAssert.IsNotNull(explainInfo.ScoredFields, "ScoredFields is null");
+            ClassicAssert.IsTrue(explainInfo.ScoredFields.ContainsKey("dob"), "ScoredFields does not contain key 'dob'");
+            ClassicAssert.IsTrue(explainInfo.ScoredFields.ContainsKey("primaryName"), "ScoredFields does not contain key 'primaryName'");
             // Assert dob
             RecordSimilarityFieldExplainInfo dob = explainInfo.ScoredFields["dob"];
-            Assert.IsNotNull(dob, "dob is null");
-            Assert.AreEqual(0.2, dob.Weight, "dob weight does not match");
-            Assert.AreEqual(0.28571428571428575, dob.CalculatedWeight, "dob calculated weight does not match");
-            Assert.AreEqual(1, dob.RawScore, "dob raw score does not match");
-            Assert.AreEqual(0.28571428571428575, dob.FinalScore, "dob final score does not match");
-            Assert.IsNotNull(dob.Details, "dob details is null");
+            ClassicAssert.IsNotNull(dob, "dob is null");
+            ClassicAssert.AreEqual(0.2, dob.Weight, "dob weight does not match");
+            ClassicAssert.AreEqual(0.28571428571428575, dob.CalculatedWeight, "dob calculated weight does not match");
+            ClassicAssert.AreEqual(1, dob.RawScore, "dob raw score does not match");
+            ClassicAssert.AreEqual(0.28571428571428575, dob.FinalScore, "dob final score does not match");
+            ClassicAssert.IsNotNull(dob.Details, "dob details is null");
         }
 
     }
@@ -482,7 +475,7 @@ namespace rosette_apiUnitTests {
         [Test]
         public void UserAgentTest() {
             string uaString = string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", CAPI.Version, Environment.Version.ToString());
-            Assert.AreEqual(uaString, _rosetteApi.UserAgent);
+            ClassicAssert.AreEqual(uaString, _rosetteApi.UserAgent);
         }
 
 
@@ -496,7 +489,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.SetOption(expected.Key, expected.Value);
 
-            Assert.AreEqual(expected.Value, _rosetteApi.GetOption(expected.Key));
+            ClassicAssert.AreEqual(expected.Value, _rosetteApi.GetOption(expected.Key));
         }
 
         [Test]
@@ -506,7 +499,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.ClearOptions();
 
-            Assert.IsNull(_rosetteApi.GetOption("option1"));
+            ClassicAssert.IsNull(_rosetteApi.GetOption("option1"));
         }
 
         //------------------------- Simple Custom Header Tests ----------------------------------------
@@ -518,7 +511,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
 
-            Assert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
+            ClassicAssert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
         }
 
         [Test]
@@ -527,7 +520,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
 
-            Assert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
+            ClassicAssert.AreEqual(expected.Value, _rosetteApi.GetCustomHeaders()[expected.Key]);
         }
 
         [Test]
@@ -536,7 +529,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.ClearCustomHeaders();
 
-            Assert.IsEmpty(_rosetteApi.GetCustomHeaders());
+            ClassicAssert.IsEmpty(_rosetteApi.GetCustomHeaders());
         }
 
         [Test]
@@ -547,7 +540,7 @@ namespace rosette_apiUnitTests {
                 _rosetteApi.SetCustomHeaders(expected.Key, expected.Value);
             }
             catch (RosetteException ex) {
-                Assert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\" or \"X-BabelStreetAPI-\"");
+                ClassicAssert.AreEqual(ex.Message, "Custom header name must begin with \"X-RosetteAPI-\" or \"X-BabelStreetAPI-\"");
                 return;
             }
         }
@@ -563,7 +556,7 @@ namespace rosette_apiUnitTests {
             };
             _rosetteApi.SetUrlParameter("output", "rosette");
 
-            Assert.AreEqual(expected["output"], _rosetteApi.GetUrlParameters()["output"]);
+            ClassicAssert.AreEqual(expected["output"], _rosetteApi.GetUrlParameters()["output"]);
         }
 
         [Test]
@@ -575,7 +568,7 @@ namespace rosette_apiUnitTests {
 
             _rosetteApi.ClearUrlParameters();
 
-            Assert.IsEmpty(_rosetteApi.GetUrlParameters());
+            ClassicAssert.IsEmpty(_rosetteApi.GetUrlParameters());
         }
 
         [Test]
@@ -585,7 +578,7 @@ namespace rosette_apiUnitTests {
             };
             _rosetteApi.RemoveUrlParameter("output");
 
-            Assert.IsEmpty(_rosetteApi.GetUrlParameters());
+            ClassicAssert.IsEmpty(_rosetteApi.GetUrlParameters());
         }
 
 
@@ -598,7 +591,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Info();
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -617,12 +610,12 @@ namespace rosette_apiUnitTests {
                 { "buildNumber", buildNumber },
                 { "buildTime", buildTime }
             };
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, JsonConvert.SerializeObject(content));
             _mockHttp.When(_testUrl + "info").Respond(req => mockedMessage);
             InfoResponse expected = new InfoResponse(name, version, buildNumber, buildTime, responseHeaders, content);
             InfoResponse response = _rosetteApi.Info();
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         private HttpResponseMessage MakeMockedMessage(Dictionary<string, string> responseHeaders, HttpStatusCode statusCode, String content)
@@ -668,12 +661,12 @@ namespace rosette_apiUnitTests {
                 { "message", message },
                 { "time", time }
             };
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
-            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, new JavaScriptSerializer().Serialize(content));
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
+            HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, JsonConvert.SerializeObject(content));
             _mockHttp.When(_testUrl + "ping").Respond(req => mockedMessage);
             PingResponse expected = new PingResponse(message, time, responseHeaders, content);
             PingResponse response = _rosetteApi.Ping();
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -684,7 +677,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Ping();
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -704,7 +697,7 @@ namespace rosette_apiUnitTests {
                 _rosetteApi.Categories();
             }
             catch (RosetteException ex) {
-                Assert.AreEqual(ex.Message, "Must supply one of Content or ContentUri");
+                ClassicAssert.AreEqual(ex.Message, "Must supply one of Content or ContentUri");
                 return;
             }
             Assert.Fail("Exception not thrown");
@@ -719,7 +712,7 @@ namespace rosette_apiUnitTests {
                 _rosetteApi.Categories("content", null, null, "contentUri");
             }
             catch (RosetteException ex) {
-                Assert.AreEqual(ex.Message, "Cannot supply both Content and ContentUri");
+                ClassicAssert.AreEqual(ex.Message, "Cannot supply both Content and ContentUri");
                 return;
             }
             Assert.Fail("Exception not thrown");
@@ -732,7 +725,7 @@ namespace rosette_apiUnitTests {
             Init();
             double score = (double)0.9486632809417912;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "score", score }
             };
@@ -741,7 +734,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "address-similarity").Respond(req => mockedMessage);
             AddressSimilarityResponse response = _rosetteApi.AddressSimilarity(new Address(city:"Cambridge"), new Address(city:"cambridge"));
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -751,7 +744,7 @@ namespace rosette_apiUnitTests {
             Address name2 = new Address("Address Two");
             var response = _rosetteApi.AddressSimilarity(name1, name2);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -762,7 +755,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.AddressSimilarity(new Dictionary<object, object>() { { "address1", "Address One" }, { "address2", "Address Two" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -774,7 +767,7 @@ namespace rosette_apiUnitTests {
                 .Respond(HttpStatusCode.OK, "application/json", "{'response': 'OK'}");
             var response = _rosetteApi.Categories("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -796,7 +789,7 @@ namespace rosette_apiUnitTests {
             _mockHttp.When(_testUrl + "categories").Respond(req => mockedMessage);
             CategoriesResponse expected = new CategoriesResponse(categories, responseHeaders, null, mockedContent);
             CategoriesResponse response = _rosetteApi.Categories("Sony Pictures is planning to shoot a good portion of the new \"\"Ghostbusters\"\" in Boston as well.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -806,7 +799,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Categories(new Dictionary<object, object>(){ {"contentUri", "contentUrl"} });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -818,7 +811,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Categories(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -833,7 +826,7 @@ namespace rosette_apiUnitTests {
             RosetteEntity e2 = new RosetteEntity("Dan Akroyd", "Dan Akroyd", new EntityID("Q105221"), "PERSON", 2, 0.99, "X1", null, new List<MentionOffset>() { new MentionOffset(0, 10), new MentionOffset(20, 32) }, .99, 0.0, null);
             List<RosetteEntity> entities = new List<RosetteEntity>() { e0, e1, e2 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "entities", entities }
             };
@@ -842,7 +835,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "entities").Respond(req => mockedMessage);
             EntitiesResponse response = _rosetteApi.Entity("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -871,7 +864,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, object> content = new Dictionary<string, object> { { "entities", entities } };
 
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
 
             EntitiesResponse expected = new EntitiesResponse(entities, responseHeaders, content, null);
             String mockedContent = expected.ContentToString();
@@ -879,10 +872,10 @@ namespace rosette_apiUnitTests {
             _mockHttp.When(_testUrl + "entities").Respond(req => mockedMessage);
             EntitiesResponse response = _rosetteApi.Entity("Toyota");
 
-            Assert.AreEqual(expected, response);
-            Assert.AreEqual(expected.Entities[0].PermID, response.Entities[0].PermID);
-            Assert.AreEqual(expected.Entities[0].DBpediaType, response.Entities[0].DBpediaType);
-            Assert.AreEqual(expected.Entities[0].DBpediaTypes, response.Entities[0].DBpediaTypes);
+            ClassicAssert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected.Entities[0].PermID, response.Entities[0].PermID);
+            ClassicAssert.AreEqual(expected.Entities[0].DBpediaType, response.Entities[0].DBpediaType);
+            ClassicAssert.AreEqual(expected.Entities[0].DBpediaTypes, response.Entities[0].DBpediaTypes);
         }
 
         [Test]
@@ -892,7 +885,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Entity("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -903,7 +896,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Entity(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -915,7 +908,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Entity(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -923,7 +916,7 @@ namespace rosette_apiUnitTests {
         public void EntityIDLinkNullOnSetToNull()
         {
             EntityID eid = new EntityID(null);
-            Assert.AreEqual(null, eid.GetWikipedaURL());
+            ClassicAssert.AreEqual(null, eid.GetWikipedaURL());
         }
 
         //------------------------- Event ----------------------------------------
@@ -937,7 +930,7 @@ namespace rosette_apiUnitTests {
 
             List<RosetteEvent> events = new List<RosetteEvent>() { e0 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "events", events }
             };
@@ -947,7 +940,7 @@ namespace rosette_apiUnitTests {
             _mockHttp.When(_testUrl + "events").Respond(req => mockedMessage);
             _rosetteApi.SetOption("negation", "BOTH");
             EventsResponse response = _rosetteApi.Event("Vivian went to Moscow.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -958,7 +951,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Event("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -970,7 +963,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Event(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -983,7 +976,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Event(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1004,7 +997,7 @@ namespace rosette_apiUnitTests {
             LanguageDetection lang8 = new LanguageDetection("fra", (decimal)0.023298946617300347);
             List<LanguageDetection> languageDetections = new List<LanguageDetection>() { lang0, lang1, lang2, lang3, lang4, lang5, lang6, lang7, lang8 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "languageDetections", languageDetections }
             };
@@ -1013,7 +1006,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "language").Respond(req => mockedMessage);
             LanguageIdentificationResponse response = _rosetteApi.Language("Por favor Señorita, says the man.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1023,7 +1016,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Language("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1034,7 +1027,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Language(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1046,7 +1039,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Language(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1063,7 +1056,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m5 = new MorphologyItem(".", "PUNCT", ".", new List<string>(), new List<string>());
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) },
                 { "posTags", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.PosTag)) },
@@ -1076,7 +1069,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "morphology/complete").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1091,7 +1084,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m5 = new MorphologyItem(".", null, ".", null, null);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2, m3, m4, m5 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -1102,7 +1095,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "morphology/lemmas").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("The quick brown fox jumped.", feature: MorphologyFeature.lemmas);
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1114,7 +1107,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m1 = new MorphologyItem("Rechtsschutzversicherungsgesellschaft", null, null, compoundComponents, null);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -1125,7 +1118,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "morphology/compound-components").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("Er Rechtsschutzversicherungsgesellschaft.", feature: MorphologyFeature.compoundComponents);
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1140,7 +1133,7 @@ namespace rosette_apiUnitTests {
             MorphologyItem m2 = new MorphologyItem("主任", null, null, null, h2);
             List<MorphologyItem> morphology = new List<MorphologyItem>() { m0, m1, m2 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", new List<string>(morphology.Select<MorphologyItem, string>((item) => item.Token)) }
             };
@@ -1151,7 +1144,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "morphology/han-readings").Respond(req => mockedMessage);
             MorphologyResponse response = _rosetteApi.Morphology("北京大学生物系主任.", feature: MorphologyFeature.hanReadings);
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1161,7 +1154,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Morphology("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1172,7 +1165,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Morphology(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1184,7 +1177,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Morphology(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1195,7 +1188,7 @@ namespace rosette_apiUnitTests {
             Init();
             double score = (double)0.9486632809417912;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "score", score }
             };
@@ -1204,7 +1197,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "name-similarity").Respond(req => mockedMessage);
             NameSimilarityResponse response = _rosetteApi.NameSimilarity(new Name("Влади́мир Влади́мирович Пу́тин", "rus", null, "PERSON", Gender.Male), new Name("Vladmir Putin", "eng", null, "PERSON"));
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1214,7 +1207,7 @@ namespace rosette_apiUnitTests {
             Name name2 = new Name("Name Two");
             var response = _rosetteApi.NameSimilarity(name1, name2);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1225,7 +1218,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.NameSimilarity(new Dictionary<object, object>() { { "name1", "Name One" }, { "name2", "Name Two" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1239,7 +1232,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.NameDeduplication(names, threshold);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1251,7 +1244,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.NameDeduplication(names);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1267,7 +1260,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.NameDeduplication(dict);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1341,7 +1334,7 @@ namespace rosette_apiUnitTests {
             RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address, job, age, retired);
 
             var response = _rosetteApi.RecordSimilarity(request);
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
         }
 
         private JToken getJTokenFromField(RecordSimilarityField field) {
@@ -1364,7 +1357,7 @@ namespace rosette_apiUnitTests {
             RecordSimilarityRequest request = CreateTestRecordSimilarityRequest(name, dob, address, job, age, retired);
             //creating response headers
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
 
             UnfieldedAddressRecord addressUnfielded = new UnfieldedAddressRecord { Address = "123 Roadlane Ave" };
             UnfieldedDateRecord dobUnfielded = new UnfieldedDateRecord { Date = "1993-04-16" };
@@ -1399,7 +1392,7 @@ namespace rosette_apiUnitTests {
             _mockHttp.When(_testUrl + "record-similarity").Respond(req => mockedMessage);
             RecordSimilarityResponse response = _rosetteApi.RecordSimilarity(request);
 
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
 
@@ -1415,7 +1408,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Transliteration(transliteration_data, language);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1431,7 +1424,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Transliteration(dict);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1449,7 +1442,7 @@ namespace rosette_apiUnitTests {
             List<string> locatives = new List<string>() {loc1};
             HashSet<string> modalities = new HashSet<string>() {"assertion", "someOtherModality"};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
                 new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>() {{1, arg1ID}}, null, locatives, null, confidence, modalities)
             };
@@ -1461,7 +1454,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(req => mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1475,7 +1468,7 @@ namespace rosette_apiUnitTests {
             List<string> locatives = new List<string>() { loc1 };
             HashSet<string> modalities = new HashSet<string>() { "assertion", "someOtherModality" };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             List<RosetteRelationship> relationships = new List<RosetteRelationship>() {
                 new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, modalities)
             };
@@ -1487,7 +1480,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "relationships").Respond(req => mockedMessage);
             RelationshipsResponse response = _rosetteApi.Relationships("The Ghostbusters movie was filmed in Boston.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1502,7 +1495,7 @@ namespace rosette_apiUnitTests {
             RosetteRelationship relationshipFromOriginalConstructor = new RosetteRelationship(predicate, new List<string>() {arg1}, null, locatives, null, confidence);
             RosetteRelationship relationshipFromDoubleDictConstructor = new RosetteRelationship(predicate, new Dictionary<int, string>() {{1, arg1}}, new Dictionary<int, string>(), null, locatives, null, confidence, null);
             RosetteRelationship relationshipFromFullArgumentsConstructor = new RosetteRelationship(predicate, new List<Argument>() {new Argument(1, arg1, null)}, null, locatives, null, confidence, null);
-            Assert.True(relationshipFromOriginalConstructor.Equals(relationshipFromDoubleDictConstructor) && relationshipFromDoubleDictConstructor.Equals(relationshipFromFullArgumentsConstructor) &&
+            ClassicAssert.True(relationshipFromOriginalConstructor.Equals(relationshipFromDoubleDictConstructor) && relationshipFromDoubleDictConstructor.Equals(relationshipFromFullArgumentsConstructor) &&
                 relationshipFromOriginalConstructor.ToString().Equals(relationshipFromDoubleDictConstructor.ToString()) && relationshipFromDoubleDictConstructor.ToString().Equals(relationshipFromFullArgumentsConstructor.ToString()));
         }
 
@@ -1513,7 +1506,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Relationships("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1524,7 +1517,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Relationships(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1536,7 +1529,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Relationships(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1547,7 +1540,7 @@ namespace rosette_apiUnitTests {
             Init();
             List<double> vector = new List<double>() {0.02164695, 0.0032850206, 0.0038508752, -0.009704393, -0.0016203842};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "documentEmbedding", vector },
                 { "tokens", null },
@@ -1558,7 +1551,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "semantics/vector").Respond(req => mockedMessage);
             SemanticVectorsResponse response = _rosetteApi.SemanticVectors("The Ghostbusters movie was filmed in Boston.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1569,7 +1562,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.SemanticVectors("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1581,7 +1574,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.SemanticVectors(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1594,7 +1587,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.SemanticVectors(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1607,7 +1600,7 @@ namespace rosette_apiUnitTests {
                 {"eng", new List<SimilarTerm>() {new SimilarTerm("spy", 1.0m)}}
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object>() {
                 {"similarTerms", terms}
             };
@@ -1616,7 +1609,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "semantics/similar").Respond(req => mockedMessage);
             SimilarTermsResponse response = _rosetteApi.SimilarTerms("spy");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1627,7 +1620,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.SimilarTerms("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1639,7 +1632,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.SimilarTerms(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1652,7 +1645,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.SimilarTerms(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1667,7 +1660,7 @@ namespace rosette_apiUnitTests {
             string s2 = "As I was walking that ribbon of highway,\nI saw above me that endless skyway:\nI saw below me that golden valley:\nThis land was made for you and me.";
             List<string> sentences = new List<string>() { s0, s1, s2 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "sentences", sentences }
             };
@@ -1676,7 +1669,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "sentences").Respond(req => mockedMessage);
             SentenceTaggingResponse response = _rosetteApi.Sentences("This land is your land. This land is my land\\nFrom California to the New York island;\\nFrom the red wood forest to the Gulf Stream waters\\n\\nThis land was made for you and Me.\\n\\nAs I was walking that ribbon of highway,\\nI saw above me that endless skyway:\\nI saw below me that golden valley:\\nThis land was made for you and me.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1686,7 +1679,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Sentences("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1697,7 +1690,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Sentences(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1709,7 +1702,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentences(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1723,7 +1716,7 @@ namespace rosette_apiUnitTests {
             RosetteSentimentEntity e1 = new RosetteSentimentEntity("The Hollywood Reporter", "The Hollywood Reporter", new EntityID("Q61503"), "ORGANIZATION", 1, docSentiment, (double)0.5338094035254866, null, null, new List<MentionOffset>() { new MentionOffset(15, 18) }, null, null, null);
             List<RosetteSentimentEntity> entities = new List<RosetteSentimentEntity>() { e0, e1 };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "document", docSentiment },
                 { "entities", entities }
@@ -1733,7 +1726,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "sentiment").Respond(req => mockedMessage);
             SentimentResponse response = _rosetteApi.Sentiment("Original Ghostbuster Dan Aykroyd, who also co-wrote the 1984 Ghostbusters film, couldn’t be more pleased with the new all-female Ghostbusters cast, telling The Hollywood Reporter, “The Aykroyd family is delighted by this inheritance of the Ghostbusters torch by these most magnificent women in comedy.”");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1743,7 +1736,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Sentiment("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1754,7 +1747,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Sentiment(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1766,7 +1759,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Sentiment(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1784,7 +1777,7 @@ namespace rosette_apiUnitTests {
             List<SyntaxDependenciesResponse.SentenceWithDependencies> sentences = new List<SyntaxDependenciesResponse.SentenceWithDependencies>() { sentence };
             List<string> tokens = new List<string>() { "Sony", "Pictures", "is", "planning", "."};
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "sentences", sentences },
                 { "tokens", tokens }
@@ -1794,7 +1787,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "syntax/dependencies").Respond(req => mockedMessage);
             SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies("Sony Pictures is planning.");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1805,7 +1798,7 @@ namespace rosette_apiUnitTests {
 
             SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies("content");
 #pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 #pragma warning restore 618
         }
 
@@ -1817,7 +1810,7 @@ namespace rosette_apiUnitTests {
 
             SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 #pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 #pragma warning restore 618
         }
 
@@ -1830,7 +1823,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             SyntaxDependenciesResponse response = _rosetteApi.SyntaxDependencies(f);
 #pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 #pragma warning restore 618
         }
 
@@ -1848,7 +1841,7 @@ namespace rosette_apiUnitTests {
                 "会议"
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "tokens", tokens }
             };
@@ -1857,7 +1850,7 @@ namespace rosette_apiUnitTests {
             HttpResponseMessage mockedMessage = MakeMockedMessage(responseHeaders, HttpStatusCode.OK, mockedContent);
             _mockHttp.When(_testUrl + "tokens").Respond(req => mockedMessage);
             TokenizationResponse response = _rosetteApi.Tokens("北京大学生物系主任办公室内部会议");
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1867,7 +1860,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Tokens("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1878,7 +1871,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Tokens(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1890,7 +1883,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Tokens(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1905,7 +1898,7 @@ namespace rosette_apiUnitTests {
             string targetScheme = "IC";
             double confidence = (double)0.06856099342585828;
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "translation", translation },
                 { "targetLanguage", targetLanguage },
@@ -1923,7 +1916,7 @@ namespace rosette_apiUnitTests {
                 {"targetScript", "Latn"}
             };
             TranslateNamesResponse response = _rosetteApi.NameTranslation(input);
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1933,7 +1926,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.NameTranslation("content");
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1954,7 +1947,7 @@ namespace rosette_apiUnitTests {
             };
             var response = _rosetteApi.NameTranslation(sampleDict);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -1971,7 +1964,7 @@ namespace rosette_apiUnitTests {
                 new KeyPhrase("Nicholas Hoult", null)
             };
             string headersAsString = " { \"Content-Type\": \"application/json\", \"Date\": \"Thu, 11 Aug 2016 15:47:32 GMT\", \"Server\": \"openresty\", \"Strict-Transport-Security\": \"max-age=63072000; includeSubdomains; preload\", \"x-rosetteapi-app-id\": \"1409611723442\", \"x-rosetteapi-concurrency\": \"50\", \"x-rosetteapi-request-id\": \"d4176692-4f14-42d7-8c26-4b2d8f7ff049\", \"Content-Length\": \"72\", \"Connection\": \"Close\" }";
-            Dictionary<string, string> responseHeaders = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(headersAsString);
+            Dictionary<string, string> responseHeaders = JsonConvert.DeserializeObject<Dictionary<string, string>>(headersAsString);
             Dictionary<string, object> content = new Dictionary<string, object> {
                 { "concepts", concepts },
                 { "keyphrases", keyPhrases }
@@ -1982,7 +1975,7 @@ namespace rosette_apiUnitTests {
             _mockHttp.When(_testUrl + "topics").Respond(req => mockedMessage);
             string testContent = @"Lily Collins is in talks to join Nicholas Hoult in Chernin Entertainment and Fox Searchlights J.R.R. Tolkien biopic Tolkien. Anthony Boyle, known for playing Scorpius Malfoy in the British play Harry Potter and the Cursed Child, also has signed on for the film centered on the famed author. In Tolkien, Hoult will play the author of the Hobbit and Lord of the Rings book series that were later adapted into two Hollywood trilogies from Peter Jackson. Dome Karukoski is directing the project.";
             TopicsResponse response = _rosetteApi.Topics(content: testContent);
-            Assert.AreEqual(expected, response);
+            ClassicAssert.AreEqual(expected, response);
         }
 
         [Test]
@@ -1992,7 +1985,7 @@ namespace rosette_apiUnitTests {
 
             var response = _rosetteApi.Topics(new Dictionary<object, object>() { { "contentUri", "contentUrl" } });
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -2004,7 +1997,7 @@ namespace rosette_apiUnitTests {
             RosetteFile f = new RosetteFile(_tmpFile);
             var response = _rosetteApi.Topics(f);
 # pragma warning disable 618
-            Assert.AreEqual(response.Content["response"], "OK");
+            ClassicAssert.AreEqual(response.Content["response"], "OK");
 # pragma warning restore 618
         }
 
@@ -2017,7 +2010,7 @@ namespace rosette_apiUnitTests {
         public void DictionaryEquals_with_null() {
             Dictionary<string, object> dict1 = null;
             Dictionary<string, object> dict2 = null;
-            Assert.True(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.True(Utilities.DictionaryEquals(dict1, dict2));
         }
 
         [Test]
@@ -2026,7 +2019,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, object> dict2 = new Dictionary<string, object>() {
                 {"key1", "value1"}
             };
-            Assert.False(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.False(Utilities.DictionaryEquals(dict1, dict2));
         }
 
         [Test]
@@ -2035,7 +2028,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, object> dict2 = new Dictionary<string, object>() {
                 {"key1", "value1"}
             };
-            Assert.False(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.False(Utilities.DictionaryEquals(dict1, dict2));
         }
 
         [Test]
@@ -2046,7 +2039,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, object> dict2 = new Dictionary<string, object>() {
                 {"key2", "value1"}
             };
-            Assert.False(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.False(Utilities.DictionaryEquals(dict1, dict2));
         }
 
 
@@ -2058,7 +2051,7 @@ namespace rosette_apiUnitTests {
             Dictionary<string, object> dict2 = new Dictionary<string, object>() {
                 {"key1", "value2"}
             };
-            Assert.False(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.False(Utilities.DictionaryEquals(dict1, dict2));
         }
 
         [Test]
@@ -2073,7 +2066,7 @@ namespace rosette_apiUnitTests {
                 {"key2", "value2"},
                 {"key3", "value3"}
             };
-            Assert.True(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.True(Utilities.DictionaryEquals(dict1, dict2));
         }
 
         [Test]
@@ -2088,7 +2081,7 @@ namespace rosette_apiUnitTests {
                 {"key2", "value2"},
                 {"key3", "value3"}
             };
-            Assert.True(Utilities.DictionaryEquals(dict1, dict2));
+            ClassicAssert.True(Utilities.DictionaryEquals(dict1, dict2));
         }
     }
  }
