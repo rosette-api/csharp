@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
-using static System.Collections.Specialized.BitVector32;
+﻿using Newtonsoft.Json;
 
 namespace rosette_api
 {

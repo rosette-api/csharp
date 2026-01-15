@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace rosette_api {
+﻿namespace rosette_api {
     /// <summary>Name Class
     /// <para>
     /// Name: Custom Datatype to use in Matched Name endpoint
