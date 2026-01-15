@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class info
+    class Info
     {
         /// <summary>
         /// Example code to call Analytics API to get information such as version and build.

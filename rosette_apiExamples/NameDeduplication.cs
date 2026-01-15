@@ -2,10 +2,10 @@
 
 namespace rosette_apiExamples
 {
-    class address_similarity
+    class NameDeduplication
     {
         /// <summary>
-        /// Example code to call Analytics API to get match score (similarity) for two addresses.
+        /// Example code to call Analytics API to deduplication a list of names.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,17 +16,23 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //address_similarity yourapikeyhere
+            //matched_name yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            } 
+            }
             try
             {
-                CAPI cAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string name_dedupe_data = @"Alice Terry,Alice Thierry,Betty Grable,Betty Gable,Norma Shearer,Norm Shearer,Brigitte Helm,Bridget Helem,Judy Holliday,Julie Halliday";
+
+                List<string> dedup_names = name_dedupe_data.Split(',').ToList<string>();
+                List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
+                float threshold = 0.75f;
+
                 //The results of the API call will come back in the form of a Dictionary
-                AddressSimilarityResponse response = cAPI.AddressSimilarity(new FieldedAddress(houseNumber:"1600", road:"Pennsylvania Ave N.W.", city:"Washington", state:"DC", postCode: "20500"), new UnfieldedAddress(address:"160 Pennsylvana Avenue, Washington, D.C., 20500"));
+                NameDeduplicationResponse response = rosetteApi.NameDeduplication(names, threshold);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

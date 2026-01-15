@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class events
+    class Events
     {
         /// <summary>
         /// Example code to call Analytics API to get events from a piece of text.

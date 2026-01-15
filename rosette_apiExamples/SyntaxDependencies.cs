@@ -1,11 +1,11 @@
-using rosette_api;
+﻿using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class translated_name
+    class SyntaxDependencies
     {
         /// <summary>
-        /// Example code to call Analytics API to translate a name from language to another.
+        /// Example code to call Analytics API to get syntax dependencies from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //translated_name yourapikeyhere
+            //entities yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -24,10 +24,10 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI TranslatedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string translated_name_data = @"معمر محمد أبو منيار القذاف";
+                CAPI api = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string syntax_dependencies_data = "Yoshinori Ohsumi, a Japanese cell biologist, was awarded the Nobel Prize in Physiology or Medicine on Monday.";
                 //The results of the API call will come back in the form of a Dictionary
-                TranslateNamesResponse response = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", null, null, "PERSON");
+                SyntaxDependenciesResponse response = api.SyntaxDependencies(syntax_dependencies_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

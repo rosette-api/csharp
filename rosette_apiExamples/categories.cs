@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class categories
+    class Categories
     {
         /// <summary>
         /// Example code to call Analytics API to get a document's (located at given URL) categories.

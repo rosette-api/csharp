@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class sentiment
+    class Sentiment
     {
         /// <summary>
         /// Example code to call Analytics API to get a document's sentiment

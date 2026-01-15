@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class topics
+    class Topics
     {
         /// <summary>
         /// Example code to call Analytics API to get concepts and key phrases in a piece of text.

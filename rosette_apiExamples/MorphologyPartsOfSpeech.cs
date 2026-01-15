@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class events_negation
+    class MorphologyPartsOfSpeech
     {
         /// <summary>
-        /// Example code to call Analytics API to get events from a piece of text.
+        /// Example code to call Analytics API to get part-of-speech tags for words a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //events yourapikeyhere
+            //morphology_parts_of_speech yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -24,16 +24,14 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI EventsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string events_text_data = "Bill Gates went to the store.";
+                CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string morphology_parts_of_speech_data = @"The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
                 //The results of the API call will come back in the form of a Dictionary
-                EventsCAPI.SetOption("negation", "ONLY_POSITIVE");
-                EventsResponse response = EventsCAPI.Event(events_text_data);
+                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_parts_of_speech_data, null, null, null, MorphologyFeature.partsOfSpeech);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                // PrintContent() is a provided method to print the Dictionary to the console
-                response.PrintContent();
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {

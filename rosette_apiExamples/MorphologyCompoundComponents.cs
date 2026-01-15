@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class morphology_parts_of_speech
+    class MorphologyCompoundComponents
     {
         /// <summary>
-        /// Example code to call Analytics API to get part-of-speech tags for words a piece of text.
+        /// Example code to call Analytics API to get de-compounded words from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //morphology_parts_of_speech yourapikeyhere
+            //morphology_compound_components yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -25,9 +25,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string morphology_parts_of_speech_data = @"The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
+                string morphology_compound_components_data = @"Rechtsschutzversicherungsgesellschaften";
                 //The results of the API call will come back in the form of a Dictionary
-                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_parts_of_speech_data, null, null, null, MorphologyFeature.partsOfSpeech);
+                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_compound_components_data, null, null, null, MorphologyFeature.compoundComponents);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

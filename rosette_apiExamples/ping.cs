@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class ping
+    class Ping
     {
         /// <summary>
         /// Example code to send Analytics API a ping to check its reachability.

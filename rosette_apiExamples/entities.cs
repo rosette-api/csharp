@@ -2,7 +2,7 @@
 
 namespace rosette_apiExamples
 {
-    class entities
+    class Entities
     {
         /// <summary>
         /// Example code to call Analytics API to get entities from a piece of text.

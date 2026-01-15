@@ -1,11 +1,11 @@
-﻿using rosette_api;
+using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class name_deduplication
+    class TranslatedName
     {
         /// <summary>
-        /// Example code to call Analytics API to deduplication a list of names.
+        /// Example code to call Analytics API to translate a name from language to another.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //matched_name yourapikeyhere
+            //translated_name yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -24,15 +24,10 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI rosetteApi = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string name_dedupe_data = @"Alice Terry,Alice Thierry,Betty Grable,Betty Gable,Norma Shearer,Norm Shearer,Brigitte Helm,Bridget Helem,Judy Holliday,Julie Halliday";
-
-                List<string> dedup_names = name_dedupe_data.Split(',').ToList<string>();
-                List<Name> names = dedup_names.Select(name => new Name(name, "eng", "Latn")).ToList();
-                float threshold = 0.75f;
-
+                CAPI TranslatedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string translated_name_data = @"معمر محمد أبو منيار القذاف";
                 //The results of the API call will come back in the form of a Dictionary
-                NameDeduplicationResponse response = rosetteApi.NameDeduplication(names, threshold);
+                TranslateNamesResponse response = TranslatedNameCAPI.NameTranslation(translated_name_data, null, null, "eng", "Latn", null, null, "PERSON");
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

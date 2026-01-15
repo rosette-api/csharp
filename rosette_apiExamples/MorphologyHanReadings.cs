@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class morphology_compound_components
+    class MorphologyHanReadings
     {
         /// <summary>
-        /// Example code to call Analytics API to get de-compounded words from a piece of text.
+        /// Example code to call Analytics API to get Chinese readings for words in a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //morphology_compound_components yourapikeyhere
+            //morphology_han_readings yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -25,9 +25,9 @@ namespace rosette_apiExamples
             try
             {
                 CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string morphology_compound_components_data = @"Rechtsschutzversicherungsgesellschaften";
+                string morphology_han_readings_data = @"北京大学生物系主任办公室内部会议";
                 //The results of the API call will come back in the form of a Dictionary
-                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_compound_components_data, null, null, null, MorphologyFeature.compoundComponents);
+                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_han_readings_data, null, null, null, MorphologyFeature.hanReadings);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }

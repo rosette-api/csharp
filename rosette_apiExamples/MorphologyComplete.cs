@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class similar_terms
+    class MorphologyComplete
     {
         /// <summary>
-        /// Example code to call Analytics API to get an input's similar terms.
+        /// Example code to call Analytics API to get the complete set of morphological analysis results for a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,29 +16,26 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //similar-terms yourapikeyhere
+            //morphology_complete yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            }
+            } 
             try
             {
-                CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string similar_terms_data = "spy";
+                CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string morphology_complete_data = @"The quick brown fox jumped over the lazy dog. 👍🏾 Yes he did. B)";
                 //The results of the API call will come back in the form of a Dictionary
-                EmbeddingCAPI.SetOption("resultLanguages", new List<String>() {"spa", "deu", "jpn"});
-                SimilarTermsResponse response = EmbeddingCAPI.SimilarTerms(similar_terms_data);
-                foreach (KeyValuePair<string, string> h in response.Headers)
-                {
+                MorphologyResponse response = MorphologyCAPI.Morphology(morphology_complete_data);
+                foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Exception: " + e.Message);
             }
         }
     }

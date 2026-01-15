@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class matched_name
+    class MorphologyLemmas
     {
         /// <summary>
-        /// Example code to call Analytics API to get match score (similarity) for two names.
+        /// Example code to call Analytics API to get lemmas for words in a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,23 +16,22 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //matched_name yourapikeyhere
+            //morphology_lemmas yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            } 
+            }
             try
             {
-                CAPI MatchedNameCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string matched_name_data1 = @"Michael Jackson";
-                string matched_name_data2 = @"迈克尔·杰克逊";
+                CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string morphology_lemmas_data = @"The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
                 //The results of the API call will come back in the form of a Dictionary
-                NameSimilarityResponse response = MatchedNameCAPI.NameSimilarity(new Name(matched_name_data1, "eng", null, "PERSON"), new Name(matched_name_data2, null, null, "PERSON"));
+                RosetteResponse response = MorphologyCAPI.Morphology(morphology_lemmas_data, null, null, null, MorphologyFeature.lemmas);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ToString());
+                Console.WriteLine(response.ContentAsJson);
             }
             catch (Exception e)
             {

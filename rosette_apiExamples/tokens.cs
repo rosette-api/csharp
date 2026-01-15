@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class tokens
+    class Tokens
     {
         /// <summary>
         /// Example code to call Analytics API to get tokens (words) in a piece of text.

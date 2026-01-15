@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class sentences
+    class Sentences
     {
         /// <summary>
         /// Example code to call Analytics API to get sentences in a piece of text.

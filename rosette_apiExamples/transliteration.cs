@@ -2,7 +2,7 @@
 
 namespace rosette_apiExamples
 {
-    class transliteration
+    class Transliteration
     {
         /// <summary>
         /// Example code to call Analytics API to transliterate a name.

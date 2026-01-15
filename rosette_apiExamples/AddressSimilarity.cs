@@ -2,10 +2,10 @@
 
 namespace rosette_apiExamples
 {
-    class semantic_vectors
+    class AddressSimilarity
     {
         /// <summary>
-        /// Example code to call Analytics API to get an input's text-vector.
+        /// Example code to call Analytics API to get match score (similarity) for two addresses.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,28 +16,25 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //semantic-vectors yourapikeyhere
+            //AddressSimilarity yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
                 alturl = args.Length > 1 ? args[1] : string.Empty;
-            }
+            } 
             try
             {
-                CAPI EmbeddingCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string semantic_vectors_data = @"Cambridge, Massachusetts";
+                CAPI cAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
                 //The results of the API call will come back in the form of a Dictionary
-                SemanticVectorsResponse response = EmbeddingCAPI.SemanticVectors(semantic_vectors_data);
-                foreach (KeyValuePair<string, string> h in response.Headers)
-                {
+                AddressSimilarityResponse response = cAPI.AddressSimilarity(new FieldedAddress(houseNumber:"1600", road:"Pennsylvania Ave N.W.", city:"Washington", state:"DC", postCode: "20500"), new UnfieldedAddress(address:"160 Pennsylvana Avenue, Washington, D.C., 20500"));
+                foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-
-                Console.WriteLine(response.ContentAsJson);
+                Console.WriteLine(response.ToString());
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Exception: " + e.Message);
             }
         }
     }

@@ -2,7 +2,7 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class language_multilingual
+    class LanguageMultilingual
     {
         /// <summary>
         /// Example code to call Analytics API to detect possible languages for a piece of text.

@@ -2,10 +2,10 @@ using rosette_api;
 
 namespace rosette_apiExamples
 {
-    class morphology_lemmas
+    class EventsNegation
     {
         /// <summary>
-        /// Example code to call Analytics API to get lemmas for words in a piece of text.
+        /// Example code to call Analytics API to get events from a piece of text.
         /// Requires Nuget Package:
         /// rosette_api
         /// </summary>
@@ -16,7 +16,7 @@ namespace rosette_apiExamples
             string alturl = string.Empty;
 
             //You may set the API key via command line argument:
-            //morphology_lemmas yourapikeyhere
+            //events yourapikeyhere
             if (args.Length != 0)
             {
                 apikey = args[0];
@@ -24,14 +24,16 @@ namespace rosette_apiExamples
             }
             try
             {
-                CAPI MorphologyCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
-                string morphology_lemmas_data = @"The fact is that the geese just went back to get a rest and I'm not banking on their return soon";
+                CAPI EventsCAPI = string.IsNullOrEmpty(alturl) ? new CAPI(apikey) : new CAPI(apikey, alturl);
+                string events_text_data = "Bill Gates went to the store.";
                 //The results of the API call will come back in the form of a Dictionary
-                RosetteResponse response = MorphologyCAPI.Morphology(morphology_lemmas_data, null, null, null, MorphologyFeature.lemmas);
+                EventsCAPI.SetOption("negation", "ONLY_POSITIVE");
+                EventsResponse response = EventsCAPI.Event(events_text_data);
                 foreach (KeyValuePair<string, string> h in response.Headers) {
                     Console.WriteLine(string.Format("{0}:{1}", h.Key, h.Value));
                 }
-                Console.WriteLine(response.ContentAsJson);
+                // PrintContent() is a provided method to print the Dictionary to the console
+                response.PrintContent();
             }
             catch (Exception e)
             {
