@@ -1,11 +1,11 @@
 
 namespace rosette_api
 {
-    public class UnfieldedAddress: IAddress
+    public class UnfieldedAddress : IAddress
     {
-        public UnfieldedAddress(string address = null)
+        public UnfieldedAddress(string? address = null)
         {
-            this.address = address;
+            this.Address = address;
         }
 
         /// <summary>address
@@ -13,11 +13,11 @@ namespace rosette_api
         /// Getter, Setter for the address
         /// </para>
         /// </summary>
-        public string address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary> is this address fielded?
         /// </summary>
-        public bool fielded()
+        public bool Fielded()
         {
             return false;
         }
