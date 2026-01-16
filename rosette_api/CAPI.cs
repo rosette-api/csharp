@@ -43,13 +43,13 @@ namespace rosette_api
         /// setupLock is used to ensure that the setup operation cannot be run
         /// by multiple processes
         /// </summary>
-        private Object setupLock = new Object();
+        private readonly Lock setupLock = new();
 
         /// <summary>
         /// Internal string to hold the uri ending for each endpoint.
         /// Set when an endpoint is called.
         /// </summary>
-        private string _uri = null;
+        private string? _uri = null;
 
         /// <summary>
         /// Internal container for options
@@ -69,12 +69,12 @@ namespace rosette_api
         /// <summary>
         /// Http client to be used for life of API object
         /// </summary>
-        private HttpClient _httpClient = null;
+        private HttpClient? _httpClient = null;
 
         /// <summary>
         /// Reference to external http client, if provided
         /// </summary>
-        private HttpClient _externalHttpClient = null;
+        private HttpClient? _externalHttpClient = null;
 
         /// <summary>
         /// Current timeout value for the http client in milliseconds
@@ -103,7 +103,7 @@ namespace rosette_api
         /// <param name="uristring">(string, optional): Base URL for the HttpClient requests. If none is given, will use the default API URI</param>
         /// <param name="maxRetry">(int, optional): Maximum number of times to retry a request on HttpResponse error. Default is 3 times.</param>
         /// <param name="client">(HttpClient, optional): Forces the API to use a custom HttpClient.</param>
-        public CAPI(string user_key, string uristring = "https://analytics.babelstreet.com/rest/v1/", int maxRetry = 5, HttpClient client = null)
+        public CAPI(string user_key, string uristring = "https://analytics.babelstreet.com/rest/v1/", int maxRetry = 5, HttpClient? client = null)
         {
             UserKey = user_key;
             URIstring = uristring ?? "https://analytics.babelstreet.com/rest/v1/";
@@ -114,9 +114,9 @@ namespace rosette_api
             MaxRetry = (maxRetry == 0) ? 1 : maxRetry;
             MillisecondsBetweenRetries = 5000;
             _externalHttpClient = client;
-            _options = new Dictionary<string, object>();
-            _customHeaders = new Dictionary<string, string>();
-            _urlParameters = new NameValueCollection();
+            _options = [];
+            _customHeaders = [];
+            _urlParameters = [];
 
             SetupClient();
         }
@@ -143,21 +143,14 @@ namespace rosette_api
         /// Version: Internal Server Version number.
         /// </para>
         /// </summary>
-        public static string Version
-        {
-            get { return typeof(CAPI).Assembly.GetName().Version.ToString(); }
-        }
+        public static string Version => typeof(CAPI).Assembly.GetName().Version.ToString();
+
         /// <summary>
         /// UserAgent returns the string that will be used for User-Agent
         /// </summary>
         /// <returns>string User-Agent</returns>
-        public string UserAgent
-        {
-            get
-            {
-                return string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", Version, Environment.Version.ToString());
-            }
-        }
+        public static string UserAgent => string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", Version, Environment.Version.ToString());
+
         /// <summary>MaxRetry
         /// <para>
         /// Getter, Setter for the MaxRetry
@@ -180,10 +173,7 @@ namespace rosette_api
         /// client with some added headers that are required by the Analytics API.  For the default internal client
         /// it will return the current instance, which is maintained at the class level.
         /// </summary>
-        public HttpClient Client
-        {
-            get { return _externalHttpClient ?? _httpClient; }
-        }
+        public HttpClient Client => _externalHttpClient ?? _httpClient;
 
         /// <summary>Concurrency
         /// Returns the number of concurrent connections allowed by the current Analytics API plan.
@@ -276,7 +266,7 @@ namespace rosette_api
         /// </summary>
         /// <param name="name">string option name</param>
         /// <returns>object value if exists</returns>
-        public object GetOption(string name)
+        public object? GetOption(string name)
         {
             if (_options.ContainsKey(name))
             {
@@ -392,7 +382,7 @@ namespace rosette_api
         {
             _uri = "address-similarity";
 
-            Dictionary<object, object> dict = new Dictionary<object, object>(){
+            Dictionary<object, object> dict = new(){
                 { "address1", a1},
                 { "address2", a2}
             };
@@ -429,7 +419,7 @@ namespace rosette_api
         /// <returns>CategoriesResponse containing the results of the request.
         /// The response is the contextual categories identified in the input.
         /// </returns>
-        public CategoriesResponse Categories(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public CategoriesResponse Categories(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "categories";
             return Process<CategoriesResponse>(content, language, contentType, contentUri, genre);
@@ -477,7 +467,7 @@ namespace rosette_api
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>EntitiesResponse containing the results of the request.
         /// </returns>
-        public EntitiesResponse Entity(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public EntitiesResponse Entity(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "entities";
             return Process<EntitiesResponse>(content, language, contentType, contentUri, genre);
@@ -523,7 +513,7 @@ namespace rosette_api
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>EventsResponse containing the results of the request.
         /// </returns>
-        public EventsResponse Event(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public EventsResponse Event(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "events";
             return Process<EventsResponse>(content, language, contentType, contentUri, genre);
@@ -582,7 +572,7 @@ namespace rosette_api
         /// <returns>LanguageIdentificationResponse containing the results of the request.
         /// The response is an ordered list of detected languages.
         /// </returns>
-        public LanguageIdentificationResponse Language(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public LanguageIdentificationResponse Language(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "language";
             return Process<LanguageIdentificationResponse>(content, language, contentType, contentUri, genre);
@@ -633,7 +623,7 @@ namespace rosette_api
         /// The response may include lemmas, part of speech tags, compound word components, and Han readings.
         /// Support for specific return types depends on language.
         /// </returns>
-        public MorphologyResponse Morphology(string content = null, string language = null, string contentType = null, string contentUri = null, MorphologyFeature feature = MorphologyFeature.complete, string genre = null)
+        public MorphologyResponse Morphology(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, MorphologyFeature feature = MorphologyFeature.complete, string? genre = null)
         {
             _uri = "morphology/" + feature.MorphologyEndpoint();
             return Process<MorphologyResponse>(content, language, contentType, contentUri, genre);
@@ -701,7 +691,7 @@ namespace rosette_api
         {
             _uri = "name-similarity";
 
-            Dictionary<object, object> dict = new Dictionary<object, object>(){
+            Dictionary<object, object> dict = new(){
                 { "name1", n1},
                 { "name2", n2}
             };
@@ -751,7 +741,7 @@ namespace rosette_api
         {
             _uri = "name-deduplication";
 
-            Dictionary<object, object> dict = new Dictionary<object, object>(){
+            Dictionary<object, object> dict = new(){
                 { "names", names},
                 { "threshold", threshold}
             };
@@ -783,7 +773,7 @@ namespace rosette_api
 
         /// <returns>TransliterationResponse containing the results of the request.
         /// </returns>
-        public TransliterationResponse Transliteration(string content, string language = null)
+        public TransliterationResponse Transliteration(string content, string? language = null)
         {
             _uri = "transliteration";
 
@@ -847,7 +837,7 @@ namespace rosette_api
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
         /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
-        public TextEmbeddingResponse TextEmbedding(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public TextEmbeddingResponse TextEmbedding(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "text-embedding";
             return Process<TextEmbeddingResponse>(content, language, contentType, contentUri, genre);
@@ -911,7 +901,7 @@ namespace rosette_api
         /// The semantic space is a multilingual network that maps the input based on the words and their context.
         /// Words with similar meanings have similar contexts, and Analytics maps them close to each other
         /// </returns>
-        public SemanticVectorsResponse SemanticVectors(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SemanticVectorsResponse SemanticVectors(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "semantics/vector";
             return Process<SemanticVectorsResponse>(content, language, contentType, contentUri, genre);
@@ -970,7 +960,7 @@ namespace rosette_api
         /// <returns>SimilarTermsResponse containing the results of the request.
         /// The response contains a mapping of language to similar terms.
         /// </returns>
-        public SimilarTermsResponse SimilarTerms(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SimilarTermsResponse SimilarTerms(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "semantics/similar";
             return Process<SimilarTermsResponse>(content, language, contentType, contentUri, genre);
@@ -1020,7 +1010,7 @@ namespace rosette_api
         /// A SyntaxDependenciesResponse:
         /// The parsed text is represented in terms of syntactic dependencies
         /// </returns>
-        public SyntaxDependenciesResponse SyntaxDependencies(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SyntaxDependenciesResponse SyntaxDependencies(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "syntax/dependencies";
             return Process<SyntaxDependenciesResponse>(content, language, contentType, contentUri, genre);
@@ -1079,7 +1069,7 @@ namespace rosette_api
         /// locatives [optional] - usually express the locations the action expressed by the relationship took place
         /// temporals [optional] - usually express the time in which the action expressed by the relationship took place
         /// </returns>
-        public RelationshipsResponse Relationships(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public RelationshipsResponse Relationships(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "relationships";
             return Process<RelationshipsResponse>(content, language, contentType, contentUri, genre);
@@ -1144,7 +1134,7 @@ namespace rosette_api
         /// <returns>SentenceTaggingResponse containing the results of the request
         /// The response contains a list of sentences.
         /// </returns>
-        public SentenceTaggingResponse Sentences(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SentenceTaggingResponse Sentences(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "sentences";
             return Process<SentenceTaggingResponse>(content, language, contentType, contentUri, genre);
@@ -1193,7 +1183,7 @@ namespace rosette_api
         /// <returns>SentimentResponse containing the results of the request.
         /// The response contains sentiment analysis results.
         /// </returns>
-        public SentimentResponse Sentiment(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public SentimentResponse Sentiment(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "sentiment";
             return Process<SentimentResponse>(content, language, contentType, contentUri, genre);
@@ -1242,7 +1232,7 @@ namespace rosette_api
         /// <returns>TokenizationResponse containing the results of the request.
         /// The response contains a list of tokens.
         /// </returns>
-        public TokenizationResponse Tokens(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public TokenizationResponse Tokens(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "tokens";
             return Process<TokenizationResponse>(content, language, contentType, contentUri, genre);
@@ -1291,7 +1281,7 @@ namespace rosette_api
         /// <returns>TopicsResponse containing the results of the request.
         /// The response contains a list of concepts and key phrases.
         /// </returns>
-        public TopicsResponse Topics(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null)
+        public TopicsResponse Topics(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null)
         {
             _uri = "topics";
             return Process<TopicsResponse>(content, language, contentType, contentUri, genre);
@@ -1343,7 +1333,7 @@ namespace rosette_api
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>TranslateNamesResponse containing the results of the request.
         /// </returns>
-        public TranslateNamesResponse NameTranslation(string name, string sourceLanguageOfUse = null, string sourceScript = null, string targetLanguage = null, string targetScript = null, string targetScheme = null, string sourceLanguageOfOrigin = null, string entityType = null, string genre = null)
+        public TranslateNamesResponse NameTranslation(string name, string? sourceLanguageOfUse = null, string? sourceScript = null, string? targetLanguage = null, string? targetScript = null, string? targetScheme = null, string? sourceLanguageOfOrigin = null, string? entityType = null, string? genre = null)
         {
             _uri = "name-translation";
 
@@ -1382,7 +1372,7 @@ namespace rosette_api
         /// <returns>query string</returns>
         private string ToQueryString(NameValueCollection urlParameters)
         {
-            StringBuilder sb = new StringBuilder("?");
+            StringBuilder sb = new("?");
 
             bool first = true;
             foreach (string key in urlParameters.AllKeys)
@@ -1409,9 +1399,9 @@ namespace rosette_api
         /// <param name="jsonRequest">(string, optional): Content to use as the request to the server with POST. If none given, assume an Info endpoint and use GET</param>
         /// <param name="multiPart">(MultipartFormDataContent, optional): Used for file uploads</param>
         /// <returns>RosetteResponse derivative</returns>
-        private T GetResponse<T>(string jsonRequest = null, MultipartFormDataContent multiPart = null) where T : RosetteResponse
+        private T GetResponse<T>(string? jsonRequest = null, MultipartFormDataContent? multiPart = null) where T : RosetteResponse
         {
-            HttpResponseMessage responseMsg = null;
+            HttpResponseMessage? responseMsg = null;
             string wholeURI = _uri;
             if (wholeURI.StartsWith("/"))
             {
@@ -1502,7 +1492,7 @@ namespace rosette_api
         /// <param name="contentUri">(string, optional): URI to accessible content (content and contentUri are mutually exclusive)</param>
         /// <param name="genre">(string, optional): genre to categorize the input data</param>
         /// <returns>RosetteResponse derivative containing the results of the response from the server from the getResponse call.</returns>
-        private T Process<T>(string content = null, string language = null, string contentType = null, string contentUri = null, string genre = null) where T : RosetteResponse
+        private T Process<T>(string? content = null, string? language = null, string? contentType = null, string? contentUri = null, string? genre = null) where T : RosetteResponse
         {
             if (content == null)
             {
@@ -1621,11 +1611,11 @@ namespace rosette_api
         {
             // Create a GZIP stream with decompression mode.
             // ... Then create a buffer and write into while reading from the GZIP stream.
-            using (GZipStream stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress))
+            using (GZipStream stream = new(new MemoryStream(gzip), CompressionMode.Decompress))
             {
                 const int size = 4096;
                 byte[] buffer = new byte[size];
-                using (MemoryStream memory = new MemoryStream())
+                using (MemoryStream memory = new())
                 {
                     int count = 0;
                     do

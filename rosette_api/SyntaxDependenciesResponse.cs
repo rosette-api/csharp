@@ -37,11 +37,11 @@ namespace rosette_api
         public SyntaxDependenciesResponse(HttpResponseMessage apiResult)
             : base(apiResult)
         {
-            List<SentenceWithDependencies> sentences = new List<SentenceWithDependencies>();
+            List<SentenceWithDependencies> sentences = [];
             JArray enumerableResults = this.ContentDictionary.ContainsKey(SENTENCES) ? this.ContentDictionary[SENTENCES] as JArray : new JArray();
             foreach (JObject result in enumerableResults)
             {
-                List<Dependency> dependencies = new List<Dependency>();
+                List<Dependency> dependencies = [];
                 JArray depArr = result.Properties().Where((p) => p.Name == DEPENDENCIES).Any() ? result[DEPENDENCIES] as JArray : new JArray();
                 foreach (JObject dependency in depArr)
                 {
@@ -84,7 +84,7 @@ namespace rosette_api
             if (obj is SyntaxDependenciesResponse)
             {
                 SyntaxDependenciesResponse other = obj as SyntaxDependenciesResponse;
-                List<bool> conditions = new List<bool>() {
+                List<bool> conditions = new() {
                     this.Sentences != null && other.Sentences != null ? this.Sentences.SequenceEqual(other.Sentences) : this.Sentences == other.Sentences,
                     this.Tokens != null && other.Tokens != null ? this.Tokens.SequenceEqual(other.Tokens) : this.Tokens == other.Tokens,
                     this.ResponseHeaders != null && other.ResponseHeaders != null ? this.ResponseHeaders.Equals(other.ResponseHeaders) : this.ResponseHeaders == other.ResponseHeaders,
@@ -157,7 +157,7 @@ namespace rosette_api
                 if (obj is SentenceWithDependencies)
                 {
                     SentenceWithDependencies other = obj as SentenceWithDependencies;
-                    List<bool> conditions = new List<bool>() {
+                    List<bool> conditions = new() {
                     this.Dependencies != null && other.Dependencies != null ? this.Dependencies.SequenceEqual(other.Dependencies) : this.Dependencies == other.Dependencies,
                     this.StartTokenIndex.Equals(other.StartTokenIndex),
                     this.EndTokenIndex.Equals(other.EndTokenIndex),
@@ -240,7 +240,7 @@ namespace rosette_api
                 if (obj is Dependency)
                 {
                     Dependency other = obj as Dependency;
-                    List<bool> conditions = new List<bool>() {
+                    List<bool> conditions = new() {
                     this.DependencyType.Equals(other.DependencyType),
                     this.GovernorTokenIndex.Equals(other.GovernorTokenIndex),
                     this.DependentTokenIndex.Equals(other.DependentTokenIndex),

@@ -477,7 +477,7 @@ namespace rosette_apiUnitTests {
         [Test]
         public void UserAgentTest() {
             string uaString = string.Format("Babel-Street-Analytics-API-Csharp/{0}/{1}", CAPI.Version, Environment.Version.ToString());
-            Assert.That(_rosetteApi.UserAgent, Is.EqualTo(uaString));
+            Assert.That(CAPI.UserAgent, Is.EqualTo(uaString));
         }
 
 
