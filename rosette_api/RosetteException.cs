@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace rosette_api {
+﻿namespace rosette_api {
     /// <summary>RosetteException Class
     /// <para>
     /// RosetteException: Custom exception to describe an exception from the Analytics API.

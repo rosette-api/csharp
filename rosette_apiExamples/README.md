@@ -9,6 +9,70 @@ A note on prerequisites.  Analytics API only supports TLS 1.2 so ensure your too
 
 Here are some methods for running the examples.
 
+#### Latest Source with Docker
+- Clone the repository.
+  ```
+  git clone git@github.com:rosette-api/csharp.git
+  cd csharp
+  ```
+- Launch a container.
+  ```
+  docker run -it -v $(pwd):/csharp debian:13
+  ```
+- Set up the environment.
+  ```
+  apt-get update
+  apt-get install -y wget libicu76
+
+  wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && chmod +x dotnet-install.sh
+  ./dotnet-install.sh --version latest
+  export DOTNET_ROOT=/root/.dotnet
+  export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"
+  ```
+
+- _Optional:_ Setup environment for running unit tests with nunit console.  You can run them without this.
+  ```
+  apt-get install -y unzip
+  wget https://github.com/nunit/nunit-console/releases/download/3.22.0/NUnit.Console-3.22.0.zip
+  unzip NUnit.Console-3.22.0.zip
+
+  ```
+- Build the package from source.
+  ```
+  cd /csharp
+  dotnet restore rosette_api.slnx
+  dotnet build /p:Configuration=Release rosette_api.slnx
+  dotnet build /p:Configuration=Debug rosette_api.slnx
+  ```
+- _Optional:_ Run the Unit Tests.
+  ```
+  dotnet test ./rosette_apiUnitTests/bin/Release/net10.0/rosette_apiUnitTests.dll
+  ```
+
+  Or with the nunit console runner...
+  ```
+  dotnet /root/bin/net8.0/nunit3-console.dll ./rosette_apiUnitTests/bin/Release/net10.0/rosette_apiUnitTests.dll
+  ```
+- Prepare a project for the example you'd like to execute.  E.g. language.cs
+  ```
+  cd rosette_apiExamples
+  mkdir LanguageExample
+  cd LanguageExample
+  dotnet new console --framework net10.0
+  cp ../Language.cs ./Program.cs
+  dotnet add reference ../../rosette_api/rosette_api.csproj
+  ```
+- Run the example against Analytics Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
+  ```
+  dotnet run $API_KEY
+  ```
+  Or against an alternate url.  The key, in this case, can be anything if you aren't using authorization
+  ```
+  dotnet run $API_KEY http://example.com:8181/rest/v1
+  ```
+
+
+#### TODO:  Refresh After Publish
 #### Latest Version on NuGet with Docker
 - Clone the repository.
   ```
@@ -23,7 +87,7 @@ Here are some methods for running the examples.
   ```
   cd /csharp
   nuget install rosette_api
-  ``` 
+  ```
 - Copy the runtime binaries to the examples directory.
   ```
   cp Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
@@ -39,49 +103,3 @@ Here are some methods for running the examples.
   mono language.exe $API_KEY
   ```
 
-#### Latest Source with Docker
-- Clone the repository.
-  ```
-  git clone git@github.com:rosette-api/csharp.git
-  cd csharp
-  ```
-- Launch a `mono` container.
-  ```
-  docker run -it -v $(pwd):/csharp mono:6
-  ```
-- Build the package from source.
-  ```
-  cd /csharp
-  nuget restore rosette_api.sln
-  msbuild /p:Configuration=Release rosette_api.sln
-  ```
-- _Optional:_ Run the Unit Tests.
-  - First, fix the certificate store so we can download wikidata.
-    Per:  https://github.com/KSP-CKAN/CKAN/wiki/SSL-certificate-errors#removing-expired-lets-encrypt-certificates
-    ```
-    sed -i 's/^mozilla\/DST_Root_CA_X3.crt$/!mozilla\/DST_Root_CA_X3.crt/' /etc/ca-certificates.conf
-    update-ca-certificates
-    cert-sync /etc/ssl/certs/ca-certificates.crt
-    ```
-  - Then run the tests.
-    ```
-    mono ./packages/NUnit.Console.3.0.1/tools/nunit3-console.exe ./rosette_apiUnitTests/bin/Release/rosette_apiUnitTests.dll
-    ```- Copy the runtime binaries to the examples directory.
-  ```
-  cp packages/Newtonsoft.Json.13.0.2/lib/net45/Newtonsoft.Json.dll rosette_apiExamples/.
-  cp rosette_api/bin/Release/rosette_api.dll rosette_apiExamples/.
-  ```
-- Compile the example you'd like to execute.  E.g. language.cs
-  ```
-  cd rosette_apiExamples
-  csc language.cs /r:rosette_api.dll /r:System.Net.Http.dll /r:System.Web.Extensions.dll
-  ```
-- Run the compiled example against Analytics Cloud.  In this example, your Cloud API key is stored in the environment variable `$API_KEY`.
-  ```
-  mono language.exe $API_KEY
-  ```
-
-### Visual Studio
-- If you are using Visual Studio, you can use the Nuget Package Manager.  Search for `rosette_api` in the Online Packages and install.
-
-You can now run your desired endpoint file to see it in action.
